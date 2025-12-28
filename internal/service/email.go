@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	TaskTypeSendEmail = "email:send"
+	taskTypeSendEmail = "email:send"
 	MaxRetries        = 3
 )
 
@@ -220,7 +220,7 @@ func (s *EmailService) enqueue(email *domain.Email) error {
 		return err
 	}
 
-	task := asynq.NewTask(TaskTypeSendEmail, payload,
+	task := asynq.NewTask(taskTypeSendEmail, payload,
 		asynq.MaxRetry(MaxRetries),
 		asynq.Timeout(30*time.Second),
 		asynq.Queue("email"),

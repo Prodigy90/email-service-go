@@ -72,6 +72,7 @@ func (c *SMTPClient) Send(email *domain.Email) error {
 func (c *SMTPClient) sendWithTLS(addr string, auth smtp.Auth, from, to string, msg []byte) error {
 	tlsConfig := &tls.Config{
 		ServerName: c.config.Host,
+		MinVersion: tls.VersionTLS12,
 	}
 
 	conn, err := tls.Dial("tcp", addr, tlsConfig)
