@@ -11,6 +11,9 @@ import (
 // APIKeyAuth middleware validates API key authentication.
 // Uses constant-time comparison to prevent timing attacks.
 func APIKeyAuth(apiKey string) gin.HandlerFunc {
+	if apiKey == "" {
+		panic("APIKeyAuth: API key must not be empty")
+	}
 	apiKeyBytes := []byte(apiKey)
 
 	return func(c *gin.Context) {
