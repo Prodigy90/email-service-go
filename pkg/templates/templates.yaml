@@ -1,0 +1,19 @@
+# Custom email templates
+# These override or extend the built-in templates
+# Variables use Go template syntax: {{.VariableName}}
+
+# Example custom template:
+# custom_notification:
+#   subject: "Custom Alert: {{.Title}}"
+#   body: |
+#     Hi {{.Name}},
+#
+#     {{.Message}}
+#
+#     Best regards,
+#     {{.AppName}} Team
+#   html_body: |
+#     <p>Hi {{.Name}},</p>
+#     <p>{{.Message}}</p>
+#     <p>Best regards,<br>{{.AppName}} Team</p>
+#   description: "Custom notification template"
