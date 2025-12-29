@@ -1,8 +1,72 @@
 # Email Testing Guide
 
-This guide covers how to set up and test the email service with AWS SES.
+This guide covers how to set up and test the email service. The service supports two providers:
+- **Resend** (Recommended) - Simple API, minimal setup
+- **SMTP** (AWS SES, etc.) - Traditional SMTP
 
-## AWS SES Setup
+## Quick Start with Resend (Recommended)
+
+### 1. Create Resend Account
+
+1. Go to [resend.com](https://resend.com) and sign up
+2. Go to API Keys → Create API Key
+3. Copy your API key
+
+### 2. Configure Environment
+
+```env
+EMAIL_PROVIDER=resend
+RESEND_API_KEY=re_xxxxxxxxxxxx
+RESEND_FROM_ADDRESS=onboarding@resend.dev  # Use this for testing
+RESEND_FROM_NAME=Your App Name
+```
+
+> **Note**: `onboarding@resend.dev` works immediately for testing. For production, verify your own domain.
+
+### 3. Start the Service
+
+```bash
+# Terminal 1: Start API
+cd email-service-go && go run cmd/api/main.go
+
+# Terminal 2: Start worker
+cd email-service-go && go run cmd/worker/main.go
+```
+
+### 4. Send a Test Email
+
+```bash
+curl -X POST http://localhost:8082/api/v1/send \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: dev-api-key" \
+  -d '{
+    "to": "your-email@example.com",
+    "template": "payment_success",
+    "template_data": {
+      "CustomerName": "John",
+      "Amount": "5,000.00",
+      "Currency": "₦",
+      "ProductName": "Pro Plan",
+      "TransactionID": "TXN_123456"
+    },
+    "source_service": "test"
+  }'
+```
+
+### 5. Verify Your Domain (Production)
+
+For production, add your domain in Resend dashboard:
+
+1. Go to Domains → Add Domain
+2. Add DNS records (2 records: MX + TXT)
+3. Wait for verification (usually < 5 minutes)
+4. Update `RESEND_FROM_ADDRESS` to use your domain
+
+---
+
+## AWS SES Setup (Alternative)
+
+If you prefer AWS SES, follow this section.
 
 ### 1. Create AWS Account & Access Keys
 
@@ -40,28 +104,21 @@ To send to any email address:
 
 Approval typically takes 24-48 hours.
 
-## Configuration
-
-### Environment Variables
+### 4. Configure Environment
 
 ```env
-# AWS SES Configuration
-AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=your-access-key
-AWS_SECRET_ACCESS_KEY=your-secret-key
+EMAIL_PROVIDER=smtp
 
-# Email Service Settings
-FROM_EMAIL=noreply@yourdomain.com
-FROM_NAME=Your App Name
-
-# Optional: SMTP Configuration (alternative to API)
+# SMTP Configuration for AWS SES
 SMTP_HOST=email-smtp.us-east-1.amazonaws.com
 SMTP_PORT=587
 SMTP_USERNAME=your-smtp-username
 SMTP_PASSWORD=your-smtp-password
+SMTP_FROM_ADDRESS=noreply@yourdomain.com
+SMTP_FROM_NAME=Your App Name
 ```
 
-### Domain Verification (Recommended)
+### 5. Domain Verification (Recommended)
 
 For production, verify your domain:
 
@@ -73,47 +130,28 @@ For production, verify your domain:
    - 1 TXT record for domain verification
 5. Wait for DNS propagation (up to 72 hours)
 
-## Testing Locally
+---
 
-### 1. Start the Email Service
+## Configuration Reference
 
-```bash
-cd email-service-go
-go run cmd/api/main.go
-```
+### Environment Variables
 
-### 2. Send a Test Email
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `EMAIL_PROVIDER` | `resend` or `smtp` (default: smtp) | No |
+| `RESEND_API_KEY` | Resend API key | If using Resend |
+| `RESEND_FROM_ADDRESS` | Sender email address | If using Resend |
+| `RESEND_FROM_NAME` | Sender display name | No |
+| `SMTP_HOST` | SMTP server hostname | If using SMTP |
+| `SMTP_PORT` | SMTP server port | If using SMTP |
+| `SMTP_USERNAME` | SMTP username | If using SMTP |
+| `SMTP_PASSWORD` | SMTP password | If using SMTP |
+| `SMTP_FROM_ADDRESS` | Sender email address | If using SMTP |
+| `SMTP_FROM_NAME` | Sender display name | No |
 
-```bash
-# Using curl
-curl -X POST http://localhost:8082/api/v1/send \
-  -H "Content-Type: application/json" \
-  -H "X-API-Key: your-api-key" \
-  -d '{
-    "to": "verified-email@example.com",
-    "template": "subscription_reminder_3d",
-    "template_data": {
-      "CustomerName": "John",
-      "PlanName": "Pro Plan",
-      "RenewalDate": "January 15, 2025",
-      "Amount": "5000.00",
-      "Currency": "₦",
-      "ProfileURL": "https://yourapp.com/profile"
-    },
-    "source_service": "test"
-  }'
-```
+---
 
-### 3. Check Email Status
-
-```bash
-curl http://localhost:8082/api/v1/status/{email_id} \
-  -H "X-API-Key: your-api-key"
-```
-
-## Testing Email Templates
-
-### Available Templates
+## Available Templates
 
 | Template | Use Case | Required Variables |
 |----------|----------|-------------------|
@@ -127,13 +165,14 @@ curl http://localhost:8082/api/v1/status/{email_id} \
 | `refund_processed` | Refund completed | CustomerName, Amount, Currency, TransactionID |
 | `refund_failed` | Refund failed | CustomerName, Amount, Currency, TransactionID, Reason |
 
-### Test Each Template
+### List All Templates
 
 ```bash
-# List all templates
 curl http://localhost:8082/api/v1/templates \
-  -H "X-API-Key: your-api-key"
+  -H "X-API-Key: dev-api-key"
 ```
+
+---
 
 ## Integration Testing
 
@@ -141,13 +180,16 @@ curl http://localhost:8082/api/v1/templates \
 
 1. Start all services:
 ```bash
-# Terminal 1: Email service
+# Terminal 1: Email service API
 cd email-service-go && go run cmd/api/main.go
 
-# Terminal 2: Webhook router worker
+# Terminal 2: Email service worker
+cd email-service-go && go run cmd/worker/main.go
+
+# Terminal 3: Webhook router worker
 cd webhook-router-go && go run cmd/worker/main.go
 
-# Terminal 3: Webhook router API
+# Terminal 4: Webhook router API
 cd webhook-router-go && go run cmd/api/main.go
 ```
 
@@ -161,7 +203,7 @@ curl -X POST http://localhost:8080/api/v1/webhooks/paystack \
     "data": {
       "amount": 500000,
       "customer": {
-        "email": "verified-email@example.com",
+        "email": "your-email@example.com",
         "first_name": "John",
         "last_name": "Doe"
       },
@@ -189,7 +231,7 @@ curl -X POST http://localhost:8080/api/v1/webhooks/paystack \
       "amount": 1000000,
       "created_at": "2025-01-01T00:00:00.000Z",
       "customer": {
-        "email": "verified-email@example.com",
+        "email": "your-email@example.com",
         "first_name": "Jane"
       },
       "metadata": {
@@ -199,33 +241,44 @@ curl -X POST http://localhost:8080/api/v1/webhooks/paystack \
   }'
 ```
 
+---
+
 ## Troubleshooting
 
-### Email Not Sending
+### Common Issues
 
-1. **Check SES Sandbox Mode**: Ensure recipient email is verified
-2. **Check Bounce Rate**: High bounce rates can suspend your account
-3. **Check Logs**: Review email-service logs for errors
-4. **Verify Credentials**: Ensure AWS credentials are correct
-
-### Email in Spam
-
-1. Set up SPF record for your domain
-2. Enable DKIM signing in SES
-3. Set up DMARC record
-4. Use consistent From address
-
-### Common Errors
-
-| Error | Solution |
+| Issue | Solution |
 |-------|----------|
-| `Email address not verified` | Verify email in SES console |
-| `Access Denied` | Check IAM permissions |
-| `Throttling` | Request higher sending limits |
+| `RESEND_API_KEY is required` | Set the `RESEND_API_KEY` environment variable |
+| `validation_error: Invalid to address` | Use a valid email format |
+| `Email address not verified` (SES) | Verify email in SES console or use Resend |
+| `Access Denied` (SES) | Check IAM permissions |
 | `Template not found` | Check template name spelling |
+
+### Check Email Status
+
+```bash
+curl http://localhost:8082/api/v1/status/{email_id} \
+  -H "X-API-Key: dev-api-key"
+```
+
+### View Logs
+
+Both API and worker services log email sending activity. Check console output for:
+- `Email queued for delivery` - Email accepted and queued
+- `Email sent successfully` - Delivered to provider
+- `Failed to send email` - Error details
+
+---
 
 ## Production Checklist
 
+### Resend
+- [ ] Domain verified
+- [ ] API key stored securely (not in code)
+- [ ] Monitoring set up in Resend dashboard
+
+### AWS SES
 - [ ] Domain verified in SES
 - [ ] DKIM enabled
 - [ ] SPF record configured

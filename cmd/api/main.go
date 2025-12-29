@@ -67,12 +67,26 @@ func main() {
 
 	// Initialize services
 	emailRepo := postgres.NewEmailRepository(db)
-	smtpClient := service.NewSMTPClient(cfg.SMTP, logger)
 	templateService, err := service.NewTemplateService(cfg.TemplateDir, logger)
 	if err != nil {
 		logger.Fatal().Err(err).Msg("Failed to initialize template service")
 	}
-	emailService := service.NewEmailService(emailRepo, smtpClient, templateService, asynqClient, logger)
+
+	// Choose email provider based on config
+	var emailSender service.EmailSender
+	switch cfg.EmailProvider {
+	case "resend":
+		if cfg.Resend.APIKey == "" {
+			logger.Fatal().Msg("RESEND_API_KEY is required when EMAIL_PROVIDER=resend")
+		}
+		emailSender = service.NewResendClient(cfg.Resend, logger)
+		logger.Info().Msg("Using Resend as email provider")
+	default:
+		emailSender = service.NewSMTPClient(cfg.SMTP, logger)
+		logger.Info().Msg("Using SMTP as email provider")
+	}
+
+	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, logger)
 
 	// Create router
 	router := routes.New(routes.Deps{

@@ -15,8 +15,14 @@ type Config struct {
 	// Redis
 	RedisURL string
 
+	// Email Provider: "smtp" or "resend"
+	EmailProvider string
+
 	// SMTP
 	SMTP SMTPConfig
+
+	// Resend
+	Resend ResendConfig
 
 	// API Authentication
 	APIKey string
@@ -34,12 +40,19 @@ type SMTPConfig struct {
 	FromName    string
 }
 
+type ResendConfig struct {
+	APIKey      string
+	FromAddress string
+	FromName    string
+}
+
 func Load() *Config {
 	return &Config{
-		Env:         getEnv("ENV", "development"),
-		APIPort:     getEnv("API_PORT", "8082"),
-		DatabaseURL: getEnv("DATABASE_URL", "postgres://email:email@localhost:55433/email_service?sslmode=disable"),
-		RedisURL:    getEnv("REDIS_URL", "redis://localhost:16380/0"),
+		Env:           getEnv("ENV", "development"),
+		APIPort:       getEnv("API_PORT", "8082"),
+		DatabaseURL:   getEnv("DATABASE_URL", "postgres://email:email@localhost:55433/email_service?sslmode=disable"),
+		RedisURL:      getEnv("REDIS_URL", "redis://localhost:16380/0"),
+		EmailProvider: getEnv("EMAIL_PROVIDER", "smtp"),
 		SMTP: SMTPConfig{
 			Host:        getEnv("SMTP_HOST", "localhost"),
 			Port:        getEnvInt("SMTP_PORT", 1025),
@@ -47,6 +60,11 @@ func Load() *Config {
 			Password:    getEnv("SMTP_PASSWORD", ""),
 			FromAddress: getEnv("SMTP_FROM_ADDRESS", "noreply@localhost"),
 			FromName:    getEnv("SMTP_FROM_NAME", "Email Service"),
+		},
+		Resend: ResendConfig{
+			APIKey:      getEnv("RESEND_API_KEY", ""),
+			FromAddress: getEnv("RESEND_FROM_ADDRESS", ""),
+			FromName:    getEnv("RESEND_FROM_NAME", ""),
 		},
 		APIKey:      getEnv("API_KEY", "dev-api-key"),
 		TemplateDir: getEnv("TEMPLATE_DIR", "./pkg/templates"),

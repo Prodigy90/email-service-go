@@ -20,24 +20,24 @@ const (
 
 // EmailService handles email operations.
 type EmailService struct {
-	repo       *postgres.EmailRepository
-	smtp       *SMTPClient
-	templates  *TemplateService
-	queue      *asynq.Client
-	logger     zerolog.Logger
+	repo      *postgres.EmailRepository
+	sender    EmailSender
+	templates *TemplateService
+	queue     *asynq.Client
+	logger    zerolog.Logger
 }
 
 // NewEmailService creates a new email service.
 func NewEmailService(
 	repo *postgres.EmailRepository,
-	smtp *SMTPClient,
+	sender EmailSender,
 	templates *TemplateService,
 	queue *asynq.Client,
 	logger zerolog.Logger,
 ) *EmailService {
 	return &EmailService{
 		repo:      repo,
-		smtp:      smtp,
+		sender:    sender,
 		templates: templates,
 		queue:     queue,
 		logger:    logger.With().Str("component", "email_service").Logger(),
@@ -185,8 +185,8 @@ func (s *EmailService) ProcessEmail(ctx context.Context, emailID uuid.UUID) erro
 	// Update status to sending
 	_ = s.repo.UpdateStatus(ctx, emailID, domain.StatusSending, "")
 
-	// Send via SMTP
-	if err := s.smtp.Send(email); err != nil {
+	// Send via configured provider
+	if err := s.sender.Send(email); err != nil {
 		// Increment retry count
 		email.RetryCount++
 		_ = s.repo.IncrementRetry(ctx, emailID)
