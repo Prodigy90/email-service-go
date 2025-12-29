@@ -293,16 +293,16 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateSubscriptionReminder3d] = &domain.Template{
 		Name:        domain.TemplateSubscriptionReminder3d,
 		Subject:     "Your {{.PlanName}} subscription renews in 3 days",
-		Body:        "Hi {{.CustomerName}},\n\nThis is a friendly reminder that your {{.PlanName}} subscription will automatically renew in 3 days.\n\nRenewal Date: {{.RenewalDate}}\nAmount: {{.Currency}}{{.Amount}}\n\nIf you'd like to make any changes to your subscription, you can manage it here:\n{{.ProfileURL}}\n\nThank you for being a valued {{.AppName}} customer!",
-		HTMLBody:    ts.wrapHTML("Subscription Renewal Reminder", "<p>Hi {{.CustomerName}},</p><p>This is a friendly reminder that your <strong>{{.PlanName}}</strong> subscription will automatically renew in 3 days.</p><p><strong>Renewal Date:</strong> {{.RenewalDate}}<br><strong>Amount:</strong> {{.Currency}}{{.Amount}}</p><p>If you'd like to make any changes to your subscription, you can manage it here:</p><p><a href=\"{{.ProfileURL}}\" style=\"background:#10b981;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block;\">Manage Subscription</a></p><p>Thank you for being a valued {{.AppName}} customer!</p>"),
+		Body:        "Hi {{.CustomerName}},\n\nThis is a friendly reminder that your {{.PlanName}} subscription will automatically renew in 3 days.\n\nRenewal Date: {{.RenewalDate}}\nAmount: {{.Currency}}{{.Amount}}\n\nIf you'd like to make any changes to your subscription, you can manage it here:\n{{.ProfileURL}}\n\nThank you for being a valued WASBOT customer!",
+		HTMLBody:    ts.wrapHTML("Subscription Renewal Reminder", ts.subscriptionReminder3dContent()),
 		Description: "Sent 3 days before subscription renewal",
 	}
 
 	ts.templates[domain.TemplateSubscriptionReminder1d] = &domain.Template{
 		Name:        domain.TemplateSubscriptionReminder1d,
-		Subject:     "Reminder: {{.PlanName}} renews tomorrow",
-		Body:        "Hi {{.CustomerName}},\n\nThis is a final reminder that your {{.PlanName}} subscription will renew tomorrow.\n\nAmount: {{.Currency}}{{.Amount}}\n\nIf you need to update your payment method or make changes, please do so before the renewal:\n{{.ProfileURL}}\n\nThank you for your continued support!\n\nThe {{.AppName}} Team",
-		HTMLBody:    ts.wrapHTML("Subscription Renews Tomorrow", "<p>Hi {{.CustomerName}},</p><p>This is a final reminder that your <strong>{{.PlanName}}</strong> subscription will renew tomorrow.</p><p><strong>Amount:</strong> {{.Currency}}{{.Amount}}</p><p>If you need to update your payment method or make changes, please do so before the renewal:</p><p><a href=\"{{.ProfileURL}}\" style=\"background:#10b981;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block;\">Manage Subscription</a></p><p>Thank you for your continued support!</p><p>The {{.AppName}} Team</p>"),
+		Subject:     "⏰ Reminder: {{.PlanName}} renews tomorrow",
+		Body:        "Hi {{.CustomerName}},\n\nThis is a final reminder that your {{.PlanName}} subscription will renew tomorrow.\n\nAmount: {{.Currency}}{{.Amount}}\n\nIf you need to update your payment method or make changes, please do so before the renewal:\n{{.ProfileURL}}\n\nThank you for your continued support!\n\nThe WASBOT Team",
+		HTMLBody:    ts.wrapHTML("Subscription Renews Tomorrow", ts.subscriptionReminder1dContent()),
 		Description: "Sent 1 day before subscription renewal",
 	}
 
@@ -311,15 +311,15 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 		Name:        domain.TemplateSubscriptionExpiring3d,
 		Subject:     "Your {{.PlanName}} access expires in 3 days",
 		Body:        "Hi {{.CustomerName}},\n\nThis is a friendly reminder that your {{.PlanName}} access will expire in 3 days.\n\nExpiry Date: {{.ExpiryDate}}\n\nTo continue enjoying uninterrupted access, renew your subscription before it expires:\n{{.ProfileURL}}\n\nThank you for being a valued customer!",
-		HTMLBody:    ts.wrapHTML("Subscription Expiring Soon", "<p>Hi {{.CustomerName}},</p><p>This is a friendly reminder that your <strong>{{.PlanName}}</strong> access will expire in 3 days.</p><p><strong>Expiry Date:</strong> {{.ExpiryDate}}</p><p>To continue enjoying uninterrupted access, renew your subscription before it expires:</p><p><a href=\"{{.ProfileURL}}\" style=\"background:#10b981;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block;\">Renew Now</a></p><p>Thank you for being a valued customer!</p>"),
+		HTMLBody:    ts.wrapHTML("Subscription Expiring Soon", ts.subscriptionExpiring3dContent()),
 		Description: "Sent 3 days before one-off subscription expires",
 	}
 
 	ts.templates[domain.TemplateSubscriptionExpiring1d] = &domain.Template{
 		Name:        domain.TemplateSubscriptionExpiring1d,
-		Subject:     "Final Reminder: {{.PlanName}} expires tomorrow",
-		Body:        "Hi {{.CustomerName}},\n\nThis is a final reminder that your {{.PlanName}} access will expire tomorrow.\n\nExpiry Date: {{.ExpiryDate}}\n\nDon't lose access! Renew now to continue using all features:\n{{.ProfileURL}}\n\nIf you have any questions, our support team is here to help.\n\nThe {{.AppName}} Team",
-		HTMLBody:    ts.wrapHTML("Subscription Expires Tomorrow", "<p>Hi {{.CustomerName}},</p><p>This is a final reminder that your <strong>{{.PlanName}}</strong> access will expire <strong>tomorrow</strong>.</p><p><strong>Expiry Date:</strong> {{.ExpiryDate}}</p><p>Don't lose access! Renew now to continue using all features:</p><p><a href=\"{{.ProfileURL}}\" style=\"background:#ef4444;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block;\">Renew Now</a></p><p>If you have any questions, our support team is here to help.</p><p>The {{.AppName}} Team</p>"),
+		Subject:     "⚠️ Final Reminder: {{.PlanName}} expires tomorrow",
+		Body:        "Hi {{.CustomerName}},\n\nThis is a final reminder that your {{.PlanName}} access will expire tomorrow.\n\nExpiry Date: {{.ExpiryDate}}\n\nDon't lose access! Renew now to continue using all features:\n{{.ProfileURL}}\n\nIf you have any questions, our support team is here to help.\n\nThe WASBOT Team",
+		HTMLBody:    ts.wrapHTML("Subscription Expires Tomorrow", ts.subscriptionExpiring1dContent()),
 		Description: "Sent 1 day before one-off subscription expires",
 	}
 }
@@ -420,12 +420,19 @@ func (ts *TemplateService) wrapHTML(title, content string) string {
                 <tr>
                   <td>
                     <!-- Logo/Brand -->
-                    <div style="display: flex; align-items: center;">
-                      <div style="width: 44px; height: 44px; background: linear-gradient(135deg, #10b981 0%%, #059669 100%%); border-radius: 12px; display: inline-block; text-align: center; line-height: 44px; margin-right: 14px;">
-                        <span style="color: white; font-size: 22px; font-weight: bold;">W</span>
-                      </div>
-                      <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">WasBot</span>
-                    </div>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td style="vertical-align: middle; padding-right: 14px;">
+                          <!-- Replace with actual logo: <img src="https://wasbot.ng/logo.png" alt="WASBOT" width="44" height="44" style="border-radius: 12px;"> -->
+                          <div style="width: 44px; height: 44px; background: linear-gradient(135deg, #10b981 0%%, #059669 100%%); border-radius: 12px; text-align: center; line-height: 44px;">
+                            <span style="color: white; font-size: 22px; font-weight: bold;">W</span>
+                          </div>
+                        </td>
+                        <td style="vertical-align: middle;">
+                          <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">WASBOT</span>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                 </tr>
               </table>
@@ -461,24 +468,30 @@ func (ts *TemplateService) wrapHTML(title, content string) string {
                     </p>
 
                     <!-- Social links -->
-                    <div style="margin-bottom: 20px;">
-                      <a href="https://twitter.com/wasbot" style="display: inline-block; margin: 0 8px;">
-                        <img src="https://cdn-icons-png.flaticon.com/32/733/733579.png" alt="Twitter" width="24" height="24" style="opacity: 0.6;">
-                      </a>
-                      <a href="https://wa.me/2348000000000" style="display: inline-block; margin: 0 8px;">
-                        <img src="https://cdn-icons-png.flaticon.com/32/733/733585.png" alt="WhatsApp" width="24" height="24" style="opacity: 0.6;">
-                      </a>
-                    </div>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="padding: 0 8px;">
+                          <a href="https://twitter.com/trywasbot" style="display: inline-block;">
+                            <img src="https://cdn-icons-png.flaticon.com/32/733/733579.png" alt="Twitter" width="24" height="24" style="opacity: 0.6;">
+                          </a>
+                        </td>
+                        <td style="padding: 0 8px;">
+                          <a href="https://instagram.com/trywasbot" style="display: inline-block;">
+                            <img src="https://cdn-icons-png.flaticon.com/32/2111/2111463.png" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
 
                     <!-- Company info -->
                     <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
-                      WasBot Technologies<br>
+                      WASBOT Technologies<br>
                       Lagos, Nigeria
                     </p>
 
                     <!-- Legal -->
                     <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
-                      &copy; 2025 WasBot. All rights reserved.
+                      &copy; 2025 WASBOT. All rights reserved.
                     </p>
                   </td>
                 </tr>
@@ -500,7 +513,34 @@ func (ts *TemplateService) paymentSuccessContent() string {
 	return `
 <p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
 
-<p style="margin: 0 0 24px 0;">Thank you for your payment! Your subscription is now active.</p>
+<p style="margin: 0 0 8px 0;">Thank you for subscribing to <strong>{{.ProductName}}</strong>! 🎉</p>
+
+<p style="margin: 0 0 24px 0;">Your subscription is now <span style="color: #059669; font-weight: 600;">active</span> and you have full access to all features.</p>
+
+<!-- Subscription info box -->
+{{if .IsRecurring}}
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 0 8px 8px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 16px 20px;">
+      <p style="margin: 0; font-size: 14px; color: #1e40af;">
+        <strong>📅 Auto-renewal:</strong> Your subscription will automatically renew on <strong>{{.NextBillingDate}}</strong>.<br>
+        <span style="color: #6b7280;">We'll send you a reminder before your next payment.</span>
+      </p>
+    </td>
+  </tr>
+</table>
+{{else}}
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 0 8px 8px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 16px 20px;">
+      <p style="margin: 0; font-size: 14px; color: #92400e;">
+        <strong>📅 Access expires:</strong> Your subscription will end on <strong>{{.ExpiryDate}}</strong>.<br>
+        <span style="color: #6b7280;">We'll remind you before it expires so you don't lose access.</span>
+      </p>
+    </td>
+  </tr>
+</table>
+{{end}}
 
 <!-- Payment details card -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
@@ -518,7 +558,7 @@ func (ts *TemplateService) paymentSuccessContent() string {
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
               <tr>
                 <td width="50%" style="vertical-align: top;">
-                  <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Product</span><br>
+                  <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Plan</span><br>
                   <span style="font-size: 15px; font-weight: 600; color: #111827;">{{.ProductName}}</span>
                 </td>
                 <td width="50%" style="vertical-align: top;">
@@ -534,7 +574,7 @@ func (ts *TemplateService) paymentSuccessContent() string {
   </tr>
 </table>
 
-<p style="margin: 0 0 24px 0; color: #6b7280;">You can now access all the features included in your plan. If you have any questions, we're here to help!</p>
+<p style="margin: 0 0 24px 0; color: #6b7280;">You're all set! Start using WASBOT to automate your WhatsApp business today.</p>
 
 <!-- CTA Button -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
@@ -546,6 +586,166 @@ func (ts *TemplateService) paymentSuccessContent() string {
     </td>
   </tr>
 </table>
+`
+}
+
+// subscriptionReminder3dContent returns content for 3-day renewal reminder.
+func (ts *TemplateService) subscriptionReminder3dContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+<p style="margin: 0 0 24px 0;">This is a friendly reminder that your <strong>{{.PlanName}}</strong> subscription will automatically renew in <strong>3 days</strong>.</p>
+
+<!-- Renewal info card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td width="50%" style="vertical-align: top; padding-right: 12px;">
+            <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Renewal Date</span><br>
+            <span style="font-size: 18px; font-weight: 600; color: #1e40af;">{{.RenewalDate}}</span>
+          </td>
+          <td width="50%" style="vertical-align: top; padding-left: 12px;">
+            <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Amount</span><br>
+            <span style="font-size: 18px; font-weight: 600; color: #1e40af;">{{.Currency}}{{.Amount}}</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 24px 0; color: #6b7280;">No action is needed if you wish to continue. Your subscription will renew automatically using your saved payment method.</p>
+
+<p style="margin: 0 0 24px 0; color: #6b7280;">Need to make changes? You can update your payment method or cancel anytime from your account settings.</p>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+      <a href="{{.ProfileURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        Manage Subscription
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #9ca3af;">Thank you for being a valued WASBOT customer! 💚</p>
+`
+}
+
+// subscriptionReminder1dContent returns content for 1-day renewal reminder.
+func (ts *TemplateService) subscriptionReminder1dContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+<p style="margin: 0 0 24px 0;">⏰ <strong>Final reminder:</strong> Your <strong>{{.PlanName}}</strong> subscription renews <strong>tomorrow</strong>.</p>
+
+<!-- Renewal info card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 20px 24px;">
+      <p style="margin: 0; font-size: 16px; color: #92400e;">
+        <strong>{{.Currency}}{{.Amount}}</strong> will be charged to your payment method tomorrow.
+      </p>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 24px 0; color: #6b7280;">If you need to update your payment method or make any changes, please do so before the renewal.</p>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+      <a href="{{.ProfileURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        Review Subscription
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Thank you for your continued support!</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+`
+}
+
+// subscriptionExpiring3dContent returns content for 3-day expiry reminder.
+func (ts *TemplateService) subscriptionExpiring3dContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+<p style="margin: 0 0 24px 0;">This is a friendly reminder that your <strong>{{.PlanName}}</strong> access will expire in <strong>3 days</strong>.</p>
+
+<!-- Expiry info card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px; text-align: center;">
+      <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Access Expires On</span><br>
+      <span style="font-size: 24px; font-weight: 700; color: #92400e;">{{.ExpiryDate}}</span>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 8px 0; color: #4b5563;"><strong>What happens after expiry?</strong></p>
+<ul style="margin: 0 0 24px 0; padding-left: 20px; color: #6b7280;">
+  <li style="margin-bottom: 8px;">You'll lose access to all WASBOT features</li>
+  <li style="margin-bottom: 8px;">Your automations will stop running</li>
+  <li>Your data will be preserved for 30 days</li>
+</ul>
+
+<p style="margin: 0 0 24px 0; color: #4b5563;">Renew now to continue enjoying uninterrupted service!</p>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+      <a href="{{.ProfileURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        Renew Now →
+      </a>
+    </td>
+  </tr>
+</table>
+`
+}
+
+// subscriptionExpiring1dContent returns content for 1-day expiry reminder (urgent).
+func (ts *TemplateService) subscriptionExpiring1dContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+<p style="margin: 0 0 24px 0;">⚠️ <strong>Your {{.PlanName}} access expires tomorrow!</strong></p>
+
+<!-- Urgent expiry card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-left: 4px solid #ef4444; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 20px 24px;">
+      <p style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600; color: #991b1b;">
+        Expiry Date: {{.ExpiryDate}}
+      </p>
+      <p style="margin: 0; font-size: 14px; color: #b91c1c;">
+        After this date, your WASBOT automations will stop working.
+      </p>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 24px 0; color: #4b5563;">Don't lose access to your WhatsApp automations! Renew now to keep everything running smoothly.</p>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+      <a href="{{.ProfileURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+        🚀 Renew Now — Keep My Access
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Questions? Reply to this email and we'll help you out.</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
 `
 }
 
