@@ -3,6 +3,7 @@ package service
 import (
 	"bytes"
 	"fmt"
+	"html"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -77,7 +78,8 @@ func (ts *TemplateService) RenderWithBranding(templateName string, data map[stri
 	// Render HTML body if present
 	if tmpl.HTMLBody != "" {
 		// First render the template with data
-		renderedHTML, err := ts.renderString(tmpl.HTMLBody, data)
+		var renderedHTML string
+		renderedHTML, err = ts.renderString(tmpl.HTMLBody, data)
 		if err != nil {
 			return "", "", "", fmt.Errorf("failed to render html body: %w", err)
 		}
@@ -88,21 +90,69 @@ func (ts *TemplateService) RenderWithBranding(templateName string, data map[stri
 	return subject, body, htmlBody, nil
 }
 
+// isValidHexColor validates that a string is a valid hex color code.
+func isValidHexColor(color string) bool {
+	if len(color) != 7 || color[0] != '#' {
+		return false
+	}
+	for _, c := range color[1:] {
+		if !((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')) {
+			return false
+		}
+	}
+	return true
+}
+
 // applyBranding replaces branding placeholders in the rendered HTML.
-func (ts *TemplateService) applyBranding(html string, branding *domain.BrandingConfig) string {
-	// Replace color placeholders
-	html = strings.ReplaceAll(html, "{{.Branding.PrimaryColor}}", branding.PrimaryColor)
-	html = strings.ReplaceAll(html, "{{.Branding.SecondaryColor}}", branding.SecondaryColor)
-	html = strings.ReplaceAll(html, "{{.Branding.AccentColor}}", branding.AccentColor)
-	html = strings.ReplaceAll(html, "{{.Branding.DangerColor}}", branding.DangerColor)
-	html = strings.ReplaceAll(html, "{{.Branding.CompanyName}}", branding.CompanyName)
-	html = strings.ReplaceAll(html, "{{.Branding.LogoURL}}", branding.LogoURL)
-	html = strings.ReplaceAll(html, "{{.Branding.DashboardURL}}", branding.DashboardURL)
-	html = strings.ReplaceAll(html, "{{.Branding.SupportEmail}}", branding.SupportEmail)
-	html = strings.ReplaceAll(html, "{{.Branding.WebsiteURL}}", branding.WebsiteURL)
-	html = strings.ReplaceAll(html, "{{.Branding.SocialTwitter}}", branding.SocialTwitter)
-	html = strings.ReplaceAll(html, "{{.Branding.SocialInstagram}}", branding.SocialInstagram)
-	return html
+func (ts *TemplateService) applyBranding(htmlContent string, branding *domain.BrandingConfig) string {
+	// Validate and sanitize color values - use safe defaults for invalid colors
+	primaryColor := branding.PrimaryColor
+	if !isValidHexColor(primaryColor) {
+		primaryColor = "#10b981" // safe default
+	}
+	secondaryColor := branding.SecondaryColor
+	if !isValidHexColor(secondaryColor) {
+		secondaryColor = "#059669" // safe default
+	}
+	accentColor := branding.AccentColor
+	if !isValidHexColor(accentColor) {
+		accentColor = "#047857" // safe default
+	}
+	dangerColor := branding.DangerColor
+	if !isValidHexColor(dangerColor) {
+		dangerColor = "#ef4444" // safe default
+	}
+
+	// Replace color placeholders with validated values
+	htmlContent = strings.ReplaceAll(htmlContent, "{{.Branding.PrimaryColor}}", primaryColor)
+	htmlContent = strings.ReplaceAll(htmlContent, "{{.Branding.SecondaryColor}}", secondaryColor)
+	htmlContent = strings.ReplaceAll(htmlContent, "{{.Branding.AccentColor}}", accentColor)
+	htmlContent = strings.ReplaceAll(htmlContent, "{{.Branding.DangerColor}}", dangerColor)
+
+	// Generate logo content - use image if LogoURL provided, otherwise first letter
+	var logoContent string
+	if branding.LogoURL != "" {
+		logoContent = fmt.Sprintf(`<img src="%s" alt="%s" style="max-width: 44px; max-height: 44px;">`,
+			html.EscapeString(branding.LogoURL), html.EscapeString(branding.CompanyName))
+	} else {
+		firstChar := "W"
+		if len(branding.CompanyName) > 0 {
+			firstChar = string([]rune(branding.CompanyName)[0])
+		}
+		logoContent = fmt.Sprintf(`<span style="color: white; font-size: 22px; font-weight: bold;">%s</span>`,
+			html.EscapeString(firstChar))
+	}
+	htmlContent = strings.ReplaceAll(htmlContent, "{{.Branding.LogoContent}}", logoContent)
+
+	// Escape text values to prevent XSS
+	htmlContent = strings.ReplaceAll(htmlContent, "{{.Branding.CompanyName}}", html.EscapeString(branding.CompanyName))
+	htmlContent = strings.ReplaceAll(htmlContent, "{{.Branding.LogoURL}}", html.EscapeString(branding.LogoURL))
+	htmlContent = strings.ReplaceAll(htmlContent, "{{.Branding.DashboardURL}}", html.EscapeString(branding.DashboardURL))
+	htmlContent = strings.ReplaceAll(htmlContent, "{{.Branding.SupportEmail}}", html.EscapeString(branding.SupportEmail))
+	htmlContent = strings.ReplaceAll(htmlContent, "{{.Branding.WebsiteURL}}", html.EscapeString(branding.WebsiteURL))
+	htmlContent = strings.ReplaceAll(htmlContent, "{{.Branding.SocialTwitter}}", html.EscapeString(branding.SocialTwitter))
+	htmlContent = strings.ReplaceAll(htmlContent, "{{.Branding.SocialInstagram}}", html.EscapeString(branding.SocialInstagram))
+	return htmlContent
 }
 
 // List returns all available templates.
@@ -476,9 +526,9 @@ func (ts *TemplateService) wrapHTMLWithBranding(title, content string) string {
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0">
                       <tr>
                         <td style="vertical-align: middle; padding-right: 14px;">
-                          <!-- Logo placeholder - uses gradient if no logo URL provided -->
+                          <!-- Logo placeholder - uses image if LogoURL provided, otherwise first letter of company name -->
                           <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%%, {{.Branding.SecondaryColor}} 100%%); border-radius: 12px; text-align: center; line-height: 44px;">
-                            <span style="color: white; font-size: 22px; font-weight: bold;">{{.Branding.CompanyName}}</span>
+                            {{.Branding.LogoContent}}
                           </div>
                         </td>
                         <td style="vertical-align: middle;">
