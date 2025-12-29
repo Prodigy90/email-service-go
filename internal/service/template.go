@@ -198,6 +198,22 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 		Description: "Sent when an affiliate earns a commission",
 	}
 
+	ts.templates[domain.TemplateCommissionRefunded] = &domain.Template{
+		Name:        domain.TemplateCommissionRefunded,
+		Subject:     "Commission Reversed - {{.ProductName}}",
+		Body:        "Hi {{.CustomerName}},\n\nA commission of {{.Currency}}{{.Amount}} for {{.ProductName}} has been reversed.\n\nReason: {{.Reason}}\n\nThis adjustment has been applied to your affiliate account balance.\n\nIf you have any questions about this reversal, please contact our support team.",
+		HTMLBody:    ts.wrapHTML("Commission Reversed", ts.commissionRefundedContent()),
+		Description: "Sent when an affiliate commission is reversed due to a refund",
+	}
+
+	ts.templates[domain.TemplateAccessRevoked] = &domain.Template{
+		Name:        domain.TemplateAccessRevoked,
+		Subject:     "Access Revoked - Your Subscription Has Been Cancelled",
+		Body:        "Hi {{.CustomerName}},\n\nYour refund of {{.Currency}}{{.Amount}} for {{.ProductName}} has been processed.\n\nAs a result, your access to {{.ProductName}} has been revoked.\n\nTransaction ID: {{.TransactionID}}\n\nIf you have any questions or believe this was done in error, please contact our support team.",
+		HTMLBody:    ts.wrapHTML("Access Revoked", ts.accessRevokedContent()),
+		Description: "Sent when a customer's access is revoked due to a refund",
+	}
+
 	// Payment/Webhook templates
 	ts.templates[domain.TemplatePaymentSuccess] = &domain.Template{
 		Name:        domain.TemplatePaymentSuccess,
@@ -910,6 +926,131 @@ func (ts *TemplateService) refundFailedContent() string {
 </table>
 
 <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">We sincerely apologize for the inconvenience and will work to resolve this as quickly as possible.</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+`
+}
+
+// commissionRefundedContent returns content for commission reversal emails.
+func (ts *TemplateService) commissionRefundedContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+<p style="margin: 0 0 24px 0;">A commission you previously earned has been reversed due to a refund.</p>
+
+<!-- Commission reversal card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <!-- Status badge -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 16px;">
+        <tr>
+          <td style="background-color: #fde68a; border-radius: 20px; padding: 6px 14px;">
+            <span style="font-size: 13px; font-weight: 600; color: #92400e;">↩ Reversed</span>
+          </td>
+        </tr>
+      </table>
+
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding-bottom: 12px;">
+            <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Commission Amount</span><br>
+            <span style="font-size: 28px; font-weight: 700; color: #92400e;">{{.Currency}}{{.Amount}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom: 12px;">
+            <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Product</span><br>
+            <span style="font-size: 15px; font-weight: 600; color: #374151;">{{.ProductName}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Reason</span><br>
+            <span style="font-size: 14px; color: #92400e;">{{.Reason}}</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 8px 0; color: #4b5563;"><strong>What does this mean?</strong></p>
+<ul style="margin: 0 0 24px 0; padding-left: 20px; color: #6b7280;">
+  <li style="margin-bottom: 8px;">The original customer requested a refund for their purchase</li>
+  <li style="margin-bottom: 8px;">This commission has been deducted from your available balance</li>
+  <li>Your pending payouts may be adjusted accordingly</li>
+</ul>
+
+<p style="margin: 0; font-size: 14px; color: #6b7280;">This is a standard part of the affiliate program. If you have any questions, please don't hesitate to reach out.</p>
+<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+`
+}
+
+// accessRevokedContent returns content for access revocation emails.
+func (ts *TemplateService) accessRevokedContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+<p style="margin: 0 0 24px 0;">Your refund has been processed and your access has been revoked.</p>
+
+<!-- Access revoked card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <!-- Status badge -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 16px;">
+        <tr>
+          <td style="background-color: #fecaca; border-radius: 20px; padding: 6px 14px;">
+            <span style="font-size: 13px; font-weight: 600; color: #991b1b;">Access Revoked</span>
+          </td>
+        </tr>
+      </table>
+
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding-bottom: 12px;">
+            <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Refund Amount</span><br>
+            <span style="font-size: 28px; font-weight: 700; color: #dc2626;">{{.Currency}}{{.Amount}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom: 12px;">
+            <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Product</span><br>
+            <span style="font-size: 15px; font-weight: 600; color: #374151;">{{.ProductName}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Transaction ID</span><br>
+            <span style="font-size: 14px; font-family: monospace; color: #374151;">{{.TransactionID}}</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 8px 0; color: #4b5563;"><strong>What happens now?</strong></p>
+<ul style="margin: 0 0 24px 0; padding-left: 20px; color: #6b7280;">
+  <li style="margin-bottom: 8px;">Your access to {{.ProductName}} has been immediately revoked</li>
+  <li style="margin-bottom: 8px;">The refund amount will appear in your account within 5-10 business days</li>
+  <li>Any associated data or settings have been preserved for 30 days</li>
+</ul>
+
+<p style="margin: 0 0 24px 0; color: #4b5563;">Changed your mind? You can resubscribe anytime to regain access.</p>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+      <a href="https://wasbot.ng/pricing" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        View Plans
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">If you have any questions or believe this was done in error, please contact our support team.</p>
 <p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
 `
 }

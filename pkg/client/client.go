@@ -215,9 +215,11 @@ const (
 	TemplateSubscriptionCancelled = "subscription_cancelled"
 
 	// Refunds
-	TemplateRefundPending   = "refund_pending"
-	TemplateRefundProcessed = "refund_processed"
-	TemplateRefundFailed    = "refund_failed"
+	TemplateRefundPending      = "refund_pending"
+	TemplateRefundProcessed    = "refund_processed"
+	TemplateRefundFailed       = "refund_failed"
+	TemplateCommissionRefunded = "commission_refunded"
+	TemplateAccessRevoked      = "access_revoked"
 
 	// Subscription reminders (for recurring subscriptions - renewal reminders)
 	TemplateSubscriptionReminder3d = "subscription_reminder_3d"

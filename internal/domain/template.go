@@ -53,4 +53,8 @@ const (
 	// Subscription expiration templates (for one-off payments)
 	TemplateSubscriptionExpiring3d = "subscription_expiring_3d"
 	TemplateSubscriptionExpiring1d = "subscription_expiring_1d"
+
+	// Refund-related affiliate templates
+	TemplateCommissionRefunded = "commission_refunded"
+	TemplateAccessRevoked      = "access_revoked"
 )
