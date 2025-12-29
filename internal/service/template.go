@@ -463,20 +463,19 @@ func (ts *TemplateService) wrapHTML(title, content string) string {
                   <td class="footer-content" style="padding: 32px 40px; text-align: center;">
                     <!-- Help text -->
                     <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
-                      Need help? Reply to this email or visit our
-                      <a href="https://wasbot.ng/support" style="color: #10b981; font-weight: 500;">Help Center</a>
+                      Need help? Simply reply to this email and we'll get back to you.
                     </p>
 
                     <!-- Social links -->
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
                       <tr>
                         <td style="padding: 0 8px;">
-                          <a href="https://twitter.com/trywasbot" style="display: inline-block;">
+                          <a href="https://twitter.com/wasbot" style="display: inline-block;">
                             <img src="https://cdn-icons-png.flaticon.com/32/733/733579.png" alt="Twitter" width="24" height="24" style="opacity: 0.6;">
                           </a>
                         </td>
                         <td style="padding: 0 8px;">
-                          <a href="https://instagram.com/trywasbot" style="display: inline-block;">
+                          <a href="https://instagram.com/wasbot.ng" style="display: inline-block;">
                             <img src="https://cdn-icons-png.flaticon.com/32/2111/2111463.png" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
                           </a>
                         </td>
