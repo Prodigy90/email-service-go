@@ -90,9 +90,10 @@ func main() {
 
 	// Create router
 	router := routes.New(routes.Deps{
-		Logger:       logger,
-		EmailService: emailService,
-		APIKey:       cfg.APIKey,
+		Logger:            logger,
+		EmailService:      emailService,
+		APIKey:            cfg.APIKey,
+		SwaggerAllowedIPs: cfg.SwaggerAllowedIPs,
 	})
 
 	// Start server

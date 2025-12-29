@@ -29,6 +29,11 @@ type Config struct {
 
 	// Templates
 	TemplateDir string
+
+	// Swagger UI
+	// SwaggerAllowedIPs is a comma-separated list of IPs or CIDR ranges
+	// If empty, Swagger UI is accessible to everyone (dev mode)
+	SwaggerAllowedIPs string
 }
 
 type SMTPConfig struct {
@@ -66,8 +71,9 @@ func Load() *Config {
 			FromAddress: getEnv("RESEND_FROM_ADDRESS", ""),
 			FromName:    getEnv("RESEND_FROM_NAME", ""),
 		},
-		APIKey:      getEnv("API_KEY", "dev-api-key"),
-		TemplateDir: getEnv("TEMPLATE_DIR", "./pkg/templates"),
+		APIKey:            getEnv("API_KEY", "dev-api-key"),
+		TemplateDir:       getEnv("TEMPLATE_DIR", "./pkg/templates"),
+		SwaggerAllowedIPs: getEnv("SWAGGER_ALLOWED_IPS", ""),
 	}
 }
 
