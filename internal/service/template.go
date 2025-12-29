@@ -267,25 +267,25 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	// Refund templates
 	ts.templates[domain.TemplateRefundPending] = &domain.Template{
 		Name:        domain.TemplateRefundPending,
-		Subject:     "Refund Request Received",
+		Subject:     "Refund Request Received - {{.Currency}}{{.Amount}}",
 		Body:        "Hi {{.CustomerName}},\n\nWe have received your refund request for {{.Currency}}{{.Amount}}.\n\nTransaction ID: {{.TransactionID}}\n\nYour refund is being processed and should be completed within 5-10 business days.\n\nWe'll send you another email once the refund has been processed.\n\nIf you have any questions, please don't hesitate to contact our support team.",
-		HTMLBody:    ts.wrapHTML("Refund Request Received", "<p>Hi {{.CustomerName}},</p><p>We have received your refund request for <strong>{{.Currency}}{{.Amount}}</strong>.</p><p><strong>Transaction ID:</strong> {{.TransactionID}}</p><p>Your refund is being processed and should be completed within 5-10 business days.</p><p>We'll send you another email once the refund has been processed.</p><p>If you have any questions, please don't hesitate to contact our support team.</p>"),
+		HTMLBody:    ts.wrapHTML("Refund Request Received", ts.refundPendingContent()),
 		Description: "Sent when a refund request is initiated",
 	}
 
 	ts.templates[domain.TemplateRefundProcessed] = &domain.Template{
 		Name:        domain.TemplateRefundProcessed,
-		Subject:     "Refund Processed - {{.Currency}}{{.Amount}}",
+		Subject:     "✅ Refund Processed - {{.Currency}}{{.Amount}}",
 		Body:        "Hi {{.CustomerName}},\n\nGreat news! Your refund of {{.Currency}}{{.Amount}} has been successfully processed.\n\nTransaction ID: {{.TransactionID}}\n\nThe funds should appear in your account within 5-10 business days, depending on your bank.\n\nThank you for your patience.",
-		HTMLBody:    ts.wrapHTML("Refund Processed", "<p>Hi {{.CustomerName}},</p><p>Great news! Your refund of <strong>{{.Currency}}{{.Amount}}</strong> has been successfully processed.</p><p><strong>Transaction ID:</strong> {{.TransactionID}}</p><p>The funds should appear in your account within 5-10 business days, depending on your bank.</p><p>Thank you for your patience.</p>"),
+		HTMLBody:    ts.wrapHTML("Refund Processed", ts.refundProcessedContent()),
 		Description: "Sent when a refund has been processed successfully",
 	}
 
 	ts.templates[domain.TemplateRefundFailed] = &domain.Template{
 		Name:        domain.TemplateRefundFailed,
-		Subject:     "Refund Update - Action Required",
+		Subject:     "⚠️ Refund Update - Action Required",
 		Body:        "Hi {{.CustomerName}},\n\nWe were unable to process your refund of {{.Currency}}{{.Amount}}.\n\nTransaction ID: {{.TransactionID}}\nReason: {{.Reason}}\n\nPlease contact our support team to resolve this issue and complete your refund.\n\nWe apologize for any inconvenience.",
-		HTMLBody:    ts.wrapHTML("Refund Update", "<p>Hi {{.CustomerName}},</p><p>We were unable to process your refund of <strong>{{.Currency}}{{.Amount}}</strong>.</p><p><strong>Transaction ID:</strong> {{.TransactionID}}<br><strong>Reason:</strong> {{.Reason}}</p><p>Please contact our support team to resolve this issue and complete your refund.</p><p>We apologize for any inconvenience.</p>"),
+		HTMLBody:    ts.wrapHTML("Refund Issue", ts.refundFailedContent()),
 		Description: "Sent when a refund could not be processed",
 	}
 
@@ -744,6 +744,172 @@ func (ts *TemplateService) subscriptionExpiring1dContent() string {
 </table>
 
 <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Questions? Reply to this email and we'll help you out.</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+`
+}
+
+// refundPendingContent returns content for refund pending emails.
+func (ts *TemplateService) refundPendingContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+<p style="margin: 0 0 24px 0;">We've received your refund request and it's being processed.</p>
+
+<!-- Refund status card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <!-- Status badge -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 16px;">
+        <tr>
+          <td style="background-color: #dbeafe; border-radius: 20px; padding: 6px 14px;">
+            <span style="font-size: 13px; font-weight: 600; color: #1d4ed8;">⏳ Processing</span>
+          </td>
+        </tr>
+      </table>
+
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding-bottom: 12px;">
+            <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Refund Amount</span><br>
+            <span style="font-size: 28px; font-weight: 700; color: #1e40af;">{{.Currency}}{{.Amount}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Transaction ID</span><br>
+            <span style="font-size: 14px; font-family: monospace; color: #374151;">{{.TransactionID}}</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 8px 0; color: #4b5563;"><strong>What happens next?</strong></p>
+<ul style="margin: 0 0 24px 0; padding-left: 20px; color: #6b7280;">
+  <li style="margin-bottom: 8px;">Your refund is being reviewed by our team</li>
+  <li style="margin-bottom: 8px;">Processing typically takes 5-10 business days</li>
+  <li>We'll email you once the refund is complete</li>
+</ul>
+
+<p style="margin: 0; font-size: 14px; color: #9ca3af;">Thank you for your patience. If you have any questions, just reply to this email.</p>
+`
+}
+
+// refundProcessedContent returns content for successful refund emails.
+func (ts *TemplateService) refundProcessedContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+<p style="margin: 0 0 24px 0;">Great news! Your refund has been successfully processed. 🎉</p>
+
+<!-- Refund success card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <!-- Status badge -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 16px;">
+        <tr>
+          <td style="background-color: #bbf7d0; border-radius: 20px; padding: 6px 14px;">
+            <span style="font-size: 13px; font-weight: 600; color: #166534;">✓ Completed</span>
+          </td>
+        </tr>
+      </table>
+
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding-bottom: 12px;">
+            <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Amount Refunded</span><br>
+            <span style="font-size: 28px; font-weight: 700; color: #059669;">{{.Currency}}{{.Amount}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Transaction ID</span><br>
+            <span style="font-size: 14px; font-family: monospace; color: #374151;">{{.TransactionID}}</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- Timeline -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fefce8; border-left: 4px solid #eab308; border-radius: 0 8px 8px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 16px 20px;">
+      <p style="margin: 0; font-size: 14px; color: #854d0e;">
+        <strong>💳 When will I receive my money?</strong><br>
+        <span style="color: #a16207;">The funds should appear in your account within 5-10 business days, depending on your bank.</span>
+      </p>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0; font-size: 14px; color: #6b7280;">Thank you for your patience throughout this process. We hope to serve you again in the future!</p>
+<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+`
+}
+
+// refundFailedContent returns content for failed refund emails.
+func (ts *TemplateService) refundFailedContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+<p style="margin: 0 0 24px 0;">Unfortunately, we encountered an issue processing your refund.</p>
+
+<!-- Refund failed card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <!-- Status badge -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 16px;">
+        <tr>
+          <td style="background-color: #fecaca; border-radius: 20px; padding: 6px 14px;">
+            <span style="font-size: 13px; font-weight: 600; color: #991b1b;">✗ Action Required</span>
+          </td>
+        </tr>
+      </table>
+
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding-bottom: 12px;">
+            <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Refund Amount</span><br>
+            <span style="font-size: 28px; font-weight: 700; color: #dc2626;">{{.Currency}}{{.Amount}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom: 12px;">
+            <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Transaction ID</span><br>
+            <span style="font-size: 14px; font-family: monospace; color: #374151;">{{.TransactionID}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Reason</span><br>
+            <span style="font-size: 14px; color: #991b1b;">{{.Reason}}</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 24px 0; color: #4b5563;">Please reply to this email with your preferred resolution, and our team will assist you promptly.</p>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+      <a href="mailto:support@wasbot.ng?subject=Refund Issue - {{.TransactionID}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        Contact Support
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">We sincerely apologize for the inconvenience and will work to resolve this as quickly as possible.</p>
 <p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
 `
 }
