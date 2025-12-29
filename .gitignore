@@ -37,3 +37,6 @@ tmp/
 
 # Air (hot reload)
 tmp/
+
+# Assets
+assets/
