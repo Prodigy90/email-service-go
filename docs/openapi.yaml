@@ -1,0 +1,995 @@
+openapi: 3.0.3
+info:
+  title: Email Service API
+  version: 1.0.0
+  description: |
+    A transactional email service for sending templated emails with support for custom branding.
+
+    Features:
+    - Send single or bulk emails
+    - Template-based email rendering with variable substitution
+    - Custom branding configuration per product
+    - Idempotent email sending with idempotency keys
+    - Email status tracking with delivery status updates
+    - Async processing with queue-based delivery
+
+    ## Authentication
+    All API endpoints require authentication via API key. The key can be provided in two ways:
+    - `X-API-Key` header
+    - `Authorization: Bearer <api-key>` header
+
+servers:
+  - url: http://localhost:{port}
+    description: Local development
+    variables:
+      port:
+        default: "8080"
+  - url: https://email.example.com
+    description: Production
+
+tags:
+  - name: Health
+    description: Health check endpoints for liveness and readiness probes
+  - name: Email
+    description: Email sending and status endpoints
+  - name: Templates
+    description: Email template management
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for service authentication
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token authentication (API key as token)
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: "invalid request body"
+      required:
+        - error
+
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [ok, ready]
+          example: "ok"
+      required:
+        - status
+
+    EmailStatus:
+      type: string
+      description: The delivery status of an email
+      enum:
+        - pending
+        - queued
+        - sending
+        - sent
+        - failed
+        - bounced
+        - complaint
+      example: "sent"
+
+    BrandingConfig:
+      type: object
+      description: Product-specific branding configuration for email templates
+      properties:
+        primary_color:
+          type: string
+          description: Primary brand color in hex format
+          example: "#10b981"
+          pattern: "^#[0-9A-Fa-f]{6}$"
+        secondary_color:
+          type: string
+          description: Secondary brand color in hex format
+          example: "#059669"
+          pattern: "^#[0-9A-Fa-f]{6}$"
+        accent_color:
+          type: string
+          description: Accent color in hex format
+          example: "#047857"
+          pattern: "^#[0-9A-Fa-f]{6}$"
+        danger_color:
+          type: string
+          description: Danger/error color in hex format
+          example: "#ef4444"
+          pattern: "^#[0-9A-Fa-f]{6}$"
+        company_name:
+          type: string
+          description: Company or product name displayed in emails
+          example: "WASBOT"
+        logo_url:
+          type: string
+          format: uri
+          description: URL to the company logo image
+          example: "https://example.com/logo.png"
+        dashboard_url:
+          type: string
+          format: uri
+          description: URL to the product dashboard
+          example: "https://wasbot.ng/dashboard"
+        support_email:
+          type: string
+          format: email
+          description: Support email address
+          example: "support@wasbot.ng"
+        website_url:
+          type: string
+          format: uri
+          description: Main website URL
+          example: "https://wasbot.ng"
+        social_twitter:
+          type: string
+          format: uri
+          description: Twitter/X profile URL
+          example: "https://twitter.com/AskWasBot"
+        social_instagram:
+          type: string
+          format: uri
+          description: Instagram profile URL
+          example: "https://instagram.com/AskWasBot"
+      example:
+        primary_color: "#10b981"
+        secondary_color: "#059669"
+        accent_color: "#047857"
+        danger_color: "#ef4444"
+        company_name: "WASBOT"
+        logo_url: "https://wasbot.ng/logo.png"
+        dashboard_url: "https://wasbot.ng/dashboard"
+        support_email: "support@wasbot.ng"
+        website_url: "https://wasbot.ng"
+        social_twitter: "https://twitter.com/AskWasBot"
+        social_instagram: "https://instagram.com/AskWasBot"
+
+    SendEmailRequest:
+      type: object
+      description: Request payload for sending a single email
+      required:
+        - to
+      properties:
+        to:
+          type: string
+          format: email
+          description: Recipient email address
+          example: "user@example.com"
+        subject:
+          type: string
+          description: Email subject line (overrides template subject if provided)
+          example: "Welcome to our platform!"
+        body:
+          type: string
+          description: Plain text email body (overrides template body if provided)
+          example: "Hello, welcome to our service."
+        html_body:
+          type: string
+          description: HTML email body (overrides template HTML if provided)
+          example: "<p>Hello, welcome to our service.</p>"
+        template:
+          type: string
+          description: Template name to use for rendering the email
+          example: "welcome"
+        template_data:
+          type: object
+          additionalProperties: true
+          description: Key-value pairs for template variable substitution
+          example:
+            Name: "John Doe"
+            AppName: "WASBOT"
+        idempotency_id:
+          type: string
+          description: Unique identifier for idempotent requests (prevents duplicate sends)
+          example: "order-123-confirmation"
+        source_service:
+          type: string
+          description: Name of the calling service (for tracking/debugging)
+          example: "webhook-router"
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Additional metadata to store with the email record
+          example:
+            order_id: "ord_123"
+            user_id: "usr_456"
+        product_id:
+          type: string
+          description: Product identifier for branding lookup
+          example: "wasbot"
+        branding:
+          $ref: '#/components/schemas/BrandingConfig'
+      example:
+        to: "user@example.com"
+        template: "payment_success"
+        template_data:
+          CustomerName: "John Doe"
+          ProductName: "Premium Plan"
+          Currency: "NGN"
+          Amount: "5000"
+          TransactionID: "txn_abc123"
+        source_service: "webhook-router"
+        idempotency_id: "payment-txn_abc123"
+
+    SendBulkRequest:
+      type: object
+      description: Request payload for sending emails to multiple recipients
+      required:
+        - recipients
+      properties:
+        recipients:
+          type: array
+          items:
+            type: string
+            format: email
+          minItems: 1
+          description: List of recipient email addresses
+          example:
+            - "user1@example.com"
+            - "user2@example.com"
+            - "user3@example.com"
+        subject:
+          type: string
+          description: Email subject line (overrides template subject if provided)
+          example: "Important announcement"
+        body:
+          type: string
+          description: Plain text email body (overrides template body if provided)
+          example: "Hello, we have an important announcement."
+        html_body:
+          type: string
+          description: HTML email body (overrides template HTML if provided)
+          example: "<p>Hello, we have an important announcement.</p>"
+        template:
+          type: string
+          description: Template name to use for rendering all emails
+          example: "subscription_renewed"
+        template_data:
+          type: object
+          additionalProperties: true
+          description: Key-value pairs for template variable substitution (applies to all recipients)
+          example:
+            PlanName: "Premium"
+            Currency: "NGN"
+            Amount: "5000"
+        source_service:
+          type: string
+          description: Name of the calling service (for tracking/debugging)
+          example: "cron-service"
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Additional metadata to store with each email record
+          example:
+            campaign_id: "camp_123"
+        product_id:
+          type: string
+          description: Product identifier for branding lookup
+          example: "wasbot"
+        branding:
+          $ref: '#/components/schemas/BrandingConfig'
+      example:
+        recipients:
+          - "user1@example.com"
+          - "user2@example.com"
+        template: "subscription_reminder_3d"
+        template_data:
+          CustomerName: "Valued Customer"
+          PlanName: "Premium"
+          Currency: "NGN"
+          Amount: "5000"
+          RenewalDate: "2025-01-15"
+          ProfileURL: "https://wasbot.ng/profile"
+        source_service: "reminder-cron"
+
+    SendEmailResponse:
+      type: object
+      description: Response after queuing a single email
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the queued email
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        status:
+          $ref: '#/components/schemas/EmailStatus'
+        message:
+          type: string
+          description: Human-readable status message
+          example: "Email queued for delivery"
+      required:
+        - id
+        - status
+        - message
+      example:
+        id: "550e8400-e29b-41d4-a716-446655440000"
+        status: "queued"
+        message: "Email queued for delivery"
+
+    SendBulkResponse:
+      type: object
+      description: Response after queuing bulk emails
+      properties:
+        total_queued:
+          type: integer
+          description: Number of emails successfully queued
+          example: 3
+        email_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of email IDs for tracking individual delivery status
+          example:
+            - "550e8400-e29b-41d4-a716-446655440001"
+            - "550e8400-e29b-41d4-a716-446655440002"
+            - "550e8400-e29b-41d4-a716-446655440003"
+        message:
+          type: string
+          description: Human-readable status message
+          example: "3 emails queued for delivery"
+      required:
+        - total_queued
+        - email_ids
+        - message
+      example:
+        total_queued: 3
+        email_ids:
+          - "550e8400-e29b-41d4-a716-446655440001"
+          - "550e8400-e29b-41d4-a716-446655440002"
+          - "550e8400-e29b-41d4-a716-446655440003"
+        message: "3 emails queued for delivery"
+
+    EmailStatusResponse:
+      type: object
+      description: Detailed status of a queued email
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique email identifier
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        to:
+          type: string
+          format: email
+          description: Recipient email address
+          example: "user@example.com"
+        subject:
+          type: string
+          description: Email subject line
+          example: "Payment Confirmed - Premium Plan"
+        status:
+          $ref: '#/components/schemas/EmailStatus'
+        error_message:
+          type: string
+          description: Error message if delivery failed
+          example: "SMTP connection timeout"
+        retry_count:
+          type: integer
+          description: Number of delivery attempts made
+          example: 2
+        sent_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when email was successfully sent
+          example: "2025-01-15T10:30:00Z"
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when email was created/queued
+          example: "2025-01-15T10:00:00Z"
+      required:
+        - id
+        - to
+        - subject
+        - status
+        - retry_count
+        - created_at
+      example:
+        id: "550e8400-e29b-41d4-a716-446655440000"
+        to: "user@example.com"
+        subject: "Payment Confirmed - Premium Plan"
+        status: "sent"
+        error_message: ""
+        retry_count: 0
+        sent_at: "2025-01-15T10:30:00Z"
+        created_at: "2025-01-15T10:00:00Z"
+
+    TemplateInfo:
+      type: object
+      description: Information about an available email template
+      properties:
+        name:
+          type: string
+          description: Template identifier used in send requests
+          example: "payment_success"
+        description:
+          type: string
+          description: Human-readable description of the template purpose
+          example: "Sent after successful payment"
+        variables:
+          type: array
+          items:
+            type: string
+          description: List of variable names that can be substituted in the template
+          example:
+            - "CustomerName"
+            - "ProductName"
+            - "Currency"
+            - "Amount"
+            - "TransactionID"
+      required:
+        - name
+      example:
+        name: "payment_success"
+        description: "Sent after successful payment"
+        variables:
+          - "CustomerName"
+          - "ProductName"
+          - "Currency"
+          - "Amount"
+          - "TransactionID"
+
+    TemplateListResponse:
+      type: object
+      description: List of all available email templates
+      properties:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateInfo'
+          description: Array of template information objects
+      required:
+        - templates
+      example:
+        templates:
+          - name: "welcome"
+            description: "Welcome email for new users"
+            variables:
+              - "Name"
+              - "AppName"
+          - name: "payment_success"
+            description: "Sent after successful payment"
+            variables:
+              - "CustomerName"
+              - "ProductName"
+              - "Currency"
+              - "Amount"
+              - "TransactionID"
+
+security:
+  - ApiKeyAuth: []
+  - BearerAuth: []
+
+paths:
+  /healthz:
+    get:
+      tags:
+        - Health
+      summary: Liveness probe
+      description: |
+        Kubernetes liveness probe endpoint. Returns 200 OK if the service is alive.
+        Used by orchestrators to determine if the container should be restarted.
+      operationId: healthzCheck
+      security: []
+      responses:
+        '200':
+          description: Service is alive
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              example:
+                status: "ok"
+
+  /readyz:
+    get:
+      tags:
+        - Health
+      summary: Readiness probe
+      description: |
+        Kubernetes readiness probe endpoint. Returns 200 OK if the service is ready to accept traffic.
+        Used by orchestrators to determine if traffic should be routed to this instance.
+      operationId: readyzCheck
+      security: []
+      responses:
+        '200':
+          description: Service is ready to accept traffic
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              example:
+                status: "ready"
+
+  /api/v1/send:
+    post:
+      tags:
+        - Email
+      summary: Send single email
+      description: |
+        Queues a single email for delivery. The email can be sent using:
+        - A pre-defined template with variable substitution
+        - Custom subject/body/html_body content
+        - A combination of both (custom content overrides template)
+
+        ## Idempotency
+        Use the `idempotency_id` field to prevent duplicate sends. If an email with the same
+        idempotency ID was already queued, the existing email ID is returned.
+
+        ## Branding
+        Custom branding can be provided per-request to customize the email appearance.
+        If not provided, default branding is applied.
+      operationId: sendEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailRequest'
+            examples:
+              template_based:
+                summary: Using a template
+                value:
+                  to: "user@example.com"
+                  template: "payment_success"
+                  template_data:
+                    CustomerName: "John Doe"
+                    ProductName: "Premium Plan"
+                    Currency: "NGN"
+                    Amount: "5000"
+                    TransactionID: "txn_abc123"
+                  source_service: "webhook-router"
+                  idempotency_id: "payment-txn_abc123"
+              custom_content:
+                summary: Custom content without template
+                value:
+                  to: "user@example.com"
+                  subject: "Your order has shipped"
+                  body: "Hi John, your order #12345 has shipped."
+                  html_body: "<p>Hi John, your order <strong>#12345</strong> has shipped.</p>"
+                  source_service: "order-service"
+              with_branding:
+                summary: With custom branding
+                value:
+                  to: "user@example.com"
+                  template: "welcome"
+                  template_data:
+                    Name: "Jane"
+                    AppName: "MyProduct"
+                  branding:
+                    primary_color: "#3b82f6"
+                    company_name: "MyProduct"
+                    support_email: "help@myproduct.com"
+                    website_url: "https://myproduct.com"
+      responses:
+        '202':
+          description: Email accepted and queued for delivery
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailResponse'
+        '400':
+          description: Invalid request (missing required fields, invalid email format)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                invalid_email:
+                  summary: Invalid email format
+                  value:
+                    error: "Key: 'SendEmailRequest.To' Error:Field validation for 'To' failed on the 'email' tag"
+                missing_to:
+                  summary: Missing recipient
+                  value:
+                    error: "Key: 'SendEmailRequest.To' Error:Field validation for 'To' failed on the 'required' tag"
+        '401':
+          description: Unauthorized (missing or invalid API key)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "unauthorized: invalid or missing API key"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "failed to queue email"
+
+  /api/v1/send/bulk:
+    post:
+      tags:
+        - Email
+      summary: Send bulk emails
+      description: |
+        Queues emails for multiple recipients. All recipients receive the same email content
+        with the same template data. Each recipient gets a separate email record that can be
+        tracked individually.
+
+        ## Use Cases
+        - Announcements to multiple users
+        - Batch notifications (e.g., subscription reminders)
+        - Marketing campaigns
+
+        ## Limitations
+        - All recipients receive identical content
+        - For personalized content per recipient, use individual /send calls
+      operationId: sendBulkEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendBulkRequest'
+            examples:
+              bulk_reminder:
+                summary: Subscription reminder to multiple users
+                value:
+                  recipients:
+                    - "user1@example.com"
+                    - "user2@example.com"
+                    - "user3@example.com"
+                  template: "subscription_reminder_3d"
+                  template_data:
+                    CustomerName: "Valued Customer"
+                    PlanName: "Premium"
+                    Currency: "NGN"
+                    Amount: "5000"
+                    RenewalDate: "2025-01-15"
+                    ProfileURL: "https://wasbot.ng/profile"
+                  source_service: "reminder-cron"
+              bulk_announcement:
+                summary: Custom announcement
+                value:
+                  recipients:
+                    - "team1@company.com"
+                    - "team2@company.com"
+                  subject: "System Maintenance Notice"
+                  body: "Scheduled maintenance on January 20th, 2025 from 2-4 AM UTC."
+                  html_body: "<p>Scheduled maintenance on <strong>January 20th, 2025</strong> from 2-4 AM UTC.</p>"
+                  source_service: "admin-panel"
+      responses:
+        '202':
+          description: Emails accepted and queued for delivery
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendBulkResponse'
+        '400':
+          description: Invalid request (no recipients, invalid email formats)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                empty_recipients:
+                  summary: No recipients provided
+                  value:
+                    error: "Key: 'SendBulkRequest.Recipients' Error:Field validation for 'Recipients' failed on the 'min' tag"
+                invalid_email:
+                  summary: Invalid email in recipients list
+                  value:
+                    error: "Key: 'SendBulkRequest.Recipients[0]' Error:Field validation for 'Recipients[0]' failed on the 'email' tag"
+        '401':
+          description: Unauthorized (missing or invalid API key)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "unauthorized: invalid or missing API key"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "failed to queue bulk emails"
+
+  /api/v1/status/{id}:
+    get:
+      tags:
+        - Email
+      summary: Get email status
+      description: |
+        Retrieves the current delivery status and details of a previously queued email.
+
+        ## Status Flow
+        ```
+        pending -> queued -> sending -> sent
+                                    \-> failed (may retry)
+                                          \-> bounced
+                                          \-> complaint
+        ```
+
+        ## Retry Behavior
+        Failed emails are automatically retried up to a configured maximum.
+        The `retry_count` field shows how many attempts have been made.
+      operationId: getEmailStatus
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Email UUID returned from send endpoints
+          schema:
+            type: string
+            format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+      responses:
+        '200':
+          description: Email status retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailStatusResponse'
+              examples:
+                sent:
+                  summary: Successfully sent email
+                  value:
+                    id: "550e8400-e29b-41d4-a716-446655440000"
+                    to: "user@example.com"
+                    subject: "Payment Confirmed"
+                    status: "sent"
+                    error_message: ""
+                    retry_count: 0
+                    sent_at: "2025-01-15T10:30:00Z"
+                    created_at: "2025-01-15T10:00:00Z"
+                queued:
+                  summary: Email still in queue
+                  value:
+                    id: "550e8400-e29b-41d4-a716-446655440001"
+                    to: "user@example.com"
+                    subject: "Welcome!"
+                    status: "queued"
+                    error_message: ""
+                    retry_count: 0
+                    sent_at: null
+                    created_at: "2025-01-15T10:00:00Z"
+                failed:
+                  summary: Failed delivery with retries
+                  value:
+                    id: "550e8400-e29b-41d4-a716-446655440002"
+                    to: "invalid@nonexistent.domain"
+                    subject: "Test Email"
+                    status: "failed"
+                    error_message: "DNS lookup failed: no such host"
+                    retry_count: 3
+                    sent_at: null
+                    created_at: "2025-01-15T10:00:00Z"
+        '400':
+          description: Invalid email ID format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "invalid email id"
+        '401':
+          description: Unauthorized (missing or invalid API key)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "unauthorized: invalid or missing API key"
+        '404':
+          description: Email not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "email not found"
+
+  /api/v1/templates:
+    get:
+      tags:
+        - Templates
+      summary: List available templates
+      description: |
+        Returns a list of all available email templates with their names, descriptions,
+        and required variables.
+
+        ## Available Templates
+
+        ### User Onboarding
+        - `welcome` - Welcome email for new users
+
+        ### Trial/Subscription Lifecycle
+        - `trial_expiring` - Sent before trial expires
+        - `subscription_renewed` - Sent when subscription renews
+        - `subscription_cancelled` - Sent when subscription is cancelled
+        - `subscription_reminder_3d` - Renewal reminder (3 days before)
+        - `subscription_reminder_1d` - Renewal reminder (1 day before)
+        - `subscription_expiring_3d` - Expiry reminder for one-off subscriptions (3 days)
+        - `subscription_expiring_1d` - Expiry reminder for one-off subscriptions (1 day)
+
+        ### Payments
+        - `payment_success` - Sent after successful payment
+        - `payment_failed` - Sent when payment fails
+
+        ### Refunds
+        - `refund_pending` - Sent when refund is initiated
+        - `refund_processed` - Sent when refund completes
+        - `refund_failed` - Sent when refund fails
+
+        ### Affiliate System
+        - `payout_approved` - Sent when affiliate payout is approved
+        - `payout_rejected` - Sent when affiliate payout is rejected
+        - `payout_processed` - Sent when payout transfer completes
+        - `commission_earned` - Sent when affiliate earns commission
+        - `commission_refunded` - Sent when commission is reversed
+        - `access_revoked` - Sent when customer access is revoked due to refund
+      operationId: listTemplates
+      responses:
+        '200':
+          description: List of available templates
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateListResponse'
+              example:
+                templates:
+                  - name: "welcome"
+                    description: "Welcome email for new users"
+                    variables:
+                      - "Name"
+                      - "AppName"
+                  - name: "trial_expiring"
+                    description: "Sent before trial expires"
+                    variables:
+                      - "Name"
+                      - "AppName"
+                      - "Days"
+                      - "UpgradeURL"
+                  - name: "payment_success"
+                    description: "Sent after successful payment"
+                    variables:
+                      - "CustomerName"
+                      - "ProductName"
+                      - "Currency"
+                      - "Amount"
+                      - "TransactionID"
+                      - "IsRecurring"
+                      - "NextBillingDate"
+                      - "ExpiryDate"
+                  - name: "payment_failed"
+                    description: "Sent when payment fails"
+                    variables:
+                      - "CustomerName"
+                      - "ProductName"
+                      - "Currency"
+                      - "Amount"
+                  - name: "subscription_renewed"
+                    description: "Sent when subscription renews"
+                    variables:
+                      - "CustomerName"
+                      - "PlanName"
+                      - "Currency"
+                      - "Amount"
+                      - "NextBillingDate"
+                  - name: "subscription_cancelled"
+                    description: "Sent when subscription is cancelled"
+                    variables:
+                      - "CustomerName"
+                      - "PlanName"
+                      - "ExpiryDate"
+                  - name: "subscription_reminder_3d"
+                    description: "Sent 3 days before subscription renewal"
+                    variables:
+                      - "CustomerName"
+                      - "PlanName"
+                      - "Currency"
+                      - "Amount"
+                      - "RenewalDate"
+                      - "ProfileURL"
+                  - name: "subscription_reminder_1d"
+                    description: "Sent 1 day before subscription renewal"
+                    variables:
+                      - "CustomerName"
+                      - "PlanName"
+                      - "Currency"
+                      - "Amount"
+                      - "ProfileURL"
+                  - name: "subscription_expiring_3d"
+                    description: "Sent 3 days before one-off subscription expires"
+                    variables:
+                      - "CustomerName"
+                      - "PlanName"
+                      - "ExpiryDate"
+                      - "ProfileURL"
+                  - name: "subscription_expiring_1d"
+                    description: "Sent 1 day before one-off subscription expires"
+                    variables:
+                      - "CustomerName"
+                      - "PlanName"
+                      - "ExpiryDate"
+                      - "ProfileURL"
+                  - name: "refund_pending"
+                    description: "Sent when a refund request is initiated"
+                    variables:
+                      - "CustomerName"
+                      - "Currency"
+                      - "Amount"
+                      - "TransactionID"
+                  - name: "refund_processed"
+                    description: "Sent when a refund has been processed successfully"
+                    variables:
+                      - "CustomerName"
+                      - "Currency"
+                      - "Amount"
+                      - "TransactionID"
+                  - name: "refund_failed"
+                    description: "Sent when a refund could not be processed"
+                    variables:
+                      - "CustomerName"
+                      - "Currency"
+                      - "Amount"
+                      - "TransactionID"
+                      - "Reason"
+                  - name: "payout_approved"
+                    description: "Sent when an affiliate payout is approved"
+                    variables:
+                      - "Name"
+                      - "Currency"
+                      - "Amount"
+                  - name: "payout_rejected"
+                    description: "Sent when an affiliate payout is rejected"
+                    variables:
+                      - "Name"
+                      - "Currency"
+                      - "Amount"
+                      - "Reason"
+                  - name: "payout_processed"
+                    description: "Sent when a payout transfer completes"
+                    variables:
+                      - "Name"
+                      - "Currency"
+                      - "Amount"
+                      - "Reference"
+                  - name: "commission_earned"
+                    description: "Sent when an affiliate earns a commission"
+                    variables:
+                      - "Name"
+                      - "Currency"
+                      - "Amount"
+                      - "ProductName"
+                  - name: "commission_refunded"
+                    description: "Sent when an affiliate commission is reversed due to a refund"
+                    variables:
+                      - "CustomerName"
+                      - "Currency"
+                      - "Amount"
+                      - "ProductName"
+                      - "Reason"
+                  - name: "access_revoked"
+                    description: "Sent when a customer's access is revoked due to a refund"
+                    variables:
+                      - "CustomerName"
+                      - "Currency"
+                      - "Amount"
+                      - "ProductName"
+                      - "TransactionID"
+        '401':
+          description: Unauthorized (missing or invalid API key)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "unauthorized: invalid or missing API key"
