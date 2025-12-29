@@ -46,7 +46,11 @@ const (
 	TemplateRefundProcessed = "refund_processed"
 	TemplateRefundFailed    = "refund_failed"
 
-	// Subscription reminder templates
+	// Subscription reminder templates (for recurring subscriptions)
 	TemplateSubscriptionReminder3d = "subscription_reminder_3d"
 	TemplateSubscriptionReminder1d = "subscription_reminder_1d"
+
+	// Subscription expiration templates (for one-off payments)
+	TemplateSubscriptionExpiring3d = "subscription_expiring_3d"
+	TemplateSubscriptionExpiring1d = "subscription_expiring_1d"
 )

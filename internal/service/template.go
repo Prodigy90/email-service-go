@@ -305,6 +305,23 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 		HTMLBody:    ts.wrapHTML("Subscription Renews Tomorrow", "<p>Hi {{.CustomerName}},</p><p>This is a final reminder that your <strong>{{.PlanName}}</strong> subscription will renew tomorrow.</p><p><strong>Amount:</strong> {{.Currency}}{{.Amount}}</p><p>If you need to update your payment method or make changes, please do so before the renewal:</p><p><a href=\"{{.ProfileURL}}\" style=\"background:#10b981;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block;\">Manage Subscription</a></p><p>Thank you for your continued support!</p><p>The {{.AppName}} Team</p>"),
 		Description: "Sent 1 day before subscription renewal",
 	}
+
+	// Subscription expiration templates (for one-off payments)
+	ts.templates[domain.TemplateSubscriptionExpiring3d] = &domain.Template{
+		Name:        domain.TemplateSubscriptionExpiring3d,
+		Subject:     "Your {{.PlanName}} access expires in 3 days",
+		Body:        "Hi {{.CustomerName}},\n\nThis is a friendly reminder that your {{.PlanName}} access will expire in 3 days.\n\nExpiry Date: {{.ExpiryDate}}\n\nTo continue enjoying uninterrupted access, renew your subscription before it expires:\n{{.ProfileURL}}\n\nThank you for being a valued customer!",
+		HTMLBody:    ts.wrapHTML("Subscription Expiring Soon", "<p>Hi {{.CustomerName}},</p><p>This is a friendly reminder that your <strong>{{.PlanName}}</strong> access will expire in 3 days.</p><p><strong>Expiry Date:</strong> {{.ExpiryDate}}</p><p>To continue enjoying uninterrupted access, renew your subscription before it expires:</p><p><a href=\"{{.ProfileURL}}\" style=\"background:#10b981;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block;\">Renew Now</a></p><p>Thank you for being a valued customer!</p>"),
+		Description: "Sent 3 days before one-off subscription expires",
+	}
+
+	ts.templates[domain.TemplateSubscriptionExpiring1d] = &domain.Template{
+		Name:        domain.TemplateSubscriptionExpiring1d,
+		Subject:     "Final Reminder: {{.PlanName}} expires tomorrow",
+		Body:        "Hi {{.CustomerName}},\n\nThis is a final reminder that your {{.PlanName}} access will expire tomorrow.\n\nExpiry Date: {{.ExpiryDate}}\n\nDon't lose access! Renew now to continue using all features:\n{{.ProfileURL}}\n\nIf you have any questions, our support team is here to help.\n\nThe {{.AppName}} Team",
+		HTMLBody:    ts.wrapHTML("Subscription Expires Tomorrow", "<p>Hi {{.CustomerName}},</p><p>This is a final reminder that your <strong>{{.PlanName}}</strong> access will expire <strong>tomorrow</strong>.</p><p><strong>Expiry Date:</strong> {{.ExpiryDate}}</p><p>Don't lose access! Renew now to continue using all features:</p><p><a href=\"{{.ProfileURL}}\" style=\"background:#ef4444;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block;\">Renew Now</a></p><p>If you have any questions, our support team is here to help.</p><p>The {{.AppName}} Team</p>"),
+		Description: "Sent 1 day before one-off subscription expires",
+	}
 }
 
 // wrapHTML wraps content in a basic HTML email template.
