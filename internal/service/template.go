@@ -263,6 +263,48 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 		HTMLBody:    ts.wrapHTML("Account Upgraded", "<p>Hi {{.Name}},</p><p>Congratulations! You've been upgraded to <strong>{{.PlanName}}</strong>.</p><p>You now have access to:</p><ul>{{.FeaturesHTML}}</ul><p>Thank you for your support!</p>"),
 		Description: "Sent when user upgrades their plan",
 	}
+
+	// Refund templates
+	ts.templates[domain.TemplateRefundPending] = &domain.Template{
+		Name:        domain.TemplateRefundPending,
+		Subject:     "Refund Request Received",
+		Body:        "Hi {{.CustomerName}},\n\nWe have received your refund request for {{.Currency}}{{.Amount}}.\n\nTransaction ID: {{.TransactionID}}\n\nYour refund is being processed and should be completed within 5-10 business days.\n\nWe'll send you another email once the refund has been processed.\n\nIf you have any questions, please don't hesitate to contact our support team.",
+		HTMLBody:    ts.wrapHTML("Refund Request Received", "<p>Hi {{.CustomerName}},</p><p>We have received your refund request for <strong>{{.Currency}}{{.Amount}}</strong>.</p><p><strong>Transaction ID:</strong> {{.TransactionID}}</p><p>Your refund is being processed and should be completed within 5-10 business days.</p><p>We'll send you another email once the refund has been processed.</p><p>If you have any questions, please don't hesitate to contact our support team.</p>"),
+		Description: "Sent when a refund request is initiated",
+	}
+
+	ts.templates[domain.TemplateRefundProcessed] = &domain.Template{
+		Name:        domain.TemplateRefundProcessed,
+		Subject:     "Refund Processed - {{.Currency}}{{.Amount}}",
+		Body:        "Hi {{.CustomerName}},\n\nGreat news! Your refund of {{.Currency}}{{.Amount}} has been successfully processed.\n\nTransaction ID: {{.TransactionID}}\n\nThe funds should appear in your account within 5-10 business days, depending on your bank.\n\nThank you for your patience.",
+		HTMLBody:    ts.wrapHTML("Refund Processed", "<p>Hi {{.CustomerName}},</p><p>Great news! Your refund of <strong>{{.Currency}}{{.Amount}}</strong> has been successfully processed.</p><p><strong>Transaction ID:</strong> {{.TransactionID}}</p><p>The funds should appear in your account within 5-10 business days, depending on your bank.</p><p>Thank you for your patience.</p>"),
+		Description: "Sent when a refund has been processed successfully",
+	}
+
+	ts.templates[domain.TemplateRefundFailed] = &domain.Template{
+		Name:        domain.TemplateRefundFailed,
+		Subject:     "Refund Update - Action Required",
+		Body:        "Hi {{.CustomerName}},\n\nWe were unable to process your refund of {{.Currency}}{{.Amount}}.\n\nTransaction ID: {{.TransactionID}}\nReason: {{.Reason}}\n\nPlease contact our support team to resolve this issue and complete your refund.\n\nWe apologize for any inconvenience.",
+		HTMLBody:    ts.wrapHTML("Refund Update", "<p>Hi {{.CustomerName}},</p><p>We were unable to process your refund of <strong>{{.Currency}}{{.Amount}}</strong>.</p><p><strong>Transaction ID:</strong> {{.TransactionID}}<br><strong>Reason:</strong> {{.Reason}}</p><p>Please contact our support team to resolve this issue and complete your refund.</p><p>We apologize for any inconvenience.</p>"),
+		Description: "Sent when a refund could not be processed",
+	}
+
+	// Subscription reminder templates
+	ts.templates[domain.TemplateSubscriptionReminder3d] = &domain.Template{
+		Name:        domain.TemplateSubscriptionReminder3d,
+		Subject:     "Your {{.PlanName}} subscription renews in 3 days",
+		Body:        "Hi {{.CustomerName}},\n\nThis is a friendly reminder that your {{.PlanName}} subscription will automatically renew in 3 days.\n\nRenewal Date: {{.RenewalDate}}\nAmount: {{.Currency}}{{.Amount}}\n\nIf you'd like to make any changes to your subscription, you can manage it here:\n{{.ProfileURL}}\n\nThank you for being a valued {{.AppName}} customer!",
+		HTMLBody:    ts.wrapHTML("Subscription Renewal Reminder", "<p>Hi {{.CustomerName}},</p><p>This is a friendly reminder that your <strong>{{.PlanName}}</strong> subscription will automatically renew in 3 days.</p><p><strong>Renewal Date:</strong> {{.RenewalDate}}<br><strong>Amount:</strong> {{.Currency}}{{.Amount}}</p><p>If you'd like to make any changes to your subscription, you can manage it here:</p><p><a href=\"{{.ProfileURL}}\" style=\"background:#10b981;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block;\">Manage Subscription</a></p><p>Thank you for being a valued {{.AppName}} customer!</p>"),
+		Description: "Sent 3 days before subscription renewal",
+	}
+
+	ts.templates[domain.TemplateSubscriptionReminder1d] = &domain.Template{
+		Name:        domain.TemplateSubscriptionReminder1d,
+		Subject:     "Reminder: {{.PlanName}} renews tomorrow",
+		Body:        "Hi {{.CustomerName}},\n\nThis is a final reminder that your {{.PlanName}} subscription will renew tomorrow.\n\nAmount: {{.Currency}}{{.Amount}}\n\nIf you need to update your payment method or make changes, please do so before the renewal:\n{{.ProfileURL}}\n\nThank you for your continued support!\n\nThe {{.AppName}} Team",
+		HTMLBody:    ts.wrapHTML("Subscription Renews Tomorrow", "<p>Hi {{.CustomerName}},</p><p>This is a final reminder that your <strong>{{.PlanName}}</strong> subscription will renew tomorrow.</p><p><strong>Amount:</strong> {{.Currency}}{{.Amount}}</p><p>If you need to update your payment method or make changes, please do so before the renewal:</p><p><a href=\"{{.ProfileURL}}\" style=\"background:#10b981;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block;\">Manage Subscription</a></p><p>Thank you for your continued support!</p><p>The {{.AppName}} Team</p>"),
+		Description: "Sent 1 day before subscription renewal",
+	}
 }
 
 // wrapHTML wraps content in a basic HTML email template.

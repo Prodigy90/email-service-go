@@ -214,6 +214,15 @@ const (
 	TemplateSubscriptionExpiring  = "subscription_expiring"
 	TemplateSubscriptionCancelled = "subscription_cancelled"
 
+	// Refunds
+	TemplateRefundPending   = "refund_pending"
+	TemplateRefundProcessed = "refund_processed"
+	TemplateRefundFailed    = "refund_failed"
+
+	// Subscription reminders
+	TemplateSubscriptionReminder3d = "subscription_reminder_3d"
+	TemplateSubscriptionReminder1d = "subscription_reminder_1d"
+
 	// General
 	TemplateWelcome         = "welcome"
 	TemplateTrialExpiring   = "trial_expiring"

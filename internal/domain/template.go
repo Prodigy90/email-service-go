@@ -40,4 +40,13 @@ const (
 	TemplateWelcome          = "welcome"
 	TemplateTrialExpiring    = "trial_expiring"
 	TemplateAccountUpgraded  = "account_upgraded"
+
+	// Refund templates
+	TemplateRefundPending   = "refund_pending"
+	TemplateRefundProcessed = "refund_processed"
+	TemplateRefundFailed    = "refund_failed"
+
+	// Subscription reminder templates
+	TemplateSubscriptionReminder3d = "subscription_reminder_3d"
+	TemplateSubscriptionReminder1d = "subscription_reminder_1d"
 )
