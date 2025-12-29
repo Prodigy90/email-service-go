@@ -51,6 +51,22 @@ func (c *Client) WithHTTPClient(httpClient *http.Client) *Client {
 	return c
 }
 
+// BrandingConfig holds product-specific branding for email templates.
+// This allows different products to customize email appearance.
+type BrandingConfig struct {
+	PrimaryColor    string `json:"primary_color,omitempty"`    // e.g., "#10b981" (green for wasbot)
+	SecondaryColor  string `json:"secondary_color,omitempty"`  // e.g., "#059669"
+	AccentColor     string `json:"accent_color,omitempty"`     // e.g., "#047857"
+	DangerColor     string `json:"danger_color,omitempty"`     // e.g., "#ef4444"
+	CompanyName     string `json:"company_name,omitempty"`     // e.g., "WASBOT"
+	LogoURL         string `json:"logo_url,omitempty"`         // URL to company logo
+	DashboardURL    string `json:"dashboard_url,omitempty"`    // e.g., "https://wasbot.ng/dashboard"
+	SupportEmail    string `json:"support_email,omitempty"`    // e.g., "support@wasbot.ng"
+	WebsiteURL      string `json:"website_url,omitempty"`      // e.g., "https://wasbot.ng"
+	SocialTwitter   string `json:"social_twitter,omitempty"`   // Twitter URL
+	SocialInstagram string `json:"social_instagram,omitempty"` // Instagram URL
+}
+
 // SendRequest represents an email send request.
 type SendRequest struct {
 	To            string                 `json:"to"`
@@ -62,6 +78,8 @@ type SendRequest struct {
 	IdempotencyID string                 `json:"idempotency_id,omitempty"`
 	SourceService string                 `json:"source_service,omitempty"`
 	Metadata      map[string]interface{} `json:"metadata,omitempty"`
+	ProductID     string                 `json:"product_id,omitempty"`
+	Branding      *BrandingConfig        `json:"branding,omitempty"`
 }
 
 // SendBulkRequest represents a bulk email send request.
@@ -74,6 +92,8 @@ type SendBulkRequest struct {
 	TemplateData  map[string]interface{} `json:"template_data,omitempty"`
 	SourceService string                 `json:"source_service,omitempty"`
 	Metadata      map[string]interface{} `json:"metadata,omitempty"`
+	ProductID     string                 `json:"product_id,omitempty"`
+	Branding      *BrandingConfig        `json:"branding,omitempty"`
 }
 
 // SendResponse represents the response from sending an email.

@@ -52,6 +52,8 @@ type SendEmailRequest struct {
 	IdempotencyID string                 `json:"idempotency_id,omitempty"`
 	SourceService string                 `json:"source_service,omitempty"`
 	Metadata      map[string]interface{} `json:"metadata,omitempty"`
+	ProductID     string                 `json:"product_id,omitempty"`
+	Branding      *BrandingConfig        `json:"branding,omitempty"`
 }
 
 // SendBulkRequest represents a request to send emails to multiple recipients.
@@ -64,6 +66,8 @@ type SendBulkRequest struct {
 	TemplateData  map[string]interface{} `json:"template_data,omitempty"`
 	SourceService string                 `json:"source_service,omitempty"`
 	Metadata      map[string]interface{} `json:"metadata,omitempty"`
+	ProductID     string                 `json:"product_id,omitempty"`
+	Branding      *BrandingConfig        `json:"branding,omitempty"`
 }
 
 // SendEmailResponse represents the response after queuing an email.

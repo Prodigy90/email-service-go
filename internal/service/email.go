@@ -79,7 +79,7 @@ func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (
 
 	// If template specified, render it
 	if req.Template != "" {
-		subject, body, htmlBody, err := s.templates.Render(req.Template, req.TemplateData)
+		subject, body, htmlBody, err := s.templates.RenderWithBranding(req.Template, req.TemplateData, req.Branding)
 		if err != nil {
 			return nil, fmt.Errorf("template render failed: %w", err)
 		}
@@ -139,6 +139,8 @@ func (s *EmailService) SendBulk(ctx context.Context, req *domain.SendBulkRequest
 			TemplateData:  req.TemplateData,
 			SourceService: req.SourceService,
 			Metadata:      req.Metadata,
+			ProductID:     req.ProductID,
+			Branding:      req.Branding,
 		}
 
 		resp, err := s.Send(ctx, singleReq)

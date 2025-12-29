@@ -42,14 +42,24 @@ func NewTemplateService(templateDir string, logger zerolog.Logger) (*TemplateSer
 	return ts, nil
 }
 
-// Render renders a template with the given data.
+// Render renders a template with the given data using default branding.
 func (ts *TemplateService) Render(templateName string, data map[string]interface{}) (subject, body, htmlBody string, err error) {
+	return ts.RenderWithBranding(templateName, data, nil)
+}
+
+// RenderWithBranding renders a template with the given data and branding config.
+func (ts *TemplateService) RenderWithBranding(templateName string, data map[string]interface{}, branding *domain.BrandingConfig) (subject, body, htmlBody string, err error) {
 	ts.mu.RLock()
 	tmpl, ok := ts.templates[templateName]
 	ts.mu.RUnlock()
 
 	if !ok {
 		return "", "", "", fmt.Errorf("template not found: %s", templateName)
+	}
+
+	// Use default branding if not provided
+	if branding == nil {
+		branding = domain.DefaultBranding()
 	}
 
 	// Render subject
@@ -66,13 +76,33 @@ func (ts *TemplateService) Render(templateName string, data map[string]interface
 
 	// Render HTML body if present
 	if tmpl.HTMLBody != "" {
-		htmlBody, err = ts.renderString(tmpl.HTMLBody, data)
+		// First render the template with data
+		renderedHTML, err := ts.renderString(tmpl.HTMLBody, data)
 		if err != nil {
 			return "", "", "", fmt.Errorf("failed to render html body: %w", err)
 		}
+		// Then apply branding replacements
+		htmlBody = ts.applyBranding(renderedHTML, branding)
 	}
 
 	return subject, body, htmlBody, nil
+}
+
+// applyBranding replaces branding placeholders in the rendered HTML.
+func (ts *TemplateService) applyBranding(html string, branding *domain.BrandingConfig) string {
+	// Replace color placeholders
+	html = strings.ReplaceAll(html, "{{.Branding.PrimaryColor}}", branding.PrimaryColor)
+	html = strings.ReplaceAll(html, "{{.Branding.SecondaryColor}}", branding.SecondaryColor)
+	html = strings.ReplaceAll(html, "{{.Branding.AccentColor}}", branding.AccentColor)
+	html = strings.ReplaceAll(html, "{{.Branding.DangerColor}}", branding.DangerColor)
+	html = strings.ReplaceAll(html, "{{.Branding.CompanyName}}", branding.CompanyName)
+	html = strings.ReplaceAll(html, "{{.Branding.LogoURL}}", branding.LogoURL)
+	html = strings.ReplaceAll(html, "{{.Branding.DashboardURL}}", branding.DashboardURL)
+	html = strings.ReplaceAll(html, "{{.Branding.SupportEmail}}", branding.SupportEmail)
+	html = strings.ReplaceAll(html, "{{.Branding.WebsiteURL}}", branding.WebsiteURL)
+	html = strings.ReplaceAll(html, "{{.Branding.SocialTwitter}}", branding.SocialTwitter)
+	html = strings.ReplaceAll(html, "{{.Branding.SocialInstagram}}", branding.SocialInstagram)
+	return html
 }
 
 // List returns all available templates.
@@ -340,8 +370,15 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	}
 }
 
-// wrapHTML wraps content in a professional HTML email template.
+// wrapHTML wraps content in a professional HTML email template using default branding.
+// This is kept for backward compatibility - new code should use wrapHTMLWithBranding.
 func (ts *TemplateService) wrapHTML(title, content string) string {
+	return ts.wrapHTMLWithBranding(title, content)
+}
+
+// wrapHTMLWithBranding wraps content in a professional HTML email template with branding placeholders.
+// The branding placeholders will be replaced at render time by applyBranding.
+func (ts *TemplateService) wrapHTMLWithBranding(title, content string) string {
 	return strings.TrimSpace(fmt.Sprintf(`
 <!DOCTYPE html>
 <html lang="en">
@@ -381,14 +418,14 @@ func (ts *TemplateService) wrapHTML(title, content string) string {
     }
 
     /* Links */
-    a { color: #10b981; text-decoration: none; }
+    a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
     a:hover { text-decoration: underline; }
 
     /* Button styles */
     .btn {
       display: inline-block;
       padding: 14px 28px;
-      background: linear-gradient(135deg, #10b981 0%%, #059669 100%%);
+      background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%%, {{.Branding.SecondaryColor}} 100%%);
       color: #ffffff !important;
       text-decoration: none;
       border-radius: 8px;
@@ -398,11 +435,11 @@ func (ts *TemplateService) wrapHTML(title, content string) string {
       transition: all 0.2s ease;
     }
     .btn:hover {
-      background: linear-gradient(135deg, #059669 0%%, #047857 100%%);
+      background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%%, {{.Branding.AccentColor}} 100%%);
       box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
     }
     .btn-danger {
-      background: linear-gradient(135deg, #ef4444 0%%, #dc2626 100%%);
+      background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%%, #dc2626 100%%);
       box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
     }
 
@@ -439,13 +476,13 @@ func (ts *TemplateService) wrapHTML(title, content string) string {
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0">
                       <tr>
                         <td style="vertical-align: middle; padding-right: 14px;">
-                          <!-- Replace with actual logo: <img src="https://wasbot.ng/logo.png" alt="WASBOT" width="44" height="44" style="border-radius: 12px;"> -->
-                          <div style="width: 44px; height: 44px; background: linear-gradient(135deg, #10b981 0%%, #059669 100%%); border-radius: 12px; text-align: center; line-height: 44px;">
-                            <span style="color: white; font-size: 22px; font-weight: bold;">W</span>
+                          <!-- Logo placeholder - uses gradient if no logo URL provided -->
+                          <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%%, {{.Branding.SecondaryColor}} 100%%); border-radius: 12px; text-align: center; line-height: 44px;">
+                            <span style="color: white; font-size: 22px; font-weight: bold;">{{.Branding.CompanyName}}</span>
                           </div>
                         </td>
                         <td style="vertical-align: middle;">
-                          <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">WASBOT</span>
+                          <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
                         </td>
                       </tr>
                     </table>
@@ -486,12 +523,12 @@ func (ts *TemplateService) wrapHTML(title, content string) string {
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
                       <tr>
                         <td style="padding: 0 8px;">
-                          <a href="https://twitter.com/wasbot" style="display: inline-block;">
+                          <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
                             <img src="https://cdn-icons-png.flaticon.com/32/733/733579.png" alt="Twitter" width="24" height="24" style="opacity: 0.6;">
                           </a>
                         </td>
                         <td style="padding: 0 8px;">
-                          <a href="https://instagram.com/wasbot.ng" style="display: inline-block;">
+                          <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
                             <img src="https://cdn-icons-png.flaticon.com/32/2111/2111463.png" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
                           </a>
                         </td>
@@ -500,13 +537,13 @@ func (ts *TemplateService) wrapHTML(title, content string) string {
 
                     <!-- Company info -->
                     <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
-                      WASBOT Technologies<br>
+                      {{.Branding.CompanyName}} Technologies<br>
                       Lagos, Nigeria
                     </p>
 
                     <!-- Legal -->
                     <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
-                      &copy; 2025 WASBOT. All rights reserved.
+                      &copy; 2025 {{.Branding.CompanyName}}. All rights reserved.
                     </p>
                   </td>
                 </tr>
@@ -530,7 +567,7 @@ func (ts *TemplateService) paymentSuccessContent() string {
 
 <p style="margin: 0 0 8px 0;">Thank you for subscribing to <strong>{{.ProductName}}</strong>! 🎉</p>
 
-<p style="margin: 0 0 24px 0;">Your subscription is now <span style="color: #059669; font-weight: 600;">active</span> and you have full access to all features.</p>
+<p style="margin: 0 0 24px 0;">Your subscription is now <span style="color: {{.Branding.SecondaryColor}}; font-weight: 600;">active</span> and you have full access to all features.</p>
 
 <!-- Subscription info box -->
 {{if .IsRecurring}}
@@ -565,7 +602,7 @@ func (ts *TemplateService) paymentSuccessContent() string {
         <tr>
           <td style="padding-bottom: 16px; border-bottom: 1px solid #bbf7d0;">
             <span style="font-size: 14px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Amount Paid</span><br>
-            <span style="font-size: 32px; font-weight: 700; color: #059669;">{{.Currency}}{{.Amount}}</span>
+            <span style="font-size: 32px; font-weight: 700; color: {{.Branding.SecondaryColor}};">{{.Currency}}{{.Amount}}</span>
           </td>
         </tr>
         <tr>
@@ -589,13 +626,13 @@ func (ts *TemplateService) paymentSuccessContent() string {
   </tr>
 </table>
 
-<p style="margin: 0 0 24px 0; color: #6b7280;">You're all set! Start using WASBOT to automate your WhatsApp business today.</p>
+<p style="margin: 0 0 24px 0; color: #6b7280;">You're all set! Start using {{.Branding.CompanyName}} to automate your WhatsApp business today.</p>
 
 <!-- CTA Button -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
   <tr>
-    <td style="border-radius: 8px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-      <a href="https://wasbot.ng/dashboard" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.Branding.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
         Go to Dashboard →
       </a>
     </td>
@@ -646,7 +683,7 @@ func (ts *TemplateService) subscriptionReminder3dContent() string {
   </tr>
 </table>
 
-<p style="margin: 24px 0 0 0; font-size: 14px; color: #9ca3af;">Thank you for being a valued WASBOT customer! 💚</p>
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #9ca3af;">Thank you for being a valued {{.Branding.CompanyName}} customer!</p>
 `
 }
 
@@ -682,7 +719,7 @@ func (ts *TemplateService) subscriptionReminder1dContent() string {
 </table>
 
 <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Thank you for your continued support!</p>
-<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
 `
 }
 
@@ -705,7 +742,7 @@ func (ts *TemplateService) subscriptionExpiring3dContent() string {
 
 <p style="margin: 0 0 8px 0; color: #4b5563;"><strong>What happens after expiry?</strong></p>
 <ul style="margin: 0 0 24px 0; padding-left: 20px; color: #6b7280;">
-  <li style="margin-bottom: 8px;">You'll lose access to all WASBOT features</li>
+  <li style="margin-bottom: 8px;">You'll lose access to all {{.Branding.CompanyName}} features</li>
   <li style="margin-bottom: 8px;">Your automations will stop running</li>
   <li>Your data will be preserved for 30 days</li>
 </ul>
@@ -715,7 +752,7 @@ func (ts *TemplateService) subscriptionExpiring3dContent() string {
 <!-- CTA Button -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
   <tr>
-    <td style="border-radius: 8px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
       <a href="{{.ProfileURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
         Renew Now →
       </a>
@@ -733,14 +770,14 @@ func (ts *TemplateService) subscriptionExpiring1dContent() string {
 <p style="margin: 0 0 24px 0;">⚠️ <strong>Your {{.PlanName}} access expires tomorrow!</strong></p>
 
 <!-- Urgent expiry card -->
-<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-left: 4px solid #ef4444; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-left: 4px solid {{.Branding.DangerColor}}; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
   <tr>
     <td style="padding: 20px 24px;">
       <p style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600; color: #991b1b;">
         Expiry Date: {{.ExpiryDate}}
       </p>
       <p style="margin: 0; font-size: 14px; color: #b91c1c;">
-        After this date, your WASBOT automations will stop working.
+        After this date, your {{.Branding.CompanyName}} automations will stop working.
       </p>
     </td>
   </tr>
@@ -751,16 +788,16 @@ func (ts *TemplateService) subscriptionExpiring1dContent() string {
 <!-- CTA Button -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
   <tr>
-    <td style="border-radius: 8px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);">
       <a href="{{.ProfileURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
-        🚀 Renew Now — Keep My Access
+        Renew Now — Keep My Access
       </a>
     </td>
   </tr>
 </table>
 
 <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Questions? Reply to this email and we'll help you out.</p>
-<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
 `
 }
 
@@ -837,7 +874,7 @@ func (ts *TemplateService) refundProcessedContent() string {
         <tr>
           <td style="padding-bottom: 12px;">
             <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Amount Refunded</span><br>
-            <span style="font-size: 28px; font-weight: 700; color: #059669;">{{.Currency}}{{.Amount}}</span>
+            <span style="font-size: 28px; font-weight: 700; color: {{.Branding.SecondaryColor}};">{{.Currency}}{{.Amount}}</span>
           </td>
         </tr>
         <tr>
@@ -864,7 +901,7 @@ func (ts *TemplateService) refundProcessedContent() string {
 </table>
 
 <p style="margin: 0; font-size: 14px; color: #6b7280;">Thank you for your patience throughout this process. We hope to serve you again in the future!</p>
-<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
 `
 }
 
@@ -917,8 +954,8 @@ func (ts *TemplateService) refundFailedContent() string {
 <!-- CTA Button -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
   <tr>
-    <td style="border-radius: 8px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
-      <a href="mailto:support@wasbot.ng?subject=Refund Issue - {{.TransactionID}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);">
+      <a href="mailto:{{.Branding.SupportEmail}}?subject=Refund Issue - {{.TransactionID}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
         Contact Support
       </a>
     </td>
@@ -926,7 +963,7 @@ func (ts *TemplateService) refundFailedContent() string {
 </table>
 
 <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">We sincerely apologize for the inconvenience and will work to resolve this as quickly as possible.</p>
-<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
 `
 }
 
@@ -982,7 +1019,7 @@ func (ts *TemplateService) commissionRefundedContent() string {
 </ul>
 
 <p style="margin: 0; font-size: 14px; color: #6b7280;">This is a standard part of the affiliate program. If you have any questions, please don't hesitate to reach out.</p>
-<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
 `
 }
 
@@ -1042,8 +1079,8 @@ func (ts *TemplateService) accessRevokedContent() string {
 <!-- CTA Button -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
   <tr>
-    <td style="border-radius: 8px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-      <a href="https://wasbot.ng/pricing" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.Branding.WebsiteURL}}/pricing" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
         View Plans
       </a>
     </td>
@@ -1051,7 +1088,7 @@ func (ts *TemplateService) accessRevokedContent() string {
 </table>
 
 <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">If you have any questions or believe this was done in error, please contact our support team.</p>
-<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
 `
 }
 
