@@ -203,7 +203,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 		Name:        domain.TemplatePaymentSuccess,
 		Subject:     "Payment Confirmed - {{.ProductName}}",
 		Body:        "Hi {{.CustomerName}},\n\nThank you for your payment of {{.Currency}}{{.Amount}}.\n\nProduct: {{.ProductName}}\nTransaction ID: {{.TransactionID}}\n\nYour subscription is now active.",
-		HTMLBody:    ts.wrapHTML("Payment Confirmed", "<p>Hi {{.CustomerName}},</p><p>Thank you for your payment of <strong>{{.Currency}}{{.Amount}}</strong>.</p><p><strong>Product:</strong> {{.ProductName}}<br><strong>Transaction ID:</strong> {{.TransactionID}}</p><p>Your subscription is now active.</p>"),
+		HTMLBody:    ts.wrapHTML("Payment Confirmed", ts.paymentSuccessContent()),
 		Description: "Sent after successful payment",
 	}
 
@@ -324,33 +324,245 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	}
 }
 
-// wrapHTML wraps content in a basic HTML email template.
+// wrapHTML wraps content in a professional HTML email template.
 func (ts *TemplateService) wrapHTML(title, content string) string {
 	return strings.TrimSpace(fmt.Sprintf(`
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>%s</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #374151; margin: 0; padding: 0; }
-    .container { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
-    h1 { color: #111827; font-size: 24px; margin-bottom: 24px; }
-    p { margin: 16px 0; }
-    a { color: #10b981; }
-    .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 14px; color: #6b7280; }
+    /* Reset */
+    body, table, td, p, a, li { -webkit-text-size-adjust: 100%%; -ms-text-size-adjust: 100%%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%%; outline: none; text-decoration: none; }
+    body { margin: 0 !important; padding: 0 !important; width: 100%% !important; }
+
+    /* Client-specific */
+    #outlook a { padding: 0; }
+    .ReadMsgBody { width: 100%%; }
+    .ExternalClass { width: 100%%; }
+    .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%%; }
+
+    /* Base styles */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Links */
+    a { color: #10b981; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Button styles */
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #10b981 0%%, #059669 100%%);
+      color: #ffffff !important;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      background: linear-gradient(135deg, #059669 0%%, #047857 100%%);
+      box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+    }
+    .btn-danger {
+      background: linear-gradient(135deg, #ef4444 0%%, #dc2626 100%%);
+      box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+    }
+
+    /* Responsive */
+    @media only screen and (max-width: 620px) {
+      .container { width: 100%% !important; padding: 0 !important; }
+      .content { padding: 24px 20px !important; }
+      .header { padding: 24px 20px !important; }
+      .footer-content { padding: 24px 20px !important; }
+    }
   </style>
 </head>
-<body>
-  <div class="container">
-    <h1>%s</h1>
+<body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+  <!-- Preview text -->
+  <div style="display: none; max-height: 0; overflow: hidden;">
     %s
-    <div class="footer">
-      <p>If you have questions, reply to this email or contact our support team.</p>
-    </div>
+    &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
   </div>
+
+  <!-- Email wrapper -->
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" style="background-color: #f3f4f6;">
+    <tr>
+      <td style="padding: 40px 20px;">
+        <!-- Main container -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+          <!-- Header with logo -->
+          <tr>
+            <td class="header" style="background: linear-gradient(135deg, #111827 0%%, #1f2937 100%%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%">
+                <tr>
+                  <td>
+                    <!-- Logo/Brand -->
+                    <div style="display: flex; align-items: center;">
+                      <div style="width: 44px; height: 44px; background: linear-gradient(135deg, #10b981 0%%, #059669 100%%); border-radius: 12px; display: inline-block; text-align: center; line-height: 44px; margin-right: 14px;">
+                        <span style="color: white; font-size: 22px; font-weight: bold;">W</span>
+                      </div>
+                      <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">WasBot</span>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Main content -->
+          <tr>
+            <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+              <!-- Title -->
+              <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">%s</h1>
+
+              <!-- Content -->
+              <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                %s
+              </div>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+              <!-- Divider -->
+              <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%">
+                <tr>
+                  <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                    <!-- Help text -->
+                    <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                      Need help? Reply to this email or visit our
+                      <a href="https://wasbot.ng/support" style="color: #10b981; font-weight: 500;">Help Center</a>
+                    </p>
+
+                    <!-- Social links -->
+                    <div style="margin-bottom: 20px;">
+                      <a href="https://twitter.com/wasbot" style="display: inline-block; margin: 0 8px;">
+                        <img src="https://cdn-icons-png.flaticon.com/32/733/733579.png" alt="Twitter" width="24" height="24" style="opacity: 0.6;">
+                      </a>
+                      <a href="https://wa.me/2348000000000" style="display: inline-block; margin: 0 8px;">
+                        <img src="https://cdn-icons-png.flaticon.com/32/733/733585.png" alt="WhatsApp" width="24" height="24" style="opacity: 0.6;">
+                      </a>
+                    </div>
+
+                    <!-- Company info -->
+                    <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                      WasBot Technologies<br>
+                      Lagos, Nigeria
+                    </p>
+
+                    <!-- Legal -->
+                    <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                      &copy; 2025 WasBot. All rights reserved.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>
-`, title, title, content))
+`, title, title, title, content))
+}
+
+// paymentSuccessContent returns rich HTML content for payment success emails.
+func (ts *TemplateService) paymentSuccessContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+<p style="margin: 0 0 24px 0;">Thank you for your payment! Your subscription is now active.</p>
+
+<!-- Payment details card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding-bottom: 16px; border-bottom: 1px solid #bbf7d0;">
+            <span style="font-size: 14px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Amount Paid</span><br>
+            <span style="font-size: 32px; font-weight: 700; color: #059669;">{{.Currency}}{{.Amount}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-top: 16px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+              <tr>
+                <td width="50%" style="vertical-align: top;">
+                  <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Product</span><br>
+                  <span style="font-size: 15px; font-weight: 600; color: #111827;">{{.ProductName}}</span>
+                </td>
+                <td width="50%" style="vertical-align: top;">
+                  <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Transaction ID</span><br>
+                  <span style="font-size: 13px; font-family: monospace; color: #111827;">{{.TransactionID}}</span>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 24px 0; color: #6b7280;">You can now access all the features included in your plan. If you have any questions, we're here to help!</p>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+      <a href="https://wasbot.ng/dashboard" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        Go to Dashboard →
+      </a>
+    </td>
+  </tr>
+</table>
+`
+}
+
+// buttonHTML returns an email-compatible button.
+func (ts *TemplateService) buttonHTML(text, url, color string) string {
+	if color == "" {
+		color = "#10b981"
+	}
+	return fmt.Sprintf(`
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 24px 0;">
+  <tr>
+    <td style="border-radius: 8px; background: %s;">
+      <a href="%s" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        %s
+      </a>
+    </td>
+  </tr>
+</table>
+`, color, url, text)
 }
