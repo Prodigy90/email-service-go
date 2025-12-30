@@ -80,9 +80,9 @@
 
 | Component | Location | Status |
 |-----------|----------|--------|
-| `invoice_created` handler | webhook_handler.go | ❌ Not implemented |
-| `refund_*` handlers | webhook_handler.go | ❌ Not implemented |
-| Email on webhook events | webhook_handler.go | ⚠️ Partial (only some events) |
+| `invoice_created` handler | webhook_handler.go | ✅ Implemented |
+| `refund_*` handlers | webhook_handler.go | ✅ Implemented |
+| Email on webhook events | webhook_handler.go | ✅ Complete (all events) |
 | ref_id in user schema | migrations | ❌ Not implemented |
 | Affiliate client | internal/services/ | ❌ Not implemented |
 | Commission tracking | webhook_handler.go | ❌ Not implemented |
@@ -124,10 +124,10 @@ case "refund_failed":
 ```
 
 **Checklist:**
-- [ ] Add `invoice_created` case - send renewal reminder email
-- [ ] Add `refund_pending` case - send refund pending email
-- [ ] Add `refund_processed` case - send email, reverse commission, update status
-- [ ] Add `refund_failed` case - send failure notification email
+- [x] Add `invoice_created` case - send renewal reminder email
+- [x] Add `refund_pending` case - send refund pending email
+- [x] Add `refund_processed` case - send email, reverse commission, update status
+- [x] Add `refund_failed` case - send failure notification email
 
 ### 1.2 Wire Up Email Sending on All Events
 
@@ -180,9 +180,9 @@ case "refund_processed":
 ```
 
 **Files to Modify:**
-- [ ] `cmd/api-server/handlers/webhook_handler.go` - Add emailClient field, inject in constructor
-- [ ] `cmd/api-server/server.go` - Pass emailClient to NewWebhookHandler()
-- [ ] `internal/email/client.go` - Add `SendSubscriptionReminder()` method if missing
+- [x] `cmd/api-server/handlers/webhook_handler.go` - Add emailClient field, inject in constructor
+- [x] `cmd/api-server/server.go` - Pass emailClient to NewWebhookHandler()
+- [x] `internal/email/client.go` - Add `SendSubscriptionReminder()` method if missing
 
 ---
 
@@ -534,11 +534,11 @@ SWAGGER_ALLOWED_IPS=100.64.0.0/10
 
 ## Task Checklist
 
-### Immediate (Phase 1)
+### Immediate (Phase 1) - ✅ COMPLETE
 
-- [ ] Add `invoice_created` handler to webhook_handler.go
-- [ ] Add `refund_pending`, `refund_processed`, `refund_failed` handlers
-- [ ] Wire up email sending on all webhook events
+- [x] Add `invoice_created` handler to webhook_handler.go
+- [x] Add `refund_pending`, `refund_processed`, `refund_failed` handlers
+- [x] Wire up email sending on all webhook events
 - [ ] Test webhook flow end-to-end
 
 ### Short Term (Phase 2)
