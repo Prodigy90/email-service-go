@@ -352,6 +352,39 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 		Description: "Sent before trial expires",
 	}
 
+	// Trial sequence templates
+	ts.templates[domain.TemplateTrialDay3] = &domain.Template{
+		Name:        domain.TemplateTrialDay3,
+		Subject:     "How's your {{.AppName}} trial going?",
+		Body:        "Hi {{.Name}},\n\nYou've been using {{.AppName}} for 3 days now! How's it going?\n\nHere are some features you might not have tried yet:\n- Schedule messages to send later\n- Set up auto-replies\n- Create broadcast lists\n\nNeed help? Just reply to this email.\n\nBest,\nThe {{.AppName}} Team",
+		HTMLBody:    ts.wrapHTML("How's Your Trial Going?", ts.trialDay3Content()),
+		Description: "Day 3 engagement check",
+	}
+
+	ts.templates[domain.TemplateTrialDay5] = &domain.Template{
+		Name:        domain.TemplateTrialDay5,
+		Subject:     "Unlock the full power of {{.AppName}}",
+		Body:        "Hi {{.Name}},\n\nYou're halfway through your trial! Here's what premium users love most:\n\n- Unlimited message scheduling\n- Priority support\n- Advanced automation\n- Multi-device support\n\nUpgrade now and get 20% off your first month:\n{{.UpgradeURL}}\n\nBest,\nThe {{.AppName}} Team",
+		HTMLBody:    ts.wrapHTML("Unlock Full Power", ts.trialDay5Content()),
+		Description: "Day 5 feature highlight",
+	}
+
+	ts.templates[domain.TemplateTrialDay6] = &domain.Template{
+		Name:        domain.TemplateTrialDay6,
+		Subject:     "Your {{.AppName}} trial ends tomorrow!",
+		Body:        "Hi {{.Name}},\n\nHeads up - your {{.AppName}} trial ends tomorrow!\n\nAfter your trial:\n- Your scheduled messages will stop\n- Auto-replies will be disabled\n- You'll lose access to your dashboard\n\nDon't lose your progress! Upgrade now:\n{{.UpgradeURL}}\n\nBest,\nThe {{.AppName}} Team",
+		HTMLBody:    ts.wrapHTML("Trial Ends Tomorrow!", ts.trialDay6Content()),
+		Description: "Day 6 urgent reminder",
+	}
+
+	ts.templates[domain.TemplateTrialDay10] = &domain.Template{
+		Name:        domain.TemplateTrialDay10,
+		Subject:     "We miss you! Here's 30% off {{.AppName}}",
+		Body:        "Hi {{.Name}},\n\nYour {{.AppName}} trial ended a few days ago, and we noticed you haven't upgraded yet.\n\nWe'd love to have you back! Use code COMEBACK30 for 30% off your first month.\n\nUpgrade now:\n{{.UpgradeURL}}\n\nThis offer expires in 48 hours.\n\nBest,\nThe {{.AppName}} Team",
+		HTMLBody:    ts.wrapHTML("We Miss You!", ts.trialDay10Content()),
+		Description: "Day 10 win-back after expiry",
+	}
+
 	ts.templates[domain.TemplateAccountUpgraded] = &domain.Template{
 		Name:        domain.TemplateAccountUpgraded,
 		Subject:     "Welcome to {{.PlanName}}!",
@@ -1158,4 +1191,238 @@ func (ts *TemplateService) buttonHTML(text, url, color string) string {
   </tr>
 </table>
 `, color, url, text)
+}
+
+// trialDay3Content returns content for day 3 engagement email.
+func (ts *TemplateService) trialDay3Content() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+<p style="margin: 0 0 24px 0;">You've been using <strong>{{.AppName}}</strong> for 3 days now! How's it going? We'd love to hear your thoughts.</p>
+
+<!-- Feature suggestions -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <p style="margin: 0 0 16px 0; font-weight: 600; color: #166534;">Have you tried these features yet?</p>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">📅</span>
+            <span style="margin-left: 12px; color: #374151;"><strong>Schedule Messages</strong> - Send messages at the perfect time</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">🤖</span>
+            <span style="margin-left: 12px; color: #374151;"><strong>Auto-Replies</strong> - Never miss a customer message</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">📢</span>
+            <span style="margin-left: 12px; color: #374151;"><strong>Broadcast Lists</strong> - Message multiple contacts at once</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 24px 0; color: #6b7280;">Need help getting started? Just reply to this email and we'll walk you through it!</p>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        Continue Exploring →
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
+`
+}
+
+// trialDay5Content returns content for day 5 feature highlight email.
+func (ts *TemplateService) trialDay5Content() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+<p style="margin: 0 0 24px 0;">You're <strong>halfway through your trial!</strong> Here's what our premium users love most:</p>
+
+<!-- Premium features -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding: 12px 0; border-bottom: 1px solid #dbeafe;">
+            <span style="color: #1d4ed8; font-size: 20px;">✨</span>
+            <span style="margin-left: 12px; font-weight: 600; color: #1e40af;">Unlimited Message Scheduling</span>
+            <p style="margin: 4px 0 0 32px; font-size: 14px; color: #6b7280;">Schedule as many messages as you need</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 0; border-bottom: 1px solid #dbeafe;">
+            <span style="color: #1d4ed8; font-size: 20px;">🎯</span>
+            <span style="margin-left: 12px; font-weight: 600; color: #1e40af;">Priority Support</span>
+            <p style="margin: 4px 0 0 32px; font-size: 14px; color: #6b7280;">Get help when you need it most</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 0; border-bottom: 1px solid #dbeafe;">
+            <span style="color: #1d4ed8; font-size: 20px;">⚡</span>
+            <span style="margin-left: 12px; font-weight: 600; color: #1e40af;">Advanced Automation</span>
+            <p style="margin: 4px 0 0 32px; font-size: 14px; color: #6b7280;">Build complex workflows effortlessly</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 0;">
+            <span style="color: #1d4ed8; font-size: 20px;">📱</span>
+            <span style="margin-left: 12px; font-weight: 600; color: #1e40af;">Multi-Device Support</span>
+            <p style="margin: 4px 0 0 32px; font-size: 14px; color: #6b7280;">Manage multiple WhatsApp numbers</p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- Discount offer -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 20px 24px;">
+      <p style="margin: 0; font-size: 16px; color: #92400e;">
+        <strong>🎁 Special Offer:</strong> Upgrade now and get <strong>20% off</strong> your first month!
+      </p>
+    </td>
+  </tr>
+</table>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.UpgradeURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+        Upgrade Now — 20% Off
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
+`
+}
+
+// trialDay6Content returns content for day 6 urgent reminder email.
+func (ts *TemplateService) trialDay6Content() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+<p style="margin: 0 0 24px 0;">⚠️ <strong>Your {{.AppName}} trial ends tomorrow!</strong></p>
+
+<!-- What happens next -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <p style="margin: 0 0 16px 0; font-weight: 600; color: #991b1b;">After your trial ends:</p>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="color: #dc2626;">✗</span>
+            <span style="margin-left: 12px; color: #7f1d1d;">Scheduled messages will stop sending</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="color: #dc2626;">✗</span>
+            <span style="margin-left: 12px; color: #7f1d1d;">Auto-replies will be disabled</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="color: #dc2626;">✗</span>
+            <span style="margin-left: 12px; color: #7f1d1d;">Dashboard access will be revoked</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- Keep your progress -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 20px 24px;">
+      <p style="margin: 0; font-size: 16px; color: #166534;">
+        <strong>Good news:</strong> Upgrade now and keep all your settings, scheduled messages, and configurations intact!
+      </p>
+    </td>
+  </tr>
+</table>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);">
+      <a href="{{.UpgradeURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+        Upgrade Now — Keep My Progress
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Questions? Reply to this email and we'll help you out.</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
+`
+}
+
+// trialDay10Content returns content for day 10 win-back email.
+func (ts *TemplateService) trialDay10Content() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+<p style="margin: 0 0 24px 0;">Your {{.AppName}} trial ended a few days ago, and we noticed you haven't upgraded yet. <strong>We'd love to have you back!</strong></p>
+
+<!-- Special offer -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 32px; text-align: center;">
+      <p style="margin: 0 0 8px 0; font-size: 14px; color: #92400e; text-transform: uppercase; letter-spacing: 1px;">Exclusive Comeback Offer</p>
+      <p style="margin: 0 0 16px 0; font-size: 48px; font-weight: 800; color: #78350f;">30% OFF</p>
+      <p style="margin: 0; font-size: 16px; color: #92400e;">Use code: <strong style="background: #78350f; color: white; padding: 4px 12px; border-radius: 4px; font-family: monospace;">COMEBACK30</strong></p>
+    </td>
+  </tr>
+</table>
+
+<!-- Urgency -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-left: 4px solid {{.Branding.DangerColor}}; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 16px 20px;">
+      <p style="margin: 0; font-size: 14px; color: #991b1b;">
+        <strong>⏰ This offer expires in 48 hours!</strong>
+      </p>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 24px 0; color: #6b7280;">We know life gets busy. But if WhatsApp automation is something you need, there's no better time to start than now.</p>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.UpgradeURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+        Claim 30% Off Now →
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">If you have any questions or feedback about your trial experience, we'd love to hear from you.</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
+`
 }

@@ -76,13 +76,11 @@ services:
       DATABASE_URL: postgres://email:email@postgres:5432/email_service?sslmode=disable
       REDIS_URL: redis://redis:6379/0
       API_KEY: dev-api-key
-      # Use Mailhog for local testing
-      SMTP_HOST: mailhog
-      SMTP_PORT: "1025"
-      SMTP_USERNAME: ""
-      SMTP_PASSWORD: ""
-      SMTP_FROM_ADDRESS: noreply@localhost
-      SMTP_FROM_NAME: Email Service
+      # Use Resend for email delivery
+      EMAIL_PROVIDER: resend
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      RESEND_FROM_ADDRESS: ${RESEND_FROM_ADDRESS:-noreply@notifications.wasbot.ng}
+      RESEND_FROM_NAME: ${RESEND_FROM_NAME:-WASBOT Notifications}
     restart: unless-stopped
 
   worker:
@@ -102,12 +100,10 @@ services:
       ENV: development
       DATABASE_URL: postgres://email:email@postgres:5432/email_service?sslmode=disable
       REDIS_URL: redis://redis:6379/0
-      SMTP_HOST: mailhog
-      SMTP_PORT: "1025"
-      SMTP_USERNAME: ""
-      SMTP_PASSWORD: ""
-      SMTP_FROM_ADDRESS: noreply@localhost
-      SMTP_FROM_NAME: Email Service
+      EMAIL_PROVIDER: resend
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      RESEND_FROM_ADDRESS: ${RESEND_FROM_ADDRESS:-noreply@notifications.wasbot.ng}
+      RESEND_FROM_NAME: ${RESEND_FROM_NAME:-WASBOT Notifications}
     restart: unless-stopped
 
 volumes:

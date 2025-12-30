@@ -41,6 +41,12 @@ const (
 	TemplateTrialExpiring    = "trial_expiring"
 	TemplateAccountUpgraded  = "account_upgraded"
 
+	// Trial sequence templates
+	TemplateTrialDay3  = "trial_day3"  // Day 3: Engagement check
+	TemplateTrialDay5  = "trial_day5"  // Day 5: Feature highlight
+	TemplateTrialDay6  = "trial_day6"  // Day 6: Urgent reminder
+	TemplateTrialDay10 = "trial_day10" // Day 10: Win-back after expiry
+
 	// Refund templates
 	TemplateRefundPending   = "refund_pending"
 	TemplateRefundProcessed = "refund_processed"
