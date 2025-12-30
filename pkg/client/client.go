@@ -227,12 +227,17 @@ const (
 	TemplatePayoutProcessed  = "payout_processed"
 	TemplateCommissionEarned = "commission_earned"
 
-	// Payments
-	TemplatePaymentSuccess        = "payment_success"
-	TemplatePaymentFailed         = "payment_failed"
-	TemplateSubscriptionRenewed   = "subscription_renewed"
-	TemplateSubscriptionExpiring  = "subscription_expiring"
-	TemplateSubscriptionCancelled = "subscription_cancelled"
+	// Payments (recurring subscriptions)
+	TemplatePaymentSuccess        = "payment_success"          // Recurring payment success
+	TemplatePaymentFailed         = "payment_failed"           // Payment failure
+	TemplateSubscriptionRenewed   = "subscription_renewed"     // Auto-renewal success
+	TemplateSubscriptionExpiring  = "subscription_expiring"    // Generic expiring
+	TemplateSubscriptionCancelled = "subscription_cancelled"   // Subscription cancelled
+
+	// One-time payment templates (non-recurring)
+	TemplatePaymentSuccessOnetime        = "payment_success_onetime"        // One-time payment confirmation
+	TemplateSubscriptionActivated        = "subscription_activated"         // New recurring subscription
+	TemplateSubscriptionActivatedOnetime = "subscription_activated_onetime" // One-time subscription
 
 	// Refunds
 	TemplateRefundPending      = "refund_pending"

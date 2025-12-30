@@ -63,28 +63,35 @@ func (ts *TemplateService) RenderWithBranding(templateName string, data map[stri
 		branding = domain.DefaultBranding()
 	}
 
+	// Create a copy of data with branding added for template rendering
+	// This allows templates to use {{.Branding.X}} syntax
+	templateData := make(map[string]interface{})
+	for k, v := range data {
+		templateData[k] = v
+	}
+	templateData["Branding"] = ts.prepareBrandingData(branding)
+
 	// Render subject
-	subject, err = ts.renderString(tmpl.Subject, data)
+	subject, err = ts.renderString(tmpl.Subject, templateData)
 	if err != nil {
 		return "", "", "", fmt.Errorf("failed to render subject: %w", err)
 	}
 
 	// Render body
-	body, err = ts.renderString(tmpl.Body, data)
+	body, err = ts.renderString(tmpl.Body, templateData)
 	if err != nil {
 		return "", "", "", fmt.Errorf("failed to render body: %w", err)
 	}
 
 	// Render HTML body if present
 	if tmpl.HTMLBody != "" {
-		// First render the template with data
+		// Render the template with data (including branding)
 		var renderedHTML string
-		renderedHTML, err = ts.renderString(tmpl.HTMLBody, data)
+		renderedHTML, err = ts.renderString(tmpl.HTMLBody, templateData)
 		if err != nil {
 			return "", "", "", fmt.Errorf("failed to render html body: %w", err)
 		}
-		// Then apply branding replacements
-		htmlBody = ts.applyBranding(renderedHTML, branding)
+		htmlBody = renderedHTML
 	}
 
 	return subject, body, htmlBody, nil
@@ -103,7 +110,58 @@ func isValidHexColor(color string) bool {
 	return true
 }
 
+// prepareBrandingData converts BrandingConfig to a map with validated/computed values for templates.
+func (ts *TemplateService) prepareBrandingData(branding *domain.BrandingConfig) map[string]interface{} {
+	// Validate and sanitize color values - use safe defaults for invalid colors
+	primaryColor := branding.PrimaryColor
+	if !isValidHexColor(primaryColor) {
+		primaryColor = "#10b981"
+	}
+	secondaryColor := branding.SecondaryColor
+	if !isValidHexColor(secondaryColor) {
+		secondaryColor = "#059669"
+	}
+	accentColor := branding.AccentColor
+	if !isValidHexColor(accentColor) {
+		accentColor = "#047857"
+	}
+	dangerColor := branding.DangerColor
+	if !isValidHexColor(dangerColor) {
+		dangerColor = "#ef4444"
+	}
+
+	// Generate logo content - use image if LogoURL provided, otherwise first letter
+	var logoContent string
+	if branding.LogoURL != "" {
+		logoContent = fmt.Sprintf(`<img src="%s" alt="%s" style="max-width: 44px; max-height: 44px;">`,
+			html.EscapeString(branding.LogoURL), html.EscapeString(branding.CompanyName))
+	} else {
+		firstChar := "W"
+		if len(branding.CompanyName) > 0 {
+			firstChar = string([]rune(branding.CompanyName)[0])
+		}
+		logoContent = fmt.Sprintf(`<span style="color: white; font-size: 22px; font-weight: bold;">%s</span>`,
+			html.EscapeString(firstChar))
+	}
+
+	return map[string]interface{}{
+		"PrimaryColor":    primaryColor,
+		"SecondaryColor":  secondaryColor,
+		"AccentColor":     accentColor,
+		"DangerColor":     dangerColor,
+		"CompanyName":     branding.CompanyName,
+		"LogoURL":         branding.LogoURL,
+		"LogoContent":     logoContent,
+		"DashboardURL":    branding.DashboardURL,
+		"SupportEmail":    branding.SupportEmail,
+		"WebsiteURL":      branding.WebsiteURL,
+		"SocialTwitter":   branding.SocialTwitter,
+		"SocialInstagram": branding.SocialInstagram,
+	}
+}
+
 // applyBranding replaces branding placeholders in the rendered HTML.
+// NOTE: This is kept for backward compatibility but is no longer used by RenderWithBranding.
 func (ts *TemplateService) applyBranding(htmlContent string, branding *domain.BrandingConfig) string {
 	// Validate and sanitize color values - use safe defaults for invalid colors
 	primaryColor := branding.PrimaryColor
@@ -294,13 +352,13 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 		Description: "Sent when a customer's access is revoked due to a refund",
 	}
 
-	// Payment/Webhook templates
+	// Payment/Webhook templates - RECURRING SUBSCRIPTIONS
 	ts.templates[domain.TemplatePaymentSuccess] = &domain.Template{
 		Name:        domain.TemplatePaymentSuccess,
 		Subject:     "Payment Confirmed - {{.ProductName}}",
-		Body:        "Hi {{.CustomerName}},\n\nThank you for your payment of {{.Currency}}{{.Amount}}.\n\nProduct: {{.ProductName}}\nTransaction ID: {{.TransactionID}}\n\nYour subscription is now active.",
+		Body:        "Hi {{.CustomerName}},\n\nThank you for your payment of {{.Currency}}{{.Amount}}.\n\nProduct: {{.ProductName}}\nTransaction ID: {{.TransactionID}}\n\nYour subscription is now active and will automatically renew on {{.NextBillingDate}}.\n\nYou can manage your subscription anytime from your dashboard.",
 		HTMLBody:    ts.wrapHTML("Payment Confirmed", ts.paymentSuccessContent()),
-		Description: "Sent after successful payment",
+		Description: "Sent after successful recurring payment",
 	}
 
 	ts.templates[domain.TemplatePaymentFailed] = &domain.Template{
@@ -314,9 +372,9 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateSubscriptionRenewed] = &domain.Template{
 		Name:        domain.TemplateSubscriptionRenewed,
 		Subject:     "Subscription Renewed - {{.PlanName}}",
-		Body:        "Hi {{.CustomerName}},\n\nYour {{.PlanName}} subscription has been successfully renewed.\n\nAmount: {{.Currency}}{{.Amount}}\nNext billing date: {{.NextBillingDate}}\n\nThank you for your continued support!",
-		HTMLBody:    ts.wrapHTML("Subscription Renewed", "<p>Hi {{.CustomerName}},</p><p>Your <strong>{{.PlanName}}</strong> subscription has been successfully renewed.</p><p><strong>Amount:</strong> {{.Currency}}{{.Amount}}<br><strong>Next billing date:</strong> {{.NextBillingDate}}</p><p>Thank you for your continued support!</p>"),
-		Description: "Sent when subscription renews",
+		Body:        "Hi {{.CustomerName}},\n\nYour {{.PlanName}} subscription has been automatically renewed.\n\nAmount: {{.Currency}}{{.Amount}}\nNext billing date: {{.NextBillingDate}}\n\nYour subscription will continue to renew automatically. You can manage or cancel anytime from your dashboard.\n\nThank you for your continued support!",
+		HTMLBody:    ts.wrapHTML("Subscription Renewed", ts.subscriptionRenewedContent()),
+		Description: "Sent when recurring subscription auto-renews",
 	}
 
 	ts.templates[domain.TemplateSubscriptionExpiring] = &domain.Template{
@@ -330,25 +388,50 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateSubscriptionCancelled] = &domain.Template{
 		Name:        domain.TemplateSubscriptionCancelled,
 		Subject:     "Subscription Cancelled",
-		Body:        "Hi {{.CustomerName}},\n\nYour {{.PlanName}} subscription has been cancelled.\n\nYou will continue to have access until {{.ExpiryDate}}.\n\nWe're sorry to see you go. If you change your mind, you can resubscribe anytime.",
-		HTMLBody:    ts.wrapHTML("Subscription Cancelled", "<p>Hi {{.CustomerName}},</p><p>Your <strong>{{.PlanName}}</strong> subscription has been cancelled.</p><p>You will continue to have access until <strong>{{.ExpiryDate}}</strong>.</p><p>We're sorry to see you go. If you change your mind, you can resubscribe anytime.</p>"),
+		Body:        "Hi {{.CustomerName}},\n\nYour {{.PlanName}} subscription has been cancelled.\n\nYou will continue to have access until {{.ExpiryDate}}. Your subscription will NOT automatically renew.\n\nWe're sorry to see you go. If you change your mind, you can resubscribe anytime.",
+		HTMLBody:    ts.wrapHTML("Subscription Cancelled", ts.subscriptionCancelledContent()),
 		Description: "Sent when subscription is cancelled",
+	}
+
+	// ONE-TIME PAYMENT TEMPLATES (non-recurring)
+	ts.templates[domain.TemplatePaymentSuccessOnetime] = &domain.Template{
+		Name:        domain.TemplatePaymentSuccessOnetime,
+		Subject:     "Payment Confirmed - {{.ProductName}} ({{.Duration}})",
+		Body:        "Hi {{.CustomerName}},\n\nThank you for your payment of {{.Currency}}{{.Amount}}.\n\nProduct: {{.ProductName}}\nDuration: {{.Duration}}\nAccess until: {{.ExpiryDate}}\nTransaction ID: {{.TransactionID}}\n\nIMPORTANT: This is a one-time purchase. Your subscription will NOT automatically renew. You'll need to manually renew before {{.ExpiryDate}} to continue access.\n\nWe'll send you a reminder before your access expires.",
+		HTMLBody:    ts.wrapHTML("Payment Confirmed", ts.paymentSuccessOnetimeContent()),
+		Description: "Sent after successful one-time payment",
+	}
+
+	ts.templates[domain.TemplateSubscriptionActivated] = &domain.Template{
+		Name:        domain.TemplateSubscriptionActivated,
+		Subject:     "Welcome to {{.PlanName}} - Subscription Activated!",
+		Body:        "Hi {{.CustomerName}},\n\nWelcome! Your {{.PlanName}} subscription is now active.\n\nAmount: {{.Currency}}{{.Amount}}/{{.Interval}}\nNext billing date: {{.NextBillingDate}}\n\nYour subscription will automatically renew. You can manage or cancel anytime from your dashboard.\n\nThank you for choosing WASBOT!",
+		HTMLBody:    ts.wrapHTML("Subscription Activated", ts.subscriptionActivatedContent()),
+		Description: "Sent when new recurring subscription is activated",
+	}
+
+	ts.templates[domain.TemplateSubscriptionActivatedOnetime] = &domain.Template{
+		Name:        domain.TemplateSubscriptionActivatedOnetime,
+		Subject:     "Welcome to {{.PlanName}} - Access Activated!",
+		Body:        "Hi {{.CustomerName}},\n\nWelcome! Your {{.PlanName}} access is now active.\n\nDuration: {{.Duration}}\nAccess until: {{.ExpiryDate}}\n\nIMPORTANT: This is a one-time purchase. Your access will NOT automatically renew. Please renew manually before {{.ExpiryDate}} to avoid service interruption.\n\nWe'll send you reminders before your access expires.\n\nThank you for choosing WASBOT!",
+		HTMLBody:    ts.wrapHTML("Access Activated", ts.subscriptionActivatedOnetimeContent()),
+		Description: "Sent when new one-time subscription is activated",
 	}
 
 	// WasBot/General templates
 	ts.templates[domain.TemplateWelcome] = &domain.Template{
 		Name:        domain.TemplateWelcome,
-		Subject:     "Welcome to {{.AppName}}!",
-		Body:        "Hi {{.Name}},\n\nWelcome to {{.AppName}}! We're excited to have you on board.\n\nGet started by exploring our features and let us know if you need any help.\n\nBest,\nThe {{.AppName}} Team",
-		HTMLBody:    ts.wrapHTML("Welcome!", "<p>Hi {{.Name}},</p><p>Welcome to <strong>{{.AppName}}</strong>! We're excited to have you on board.</p><p>Get started by exploring our features and let us know if you need any help.</p><p>Best,<br>The {{.AppName}} Team</p>"),
+		Subject:     "Welcome to {{.AppName}} - Your WhatsApp Automation Journey Starts Now!",
+		Body:        "Hi {{.Name}},\n\nWelcome to {{.AppName}}! We're thrilled to have you on board.\n\nYou now have access to:\n- Broadcast status updates to up to 1,000 contacts\n- Auto-save new contacts to Google Contacts\n- Send messages to multiple groups + tag members\n- Post up to 5 status updates per day\n\nHere's how to get started:\n1. Connect your WhatsApp by scanning the QR code\n2. Link your Google account for contact sync\n3. Create your first status broadcast\n\nYour 7-day trial starts now. Make the most of it!\n\nBest,\nThe {{.AppName}} Team",
+		HTMLBody:    ts.wrapHTML("Welcome to WASBOT!", ts.welcomeContent()),
 		Description: "Welcome email for new users",
 	}
 
 	ts.templates[domain.TemplateTrialExpiring] = &domain.Template{
 		Name:        domain.TemplateTrialExpiring,
-		Subject:     "Your trial expires in {{.Days}} days",
-		Body:        "Hi {{.Name}},\n\nYour free trial of {{.AppName}} expires in {{.Days}} days.\n\nUpgrade now to keep access to all features:\n{{.UpgradeURL}}\n\nQuestions? Reply to this email.",
-		HTMLBody:    ts.wrapHTML("Trial Expiring", "<p>Hi {{.Name}},</p><p>Your free trial of <strong>{{.AppName}}</strong> expires in <strong>{{.Days}} days</strong>.</p><p><a href=\"{{.UpgradeURL}}\" style=\"background:#10b981;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block;\">Upgrade Now</a></p><p>Questions? Reply to this email.</p>"),
+		Subject:     "Your {{.AppName}} trial expires in {{.Days}} days",
+		Body:        "Hi {{.Name}},\n\nYour free trial of {{.AppName}} expires in {{.Days}} days.\n\nDon't lose access to:\n- Status broadcasting to your contacts\n- Auto-save contacts to Google Contacts\n- Group messaging and tagging\n\nUpgrade now to keep your WhatsApp automation running:\n{{.UpgradeURL}}\n\nQuestions? Reply to this email.",
+		HTMLBody:    ts.wrapHTML("Trial Expiring Soon", ts.trialExpiringContent()),
 		Description: "Sent before trial expires",
 	}
 
@@ -356,7 +439,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateTrialDay3] = &domain.Template{
 		Name:        domain.TemplateTrialDay3,
 		Subject:     "How's your {{.AppName}} trial going?",
-		Body:        "Hi {{.Name}},\n\nYou've been using {{.AppName}} for 3 days now! How's it going?\n\nHere are some features you might not have tried yet:\n- Schedule messages to send later\n- Set up auto-replies\n- Create broadcast lists\n\nNeed help? Just reply to this email.\n\nBest,\nThe {{.AppName}} Team",
+		Body:        "Hi {{.Name}},\n\nYou've been using {{.AppName}} for 3 days now! How's it going?\n\nHere are some features you might not have tried yet:\n- Broadcast status updates to all your contacts at once\n- Auto-save new WhatsApp contacts to Google Contacts\n- Send messages to multiple groups and tag members\n\nNeed help getting started? Just reply to this email.\n\nBest,\nThe {{.AppName}} Team",
 		HTMLBody:    ts.wrapHTML("How's Your Trial Going?", ts.trialDay3Content()),
 		Description: "Day 3 engagement check",
 	}
@@ -364,7 +447,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateTrialDay5] = &domain.Template{
 		Name:        domain.TemplateTrialDay5,
 		Subject:     "Unlock the full power of {{.AppName}}",
-		Body:        "Hi {{.Name}},\n\nYou're halfway through your trial! Here's what premium users love most:\n\n- Unlimited message scheduling\n- Priority support\n- Advanced automation\n- Multi-device support\n\nUpgrade now and get 20% off your first month:\n{{.UpgradeURL}}\n\nBest,\nThe {{.AppName}} Team",
+		Body:        "Hi {{.Name}},\n\nYou're halfway through your trial! Here's what paid users unlock:\n\nBasic Plan ($5.50/mo):\n- 15 status updates per day\n- 5,000 status contacts\n- 50 group messages/day\n- 25 tag messages/day\n\nPremium Plan ($14/mo):\n- 50 status updates per day\n- 30,000 status contacts\n- Bulk import contacts\n- Delete old status updates\n\nUpgrade now:\n{{.UpgradeURL}}\n\nBest,\nThe {{.AppName}} Team",
 		HTMLBody:    ts.wrapHTML("Unlock Full Power", ts.trialDay5Content()),
 		Description: "Day 5 feature highlight",
 	}
@@ -372,7 +455,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateTrialDay6] = &domain.Template{
 		Name:        domain.TemplateTrialDay6,
 		Subject:     "Your {{.AppName}} trial ends tomorrow!",
-		Body:        "Hi {{.Name}},\n\nHeads up - your {{.AppName}} trial ends tomorrow!\n\nAfter your trial:\n- Your scheduled messages will stop\n- Auto-replies will be disabled\n- You'll lose access to your dashboard\n\nDon't lose your progress! Upgrade now:\n{{.UpgradeURL}}\n\nBest,\nThe {{.AppName}} Team",
+		Body:        "Hi {{.Name}},\n\nHeads up - your {{.AppName}} trial ends tomorrow!\n\nAfter your trial:\n- Status broadcasting will stop working\n- Contact auto-save to Google Contacts will be disabled\n- Group messaging and tagging will stop\n\nDon't lose your WhatsApp automation! Upgrade now:\n{{.UpgradeURL}}\n\nBest,\nThe {{.AppName}} Team",
 		HTMLBody:    ts.wrapHTML("Trial Ends Tomorrow!", ts.trialDay6Content()),
 		Description: "Day 6 urgent reminder",
 	}
@@ -380,16 +463,16 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateTrialDay10] = &domain.Template{
 		Name:        domain.TemplateTrialDay10,
 		Subject:     "We miss you! Here's 30% off {{.AppName}}",
-		Body:        "Hi {{.Name}},\n\nYour {{.AppName}} trial ended a few days ago, and we noticed you haven't upgraded yet.\n\nWe'd love to have you back! Use code COMEBACK30 for 30% off your first month.\n\nUpgrade now:\n{{.UpgradeURL}}\n\nThis offer expires in 48 hours.\n\nBest,\nThe {{.AppName}} Team",
+		Body:        "Hi {{.Name}},\n\nYour {{.AppName}} trial ended a few days ago, and we noticed you haven't upgraded yet.\n\nWe'd love to have you back! Use code COMEBACK30 for 30% off your first month.\n\nWith {{.AppName}}, you can:\n- Broadcast status to thousands of contacts instantly\n- Auto-save contacts to Google Contacts\n- Send messages to multiple groups and tag members\n\nUpgrade now:\n{{.UpgradeURL}}\n\nThis offer expires in 48 hours.\n\nBest,\nThe {{.AppName}} Team",
 		HTMLBody:    ts.wrapHTML("We Miss You!", ts.trialDay10Content()),
 		Description: "Day 10 win-back after expiry",
 	}
 
 	ts.templates[domain.TemplateAccountUpgraded] = &domain.Template{
 		Name:        domain.TemplateAccountUpgraded,
-		Subject:     "Welcome to {{.PlanName}}!",
-		Body:        "Hi {{.Name}},\n\nCongratulations! You've been upgraded to {{.PlanName}}.\n\nYou now have access to:\n{{.Features}}\n\nThank you for your support!",
-		HTMLBody:    ts.wrapHTML("Account Upgraded", "<p>Hi {{.Name}},</p><p>Congratulations! You've been upgraded to <strong>{{.PlanName}}</strong>.</p><p>You now have access to:</p><ul>{{.FeaturesHTML}}</ul><p>Thank you for your support!</p>"),
+		Subject:     "Welcome to {{.PlanName}} - Your upgrade is complete!",
+		Body:        "Hi {{.Name}},\n\nCongratulations! You've been upgraded to {{.PlanName}}.\n\nYou now have access to:\n{{.Features}}\n\nStart using your new features now:\n{{.DashboardURL}}\n\nThank you for your support!",
+		HTMLBody:    ts.wrapHTML("Upgrade Complete!", ts.accountUpgradedContent()),
 		Description: "Sent when user upgrades their plan",
 	}
 
@@ -1208,20 +1291,20 @@ func (ts *TemplateService) trialDay3Content() string {
       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
         <tr>
           <td style="padding: 8px 0;">
-            <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">📅</span>
-            <span style="margin-left: 12px; color: #374151;"><strong>Schedule Messages</strong> - Send messages at the perfect time</span>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding: 8px 0;">
-            <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">🤖</span>
-            <span style="margin-left: 12px; color: #374151;"><strong>Auto-Replies</strong> - Never miss a customer message</span>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding: 8px 0;">
             <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">📢</span>
-            <span style="margin-left: 12px; color: #374151;"><strong>Broadcast Lists</strong> - Message multiple contacts at once</span>
+            <span style="margin-left: 12px; color: #374151;"><strong>Status Broadcasting</strong> - Post status updates to all your contacts at once</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">📇</span>
+            <span style="margin-left: 12px; color: #374151;"><strong>Google Contacts Sync</strong> - Auto-save new WhatsApp contacts</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">👥</span>
+            <span style="margin-left: 12px; color: #374151;"><strong>Group Messaging</strong> - Send to multiple groups and tag members</span>
           </td>
         </tr>
       </table>
@@ -1251,39 +1334,41 @@ func (ts *TemplateService) trialDay5Content() string {
 	return `
 <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
 
-<p style="margin: 0 0 24px 0;">You're <strong>halfway through your trial!</strong> Here's what our premium users love most:</p>
+<p style="margin: 0 0 24px 0;">You're <strong>halfway through your trial!</strong> Here's what you unlock when you upgrade:</p>
 
-<!-- Premium features -->
-<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
+<!-- Pricing comparison -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 24px;">
   <tr>
-    <td style="padding: 24px;">
-      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <!-- Basic Plan -->
+    <td width="48%" style="vertical-align: top; padding-right: 2%;">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; border: 2px solid #bbf7d0;">
         <tr>
-          <td style="padding: 12px 0; border-bottom: 1px solid #dbeafe;">
-            <span style="color: #1d4ed8; font-size: 20px;">✨</span>
-            <span style="margin-left: 12px; font-weight: 600; color: #1e40af;">Unlimited Message Scheduling</span>
-            <p style="margin: 4px 0 0 32px; font-size: 14px; color: #6b7280;">Schedule as many messages as you need</p>
+          <td style="padding: 20px;">
+            <p style="margin: 0 0 4px 0; font-size: 14px; color: #166534; font-weight: 600;">BASIC</p>
+            <p style="margin: 0 0 16px 0; font-size: 28px; font-weight: 700; color: #15803d;">$5.50<span style="font-size: 14px; font-weight: 400; color: #6b7280;">/mo</span></p>
+            <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
+              <li>15 status updates/day</li>
+              <li>5,000 status contacts</li>
+              <li>50 group messages/day</li>
+              <li>25 tag messages/day</li>
+            </ul>
           </td>
         </tr>
+      </table>
+    </td>
+    <!-- Premium Plan -->
+    <td width="48%" style="vertical-align: top; padding-left: 2%;">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; border: 2px solid #3b82f6;">
         <tr>
-          <td style="padding: 12px 0; border-bottom: 1px solid #dbeafe;">
-            <span style="color: #1d4ed8; font-size: 20px;">🎯</span>
-            <span style="margin-left: 12px; font-weight: 600; color: #1e40af;">Priority Support</span>
-            <p style="margin: 4px 0 0 32px; font-size: 14px; color: #6b7280;">Get help when you need it most</p>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding: 12px 0; border-bottom: 1px solid #dbeafe;">
-            <span style="color: #1d4ed8; font-size: 20px;">⚡</span>
-            <span style="margin-left: 12px; font-weight: 600; color: #1e40af;">Advanced Automation</span>
-            <p style="margin: 4px 0 0 32px; font-size: 14px; color: #6b7280;">Build complex workflows effortlessly</p>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding: 12px 0;">
-            <span style="color: #1d4ed8; font-size: 20px;">📱</span>
-            <span style="margin-left: 12px; font-weight: 600; color: #1e40af;">Multi-Device Support</span>
-            <p style="margin: 4px 0 0 32px; font-size: 14px; color: #6b7280;">Manage multiple WhatsApp numbers</p>
+          <td style="padding: 20px;">
+            <p style="margin: 0 0 4px 0; font-size: 14px; color: #1d4ed8; font-weight: 600;">PREMIUM ⭐</p>
+            <p style="margin: 0 0 16px 0; font-size: 28px; font-weight: 700; color: #1e40af;">$14<span style="font-size: 14px; font-weight: 400; color: #6b7280;">/mo</span></p>
+            <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
+              <li>50 status updates/day</li>
+              <li>30,000 status contacts</li>
+              <li><strong>Bulk import contacts</strong></li>
+              <li><strong>Delete old status</strong></li>
+            </ul>
           </td>
         </tr>
       </table>
@@ -1291,12 +1376,12 @@ func (ts *TemplateService) trialDay5Content() string {
   </tr>
 </table>
 
-<!-- Discount offer -->
-<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+<!-- Enterprise mention -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #faf5ff; border-left: 4px solid #a855f7; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
   <tr>
-    <td style="padding: 20px 24px;">
-      <p style="margin: 0; font-size: 16px; color: #92400e;">
-        <strong>🎁 Special Offer:</strong> Upgrade now and get <strong>20% off</strong> your first month!
+    <td style="padding: 16px 20px;">
+      <p style="margin: 0; font-size: 14px; color: #7e22ce;">
+        <strong>Need more?</strong> Enterprise ($35/mo) gives you unlimited status, 3 WhatsApp sessions, and cross-posting across sessions.
       </p>
     </td>
   </tr>
@@ -1307,7 +1392,7 @@ func (ts *TemplateService) trialDay5Content() string {
   <tr>
     <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
       <a href="{{.UpgradeURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
-        Upgrade Now — 20% Off
+        View Plans & Upgrade
       </a>
     </td>
   </tr>
@@ -1333,19 +1418,19 @@ func (ts *TemplateService) trialDay6Content() string {
         <tr>
           <td style="padding: 8px 0;">
             <span style="color: #dc2626;">✗</span>
-            <span style="margin-left: 12px; color: #7f1d1d;">Scheduled messages will stop sending</span>
+            <span style="margin-left: 12px; color: #7f1d1d;">Status broadcasting will stop working</span>
           </td>
         </tr>
         <tr>
           <td style="padding: 8px 0;">
             <span style="color: #dc2626;">✗</span>
-            <span style="margin-left: 12px; color: #7f1d1d;">Auto-replies will be disabled</span>
+            <span style="margin-left: 12px; color: #7f1d1d;">Contact auto-save to Google Contacts will be disabled</span>
           </td>
         </tr>
         <tr>
           <td style="padding: 8px 0;">
             <span style="color: #dc2626;">✗</span>
-            <span style="margin-left: 12px; color: #7f1d1d;">Dashboard access will be revoked</span>
+            <span style="margin-left: 12px; color: #7f1d1d;">Group messaging and tagging will stop</span>
           </td>
         </tr>
       </table>
@@ -1358,7 +1443,7 @@ func (ts *TemplateService) trialDay6Content() string {
   <tr>
     <td style="padding: 20px 24px;">
       <p style="margin: 0; font-size: 16px; color: #166534;">
-        <strong>Good news:</strong> Upgrade now and keep all your settings, scheduled messages, and configurations intact!
+        <strong>Good news:</strong> Upgrade now and keep your WhatsApp connection, contacts, and all your settings intact!
       </p>
     </td>
   </tr>
@@ -1369,7 +1454,7 @@ func (ts *TemplateService) trialDay6Content() string {
   <tr>
     <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);">
       <a href="{{.UpgradeURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
-        Upgrade Now — Keep My Progress
+        Upgrade Now — Keep My Access
       </a>
     </td>
   </tr>
@@ -1386,6 +1471,21 @@ func (ts *TemplateService) trialDay10Content() string {
 <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
 
 <p style="margin: 0 0 24px 0;">Your {{.AppName}} trial ended a few days ago, and we noticed you haven't upgraded yet. <strong>We'd love to have you back!</strong></p>
+
+<!-- What you're missing -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 20px;">
+      <p style="margin: 0 0 12px 0; font-weight: 600; color: #166534;">What you're missing out on:</p>
+      <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #374151; line-height: 1.8;">
+        <li>Broadcast status to thousands of WhatsApp contacts instantly</li>
+        <li>Auto-save every new contact to Google Contacts</li>
+        <li>Send messages to multiple groups at once</li>
+        <li>Tag and mention members in group messages</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
 <!-- Special offer -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; margin-bottom: 24px;">
@@ -1409,8 +1509,6 @@ func (ts *TemplateService) trialDay10Content() string {
   </tr>
 </table>
 
-<p style="margin: 0 0 24px 0; color: #6b7280;">We know life gets busy. But if WhatsApp automation is something you need, there's no better time to start than now.</p>
-
 <!-- CTA Button -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
   <tr>
@@ -1424,5 +1522,488 @@ func (ts *TemplateService) trialDay10Content() string {
 
 <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">If you have any questions or feedback about your trial experience, we'd love to hear from you.</p>
 <p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
+`
+}
+
+// welcomeContent returns content for welcome email.
+func (ts *TemplateService) welcomeContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+<p style="margin: 0 0 24px 0;">Welcome to <strong>{{.AppName}}</strong>! We're thrilled to have you on board. Your 7-day free trial starts now.</p>
+
+<!-- What you get -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <p style="margin: 0 0 16px 0; font-weight: 600; color: #166534;">Your trial includes:</p>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding: 10px 0;">
+            <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">📢</span>
+            <span style="margin-left: 12px; color: #374151;"><strong>Status Broadcasting</strong> - Post to up to 1,000 contacts at once</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 0;">
+            <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">📇</span>
+            <span style="margin-left: 12px; color: #374151;"><strong>Google Contacts Sync</strong> - Auto-save new contacts automatically</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 0;">
+            <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">👥</span>
+            <span style="margin-left: 12px; color: #374151;"><strong>Group Messaging</strong> - Send to multiple groups + tag members</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 0;">
+            <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">📱</span>
+            <span style="margin-left: 12px; color: #374151;"><strong>5 Status/Day</strong> - Post up to 5 status updates daily</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- Getting started steps -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <p style="margin: 0 0 16px 0; font-weight: 600; color: #1e40af;">Get started in 3 steps:</p>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">1</span>
+            <span style="margin-left: 12px; color: #374151;">Connect your WhatsApp by scanning the QR code</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">2</span>
+            <span style="margin-left: 12px; color: #374151;">Link your Google account for contact sync</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">3</span>
+            <span style="margin-left: 12px; color: #374151;">Create your first status broadcast!</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.Branding.DashboardURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+        Go to Dashboard →
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Need help getting started? Just reply to this email!</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
+`
+}
+
+// trialExpiringContent returns content for trial expiring email.
+func (ts *TemplateService) trialExpiringContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+<p style="margin: 0 0 24px 0;">Your free trial of <strong>{{.AppName}}</strong> expires in <strong>{{.Days}} days</strong>.</p>
+
+<!-- What you'll lose -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <p style="margin: 0 0 16px 0; font-weight: 600; color: #991b1b;">Don't lose access to:</p>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="color: #dc2626;">✗</span>
+            <span style="margin-left: 12px; color: #7f1d1d;">Status broadcasting to your contacts</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="color: #dc2626;">✗</span>
+            <span style="margin-left: 12px; color: #7f1d1d;">Auto-save contacts to Google Contacts</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="color: #dc2626;">✗</span>
+            <span style="margin-left: 12px; color: #7f1d1d;">Group messaging and tagging</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.UpgradeURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+        Upgrade Now
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Questions? Reply to this email.</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
+`
+}
+
+// accountUpgradedContent returns content for account upgrade email.
+func (ts *TemplateService) accountUpgradedContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+<p style="margin: 0 0 24px 0;">Congratulations! 🎉 You've been upgraded to <strong>{{.PlanName}}</strong>.</p>
+
+<!-- Success message -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px; text-align: center;">
+      <div style="font-size: 48px; margin-bottom: 16px;">✓</div>
+      <p style="margin: 0 0 8px 0; font-size: 20px; font-weight: 700; color: #166534;">Upgrade Complete!</p>
+      <p style="margin: 0; font-size: 14px; color: #6b7280;">Your new features are now active</p>
+    </td>
+  </tr>
+</table>
+
+<!-- What's unlocked -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <p style="margin: 0 0 16px 0; font-weight: 600; color: #1e40af;">You now have access to:</p>
+      <div style="font-size: 14px; color: #374151; line-height: 1.8;">
+        {{.FeaturesHTML}}
+      </div>
+    </td>
+  </tr>
+</table>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+        Start Using New Features →
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Thank you for your support! If you have any questions, just reply to this email.</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
+`
+}
+
+// subscriptionRenewedContent returns content for recurring subscription renewal email.
+func (ts *TemplateService) subscriptionRenewedContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+<p style="margin: 0 0 24px 0;">Your <strong>{{.PlanName}}</strong> subscription has been automatically renewed.</p>
+
+<!-- Payment details -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding: 8px 0; border-bottom: 1px solid #bbf7d0;">
+            <span style="color: #6b7280;">Amount charged:</span>
+            <span style="float: right; font-weight: 600; color: #166534;">{{.Currency}}{{.Amount}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="color: #6b7280;">Next billing date:</span>
+            <span style="float: right; font-weight: 600; color: #374151;">{{.NextBillingDate}}</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- Auto-renewal notice -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 16px 20px;">
+      <p style="margin: 0; font-size: 14px; color: #1e40af;">
+        <strong>Auto-renewal enabled:</strong> Your subscription will automatically renew each billing cycle. You can manage or cancel anytime from your dashboard.
+      </p>
+    </td>
+  </tr>
+</table>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.ProfileURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        Manage Subscription
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Thank you for your continued support!</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+`
+}
+
+// subscriptionCancelledContent returns content for subscription cancellation email.
+func (ts *TemplateService) subscriptionCancelledContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+<p style="margin: 0 0 24px 0;">Your <strong>{{.PlanName}}</strong> subscription has been cancelled.</p>
+
+<!-- Access info -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px; text-align: center;">
+      <p style="margin: 0 0 8px 0; font-size: 14px; color: #92400e;">You still have access until</p>
+      <p style="margin: 0; font-size: 28px; font-weight: 700; color: #78350f;">{{.ExpiryDate}}</p>
+    </td>
+  </tr>
+</table>
+
+<!-- No auto-renewal notice -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-left: 4px solid #22c55e; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 16px 20px;">
+      <p style="margin: 0; font-size: 14px; color: #166534;">
+        <strong>✓ No more charges:</strong> Your subscription will NOT automatically renew. You will not be charged again unless you resubscribe.
+      </p>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 24px 0; color: #6b7280;">We're sorry to see you go. If you change your mind, you can resubscribe anytime.</p>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.ProfileURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        Resubscribe
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+`
+}
+
+// paymentSuccessOnetimeContent returns content for one-time payment success email.
+func (ts *TemplateService) paymentSuccessOnetimeContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+<p style="margin: 0 0 24px 0;">Thank you for your purchase! Your payment has been confirmed.</p>
+
+<!-- Payment details -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <div style="text-align: center; margin-bottom: 16px;">
+        <span style="font-size: 48px;">✓</span>
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding: 8px 0; border-bottom: 1px solid #bbf7d0;">
+            <span style="color: #6b7280;">Product:</span>
+            <span style="float: right; font-weight: 600; color: #374151;">{{.ProductName}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; border-bottom: 1px solid #bbf7d0;">
+            <span style="color: #6b7280;">Duration:</span>
+            <span style="float: right; font-weight: 600; color: #374151;">{{.Duration}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; border-bottom: 1px solid #bbf7d0;">
+            <span style="color: #6b7280;">Amount paid:</span>
+            <span style="float: right; font-weight: 600; color: #166534;">{{.Currency}}{{.Amount}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="color: #6b7280;">Access until:</span>
+            <span style="float: right; font-weight: 600; color: #374151;">{{.ExpiryDate}}</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- IMPORTANT: One-time notice -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 16px 20px;">
+      <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #92400e;">⚠️ One-Time Purchase</p>
+      <p style="margin: 0; font-size: 14px; color: #92400e;">
+        This subscription will <strong>NOT automatically renew</strong>. Your access will end on {{.ExpiryDate}}. We'll send you reminders before it expires so you can renew manually if you'd like to continue.
+      </p>
+    </td>
+  </tr>
+</table>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        Go to Dashboard →
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Transaction ID: {{.TransactionID}}</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+`
+}
+
+// subscriptionActivatedContent returns content for new recurring subscription activation.
+func (ts *TemplateService) subscriptionActivatedContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+<p style="margin: 0 0 24px 0;">Welcome! Your <strong>{{.PlanName}}</strong> subscription is now active. 🎉</p>
+
+<!-- Subscription details -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding: 8px 0; border-bottom: 1px solid #bbf7d0;">
+            <span style="color: #6b7280;">Plan:</span>
+            <span style="float: right; font-weight: 600; color: #374151;">{{.PlanName}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; border-bottom: 1px solid #bbf7d0;">
+            <span style="color: #6b7280;">Amount:</span>
+            <span style="float: right; font-weight: 600; color: #166534;">{{.Currency}}{{.Amount}}/{{.Interval}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="color: #6b7280;">Next billing date:</span>
+            <span style="float: right; font-weight: 600; color: #374151;">{{.NextBillingDate}}</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- Auto-renewal notice -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 16px 20px;">
+      <p style="margin: 0; font-size: 14px; color: #1e40af;">
+        <strong>Auto-renewal enabled:</strong> Your subscription will automatically renew each {{.Interval}}. You can manage or cancel anytime from your dashboard.
+      </p>
+    </td>
+  </tr>
+</table>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        Get Started →
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Thank you for choosing WASBOT!</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+`
+}
+
+// subscriptionActivatedOnetimeContent returns content for new one-time subscription activation.
+func (ts *TemplateService) subscriptionActivatedOnetimeContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+<p style="margin: 0 0 24px 0;">Welcome! Your <strong>{{.PlanName}}</strong> access is now active. 🎉</p>
+
+<!-- Subscription details -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding: 8px 0; border-bottom: 1px solid #bbf7d0;">
+            <span style="color: #6b7280;">Plan:</span>
+            <span style="float: right; font-weight: 600; color: #374151;">{{.PlanName}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; border-bottom: 1px solid #bbf7d0;">
+            <span style="color: #6b7280;">Duration:</span>
+            <span style="float: right; font-weight: 600; color: #374151;">{{.Duration}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0;">
+            <span style="color: #6b7280;">Access until:</span>
+            <span style="float: right; font-weight: 600; color: #166534;">{{.ExpiryDate}}</span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- IMPORTANT: One-time notice -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 16px 20px;">
+      <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #92400e;">⚠️ One-Time Purchase</p>
+      <p style="margin: 0; font-size: 14px; color: #92400e;">
+        This is a one-time purchase. Your access will <strong>NOT automatically renew</strong>. We'll send you reminders before {{.ExpiryDate}} so you can renew manually if you'd like to continue.
+      </p>
+    </td>
+  </tr>
+</table>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        Get Started →
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Thank you for choosing WASBOT!</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
 `
 }
