@@ -2,6 +2,13 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Git Commit Rules
+
+When making git commits:
+- Do NOT include the `Co-Authored-By` line
+- Do NOT include the "Generated with Claude Code" line
+- Just use a clean commit message with no attribution footer
+
 ## Build & Development Commands
 
 ```bash
