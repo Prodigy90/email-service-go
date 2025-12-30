@@ -405,7 +405,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateSubscriptionActivated] = &domain.Template{
 		Name:        domain.TemplateSubscriptionActivated,
 		Subject:     "Welcome to {{.PlanName}} - Subscription Activated!",
-		Body:        "Hi {{.CustomerName}},\n\nWelcome! Your {{.PlanName}} subscription is now active.\n\nAmount: {{.Currency}}{{.Amount}}/{{.Interval}}\nNext billing date: {{.NextBillingDate}}\n\nYour subscription will automatically renew. You can manage or cancel anytime from your dashboard.\n\nThank you for choosing WASBOT!",
+		Body:        "Hi {{.CustomerName}},\n\nWelcome! Your {{.PlanName}} subscription is now active.\n\nAmount: {{.Currency}}{{.Amount}}/{{.Interval}}\nNext billing date: {{.NextBillingDate}}\n\nYour subscription will automatically renew. You can manage or cancel anytime from your dashboard.\n\nThank you for choosing {{.Branding.CompanyName}}!",
 		HTMLBody:    ts.wrapHTML("Subscription Activated", ts.subscriptionActivatedContent()),
 		Description: "Sent when new recurring subscription is activated",
 	}
@@ -413,7 +413,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateSubscriptionActivatedOnetime] = &domain.Template{
 		Name:        domain.TemplateSubscriptionActivatedOnetime,
 		Subject:     "Welcome to {{.PlanName}} - Access Activated!",
-		Body:        "Hi {{.CustomerName}},\n\nWelcome! Your {{.PlanName}} access is now active.\n\nDuration: {{.Duration}}\nAccess until: {{.ExpiryDate}}\n\nIMPORTANT: This is a one-time purchase. Your access will NOT automatically renew. Please renew manually before {{.ExpiryDate}} to avoid service interruption.\n\nWe'll send you reminders before your access expires.\n\nThank you for choosing WASBOT!",
+		Body:        "Hi {{.CustomerName}},\n\nWelcome! Your {{.PlanName}} access is now active.\n\nDuration: {{.Duration}}\nAccess until: {{.ExpiryDate}}\n\nIMPORTANT: This is a one-time purchase. Your access will NOT automatically renew. Please renew manually before {{.ExpiryDate}} to avoid service interruption.\n\nWe'll send you reminders before your access expires.\n\nThank you for choosing {{.Branding.CompanyName}}!",
 		HTMLBody:    ts.wrapHTML("Access Activated", ts.subscriptionActivatedOnetimeContent()),
 		Description: "Sent when new one-time subscription is activated",
 	}
@@ -423,7 +423,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 		Name:        domain.TemplateWelcome,
 		Subject:     "Welcome to {{.AppName}} - Your WhatsApp Automation Journey Starts Now!",
 		Body:        "Hi {{.Name}},\n\nWelcome to {{.AppName}}! We're thrilled to have you on board.\n\nYou now have access to:\n- Broadcast status updates to up to 1,000 contacts\n- Auto-save new contacts to Google Contacts\n- Send messages to multiple groups + tag members\n- Post up to 5 status updates per day\n\nHere's how to get started:\n1. Connect your WhatsApp by scanning the QR code\n2. Link your Google account for contact sync\n3. Create your first status broadcast\n\nYour 7-day trial starts now. Make the most of it!\n\nBest,\nThe {{.AppName}} Team",
-		HTMLBody:    ts.wrapHTML("Welcome to WASBOT!", ts.welcomeContent()),
+		HTMLBody:    ts.wrapHTML("Welcome!", ts.welcomeContent()),
 		Description: "Welcome email for new users",
 	}
 
@@ -505,7 +505,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateSubscriptionReminder3d] = &domain.Template{
 		Name:        domain.TemplateSubscriptionReminder3d,
 		Subject:     "Your {{.PlanName}} subscription renews in 3 days",
-		Body:        "Hi {{.CustomerName}},\n\nThis is a friendly reminder that your {{.PlanName}} subscription will automatically renew in 3 days.\n\nRenewal Date: {{.RenewalDate}}\nAmount: {{.Currency}}{{.Amount}}\n\nIf you'd like to make any changes to your subscription, you can manage it here:\n{{.ProfileURL}}\n\nThank you for being a valued WASBOT customer!",
+		Body:        "Hi {{.CustomerName}},\n\nThis is a friendly reminder that your {{.PlanName}} subscription will automatically renew in 3 days.\n\nRenewal Date: {{.RenewalDate}}\nAmount: {{.Currency}}{{.Amount}}\n\nIf you'd like to make any changes to your subscription, you can manage it here:\n{{.ProfileURL}}\n\nThank you for being a valued customer!",
 		HTMLBody:    ts.wrapHTML("Subscription Renewal Reminder", ts.subscriptionReminder3dContent()),
 		Description: "Sent 3 days before subscription renewal",
 	}
@@ -513,7 +513,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateSubscriptionReminder1d] = &domain.Template{
 		Name:        domain.TemplateSubscriptionReminder1d,
 		Subject:     "⏰ Reminder: {{.PlanName}} renews tomorrow",
-		Body:        "Hi {{.CustomerName}},\n\nThis is a final reminder that your {{.PlanName}} subscription will renew tomorrow.\n\nAmount: {{.Currency}}{{.Amount}}\n\nIf you need to update your payment method or make changes, please do so before the renewal:\n{{.ProfileURL}}\n\nThank you for your continued support!\n\nThe WASBOT Team",
+		Body:        "Hi {{.CustomerName}},\n\nThis is a final reminder that your {{.PlanName}} subscription will renew tomorrow.\n\nAmount: {{.Currency}}{{.Amount}}\n\nIf you need to update your payment method or make changes, please do so before the renewal:\n{{.ProfileURL}}\n\nThank you for your continued support!",
 		HTMLBody:    ts.wrapHTML("Subscription Renews Tomorrow", ts.subscriptionReminder1dContent()),
 		Description: "Sent 1 day before subscription renewal",
 	}
@@ -530,7 +530,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateSubscriptionExpiring1d] = &domain.Template{
 		Name:        domain.TemplateSubscriptionExpiring1d,
 		Subject:     "⚠️ Final Reminder: {{.PlanName}} expires tomorrow",
-		Body:        "Hi {{.CustomerName}},\n\nThis is a final reminder that your {{.PlanName}} access will expire tomorrow.\n\nExpiry Date: {{.ExpiryDate}}\n\nDon't lose access! Renew now to continue using all features:\n{{.ProfileURL}}\n\nIf you have any questions, our support team is here to help.\n\nThe WASBOT Team",
+		Body:        "Hi {{.CustomerName}},\n\nThis is a final reminder that your {{.PlanName}} access will expire tomorrow.\n\nExpiry Date: {{.ExpiryDate}}\n\nDon't lose access! Renew now to continue using all features:\n{{.ProfileURL}}\n\nIf you have any questions, our support team is here to help.",
 		HTMLBody:    ts.wrapHTML("Subscription Expires Tomorrow", ts.subscriptionExpiring1dContent()),
 		Description: "Sent 1 day before one-off subscription expires",
 	}
@@ -1762,7 +1762,7 @@ func (ts *TemplateService) subscriptionRenewedContent() string {
 </table>
 
 <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Thank you for your continued support!</p>
-<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
 `
 }
 
@@ -1807,7 +1807,7 @@ func (ts *TemplateService) subscriptionCancelledContent() string {
   </tr>
 </table>
 
-<p style="margin: 24px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
 `
 }
 
@@ -1879,7 +1879,7 @@ func (ts *TemplateService) paymentSuccessOnetimeContent() string {
 </table>
 
 <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Transaction ID: {{.TransactionID}}</p>
-<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
 `
 }
 
@@ -1940,8 +1940,8 @@ func (ts *TemplateService) subscriptionActivatedContent() string {
   </tr>
 </table>
 
-<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Thank you for choosing WASBOT!</p>
-<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Thank you for choosing {{.Branding.CompanyName}}!</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
 `
 }
 
@@ -2003,7 +2003,7 @@ func (ts *TemplateService) subscriptionActivatedOnetimeContent() string {
   </tr>
 </table>
 
-<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Thank you for choosing WASBOT!</p>
-<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Thank you for choosing {{.Branding.CompanyName}}!</p>
+<p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
 `
 }
