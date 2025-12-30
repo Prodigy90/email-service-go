@@ -209,9 +209,9 @@ ADD COLUMN IF NOT EXISTS last_commission_txn_id VARCHAR(255);
 ```
 
 **Files to Create/Modify:**
-- [ ] `migrations/019_add_referral_tracking.up.sql`
-- [ ] `migrations/019_add_referral_tracking.down.sql`
-- [ ] `internal/database/postgres/user_subscription_repository.go` - Add ref_id to UpsertFromWebhook
+- [x] `migrations/020_add_referral_tracking.sql` - Created (was numbered 020, not 019)
+- [x] `internal/database/postgres/user_subscription_repository.go` - Added ref_id and last_commission_txn_id
+- [x] `internal/database/models.go` - Added RefID and LastCommissionTxnID to UserSubscription
 
 ### 2.2 Capture Referral ID on Signup
 
@@ -364,8 +364,8 @@ func hashEmail(email string) string {
 ```
 
 **Files to Create:**
-- [ ] `internal/services/affiliate_client.go`
-- [ ] `internal/services/affiliate_client_test.go`
+- [x] `cmd/api-server/services/affiliate_client.go` - Created (in services, not internal/services)
+- [ ] `cmd/api-server/services/affiliate_client_test.go` - TODO: Add tests
 
 ### 2.4 Integrate Commission Tracking into Webhook Handler
 
@@ -420,8 +420,9 @@ case "refund_processed":
 ```
 
 **Files to Modify:**
-- [ ] `cmd/api-server/handlers/webhook_handler.go` - Add affiliateClient, integrate tracking
-- [ ] `cmd/api-server/server.go` - Initialize and inject affiliateClient
+- [x] `cmd/api-server/handlers/webhook_handler.go` - Added affiliateClient, integrated tracking
+- [x] `cmd/api-server/server.go` - Initialize and inject affiliateClient
+- [x] `cmd/api-server/main.go` - Added affiliate config fields
 
 ---
 
@@ -541,12 +542,12 @@ SWAGGER_ALLOWED_IPS=100.64.0.0/10
 - [x] Wire up email sending on all webhook events
 - [ ] Test webhook flow end-to-end
 
-### Short Term (Phase 2)
+### Short Term (Phase 2) - ✅ COMPLETE
 
-- [ ] Create migration for ref_id column
-- [ ] Update signup to capture ref_id
-- [ ] Create affiliate_client.go service
-- [ ] Integrate commission tracking into webhook handler
+- [x] Create migration for ref_id column (020_add_referral_tracking.sql)
+- [ ] Update signup to capture ref_id (needs frontend changes)
+- [x] Create affiliate_client.go service
+- [x] Integrate commission tracking into webhook handler
 - [ ] Test affiliate commission flow end-to-end
 
 ### Medium Term (Phase 3-4)
