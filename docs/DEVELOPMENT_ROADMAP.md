@@ -1,7 +1,7 @@
 # Development Roadmap
 
 > Cross-repository development plan for the WasBot ecosystem
-> Last updated: 2025-12-30
+> Last updated: 2025-12-31
 
 ## System Architecture Overview
 
@@ -37,11 +37,13 @@
 │  - Signature verification                                                    │
 │  - Event normalization (StandardWebhookResponse)                             │
 │  - Product routing (database-driven)                                         │
-│  - PURELY A ROUTING LAYER - no business logic                                │
-└──────────────────────┬───────────────────────────────────────────────────────┘
-                       │
-                       ▼
-        ┌──────────────────────────────────────────────────────────────────────┐
+│  - Paystack API proxy (subscription mgmt, payment initialization)            │
+│  - ROUTING LAYER + PAYMENT GATEWAY PROXY                                     │
+└──────────────────────┬───────────────────┬──────────────────────────────────┘
+                       │                   ▲
+                       │ webhooks          │ API calls (subscribe, cancel, etc.)
+                       ▼                   │
+        ┌──────────────────────────────────┴───────────────────────────────────┐
         │                         WASBOT (k8s)                                 │
         │  Receives ALL webhook events and handles business logic:             │
         │  - Update subscription status in DB                                  │
@@ -49,6 +51,7 @@
         │  - Push commissions to affiliate-system                              │
         │  - Send WhatsApp notifications to user                               │
         │  - Handle tier changes (cache invalidation, pod rebuilds)            │
+        │  - Subscription management via webhook-router Paystack API           │
         └───────────────┬──────────────────────────┬───────────────────────────┘
                         │                          │
                         ▼                          ▼
@@ -62,16 +65,99 @@
 
 ---
 
+## Paystack Subscription Management (via Webhook Router)
+
+The webhook-router-go acts as a centralized Paystack API proxy, allowing products like WasBot to manage subscriptions without needing direct Paystack credentials.
+
+### Available Endpoints
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/api/paystack/transactions/initialize` | POST | Create payment link (one-time or subscription) |
+| `/api/paystack/subscriptions/:code` | GET | Get subscription details |
+| `/api/paystack/subscriptions/:code/disable` | POST | Cancel a subscription |
+| `/api/paystack/transactions/:idOrRef` | GET | Get transaction details |
+| `/api/paystack/plans` | GET | List all Paystack plans |
+| `/api/paystack/plans/:idOrCode` | GET | Get plan details |
+
+### Key Data in StandardWebhookResponse
+
+The `email_token` field is now included in the Subscription object, enabling products to cancel subscriptions:
+
+```json
+{
+  "event_type": "subscription_created",
+  "customer": { "email": "user@example.com", "id": "123" },
+  "subscription": {
+    "id": "SUB_abc123",
+    "type": "recurring",
+    "interval": "monthly",
+    "status": "active",
+    "plan_name": "WASBOT - Essential Saver",
+    "email_token": "tok_xyz789"  // ← Required for cancellation
+  },
+  "payment": { ... }
+}
+```
+
+### Subscription Flow for Products (WasBot)
+
+```
+1. User selects plan on frontend
+   │
+2. WasBot API calls webhook-router:
+   │  POST /api/paystack/transactions/initialize
+   │  { "email": "user@example.com", "plan": "PLN_xxx", "callback_url": "..." }
+   │
+3. Webhook-router returns authorization_url
+   │
+4. User redirected to Paystack checkout
+   │
+5. User pays → Paystack sends webhook → webhook-router → WasBot
+   │
+6. WasBot stores subscription details including email_token
+   │
+7. User wants to cancel:
+   │  WasBot calls: POST /api/paystack/subscriptions/:code/disable
+   │  Body: { "email_token": "tok_xyz789" }
+```
+
+### What Products Need to Store
+
+| Field | Source | Purpose |
+|-------|--------|---------|
+| `subscription.id` | Webhook | Subscription code for all operations |
+| `subscription.email_token` | Webhook | Required for cancellation |
+| `subscription.status` | Webhook | Current status |
+| `subscription.period_end` | Webhook | Next billing date / expiry |
+| `customer.email` | Webhook | Customer identifier |
+
+---
+
 ## Current State Analysis
 
 ### What Already Exists
 
+**webhook-router-go:**
+
 | Component | Location | Status |
 |-----------|----------|--------|
-| Webhook endpoint | `whatsmeow-test/cmd/api-server/handlers/webhook_handler.go` | ✅ Complete |
+| Webhook receiving & routing | `internal/handlers/webhook.go` | ✅ Complete |
+| Paystack signature verification | `pkg/utils/crypto.go` | ✅ Complete |
+| Event normalization | `internal/services/processors/paystack.go` | ✅ Complete |
+| StandardWebhookResponse with `email_token` | `pkg/types/webhook.go` | ✅ Complete |
+| Paystack API proxy (get/cancel sub) | `internal/handlers/paystack_api.go` | ✅ Complete |
+| Transaction initialization endpoint | `POST /api/paystack/transactions/initialize` | ✅ Complete |
+| Product/plan configuration | Database-driven | ✅ Complete |
+
+**whatsmeow-test (WasBot):**
+
+| Component | Location | Status |
+|-----------|----------|--------|
+| Webhook endpoint | `cmd/api-server/handlers/webhook_handler.go` | ✅ Complete |
 | HMAC verification | webhook_handler.go | ✅ Complete |
 | Idempotency (trace_id) | webhook_handler.go + webhook_events table | ✅ Complete |
-| Email client | `whatsmeow-test/internal/email/client.go` | ✅ Integrated |
+| Email client | `internal/email/client.go` | ✅ Integrated |
 | Subscription updates | webhook_handler.go → userSubRepo | ✅ Complete |
 | WhatsApp notifications | NotificationDispatcher | ✅ Complete |
 | Tier change handling | TierChangeService | ✅ Complete |
@@ -83,6 +169,8 @@
 | `invoice_created` handler | webhook_handler.go | ✅ Implemented |
 | `refund_*` handlers | webhook_handler.go | ✅ Implemented |
 | Email on webhook events | webhook_handler.go | ✅ Complete (all events) |
+| Store `email_token` from webhook | WasBot user_subscriptions | ❌ Not implemented |
+| Subscription management UI | WasBot frontend | ❌ Not implemented |
 | ref_id in user schema | migrations | ❌ Not implemented |
 | Affiliate client | internal/services/ | ❌ Not implemented |
 | Commission tracking | webhook_handler.go | ❌ Not implemented |
