@@ -68,4 +68,8 @@ const (
 	// Refund-related affiliate templates
 	TemplateCommissionRefunded = "commission_refunded"
 	TemplateAccessRevoked      = "access_revoked"
+
+	// Authentication templates (Migration 022)
+	TemplateEmailVerification = "email_verification"
+	TemplatePasswordReset     = "password_reset"
 )

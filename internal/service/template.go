@@ -534,6 +534,23 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 		HTMLBody:    ts.wrapHTML("Subscription Expires Tomorrow", ts.subscriptionExpiring1dContent()),
 		Description: "Sent 1 day before one-off subscription expires",
 	}
+
+	// Authentication templates (Migration 022)
+	ts.templates[domain.TemplateEmailVerification] = &domain.Template{
+		Name:        domain.TemplateEmailVerification,
+		Subject:     "Verify your {{.AppName}} account",
+		Body:        "Hi {{.Name}},\n\nWelcome to {{.AppName}}! Please verify your email address by clicking the link below:\n\n{{.VerificationURL}}\n\nThis link will expire in 24 hours.\n\nIf you didn't create an account, you can safely ignore this email.\n\nBest,\nThe {{.AppName}} Team",
+		HTMLBody:    ts.wrapHTML("Verify Your Email", ts.emailVerificationContent()),
+		Description: "Sent when a user signs up to verify their email address",
+	}
+
+	ts.templates[domain.TemplatePasswordReset] = &domain.Template{
+		Name:        domain.TemplatePasswordReset,
+		Subject:     "Reset your {{.AppName}} password",
+		Body:        "Hi {{.Name}},\n\nWe received a request to reset your password. Click the link below to set a new password:\n\n{{.ResetURL}}\n\nThis link will expire in 1 hour.\n\nIf you didn't request a password reset, you can safely ignore this email. Your password will remain unchanged.\n\nBest,\nThe {{.AppName}} Team",
+		HTMLBody:    ts.wrapHTML("Reset Your Password", ts.passwordResetContent()),
+		Description: "Sent when a user requests a password reset",
+	}
 }
 
 // wrapHTML wraps content in a professional HTML email template using default branding.
@@ -2005,5 +2022,95 @@ func (ts *TemplateService) subscriptionActivatedOnetimeContent() string {
 
 <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Thank you for choosing {{.Branding.CompanyName}}!</p>
 <p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
+`
+}
+
+// emailVerificationContent returns content for email verification emails.
+func (ts *TemplateService) emailVerificationContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+<p style="margin: 0 0 24px 0;">Welcome to <strong>{{.AppName}}</strong>! Please verify your email address to complete your registration.</p>
+
+<!-- Verification card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0f9ff; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 32px; text-align: center;">
+      <p style="margin: 0 0 16px 0; font-size: 16px; color: #0369a1;">Click the button below to verify your email:</p>
+
+      <!-- CTA Button -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+        <tr>
+          <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+            <a href="{{.VerificationURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+              Verify Email Address
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- Link expiry notice -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 16px 20px;">
+      <p style="margin: 0; font-size: 14px; color: #92400e;">
+        <strong>This link expires in 24 hours.</strong> If you didn't create an account with {{.AppName}}, you can safely ignore this email.
+      </p>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">If the button doesn't work, copy and paste this link into your browser:</p>
+<p style="margin: 8px 0 0 0; font-size: 12px; color: #9ca3af; word-break: break-all;">{{.VerificationURL}}</p>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
+`
+}
+
+// passwordResetContent returns content for password reset emails.
+func (ts *TemplateService) passwordResetContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+<p style="margin: 0 0 24px 0;">We received a request to reset your password for your <strong>{{.AppName}}</strong> account.</p>
+
+<!-- Reset card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 32px; text-align: center;">
+      <p style="margin: 0 0 16px 0; font-size: 16px; color: #991b1b;">Click the button below to reset your password:</p>
+
+      <!-- CTA Button -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+        <tr>
+          <td style="border-radius: 8px; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);">
+            <a href="{{.ResetURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+              Reset Password
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- Link expiry notice -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 16px 20px;">
+      <p style="margin: 0; font-size: 14px; color: #92400e;">
+        <strong>This link expires in 1 hour.</strong> If you didn't request a password reset, you can safely ignore this email. Your password will remain unchanged.
+      </p>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">If the button doesn't work, copy and paste this link into your browser:</p>
+<p style="margin: 8px 0 0 0; font-size: 12px; color: #9ca3af; word-break: break-all;">{{.ResetURL}}</p>
+
+<p style="margin: 24px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
 `
 }
