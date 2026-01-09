@@ -44,8 +44,9 @@ func main() {
 
 	// Create Asynq client (for re-enqueueing if needed)
 	asynqClient := asynq.NewClient(asynq.RedisClientOpt{
-		Addr: redisOpt.Addr,
-		DB:   redisOpt.DB,
+		Addr:     redisOpt.Addr,
+		DB:       redisOpt.DB,
+		Password: redisOpt.Password,
 	})
 	defer asynqClient.Close()
 
@@ -78,8 +79,9 @@ func main() {
 	// Create Asynq server
 	srv := asynq.NewServer(
 		asynq.RedisClientOpt{
-			Addr: redisOpt.Addr,
-			DB:   redisOpt.DB,
+			Addr:     redisOpt.Addr,
+			DB:       redisOpt.DB,
+			Password: redisOpt.Password,
 		},
 		asynq.Config{
 			Concurrency: 10,

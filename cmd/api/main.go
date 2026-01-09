@@ -18,6 +18,7 @@ import (
 
 	"github.com/prodigy90/email-service-go/internal/api/routes"
 	"github.com/prodigy90/email-service-go/internal/config"
+	"github.com/prodigy90/email-service-go/internal/db"
 	"github.com/prodigy90/email-service-go/internal/repository/postgres"
 	"github.com/prodigy90/email-service-go/internal/service"
 )
@@ -38,12 +39,18 @@ func main() {
 	}
 
 	// Connect to PostgreSQL
-	db, err := sqlx.Connect("postgres", cfg.DatabaseURL)
+	sqlxDB, err := sqlx.Connect("postgres", cfg.DatabaseURL)
 	if err != nil {
 		logger.Fatal().Err(err).Msg("Failed to connect to database")
 	}
-	defer db.Close()
+	defer sqlxDB.Close()
 	logger.Info().Msg("Connected to PostgreSQL")
+
+	// Run database migrations
+	if err := db.RunMigrations(sqlxDB.DB, "./migrations"); err != nil {
+		logger.Fatal().Err(err).Msg("Failed to run database migrations")
+	}
+	logger.Info().Msg("Database migrations completed")
 
 	// Connect to Redis
 	redisOpt, err := redis.ParseURL(cfg.RedisURL)
@@ -60,13 +67,14 @@ func main() {
 
 	// Create Asynq client
 	asynqClient := asynq.NewClient(asynq.RedisClientOpt{
-		Addr: redisOpt.Addr,
-		DB:   redisOpt.DB,
+		Addr:     redisOpt.Addr,
+		DB:       redisOpt.DB,
+		Password: redisOpt.Password,
 	})
 	defer asynqClient.Close()
 
 	// Initialize services
-	emailRepo := postgres.NewEmailRepository(db)
+	emailRepo := postgres.NewEmailRepository(sqlxDB)
 	templateService, err := service.NewTemplateService(cfg.TemplateDir, logger)
 	if err != nil {
 		logger.Fatal().Err(err).Msg("Failed to initialize template service")
