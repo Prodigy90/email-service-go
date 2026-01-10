@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/hibiken/asynq"
 	"github.com/jmoiron/sqlx"
@@ -17,6 +18,19 @@ import (
 	"github.com/prodigy90/email-service-go/internal/service"
 	"github.com/prodigy90/email-service-go/internal/worker/tasks"
 )
+
+// buildRedisOpt creates an asynq RedisClientOpt from parsed redis options and config
+func buildRedisOpt(redisOpt *redis.Options, cfg *config.Config) asynq.RedisClientOpt {
+	return asynq.RedisClientOpt{
+		Addr:         redisOpt.Addr,
+		DB:           redisOpt.DB,
+		Password:     redisOpt.Password,
+		DialTimeout:  time.Duration(cfg.RedisTimeout.DialTimeout) * time.Second,
+		ReadTimeout:  time.Duration(cfg.RedisTimeout.ReadTimeout) * time.Second,
+		WriteTimeout: time.Duration(cfg.RedisTimeout.WriteTimeout) * time.Second,
+		PoolSize:     cfg.RedisTimeout.PoolSize,
+	}
+}
 
 func main() {
 	// Setup logger
@@ -42,12 +56,11 @@ func main() {
 		logger.Fatal().Err(err).Msg("Failed to parse Redis URL")
 	}
 
+	// Build asynq Redis options with timeouts
+	asynqRedisOpt := buildRedisOpt(redisOpt, cfg)
+
 	// Create Asynq client (for re-enqueueing if needed)
-	asynqClient := asynq.NewClient(asynq.RedisClientOpt{
-		Addr:     redisOpt.Addr,
-		DB:       redisOpt.DB,
-		Password: redisOpt.Password,
-	})
+	asynqClient := asynq.NewClient(asynqRedisOpt)
 	defer asynqClient.Close()
 
 	// Initialize services
@@ -78,11 +91,7 @@ func main() {
 
 	// Create Asynq server
 	srv := asynq.NewServer(
-		asynq.RedisClientOpt{
-			Addr:     redisOpt.Addr,
-			DB:       redisOpt.DB,
-			Password: redisOpt.Password,
-		},
+		asynqRedisOpt,
 		asynq.Config{
 			Concurrency: 10,
 			Queues: map[string]int{

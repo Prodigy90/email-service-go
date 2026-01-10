@@ -16,7 +16,8 @@ type Config struct {
 	DatabaseURL string
 
 	// Redis
-	RedisURL string
+	RedisURL     string
+	RedisTimeout RedisTimeoutConfig
 
 	// Email Provider: "smtp" or "resend"
 	EmailProvider string
@@ -54,6 +55,13 @@ type ResendConfig struct {
 	FromName    string
 }
 
+type RedisTimeoutConfig struct {
+	DialTimeout  int // in seconds
+	ReadTimeout  int // in seconds
+	WriteTimeout int // in seconds
+	PoolSize     int
+}
+
 func Load() *Config {
 	// Load .env file if it exists
 	if err := godotenv.Load(); err != nil {
@@ -66,7 +74,13 @@ func Load() *Config {
 		Env:           getEnv("ENV", "development"),
 		APIPort:       getEnv("API_PORT", "8082"),
 		DatabaseURL:   getEnv("DATABASE_URL", "postgres://email:email@localhost:55433/email_service?sslmode=disable"),
-		RedisURL:      getEnv("REDIS_URL", "redis://localhost:16380/0"),
+		RedisURL: getEnv("REDIS_URL", "redis://localhost:16380/0"),
+		RedisTimeout: RedisTimeoutConfig{
+			DialTimeout:  getEnvIntPositive("REDIS_DIAL_TIMEOUT", 30),
+			ReadTimeout:  getEnvIntPositive("REDIS_READ_TIMEOUT", 30),
+			WriteTimeout: getEnvIntPositive("REDIS_WRITE_TIMEOUT", 30),
+			PoolSize:     getEnvIntPositive("REDIS_POOL_SIZE", 10),
+		},
 		EmailProvider: getEnv("EMAIL_PROVIDER", "smtp"),
 		SMTP: SMTPConfig{
 			Host:        getEnv("SMTP_HOST", "localhost"),
@@ -101,4 +115,13 @@ func getEnvInt(key string, fallback int) int {
 		}
 	}
 	return fallback
+}
+
+// getEnvIntPositive returns a positive integer from env or fallback if <= 0
+func getEnvIntPositive(key string, fallback int) int {
+	val := getEnvInt(key, fallback)
+	if val <= 0 {
+		return fallback
+	}
+	return val
 }
