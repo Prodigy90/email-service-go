@@ -25,10 +25,10 @@ func buildRedisOpt(redisOpt *redis.Options, cfg *config.Config) asynq.RedisClien
 		Addr:         redisOpt.Addr,
 		DB:           redisOpt.DB,
 		Password:     redisOpt.Password,
-		DialTimeout:  time.Duration(cfg.RedisTimeout.DialTimeout) * time.Second,
-		ReadTimeout:  time.Duration(cfg.RedisTimeout.ReadTimeout) * time.Second,
-		WriteTimeout: time.Duration(cfg.RedisTimeout.WriteTimeout) * time.Second,
-		PoolSize:     cfg.RedisTimeout.PoolSize,
+		DialTimeout:  time.Duration(cfg.Redis.DialTimeoutSecs) * time.Second,
+		ReadTimeout:  time.Duration(cfg.Redis.ReadTimeoutSecs) * time.Second,
+		WriteTimeout: time.Duration(cfg.Redis.WriteTimeoutSecs) * time.Second,
+		PoolSize:     cfg.Redis.PoolSize,
 	}
 }
 

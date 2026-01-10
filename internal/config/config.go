@@ -16,8 +16,8 @@ type Config struct {
 	DatabaseURL string
 
 	// Redis
-	RedisURL     string
-	RedisTimeout RedisTimeoutConfig
+	RedisURL string
+	Redis    RedisConfig
 
 	// Email Provider: "smtp" or "resend"
 	EmailProvider string
@@ -55,11 +55,11 @@ type ResendConfig struct {
 	FromName    string
 }
 
-type RedisTimeoutConfig struct {
-	DialTimeout  int // in seconds
-	ReadTimeout  int // in seconds
-	WriteTimeout int // in seconds
-	PoolSize     int
+type RedisConfig struct {
+	DialTimeoutSecs  int
+	ReadTimeoutSecs  int
+	WriteTimeoutSecs int
+	PoolSize         int
 }
 
 func Load() *Config {
@@ -75,11 +75,11 @@ func Load() *Config {
 		APIPort:       getEnv("API_PORT", "8082"),
 		DatabaseURL:   getEnv("DATABASE_URL", "postgres://email:email@localhost:55433/email_service?sslmode=disable"),
 		RedisURL: getEnv("REDIS_URL", "redis://localhost:16380/0"),
-		RedisTimeout: RedisTimeoutConfig{
-			DialTimeout:  getEnvIntPositive("REDIS_DIAL_TIMEOUT", 30),
-			ReadTimeout:  getEnvIntPositive("REDIS_READ_TIMEOUT", 30),
-			WriteTimeout: getEnvIntPositive("REDIS_WRITE_TIMEOUT", 30),
-			PoolSize:     getEnvIntPositive("REDIS_POOL_SIZE", 10),
+		Redis: RedisConfig{
+			DialTimeoutSecs:  getEnvIntPositive("REDIS_DIAL_TIMEOUT", 30),
+			ReadTimeoutSecs:  getEnvIntPositive("REDIS_READ_TIMEOUT", 30),
+			WriteTimeoutSecs: getEnvIntPositive("REDIS_WRITE_TIMEOUT", 30),
+			PoolSize:         getEnvIntPositive("REDIS_POOL_SIZE", 10),
 		},
 		EmailProvider: getEnv("EMAIL_PROVIDER", "smtp"),
 		SMTP: SMTPConfig{
@@ -117,11 +117,20 @@ func getEnvInt(key string, fallback int) int {
 	return fallback
 }
 
-// getEnvIntPositive returns a positive integer from env or fallback if <= 0
+// getEnvIntPositive returns a positive integer from env or fallback if <= 0.
+// Logs a warning if the value is invalid or non-positive.
 func getEnvIntPositive(key string, fallback int) int {
-	val := getEnvInt(key, fallback)
-	if val <= 0 {
-		return fallback
+	if v := os.Getenv(key); v != "" {
+		i, err := strconv.Atoi(v)
+		if err != nil {
+			log.Printf("Warning: %s=%q is not a valid integer, using default %d", key, v, fallback)
+			return fallback
+		}
+		if i <= 0 {
+			log.Printf("Warning: %s=%d is not positive, using default %d", key, i, fallback)
+			return fallback
+		}
+		return i
 	}
-	return val
+	return fallback
 }
