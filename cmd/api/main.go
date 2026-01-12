@@ -47,7 +47,7 @@ func main() {
 	logger.Info().Msg("Connected to PostgreSQL")
 
 	// Run database migrations
-	if err := db.RunMigrations(sqlxDB.DB, "./migrations"); err != nil {
+	if err := db.RunMigrations(sqlxDB.DB, "/app/migrations"); err != nil {
 		logger.Fatal().Err(err).Msg("Failed to run database migrations")
 	}
 	logger.Info().Msg("Database migrations completed")

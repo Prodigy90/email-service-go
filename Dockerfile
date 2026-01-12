@@ -1,5 +1,5 @@
 # Build stage
-FROM golang:1.23-alpine AS builder
+FROM golang:1.24-alpine AS builder
 
 WORKDIR /app
 
@@ -19,28 +19,26 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /api ./cmd/api
 # Build Worker
 RUN CGO_ENABLED=0 GOOS=linux go build -o /worker ./cmd/worker
 
-# API image
-FROM alpine:3.19 AS api
+# Unified image with both API and Worker
+FROM alpine:3.19
 
 WORKDIR /app
 
 RUN apk add --no-cache ca-certificates tzdata
 
+# Copy both binaries
 COPY --from=builder /api /app/api
+COPY --from=builder /worker /app/worker
+
+# Copy templates
 COPY --from=builder /app/pkg/templates /app/pkg/templates
 
-EXPOSE 8082
+# Copy migrations
+COPY --from=builder /app/migrations /app/migrations
+
+# Copy OpenAPI docs for Swagger UI
+COPY --from=builder /app/docs /app/docs
+
+EXPOSE 8080
 
 CMD ["/app/api"]
-
-# Worker image
-FROM alpine:3.19 AS worker
-
-WORKDIR /app
-
-RUN apk add --no-cache ca-certificates tzdata
-
-COPY --from=builder /worker /app/worker
-COPY --from=builder /app/pkg/templates /app/pkg/templates
-
-CMD ["/app/worker"]
