@@ -19,11 +19,8 @@ info:
     - `Authorization: Bearer <api-key>` header
 
 servers:
-  - url: http://localhost:{port}
-    description: Local development
-    variables:
-      port:
-        default: "8080"
+  - url: ""
+    description: Current Origin (auto-detected from browser URL)
   - url: https://email.example.com
     description: Production
 
