@@ -2,6 +2,7 @@ package routes
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/prodigy90/email-service-go/internal/api/handlers"
@@ -17,6 +18,9 @@ type Deps struct {
 	APIKey            string
 	SwaggerAllowedIPs string
 }
+
+// Default rate limit: 100 requests per minute per API key
+var apiRateLimiter = middleware.NewRateLimiter(100, time.Minute)
 
 // New creates the Gin router with all routes.
 func New(d Deps) *gin.Engine {
@@ -40,9 +44,9 @@ func New(d Deps) *gin.Engine {
 		swaggerGroup.GET("/index.html", swaggerUI)
 	}
 
-	// API routes (protected by API key)
+	// API routes (protected by API key + rate limited)
 	api := r.Group("/api/v1")
-	api.Use(middleware.APIKeyAuth(d.APIKey))
+	api.Use(middleware.APIKeyAuth(d.APIKey), middleware.RateLimit(apiRateLimiter))
 
 	// Email endpoints
 	emailHandler := handlers.NewEmailHandler(d.EmailService)
