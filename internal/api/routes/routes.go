@@ -17,15 +17,19 @@ type Deps struct {
 	EmailService      *service.EmailService
 	APIKey            string
 	SwaggerAllowedIPs string
+	RateLimiter       *middleware.RateLimiter // Optional: if nil, a default is created
 }
-
-// Default rate limit: 100 requests per minute per API key
-var apiRateLimiter = middleware.NewRateLimiter(100, time.Minute)
 
 // New creates the Gin router with all routes.
 func New(d Deps) *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Recovery(), middleware.Logger(d.Logger), middleware.CORS())
+
+	// Use provided rate limiter or create default (100 req/min)
+	rateLimiter := d.RateLimiter
+	if rateLimiter == nil {
+		rateLimiter = middleware.NewRateLimiter(100, time.Minute)
+	}
 
 	// Health endpoints (public)
 	r.GET("/healthz", func(c *gin.Context) {
@@ -46,7 +50,7 @@ func New(d Deps) *gin.Engine {
 
 	// API routes (protected by API key + rate limited)
 	api := r.Group("/api/v1")
-	api.Use(middleware.APIKeyAuth(d.APIKey), middleware.RateLimit(apiRateLimiter))
+	api.Use(middleware.APIKeyAuth(d.APIKey), middleware.RateLimit(rateLimiter))
 
 	// Email endpoints
 	emailHandler := handlers.NewEmailHandler(d.EmailService)

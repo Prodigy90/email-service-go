@@ -14,20 +14,34 @@ type RateLimiter struct {
 	requests map[string][]time.Time
 	limit    int
 	window   time.Duration
+	done     chan struct{}
 }
 
 // NewRateLimiter creates a new rate limiter with the specified limit per window.
 func NewRateLimiter(limit int, window time.Duration) *RateLimiter {
+	if limit <= 0 {
+		limit = 100 // sensible default
+	}
+	if window <= 0 {
+		window = time.Minute
+	}
+
 	rl := &RateLimiter{
 		requests: make(map[string][]time.Time),
 		limit:    limit,
 		window:   window,
+		done:     make(chan struct{}),
 	}
 
 	// Start cleanup goroutine to prevent unbounded memory growth
 	go rl.cleanup()
 
 	return rl
+}
+
+// Close stops the cleanup goroutine. Call this when shutting down.
+func (rl *RateLimiter) Close() {
+	close(rl.done)
 }
 
 // Allow checks if a request from the given key should be allowed.
@@ -67,25 +81,30 @@ func (rl *RateLimiter) cleanup() {
 	ticker := time.NewTicker(5 * time.Minute)
 	defer ticker.Stop()
 
-	for range ticker.C {
-		rl.mu.Lock()
-		now := time.Now()
-		windowStart := now.Add(-rl.window)
+	for {
+		select {
+		case <-rl.done:
+			return
+		case <-ticker.C:
+			rl.mu.Lock()
+			now := time.Now()
+			windowStart := now.Add(-rl.window)
 
-		for key, requests := range rl.requests {
-			var validRequests []time.Time
-			for _, t := range requests {
-				if t.After(windowStart) {
-					validRequests = append(validRequests, t)
+			for key, requests := range rl.requests {
+				var validRequests []time.Time
+				for _, t := range requests {
+					if t.After(windowStart) {
+						validRequests = append(validRequests, t)
+					}
+				}
+				if len(validRequests) == 0 {
+					delete(rl.requests, key)
+				} else {
+					rl.requests[key] = validRequests
 				}
 			}
-			if len(validRequests) == 0 {
-				delete(rl.requests, key)
-			} else {
-				rl.requests[key] = validRequests
-			}
+			rl.mu.Unlock()
 		}
-		rl.mu.Unlock()
 	}
 }
 
@@ -108,6 +127,7 @@ func RateLimit(limiter *RateLimiter) gin.HandlerFunc {
 		}
 
 		if !limiter.Allow(key) {
+			c.Header("Retry-After", "60")
 			c.JSON(http.StatusTooManyRequests, gin.H{
 				"error":   "rate_limit_exceeded",
 				"message": "Too many requests. Please try again later.",
