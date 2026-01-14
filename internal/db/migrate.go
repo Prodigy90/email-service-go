@@ -12,12 +12,16 @@ import (
 )
 
 // RunMigrations runs all pending database migrations.
-// migrationsPath must be an absolute path to the migrations directory.
+// migrationsPath can be relative or absolute; relative paths are resolved from cwd.
 func RunMigrations(db *sql.DB, migrationsPath string) error {
-	// Validate and clean the migrations path to prevent path traversal
+	// Clean and convert to absolute path
 	cleanPath := filepath.Clean(migrationsPath)
 	if !filepath.IsAbs(cleanPath) {
-		return fmt.Errorf("migrations path must be absolute: %s", migrationsPath)
+		absPath, err := filepath.Abs(cleanPath)
+		if err != nil {
+			return fmt.Errorf("failed to resolve migrations path: %w", err)
+		}
+		cleanPath = absPath
 	}
 
 	driver, err := postgres.WithInstance(db, &postgres.Config{})
@@ -33,7 +37,8 @@ func RunMigrations(db *sql.DB, migrationsPath string) error {
 	if err != nil {
 		return fmt.Errorf("failed to create migration instance: %w", err)
 	}
-	defer m.Close()
+	// NOTE: Do NOT call m.Close() here - it closes the underlying database connection
+	// that was passed in via WithInstance, which would break the rest of the application.
 
 	if err := m.Up(); err != nil && !errors.Is(err, migrate.ErrNoChange) {
 		return fmt.Errorf("failed to run migrations: %w", err)
