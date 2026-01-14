@@ -35,10 +35,11 @@ COPY --from=builder /app/pkg/templates /app/pkg/templates
 
 # Copy migrations
 COPY --from=builder /app/migrations /app/migrations
+ENV MIGRATIONS_DIR=/app/migrations
 
 # Copy OpenAPI docs for Swagger UI
 COPY --from=builder /app/docs /app/docs
 
-EXPOSE 8080
+EXPOSE 8083
 
 CMD ["/app/api"]

@@ -109,7 +109,7 @@ Copy `.env.example` to `.env`. Key variables:
 
 | Service    | Port  |
 |------------|-------|
-| API        | 8082  |
+| API        | 8083  |
 | PostgreSQL | 55433 |
 | Redis      | 16380 |
 | Mailhog UI | 8025  |

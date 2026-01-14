@@ -34,6 +34,9 @@ type Config struct {
 	// Templates
 	TemplateDir string
 
+	// Database migrations
+	MigrationsDir string
+
 	// Swagger UI
 	// SwaggerAllowedIPs is a comma-separated list of IPs or CIDR ranges
 	// If empty, Swagger UI is accessible to everyone (dev mode)
@@ -71,10 +74,10 @@ func Load() *Config {
 	}
 
 	return &Config{
-		Env:           getEnv("ENV", "development"),
-		APIPort:       getEnv("API_PORT", "8082"),
-		DatabaseURL:   getEnv("DATABASE_URL", "postgres://email:email@localhost:55433/email_service?sslmode=disable"),
-		RedisURL: getEnv("REDIS_URL", "redis://localhost:16380/0"),
+		Env:         getEnv("ENV", "development"),
+		APIPort:     getEnv("API_PORT", "8083"),
+		DatabaseURL: getEnv("DATABASE_URL", "postgres://email:email@localhost:55433/email_service?sslmode=disable"),
+		RedisURL:    getEnv("REDIS_URL", "redis://localhost:16380/0"),
 		Redis: RedisConfig{
 			DialTimeoutSecs:  getEnvIntPositive("REDIS_DIAL_TIMEOUT", 30),
 			ReadTimeoutSecs:  getEnvIntPositive("REDIS_READ_TIMEOUT", 30),
@@ -97,6 +100,7 @@ func Load() *Config {
 		},
 		APIKey:            getEnv("API_KEY", "dev-api-key"),
 		TemplateDir:       getEnv("TEMPLATE_DIR", "./pkg/templates"),
+		MigrationsDir:     getEnv("MIGRATIONS_DIR", "./migrations"),
 		SwaggerAllowedIPs: getEnv("SWAGGER_ALLOWED_IPS", ""),
 	}
 }
