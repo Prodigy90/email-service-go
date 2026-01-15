@@ -36,7 +36,7 @@ cd email-service-go && go run cmd/worker/main.go
 ### 4. Send a Test Email
 
 ```bash
-curl -X POST http://localhost:8082/api/v1/send \
+curl -X POST http://localhost:8083/api/v1/send \
   -H "Content-Type: application/json" \
   -H "X-API-Key: dev-api-key" \
   -d '{
@@ -168,7 +168,7 @@ For production, verify your domain:
 ### List All Templates
 
 ```bash
-curl http://localhost:8082/api/v1/templates \
+curl http://localhost:8083/api/v1/templates \
   -H "X-API-Key: dev-api-key"
 ```
 
@@ -258,7 +258,7 @@ curl -X POST http://localhost:8080/api/v1/webhooks/paystack \
 ### Check Email Status
 
 ```bash
-curl http://localhost:8082/api/v1/status/{email_id} \
+curl http://localhost:8083/api/v1/status/{email_id} \
   -H "X-API-Key: dev-api-key"
 ```
 

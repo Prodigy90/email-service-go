@@ -40,7 +40,7 @@ All endpoints require `X-API-Key` header.
 ### Using Template
 
 ```bash
-curl -X POST http://localhost:8082/api/v1/send \
+curl -X POST http://localhost:8083/api/v1/send \
   -H "Content-Type: application/json" \
   -H "X-API-Key: dev-api-key" \
   -d '{
@@ -58,7 +58,7 @@ curl -X POST http://localhost:8082/api/v1/send \
 ### Using Raw Content
 
 ```bash
-curl -X POST http://localhost:8082/api/v1/send \
+curl -X POST http://localhost:8083/api/v1/send \
   -H "Content-Type: application/json" \
   -H "X-API-Key: dev-api-key" \
   -d '{
@@ -75,7 +75,7 @@ curl -X POST http://localhost:8082/api/v1/send \
 import "github.com/prodigy90/email-service-go/pkg/client"
 
 // Create client
-emailClient := client.New("http://email-service:8082", "your-api-key")
+emailClient := client.New("http://email-service:8083", "your-api-key")
 
 // Send email
 resp, err := emailClient.Send(ctx, &client.SendRequest{
@@ -111,7 +111,7 @@ resp, err := emailClient.Send(ctx, &client.SendRequest{
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `API_PORT` | API server port | 8082 |
+| `API_PORT` | API server port | 8083 |
 | `DATABASE_URL` | PostgreSQL connection string | - |
 | `REDIS_URL` | Redis connection string | - |
 | `API_KEY` | API authentication key | - |
@@ -155,7 +155,7 @@ make lint
 
 | Service | Port |
 |---------|------|
-| API | 8082 |
+| API | 8083 |
 | PostgreSQL | 55433 |
 | Redis | 16380 |
 | Mailhog SMTP | 1025 |

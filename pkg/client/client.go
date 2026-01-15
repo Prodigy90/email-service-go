@@ -3,7 +3,7 @@
 //
 // Example usage:
 //
-//	client := client.New("http://email-service:8082", "your-api-key")
+//	client := client.New("http://email-service:8083", "your-api-key")
 //	resp, err := client.Send(ctx, &client.SendRequest{
 //	    To:       "user@example.com",
 //	    Template: "payout_approved",

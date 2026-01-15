@@ -584,11 +584,11 @@ All services deployed to k3s cluster with:
 WEBHOOK_HMAC_SECRET=xxx
 
 # Email service
-EMAIL_SERVICE_URL=http://email-service:8082
+EMAIL_SERVICE_URL=http://email-service:8083
 EMAIL_SERVICE_API_KEY=xxx
 
 # Affiliate service
-AFFILIATE_SERVICE_URL=http://affiliate-system:8080
+AFFILIATE_SERVICE_URL=http://affiliate-system:8082
 AFFILIATE_API_KEY=xxx                    # Product API key from affiliate-system
 AFFILIATE_PRODUCT_ID=wasbot              # Product identifier
 
