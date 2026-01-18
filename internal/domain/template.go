@@ -72,4 +72,7 @@ const (
 	// Authentication templates (Migration 022)
 	TemplateEmailVerification = "email_verification"
 	TemplatePasswordReset     = "password_reset"
+
+	// Affiliate link update template
+	TemplateAffiliateLinkUpdated = "affiliate_link_updated"
 )

@@ -222,10 +222,11 @@ func (c *Client) doRequest(ctx context.Context, method, path string, body interf
 // Template name constants for convenience.
 const (
 	// Affiliate System
-	TemplatePayoutApproved   = "payout_approved"
-	TemplatePayoutRejected   = "payout_rejected"
-	TemplatePayoutProcessed  = "payout_processed"
-	TemplateCommissionEarned = "commission_earned"
+	TemplatePayoutApproved       = "payout_approved"
+	TemplatePayoutRejected       = "payout_rejected"
+	TemplatePayoutProcessed      = "payout_processed"
+	TemplateCommissionEarned     = "commission_earned"
+	TemplateAffiliateLinkUpdated = "affiliate_link_updated"
 
 	// Payments (recurring subscriptions)
 	TemplatePaymentSuccess        = "payment_success"          // Recurring payment success

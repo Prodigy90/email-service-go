@@ -306,40 +306,40 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	// Affiliate System templates
 	ts.templates[domain.TemplatePayoutApproved] = &domain.Template{
 		Name:        domain.TemplatePayoutApproved,
-		Subject:     "Payout Request Approved - {{.Currency}}{{.Amount}}",
-		Body:        "Hi {{.Name}},\n\nYour payout request of {{.Currency}}{{.Amount}} has been approved and is being processed.\n\nExpected arrival: 1-3 business days.\n\nThank you for being part of our affiliate program!",
-		HTMLBody:    ts.wrapHTML("Payout Approved", "<p>Hi {{.Name}},</p><p>Your payout request of <strong>{{.Currency}}{{.Amount}}</strong> has been approved and is being processed.</p><p>Expected arrival: 1-3 business days.</p><p>Thank you for being part of our affiliate program!</p>"),
+		Subject:     "Payout Request Approved - {{.Amount}}",
+		Body:        "Hi {{.Name}},\n\nYour payout request of {{.Amount}} has been approved and is being processed.\n\nExpected arrival: 1-3 business days.\n\nThank you for being part of our affiliate program!",
+		HTMLBody:    ts.wrapHTML("Payout Approved", "<p>Hi {{.Name}},</p><p>Your payout request of <strong>{{.Amount}}</strong> has been approved and is being processed.</p><p>Expected arrival: 1-3 business days.</p><p>Thank you for being part of our affiliate program!</p>"),
 		Description: "Sent when an affiliate payout is approved",
 	}
 
 	ts.templates[domain.TemplatePayoutRejected] = &domain.Template{
 		Name:        domain.TemplatePayoutRejected,
 		Subject:     "Payout Request Update",
-		Body:        "Hi {{.Name}},\n\nYour payout request of {{.Currency}}{{.Amount}} was not approved.\n\nReason: {{.Reason}}\n\nPlease contact support if you have questions.",
-		HTMLBody:    ts.wrapHTML("Payout Update", "<p>Hi {{.Name}},</p><p>Your payout request of <strong>{{.Currency}}{{.Amount}}</strong> was not approved.</p><p><strong>Reason:</strong> {{.Reason}}</p><p>Please contact support if you have questions.</p>"),
+		Body:        "Hi {{.Name}},\n\nYour payout request of {{.Amount}} was not approved.\n\nReason: {{.Reason}}\n\nPlease contact support if you have questions.",
+		HTMLBody:    ts.wrapHTML("Payout Update", "<p>Hi {{.Name}},</p><p>Your payout request of <strong>{{.Amount}}</strong> was not approved.</p><p><strong>Reason:</strong> {{.Reason}}</p><p>Please contact support if you have questions.</p>"),
 		Description: "Sent when an affiliate payout is rejected",
 	}
 
 	ts.templates[domain.TemplatePayoutProcessed] = &domain.Template{
 		Name:        domain.TemplatePayoutProcessed,
-		Subject:     "Payout Completed - {{.Currency}}{{.Amount}}",
-		Body:        "Hi {{.Name}},\n\nGreat news! Your payout of {{.Currency}}{{.Amount}} has been successfully transferred to your account.\n\nTransaction Reference: {{.Reference}}\n\nThank you!",
-		HTMLBody:    ts.wrapHTML("Payout Completed", "<p>Hi {{.Name}},</p><p>Great news! Your payout of <strong>{{.Currency}}{{.Amount}}</strong> has been successfully transferred to your account.</p><p><strong>Transaction Reference:</strong> {{.Reference}}</p><p>Thank you!</p>"),
+		Subject:     "Payout Completed - {{.Amount}}",
+		Body:        "Hi {{.Name}},\n\nGreat news! Your payout of {{.Amount}} has been successfully transferred to your account.\n\nTransaction Reference: {{.Reference}}\n\nThank you!",
+		HTMLBody:    ts.wrapHTML("Payout Completed", "<p>Hi {{.Name}},</p><p>Great news! Your payout of <strong>{{.Amount}}</strong> has been successfully transferred to your account.</p><p><strong>Transaction Reference:</strong> {{.Reference}}</p><p>Thank you!</p>"),
 		Description: "Sent when a payout transfer completes",
 	}
 
 	ts.templates[domain.TemplateCommissionEarned] = &domain.Template{
 		Name:        domain.TemplateCommissionEarned,
-		Subject:     "You earned a commission! - {{.Currency}}{{.Amount}}",
-		Body:        "Hi {{.Name}},\n\nYou just earned {{.Currency}}{{.Amount}} from {{.ProductName}}!\n\nThis commission will be available for withdrawal after the holding period.\n\nKeep up the great work!",
-		HTMLBody:    ts.wrapHTML("Commission Earned", "<p>Hi {{.Name}},</p><p>You just earned <strong>{{.Currency}}{{.Amount}}</strong> from {{.ProductName}}!</p><p>This commission will be available for withdrawal after the holding period.</p><p>Keep up the great work!</p>"),
+		Subject:     "You earned a commission! - {{.Amount}}",
+		Body:        "Hi {{.Name}},\n\nYou just earned {{.Amount}} from {{.ProductName}}{{if .PlanName}} ({{.PlanName}}){{end}}!\n\nThis commission will be available for withdrawal after the holding period.\n\nKeep up the great work!",
+		HTMLBody:    ts.wrapHTML("Commission Earned", "<p>Hi {{.Name}},</p><p>You just earned <strong>{{.Amount}}</strong> from {{.ProductName}}{{if .PlanName}} ({{.PlanName}}){{end}}!</p><p>This commission will be available for withdrawal after the holding period.</p><p>Keep up the great work!</p>"),
 		Description: "Sent when an affiliate earns a commission",
 	}
 
 	ts.templates[domain.TemplateCommissionRefunded] = &domain.Template{
 		Name:        domain.TemplateCommissionRefunded,
 		Subject:     "Commission Reversed - {{.ProductName}}",
-		Body:        "Hi {{.CustomerName}},\n\nA commission of {{.Currency}}{{.Amount}} for {{.ProductName}} has been reversed.\n\nReason: {{.Reason}}\n\nThis adjustment has been applied to your affiliate account balance.\n\nIf you have any questions about this reversal, please contact our support team.",
+		Body:        "Hi {{.CustomerName}},\n\nA commission of {{.Amount}} for {{.ProductName}} has been reversed.\n\nReason: {{.Reason}}\n\nThis adjustment has been applied to your affiliate account balance.\n\nIf you have any questions about this reversal, please contact our support team.",
 		HTMLBody:    ts.wrapHTML("Commission Reversed", ts.commissionRefundedContent()),
 		Description: "Sent when an affiliate commission is reversed due to a refund",
 	}
@@ -347,7 +347,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateAccessRevoked] = &domain.Template{
 		Name:        domain.TemplateAccessRevoked,
 		Subject:     "Access Revoked - Your Subscription Has Been Cancelled",
-		Body:        "Hi {{.CustomerName}},\n\nYour refund of {{.Currency}}{{.Amount}} for {{.ProductName}} has been processed.\n\nAs a result, your access to {{.ProductName}} has been revoked.\n\nTransaction ID: {{.TransactionID}}\n\nIf you have any questions or believe this was done in error, please contact our support team.",
+		Body:        "Hi {{.CustomerName}},\n\nYour refund of {{.Amount}} for {{.ProductName}} has been processed.\n\nAs a result, your access to {{.ProductName}} has been revoked.\n\nTransaction ID: {{.TransactionID}}\n\nIf you have any questions or believe this was done in error, please contact our support team.",
 		HTMLBody:    ts.wrapHTML("Access Revoked", ts.accessRevokedContent()),
 		Description: "Sent when a customer's access is revoked due to a refund",
 	}
@@ -356,7 +356,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplatePaymentSuccess] = &domain.Template{
 		Name:        domain.TemplatePaymentSuccess,
 		Subject:     "Payment Confirmed - {{.ProductName}}",
-		Body:        "Hi {{.CustomerName}},\n\nThank you for your payment of {{.Currency}}{{.Amount}}.\n\nProduct: {{.ProductName}}\nTransaction ID: {{.TransactionID}}\n\nYour subscription is now active and will automatically renew on {{.NextBillingDate}}.\n\nYou can manage your subscription anytime from your dashboard.",
+		Body:        "Hi {{.CustomerName}},\n\nThank you for your payment of {{.Amount}}.\n\nProduct: {{.ProductName}}\nTransaction ID: {{.TransactionID}}\n\nYour subscription is now active and will automatically renew on {{.NextBillingDate}}.\n\nYou can manage your subscription anytime from your dashboard.",
 		HTMLBody:    ts.wrapHTML("Payment Confirmed", ts.paymentSuccessContent()),
 		Description: "Sent after successful recurring payment",
 	}
@@ -364,15 +364,15 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplatePaymentFailed] = &domain.Template{
 		Name:        domain.TemplatePaymentFailed,
 		Subject:     "Payment Failed - Action Required",
-		Body:        "Hi {{.CustomerName}},\n\nWe were unable to process your payment of {{.Currency}}{{.Amount}} for {{.ProductName}}.\n\nPlease update your payment method to continue your subscription.\n\nIf you need help, contact our support team.",
-		HTMLBody:    ts.wrapHTML("Payment Failed", "<p>Hi {{.CustomerName}},</p><p>We were unable to process your payment of <strong>{{.Currency}}{{.Amount}}</strong> for {{.ProductName}}.</p><p>Please update your payment method to continue your subscription.</p><p>If you need help, contact our support team.</p>"),
+		Body:        "Hi {{.CustomerName}},\n\nWe were unable to process your payment of {{.Amount}} for {{.ProductName}}.\n\nPlease update your payment method to continue your subscription.\n\nIf you need help, contact our support team.",
+		HTMLBody:    ts.wrapHTML("Payment Failed", "<p>Hi {{.CustomerName}},</p><p>We were unable to process your payment of <strong>{{.Amount}}</strong> for {{.ProductName}}.</p><p>Please update your payment method to continue your subscription.</p><p>If you need help, contact our support team.</p>"),
 		Description: "Sent when payment fails",
 	}
 
 	ts.templates[domain.TemplateSubscriptionRenewed] = &domain.Template{
 		Name:        domain.TemplateSubscriptionRenewed,
 		Subject:     "Subscription Renewed - {{.PlanName}}",
-		Body:        "Hi {{.CustomerName}},\n\nYour {{.PlanName}} subscription has been automatically renewed.\n\nAmount: {{.Currency}}{{.Amount}}\nNext billing date: {{.NextBillingDate}}\n\nYour subscription will continue to renew automatically. You can manage or cancel anytime from your dashboard.\n\nThank you for your continued support!",
+		Body:        "Hi {{.CustomerName}},\n\nYour {{.PlanName}} subscription has been automatically renewed.\n\nAmount: {{.Amount}}\nNext billing date: {{.NextBillingDate}}\n\nYour subscription will continue to renew automatically. You can manage or cancel anytime from your dashboard.\n\nThank you for your continued support!",
 		HTMLBody:    ts.wrapHTML("Subscription Renewed", ts.subscriptionRenewedContent()),
 		Description: "Sent when recurring subscription auto-renews",
 	}
@@ -397,7 +397,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplatePaymentSuccessOnetime] = &domain.Template{
 		Name:        domain.TemplatePaymentSuccessOnetime,
 		Subject:     "Payment Confirmed - {{.ProductName}} ({{.Duration}})",
-		Body:        "Hi {{.CustomerName}},\n\nThank you for your payment of {{.Currency}}{{.Amount}}.\n\nProduct: {{.ProductName}}\nDuration: {{.Duration}}\nAccess until: {{.ExpiryDate}}\nTransaction ID: {{.TransactionID}}\n\nIMPORTANT: This is a one-time purchase. Your subscription will NOT automatically renew. You'll need to manually renew before {{.ExpiryDate}} to continue access.\n\nWe'll send you a reminder before your access expires.",
+		Body:        "Hi {{.CustomerName}},\n\nThank you for your payment of {{.Amount}}.\n\nProduct: {{.ProductName}}\nDuration: {{.Duration}}\nAccess until: {{.ExpiryDate}}\nTransaction ID: {{.TransactionID}}\n\nIMPORTANT: This is a one-time purchase. Your subscription will NOT automatically renew. You'll need to manually renew before {{.ExpiryDate}} to continue access.\n\nWe'll send you a reminder before your access expires.",
 		HTMLBody:    ts.wrapHTML("Payment Confirmed", ts.paymentSuccessOnetimeContent()),
 		Description: "Sent after successful one-time payment",
 	}
@@ -405,7 +405,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateSubscriptionActivated] = &domain.Template{
 		Name:        domain.TemplateSubscriptionActivated,
 		Subject:     "Welcome to {{.PlanName}} - Subscription Activated!",
-		Body:        "Hi {{.CustomerName}},\n\nWelcome! Your {{.PlanName}} subscription is now active.\n\nAmount: {{.Currency}}{{.Amount}}/{{.Interval}}\nNext billing date: {{.NextBillingDate}}\n\nYour subscription will automatically renew. You can manage or cancel anytime from your dashboard.\n\nThank you for choosing {{.Branding.CompanyName}}!",
+		Body:        "Hi {{.CustomerName}},\n\nWelcome! Your {{.PlanName}} subscription is now active.\n\nAmount: {{.Amount}}/{{.Interval}}\nNext billing date: {{.NextBillingDate}}\n\nYour subscription will automatically renew. You can manage or cancel anytime from your dashboard.\n\nThank you for choosing {{.Branding.CompanyName}}!",
 		HTMLBody:    ts.wrapHTML("Subscription Activated", ts.subscriptionActivatedContent()),
 		Description: "Sent when new recurring subscription is activated",
 	}
@@ -418,7 +418,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 		Description: "Sent when new one-time subscription is activated",
 	}
 
-	// WasBot/General templates
+	// WASBOT/General templates
 	ts.templates[domain.TemplateWelcome] = &domain.Template{
 		Name:        domain.TemplateWelcome,
 		Subject:     "Welcome to {{.AppName}} - Your WhatsApp Automation Journey Starts Now!",
@@ -479,24 +479,24 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	// Refund templates
 	ts.templates[domain.TemplateRefundPending] = &domain.Template{
 		Name:        domain.TemplateRefundPending,
-		Subject:     "Refund Request Received - {{.Currency}}{{.Amount}}",
-		Body:        "Hi {{.CustomerName}},\n\nWe have received your refund request for {{.Currency}}{{.Amount}}.\n\nTransaction ID: {{.TransactionID}}\n\nYour refund is being processed and should be completed within 5-10 business days.\n\nWe'll send you another email once the refund has been processed.\n\nIf you have any questions, please don't hesitate to contact our support team.",
+		Subject:     "Refund Request Received - {{.Amount}}",
+		Body:        "Hi {{.CustomerName}},\n\nWe have received your refund request for {{.Amount}}.\n\nTransaction ID: {{.TransactionID}}\n\nYour refund is being processed and should be completed within 5-10 business days.\n\nWe'll send you another email once the refund has been processed.\n\nIf you have any questions, please don't hesitate to contact our support team.",
 		HTMLBody:    ts.wrapHTML("Refund Request Received", ts.refundPendingContent()),
 		Description: "Sent when a refund request is initiated",
 	}
 
 	ts.templates[domain.TemplateRefundProcessed] = &domain.Template{
 		Name:        domain.TemplateRefundProcessed,
-		Subject:     "✅ Refund Processed - {{.Currency}}{{.Amount}}",
-		Body:        "Hi {{.CustomerName}},\n\nGreat news! Your refund of {{.Currency}}{{.Amount}} has been successfully processed.\n\nTransaction ID: {{.TransactionID}}\n\nThe funds should appear in your account within 5-10 business days, depending on your bank.\n\nThank you for your patience.",
+		Subject:     "Refund Processed - {{.Amount}}",
+		Body:        "Hi {{.CustomerName}},\n\nGreat news! Your refund of {{.Amount}} has been successfully processed.\n\nTransaction ID: {{.TransactionID}}\n\nThe funds should appear in your account within 5-10 business days, depending on your bank.\n\nThank you for your patience.",
 		HTMLBody:    ts.wrapHTML("Refund Processed", ts.refundProcessedContent()),
 		Description: "Sent when a refund has been processed successfully",
 	}
 
 	ts.templates[domain.TemplateRefundFailed] = &domain.Template{
 		Name:        domain.TemplateRefundFailed,
-		Subject:     "⚠️ Refund Update - Action Required",
-		Body:        "Hi {{.CustomerName}},\n\nWe were unable to process your refund of {{.Currency}}{{.Amount}}.\n\nTransaction ID: {{.TransactionID}}\nReason: {{.Reason}}\n\nPlease contact our support team to resolve this issue and complete your refund.\n\nWe apologize for any inconvenience.",
+		Subject:     "Refund Update - Action Required",
+		Body:        "Hi {{.CustomerName}},\n\nWe were unable to process your refund of {{.Amount}}.\n\nTransaction ID: {{.TransactionID}}\nReason: {{.Reason}}\n\nPlease contact our support team to resolve this issue and complete your refund.\n\nWe apologize for any inconvenience.",
 		HTMLBody:    ts.wrapHTML("Refund Issue", ts.refundFailedContent()),
 		Description: "Sent when a refund could not be processed",
 	}
@@ -505,15 +505,15 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateSubscriptionReminder3d] = &domain.Template{
 		Name:        domain.TemplateSubscriptionReminder3d,
 		Subject:     "Your {{.PlanName}} subscription renews in 3 days",
-		Body:        "Hi {{.CustomerName}},\n\nThis is a friendly reminder that your {{.PlanName}} subscription will automatically renew in 3 days.\n\nRenewal Date: {{.RenewalDate}}\nAmount: {{.Currency}}{{.Amount}}\n\nIf you'd like to make any changes to your subscription, you can manage it here:\n{{.ProfileURL}}\n\nThank you for being a valued customer!",
+		Body:        "Hi {{.CustomerName}},\n\nThis is a friendly reminder that your {{.PlanName}} subscription will automatically renew in 3 days.\n\nRenewal Date: {{.RenewalDate}}\nAmount: {{.Amount}}\n\nIf you'd like to make any changes to your subscription, you can manage it here:\n{{.ProfileURL}}\n\nThank you for being a valued customer!",
 		HTMLBody:    ts.wrapHTML("Subscription Renewal Reminder", ts.subscriptionReminder3dContent()),
 		Description: "Sent 3 days before subscription renewal",
 	}
 
 	ts.templates[domain.TemplateSubscriptionReminder1d] = &domain.Template{
 		Name:        domain.TemplateSubscriptionReminder1d,
-		Subject:     "⏰ Reminder: {{.PlanName}} renews tomorrow",
-		Body:        "Hi {{.CustomerName}},\n\nThis is a final reminder that your {{.PlanName}} subscription will renew tomorrow.\n\nAmount: {{.Currency}}{{.Amount}}\n\nIf you need to update your payment method or make changes, please do so before the renewal:\n{{.ProfileURL}}\n\nThank you for your continued support!",
+		Subject:     "Reminder: {{.PlanName}} renews tomorrow",
+		Body:        "Hi {{.CustomerName}},\n\nThis is a final reminder that your {{.PlanName}} subscription will renew tomorrow.\n\nAmount: {{.Amount}}\n\nIf you need to update your payment method or make changes, please do so before the renewal:\n{{.ProfileURL}}\n\nThank you for your continued support!",
 		HTMLBody:    ts.wrapHTML("Subscription Renews Tomorrow", ts.subscriptionReminder1dContent()),
 		Description: "Sent 1 day before subscription renewal",
 	}
@@ -550,6 +550,15 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 		Body:        "Hi {{.Name}},\n\nWe received a request to reset your password. Click the link below to set a new password:\n\n{{.ResetURL}}\n\nThis link will expire in 1 hour.\n\nIf you didn't request a password reset, you can safely ignore this email. Your password will remain unchanged.\n\nBest,\nThe {{.AppName}} Team",
 		HTMLBody:    ts.wrapHTML("Reset Your Password", ts.passwordResetContent()),
 		Description: "Sent when a user requests a password reset",
+	}
+
+	// Affiliate link update template
+	ts.templates[domain.TemplateAffiliateLinkUpdated] = &domain.Template{
+		Name:        domain.TemplateAffiliateLinkUpdated,
+		Subject:     "Your affiliate link for {{.ProductName}} has been updated",
+		Body:        "Hi {{.AffiliateName}},\n\nYour affiliate referral link for {{.ProductName}} has been updated.\n\nReason: {{.ChangeReason}}\n\nYour new affiliate link:\n{{.NewLink}}\n\nPlease update any promotional materials, websites, or social media posts that contain your old link to use your new link.\n\nYou can view all your affiliate links and manage your account from your dashboard:\n{{.DashboardURL}}\n\nIf you have any questions, please don't hesitate to contact our support team.\n\nBest,\nThe {{.Branding.CompanyName}} Team",
+		HTMLBody:    ts.wrapHTML("Affiliate Link Updated", ts.affiliateLinkUpdatedContent()),
+		Description: "Sent when an affiliate's referral link changes due to product URL updates",
 	}
 }
 
@@ -636,9 +645,9 @@ func (ts *TemplateService) wrapHTMLWithBranding(title, content string) string {
   </style>
 </head>
 <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
-  <!-- Preview text -->
+  <!-- Preview text - uses PreviewText if set, otherwise falls back to title -->
   <div style="display: none; max-height: 0; overflow: hidden;">
-    %s
+    {{if .PreviewText}}{{.PreviewText}}{{else}}%s{{end}}
     &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
   </div>
 
@@ -785,7 +794,7 @@ func (ts *TemplateService) paymentSuccessContent() string {
         <tr>
           <td style="padding-bottom: 16px; border-bottom: 1px solid #bbf7d0;">
             <span style="font-size: 14px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Amount Paid</span><br>
-            <span style="font-size: 32px; font-weight: 700; color: {{.Branding.SecondaryColor}};">{{.Currency}}{{.Amount}}</span>
+            <span style="font-size: 32px; font-weight: 700; color: {{.Branding.SecondaryColor}};">{{.Amount}}</span>
           </td>
         </tr>
         <tr>
@@ -843,7 +852,7 @@ func (ts *TemplateService) subscriptionReminder3dContent() string {
           </td>
           <td width="50%" style="vertical-align: top; padding-left: 12px;">
             <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Amount</span><br>
-            <span style="font-size: 18px; font-weight: 600; color: #1e40af;">{{.Currency}}{{.Amount}}</span>
+            <span style="font-size: 18px; font-weight: 600; color: #1e40af;">{{.Amount}}</span>
           </td>
         </tr>
       </table>
@@ -882,7 +891,7 @@ func (ts *TemplateService) subscriptionReminder1dContent() string {
   <tr>
     <td style="padding: 20px 24px;">
       <p style="margin: 0; font-size: 16px; color: #92400e;">
-        <strong>{{.Currency}}{{.Amount}}</strong> will be charged to your payment method tomorrow.
+        <strong>{{.Amount}}</strong> will be charged to your payment method tomorrow.
       </p>
     </td>
   </tr>
@@ -1008,7 +1017,7 @@ func (ts *TemplateService) refundPendingContent() string {
         <tr>
           <td style="padding-bottom: 12px;">
             <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Refund Amount</span><br>
-            <span style="font-size: 28px; font-weight: 700; color: #1e40af;">{{.Currency}}{{.Amount}}</span>
+            <span style="font-size: 28px; font-weight: 700; color: #1e40af;">{{.Amount}}</span>
           </td>
         </tr>
         <tr>
@@ -1057,7 +1066,7 @@ func (ts *TemplateService) refundProcessedContent() string {
         <tr>
           <td style="padding-bottom: 12px;">
             <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Amount Refunded</span><br>
-            <span style="font-size: 28px; font-weight: 700; color: {{.Branding.SecondaryColor}};">{{.Currency}}{{.Amount}}</span>
+            <span style="font-size: 28px; font-weight: 700; color: {{.Branding.SecondaryColor}};">{{.Amount}}</span>
           </td>
         </tr>
         <tr>
@@ -1112,7 +1121,7 @@ func (ts *TemplateService) refundFailedContent() string {
         <tr>
           <td style="padding-bottom: 12px;">
             <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Refund Amount</span><br>
-            <span style="font-size: 28px; font-weight: 700; color: #dc2626;">{{.Currency}}{{.Amount}}</span>
+            <span style="font-size: 28px; font-weight: 700; color: #dc2626;">{{.Amount}}</span>
           </td>
         </tr>
         <tr>
@@ -1174,7 +1183,7 @@ func (ts *TemplateService) commissionRefundedContent() string {
         <tr>
           <td style="padding-bottom: 12px;">
             <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Commission Amount</span><br>
-            <span style="font-size: 28px; font-weight: 700; color: #92400e;">{{.Currency}}{{.Amount}}</span>
+            <span style="font-size: 28px; font-weight: 700; color: #92400e;">{{.Amount}}</span>
           </td>
         </tr>
         <tr>
@@ -1230,7 +1239,7 @@ func (ts *TemplateService) accessRevokedContent() string {
         <tr>
           <td style="padding-bottom: 12px;">
             <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Refund Amount</span><br>
-            <span style="font-size: 28px; font-weight: 700; color: #dc2626;">{{.Currency}}{{.Amount}}</span>
+            <span style="font-size: 28px; font-weight: 700; color: #dc2626;">{{.Amount}}</span>
           </td>
         </tr>
         <tr>
@@ -1742,7 +1751,7 @@ func (ts *TemplateService) subscriptionRenewedContent() string {
         <tr>
           <td style="padding: 8px 0; border-bottom: 1px solid #bbf7d0;">
             <span style="color: #6b7280;">Amount charged:</span>
-            <span style="float: right; font-weight: 600; color: #166534;">{{.Currency}}{{.Amount}}</span>
+            <span style="float: right; font-weight: 600; color: #166534;">{{.Amount}}</span>
           </td>
         </tr>
         <tr>
@@ -1761,7 +1770,7 @@ func (ts *TemplateService) subscriptionRenewedContent() string {
   <tr>
     <td style="padding: 16px 20px;">
       <p style="margin: 0; font-size: 14px; color: #1e40af;">
-        <strong>Auto-renewal enabled:</strong> Your subscription will automatically renew each billing cycle. You can manage or cancel anytime from your dashboard.
+        <strong>Auto-renewal enabled:</strong> Your subscription will automatically renew. You can manage or cancel anytime from your dashboard.
       </p>
     </td>
   </tr>
@@ -1858,7 +1867,7 @@ func (ts *TemplateService) paymentSuccessOnetimeContent() string {
         <tr>
           <td style="padding: 8px 0; border-bottom: 1px solid #bbf7d0;">
             <span style="color: #6b7280;">Amount paid:</span>
-            <span style="float: right; font-weight: 600; color: #166534;">{{.Currency}}{{.Amount}}</span>
+            <span style="float: right; font-weight: 600; color: #166534;">{{.Amount}}</span>
           </td>
         </tr>
         <tr>
@@ -1921,7 +1930,7 @@ func (ts *TemplateService) subscriptionActivatedContent() string {
         <tr>
           <td style="padding: 8px 0; border-bottom: 1px solid #bbf7d0;">
             <span style="color: #6b7280;">Amount:</span>
-            <span style="float: right; font-weight: 600; color: #166534;">{{.Currency}}{{.Amount}}/{{.Interval}}</span>
+            <span style="float: right; font-weight: 600; color: #166534;">{{.Amount}}/{{.Interval}}</span>
           </td>
         </tr>
         <tr>
@@ -1940,7 +1949,7 @@ func (ts *TemplateService) subscriptionActivatedContent() string {
   <tr>
     <td style="padding: 16px 20px;">
       <p style="margin: 0; font-size: 14px; color: #1e40af;">
-        <strong>Auto-renewal enabled:</strong> Your subscription will automatically renew each {{.Interval}}. You can manage or cancel anytime from your dashboard.
+        <strong>Auto-renewal enabled:</strong> Your subscription renews {{.Interval}}. You can manage or cancel anytime from your dashboard.
       </p>
     </td>
   </tr>
@@ -2112,5 +2121,81 @@ func (ts *TemplateService) passwordResetContent() string {
 <p style="margin: 8px 0 0 0; font-size: 12px; color: #9ca3af; word-break: break-all;">{{.ResetURL}}</p>
 
 <p style="margin: 24px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
+`
+}
+
+// affiliateLinkUpdatedContent returns content for affiliate link update emails.
+func (ts *TemplateService) affiliateLinkUpdatedContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.AffiliateName}},</p>
+
+<p style="margin: 0 0 24px 0;">Your affiliate referral link for <strong>{{.ProductName}}</strong> has been updated.</p>
+
+<!-- Change reason card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 16px 20px;">
+      <p style="margin: 0; font-size: 14px; color: #92400e;">
+        <strong>Why did this change?</strong> {{.ChangeReason}}
+      </p>
+    </td>
+  </tr>
+</table>
+
+<!-- New link card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #ecfdf5; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <!-- Status badge -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 16px;">
+        <tr>
+          <td style="background-color: #a7f3d0; border-radius: 20px; padding: 6px 14px;">
+            <span style="font-size: 13px; font-weight: 600; color: #065f46;">New Link</span>
+          </td>
+        </tr>
+      </table>
+
+      <p style="margin: 0 0 8px 0; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Your New Affiliate Link</p>
+      <p style="margin: 0; font-size: 14px; font-weight: 600; color: {{.Branding.PrimaryColor}}; word-break: break-all;">
+        <a href="{{.NewLink}}" target="_blank" style="color: {{.Branding.PrimaryColor}}; text-decoration: none;">{{.NewLink}}</a>
+      </p>
+    </td>
+  </tr>
+</table>
+
+{{if .OldLink}}
+<!-- Old link reference -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 16px 20px;">
+      <p style="margin: 0 0 4px 0; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Previous Link (No Longer Active)</p>
+      <p style="margin: 0; font-size: 13px; color: #9ca3af; word-break: break-all; text-decoration: line-through;">{{.OldLink}}</p>
+    </td>
+  </tr>
+</table>
+{{end}}
+
+<!-- Action required -->
+<p style="margin: 0 0 8px 0; color: #4b5563;"><strong>Action Required:</strong></p>
+<ul style="margin: 0 0 24px 0; padding-left: 20px; color: #6b7280;">
+  <li style="margin-bottom: 8px;">Update any promotional materials with your new link</li>
+  <li style="margin-bottom: 8px;">Replace links on your website or blog</li>
+  <li style="margin-bottom: 8px;">Update social media posts and bios</li>
+  <li>Check email signatures and other marketing channels</li>
+</ul>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        View Dashboard
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0; font-size: 14px; color: #6b7280;">If you have any questions about this change, please don't hesitate to contact our support team.</p>
+<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
 `
 }
