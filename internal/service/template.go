@@ -339,7 +339,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	ts.templates[domain.TemplateCommissionRefunded] = &domain.Template{
 		Name:        domain.TemplateCommissionRefunded,
 		Subject:     "Commission Reversed - {{.ProductName}}",
-		Body:        "Hi {{.CustomerName}},\n\nA commission of {{.Amount}} for {{.ProductName}} has been reversed.\n\nReason: {{.Reason}}\n\nThis adjustment has been applied to your affiliate account balance.\n\nIf you have any questions about this reversal, please contact our support team.",
+		Body:        "Hi {{.Name}},\n\nA commission of {{.Amount}} for {{.ProductName}} has been reversed.\n\nReason: {{.Reason}}\n\nThis adjustment has been applied to your affiliate account balance.\n\nIf you have any questions about this reversal, please contact our support team.",
 		HTMLBody:    ts.wrapHTML("Commission Reversed", ts.commissionRefundedContent()),
 		Description: "Sent when an affiliate commission is reversed due to a refund",
 	}
@@ -1162,7 +1162,7 @@ func (ts *TemplateService) refundFailedContent() string {
 // commissionRefundedContent returns content for commission reversal emails.
 func (ts *TemplateService) commissionRefundedContent() string {
 	return `
-<p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+<p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
 
 <p style="margin: 0 0 24px 0;">A commission you previously earned has been reversed due to a refund.</p>
 
