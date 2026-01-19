@@ -57,19 +57,35 @@ func main() {
 	if err != nil {
 		logger.Fatal().Err(err).Msg("Failed to parse Redis URL")
 	}
+
+	// Configure timeouts and pool settings for resilience
+	redisOpt.DialTimeout = 10 * time.Second
+	redisOpt.ReadTimeout = 30 * time.Second
+	redisOpt.WriteTimeout = 30 * time.Second
+	redisOpt.PoolSize = 10
+	redisOpt.MinIdleConns = 2
+	redisOpt.PoolTimeout = 60 * time.Second
+	redisOpt.MaxRetries = 3
+
 	redisClient := redis.NewClient(redisOpt)
 	defer redisClient.Close()
 
-	if err := redisClient.Ping(context.Background()).Err(); err != nil {
+	pingCtx, pingCancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer pingCancel()
+	if err := redisClient.Ping(pingCtx).Err(); err != nil {
 		logger.Fatal().Err(err).Msg("Failed to connect to Redis")
 	}
 	logger.Info().Msg("Connected to Redis")
 
-	// Create Asynq client
+	// Create Asynq client with timeouts
 	asynqClient := asynq.NewClient(asynq.RedisClientOpt{
-		Addr:     redisOpt.Addr,
-		DB:       redisOpt.DB,
-		Password: redisOpt.Password,
+		Addr:         redisOpt.Addr,
+		DB:           redisOpt.DB,
+		Password:     redisOpt.Password,
+		DialTimeout:  10 * time.Second,
+		ReadTimeout:  30 * time.Second,
+		WriteTimeout: 30 * time.Second,
+		PoolSize:     10,
 	})
 	defer asynqClient.Close()
 
