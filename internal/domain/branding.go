@@ -27,7 +27,7 @@ func DefaultBranding() *BrandingConfig {
 		DashboardURL:    "https://wasbot.ng/dashboard",
 		SupportEmail:    "support@wasbot.ng",
 		WebsiteURL:      "https://wasbot.ng",
-		SocialTwitter:   "https://twitter.com/AskWasBot",
-		SocialInstagram: "https://instagram.com/AskWasBot",
+		SocialTwitter:   "https://twitter.com/AskWASBOT",
+		SocialInstagram: "https://instagram.com/AskWASBOT",
 	}
 }

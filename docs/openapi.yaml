@@ -130,12 +130,12 @@ components:
           type: string
           format: uri
           description: Twitter/X profile URL
-          example: "https://twitter.com/AskWasBot"
+          example: "https://twitter.com/AskWASBOT"
         social_instagram:
           type: string
           format: uri
           description: Instagram profile URL
-          example: "https://instagram.com/AskWasBot"
+          example: "https://instagram.com/AskWASBOT"
       example:
         primary_color: "#10b981"
         secondary_color: "#059669"
@@ -146,8 +146,8 @@ components:
         dashboard_url: "https://wasbot.ng/dashboard"
         support_email: "support@wasbot.ng"
         website_url: "https://wasbot.ng"
-        social_twitter: "https://twitter.com/AskWasBot"
-        social_instagram: "https://instagram.com/AskWasBot"
+        social_twitter: "https://twitter.com/AskWASBOT"
+        social_instagram: "https://instagram.com/AskWASBOT"
 
     SendEmailRequest:
       type: object
