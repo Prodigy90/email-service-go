@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -113,6 +114,10 @@ func (r *EmailRepository) CreateOrGetByIdempotencyID(ctx context.Context, email 
 		existing, err := r.GetByIdempotencyID(ctx, email.IdempotencyID)
 		if err != nil {
 			return nil, false, err
+		}
+		if existing == nil {
+			// Edge case: conflict row was deleted between INSERT and SELECT
+			return nil, false, fmt.Errorf("idempotency conflict but record not found")
 		}
 		return existing, true, nil
 	}
