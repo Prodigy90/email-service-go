@@ -33,6 +33,11 @@ func main() {
 	// Load config
 	cfg := config.Load()
 
+	// Validate production config
+	if err := config.ValidateProduction(cfg); err != nil {
+		logger.Fatal().Err(err).Msg("Configuration validation failed")
+	}
+
 	// Set Gin mode
 	if cfg.Env == "production" {
 		gin.SetMode(gin.ReleaseMode)

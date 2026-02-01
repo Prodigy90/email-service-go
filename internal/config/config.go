@@ -1,9 +1,11 @@
 package config
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
@@ -63,6 +65,31 @@ type RedisConfig struct {
 	ReadTimeoutSecs  int
 	WriteTimeoutSecs int
 	PoolSize         int
+}
+
+// ValidateProduction checks that required environment variables are set for production.
+// Returns an error listing all missing required variables.
+func ValidateProduction(cfg *Config) error {
+	if cfg.Env != "production" {
+		return nil // Skip validation in development
+	}
+
+	var missing []string
+
+	if cfg.DatabaseURL == "" || cfg.DatabaseURL == "postgres://email:email@localhost:55433/email_service?sslmode=disable" {
+		missing = append(missing, "DATABASE_URL")
+	}
+	if cfg.RedisURL == "" || cfg.RedisURL == "redis://localhost:16380/0" {
+		missing = append(missing, "REDIS_URL")
+	}
+	if cfg.APIKey == "" || cfg.APIKey == "dev-api-key" {
+		missing = append(missing, "API_KEY")
+	}
+
+	if len(missing) > 0 {
+		return fmt.Errorf("missing required environment variables for production: %s", strings.Join(missing, ", "))
+	}
+	return nil
 }
 
 func Load() *Config {
