@@ -55,6 +55,72 @@ func (r *EmailRepository) Create(ctx context.Context, email *domain.Email) error
 	return err
 }
 
+// CreateOrGetByIdempotencyID atomically creates an email or returns existing one if idempotency_id matches.
+// This prevents race conditions by using INSERT ON CONFLICT DO NOTHING.
+// Returns (email, true) if existing was found, (email, false) if new was created.
+func (r *EmailRepository) CreateOrGetByIdempotencyID(ctx context.Context, email *domain.Email) (*domain.Email, bool, error) {
+	if email.IdempotencyID == "" {
+		// No idempotency ID - just create normally
+		if err := r.Create(ctx, email); err != nil {
+			return nil, false, err
+		}
+		return email, false, nil
+	}
+
+	metadata, _ := json.Marshal(email.Metadata)
+	templateData, _ := json.Marshal(email.TemplateData)
+
+	// Use INSERT ON CONFLICT DO NOTHING to atomically try insertion
+	// If conflict on idempotency_id, nothing is inserted
+	query := `
+		INSERT INTO emails (
+			id, to_address, from_address, subject, body, html_body,
+			template, template_data, status, max_retries, idempotency_id,
+			source_service, metadata, created_at, updated_at
+		) VALUES (
+			$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15
+		)
+		ON CONFLICT (idempotency_id) DO NOTHING`
+
+	result, err := r.db.ExecContext(ctx, query,
+		email.ID,
+		email.To,
+		email.From,
+		email.Subject,
+		email.Body,
+		email.HTMLBody,
+		email.Template,
+		templateData,
+		email.Status,
+		email.MaxRetries,
+		nullString(email.IdempotencyID),
+		nullString(email.SourceService),
+		metadata,
+		email.CreatedAt,
+		email.UpdatedAt,
+	)
+	if err != nil {
+		return nil, false, err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return nil, false, err
+	}
+
+	if rowsAffected == 0 {
+		// Conflict occurred - fetch the existing record
+		existing, err := r.GetByIdempotencyID(ctx, email.IdempotencyID)
+		if err != nil {
+			return nil, false, err
+		}
+		return existing, true, nil
+	}
+
+	// New record was inserted
+	return email, false, nil
+}
+
 // GetByID retrieves an email by ID.
 func (r *EmailRepository) GetByID(ctx context.Context, id uuid.UUID) (*domain.Email, error) {
 	var email emailRow

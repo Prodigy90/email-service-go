@@ -46,19 +46,6 @@ func NewEmailService(
 
 // Send queues an email for delivery.
 func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (*domain.SendEmailResponse, error) {
-	// Check idempotency if ID provided
-	if req.IdempotencyID != "" {
-		existing, err := s.repo.GetByIdempotencyID(ctx, req.IdempotencyID)
-		if err == nil && existing != nil {
-			s.logger.Debug().Str("idempotency_id", req.IdempotencyID).Msg("Duplicate request, returning existing")
-			return &domain.SendEmailResponse{
-				ID:      existing.ID,
-				Status:  existing.Status,
-				Message: "Email already queued (idempotent)",
-			}, nil
-		}
-	}
-
 	// Build email
 	email := &domain.Email{
 		ID:            uuid.New(),
@@ -96,10 +83,25 @@ func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (
 		return nil, fmt.Errorf("body or html_body is required")
 	}
 
-	// Save to database
-	if err := s.repo.Create(ctx, email); err != nil {
+	// Atomically create or get existing email by idempotency ID
+	// This prevents race conditions with concurrent duplicate requests
+	savedEmail, existedBefore, err := s.repo.CreateOrGetByIdempotencyID(ctx, email)
+	if err != nil {
 		return nil, fmt.Errorf("failed to save email: %w", err)
 	}
+
+	// If email already existed (idempotent duplicate), return the existing record
+	if existedBefore {
+		s.logger.Debug().Str("idempotency_id", req.IdempotencyID).Msg("Duplicate request, returning existing")
+		return &domain.SendEmailResponse{
+			ID:      savedEmail.ID,
+			Status:  savedEmail.Status,
+			Message: "Email already queued (idempotent)",
+		}, nil
+	}
+
+	// Use the saved email for further processing
+	email = savedEmail
 
 	// Queue for sending
 	if err := s.enqueue(email); err != nil {
