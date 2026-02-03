@@ -59,7 +59,7 @@ func (c *ResendClient) Send(email *domain.Email) error {
 	from := email.From
 	if from == "" {
 		if c.config.FromAddress == "" {
-			return fmt.Errorf("no from address configured: set RESEND_FROM_ADDRESS")
+			return fmt.Errorf("no from address configured: set FROM_EMAIL")
 		}
 		if c.config.FromName != "" {
 			from = fmt.Sprintf("%s <%s>", c.config.FromName, c.config.FromAddress)

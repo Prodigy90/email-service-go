@@ -117,13 +117,13 @@ func Load() *Config {
 			Port:        getEnvInt("SMTP_PORT", 1025),
 			Username:    getEnv("SMTP_USERNAME", ""),
 			Password:    getEnv("SMTP_PASSWORD", ""),
-			FromAddress: getEnv("SMTP_FROM_ADDRESS", "noreply@localhost"),
-			FromName:    getEnv("SMTP_FROM_NAME", "Email Service"),
+			FromAddress: getEnvWithFallback("FROM_EMAIL", "SMTP_FROM_ADDRESS", "noreply@localhost"),
+			FromName:    getEnvWithFallback("FROM_NAME", "SMTP_FROM_NAME", "Email Service"),
 		},
 		Resend: ResendConfig{
 			APIKey:      getEnv("RESEND_API_KEY", ""),
-			FromAddress: getEnv("RESEND_FROM_ADDRESS", ""),
-			FromName:    getEnv("RESEND_FROM_NAME", ""),
+			FromAddress: getEnvWithFallback("FROM_EMAIL", "RESEND_FROM_ADDRESS", ""),
+			FromName:    getEnvWithFallback("FROM_NAME", "RESEND_FROM_NAME", ""),
 		},
 		APIKey:            getEnv("API_KEY", "dev-api-key"),
 		TemplateDir:       getEnv("TEMPLATE_DIR", "./pkg/templates"),
@@ -137,6 +137,17 @@ func getEnv(key, fallback string) string {
 		return v
 	}
 	return fallback
+}
+
+// getEnvWithFallback tries primary key first, then fallback key, then default value
+func getEnvWithFallback(primary, fallback, defaultVal string) string {
+	if v := os.Getenv(primary); v != "" {
+		return v
+	}
+	if v := os.Getenv(fallback); v != "" {
+		return v
+	}
+	return defaultVal
 }
 
 func getEnvInt(key string, fallback int) int {
