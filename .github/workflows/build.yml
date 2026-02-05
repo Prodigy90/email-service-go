@@ -1,4 +1,4 @@
-name: Build and Push
+name: Build and Deploy
 
 on:
   push:
@@ -13,7 +13,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   test:
@@ -47,6 +46,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set image name to lowercase
+        id: image
+        run: echo "name=${GITHUB_REPOSITORY,,}" >> $GITHUB_OUTPUT
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -61,7 +64,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}
           tags: |
             type=sha,prefix=
             type=raw,value=latest,enable={{is_default_branch}}
@@ -88,3 +91,99 @@ jobs:
           echo "This image contains both API and Worker binaries:" >> $GITHUB_STEP_SUMMARY
           echo "- API: \`/app/api\` (default CMD)" >> $GITHUB_STEP_SUMMARY
           echo "- Worker: \`/app/worker\`" >> $GITHUB_STEP_SUMMARY
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Check if KUBECONFIG is configured
+        id: check_kubeconfig
+        run: |
+          if [ -z "${{ secrets.KUBECONFIG }}" ]; then
+            echo "configured=false" >> $GITHUB_OUTPUT
+            echo "::warning::KUBECONFIG secret not configured - skipping deployment"
+          else
+            echo "configured=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up kubectl
+        if: steps.check_kubeconfig.outputs.configured == 'true'
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.29.0'
+
+      - name: Configure kubeconfig
+        if: steps.check_kubeconfig.outputs.configured == 'true'
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBECONFIG }}" | base64 -d > ~/.kube/config
+          chmod 600 ~/.kube/config
+
+      - name: Deploy to Kubernetes
+        if: steps.check_kubeconfig.outputs.configured == 'true'
+        run: |
+          echo "Deploying email-service to wasbot-prod..."
+          kubectl -n wasbot-prod rollout restart deployment email-service
+          kubectl -n wasbot-prod rollout status deployment email-service --timeout=180s
+
+      - name: Rollback on failure
+        if: failure() && steps.check_kubeconfig.outputs.configured == 'true'
+        run: |
+          echo "Deployment failed, rolling back..."
+          kubectl -n wasbot-prod rollout undo deployment email-service
+          kubectl -n wasbot-prod rollout status deployment email-service --timeout=60s
+          exit 1
+
+      - name: Notify Discord (Success)
+        if: success() && steps.check_kubeconfig.outputs.configured == 'true'
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          if [ -n "$DISCORD_WEBHOOK" ]; then
+            curl -s -H "Content-Type: application/json" \
+              -d '{
+                "embeds": [{
+                  "title": "✅ email-service Deployed",
+                  "description": "Successfully deployed to production",
+                  "color": 5763719,
+                  "fields": [
+                    {"name": "Commit", "value": "`'"${GITHUB_SHA::8}"'`", "inline": true},
+                    {"name": "Branch", "value": "`${{ github.ref_name }}`", "inline": true}
+                  ]
+                }]
+              }' \
+              "$DISCORD_WEBHOOK"
+          fi
+        continue-on-error: true
+
+      - name: Notify Discord (Failure)
+        if: failure()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          if [ -n "$DISCORD_WEBHOOK" ]; then
+            curl -s -H "Content-Type: application/json" \
+              -d '{
+                "embeds": [{
+                  "title": "❌ email-service Deploy Failed",
+                  "description": "Deployment failed and was rolled back",
+                  "color": 15548997,
+                  "fields": [
+                    {"name": "Commit", "value": "`'"${GITHUB_SHA::8}"'`", "inline": true},
+                    {"name": "Logs", "value": "[View Logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})", "inline": true}
+                  ]
+                }]
+              }' \
+              "$DISCORD_WEBHOOK"
+          fi
+        continue-on-error: true
+
+      - name: Deployment Summary
+        if: steps.check_kubeconfig.outputs.configured == 'true'
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- Namespace: \`wasbot-prod\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Deployment: \`email-service\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit: \`${GITHUB_SHA::8}\`" >> $GITHUB_STEP_SUMMARY
