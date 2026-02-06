@@ -27,18 +27,26 @@ func Logger(logger zerolog.Logger) gin.HandlerFunc {
 		// Log after request
 		duration := time.Since(start)
 		status := c.Writer.Status()
+		path := c.Request.URL.Path
 
-		event := logger.Info()
+		// Health check endpoints are logged at debug level to reduce noise
+		isHealthCheck := path == "/healthz" || path == "/readyz"
+
+		var event *zerolog.Event
 		if status >= 500 {
 			event = logger.Error()
 		} else if status >= 400 {
 			event = logger.Warn()
+		} else if isHealthCheck {
+			event = logger.Debug()
+		} else {
+			event = logger.Info()
 		}
 
 		event.
 			Str("request_id", requestID).
 			Str("method", c.Request.Method).
-			Str("path", c.Request.URL.Path).
+			Str("path", path).
 			Int("status", status).
 			Dur("duration", duration).
 			Str("client_ip", c.ClientIP()).
