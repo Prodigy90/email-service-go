@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"log"
+	"net"
 	"os"
 	"strconv"
 	"strings"
@@ -43,6 +44,11 @@ type Config struct {
 	// SwaggerAllowedIPs is a comma-separated list of IPs or CIDR ranges
 	// If empty, Swagger UI is accessible to everyone (dev mode)
 	SwaggerAllowedIPs string
+
+	// TrustedProxies is a list of trusted proxy IPs or CIDR ranges.
+	// Set to the ingress/load balancer IP range in production (e.g., "10.0.0.0/8").
+	// If empty, no proxies are trusted (safest default).
+	TrustedProxies []string
 }
 
 type SMTPConfig struct {
@@ -129,7 +135,32 @@ func Load() *Config {
 		TemplateDir:       getEnv("TEMPLATE_DIR", "./pkg/templates"),
 		MigrationsDir:     getEnv("MIGRATIONS_DIR", "./migrations"),
 		SwaggerAllowedIPs: getEnv("SWAGGER_ALLOWED_IPS", ""),
+		TrustedProxies:    parseTrustedProxies(getEnv("TRUSTED_PROXIES", "")),
 	}
+}
+
+// parseTrustedProxies parses a comma-separated list of trusted proxy IPs/CIDRs.
+// Returns nil if the input is empty. Invalid entries are logged and skipped.
+func parseTrustedProxies(s string) []string {
+	if s == "" {
+		return nil
+	}
+	var proxies []string
+	for _, p := range strings.Split(s, ",") {
+		p = strings.TrimSpace(p)
+		if p == "" {
+			continue
+		}
+		// Validate IP or CIDR format
+		if _, _, err := net.ParseCIDR(p); err != nil {
+			if net.ParseIP(p) == nil {
+				log.Printf("warning: invalid trusted proxy %q (not a valid IP or CIDR), skipping", p)
+				continue
+			}
+		}
+		proxies = append(proxies, p)
+	}
+	return proxies
 }
 
 func getEnv(key, fallback string) string {

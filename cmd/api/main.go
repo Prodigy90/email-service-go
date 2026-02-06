@@ -123,6 +123,7 @@ func main() {
 		EmailService:      emailService,
 		APIKey:            cfg.APIKey,
 		SwaggerAllowedIPs: cfg.SwaggerAllowedIPs,
+		TrustedProxies:    cfg.TrustedProxies,
 	})
 
 	// Start server

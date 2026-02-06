@@ -28,8 +28,10 @@ func New(d Deps) *gin.Engine {
 	// Configure trusted proxies for production.
 	if len(d.TrustedProxies) > 0 {
 		if err := r.SetTrustedProxies(d.TrustedProxies); err != nil {
-			d.Logger.Warn().Err(err).Strs("proxies", d.TrustedProxies).Msg("Failed to set trusted proxies")
+			// Fatal - misconfigured proxies affect security (rate limiting, IP logging)
+			d.Logger.Fatal().Err(err).Strs("proxies", d.TrustedProxies).Msg("Failed to set trusted proxies")
 		}
+		d.Logger.Info().Strs("proxies", d.TrustedProxies).Msg("Trusted proxies configured")
 	} else {
 		// Trust no proxies by default (safer than trusting all)
 		_ = r.SetTrustedProxies(nil)
