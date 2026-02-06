@@ -11,9 +11,9 @@ import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	"github.com/redis/go-redis/v9"
-	"github.com/rs/zerolog"
 
 	"github.com/prodigy90/email-service-go/internal/config"
+	"github.com/prodigy90/email-service-go/internal/logger"
 	"github.com/prodigy90/email-service-go/internal/repository/postgres"
 	"github.com/prodigy90/email-service-go/internal/service"
 	"github.com/prodigy90/email-service-go/internal/worker/tasks"
@@ -33,27 +33,25 @@ func buildRedisOpt(redisOpt *redis.Options, cfg *config.Config) asynq.RedisClien
 }
 
 func main() {
-	// Setup logger
-	logger := zerolog.New(os.Stdout).With().Timestamp().Logger()
-	if os.Getenv("ENV") == "development" {
-		logger = logger.Output(zerolog.ConsoleWriter{Out: os.Stdout})
-	}
-
-	// Load config
+	// Load config first so we can use LogLevel
 	cfg := config.Load()
+
+	// Setup logger with configured level
+	logger.Init(cfg.LogLevel)
+	log := *logger.Get()
 
 	// Connect to PostgreSQL
 	db, err := sqlx.Connect("postgres", cfg.DatabaseURL)
 	if err != nil {
-		logger.Fatal().Err(err).Msg("Failed to connect to database")
+		log.Fatal().Err(err).Msg("Failed to connect to database")
 	}
 	defer db.Close()
-	logger.Info().Msg("Connected to PostgreSQL")
+	log.Info().Msg("Connected to PostgreSQL")
 
 	// Parse Redis URL
 	redisOpt, err := redis.ParseURL(cfg.RedisURL)
 	if err != nil {
-		logger.Fatal().Err(err).Msg("Failed to parse Redis URL")
+		log.Fatal().Err(err).Msg("Failed to parse Redis URL")
 	}
 
 	// Build asynq Redis options with timeouts
@@ -65,9 +63,9 @@ func main() {
 
 	// Initialize services
 	emailRepo := postgres.NewEmailRepository(db)
-	templateService, err := service.NewTemplateService(cfg.TemplateDir, logger)
+	templateService, err := service.NewTemplateService(cfg.TemplateDir, log)
 	if err != nil {
-		logger.Fatal().Err(err).Msg("Failed to initialize template service")
+		log.Fatal().Err(err).Msg("Failed to initialize template service")
 	}
 
 	// Choose email provider based on config
@@ -75,19 +73,19 @@ func main() {
 	switch cfg.EmailProvider {
 	case "resend":
 		if cfg.Resend.APIKey == "" {
-			logger.Fatal().Msg("RESEND_API_KEY is required when EMAIL_PROVIDER=resend")
+			log.Fatal().Msg("RESEND_API_KEY is required when EMAIL_PROVIDER=resend")
 		}
-		emailSender = service.NewResendClient(cfg.Resend, logger)
-		logger.Info().Msg("Using Resend as email provider")
+		emailSender = service.NewResendClient(cfg.Resend, log)
+		log.Info().Msg("Using Resend as email provider")
 	default:
-		emailSender = service.NewSMTPClient(cfg.SMTP, logger)
-		logger.Info().Msg("Using SMTP as email provider")
+		emailSender = service.NewSMTPClient(cfg.SMTP, log)
+		log.Info().Msg("Using SMTP as email provider")
 	}
 
-	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, logger)
+	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, log)
 
 	// Create task handler
-	emailTaskHandler := tasks.NewEmailTaskHandler(emailService, logger)
+	emailTaskHandler := tasks.NewEmailTaskHandler(emailService, log)
 
 	// Create Asynq server
 	srv := asynq.NewServer(
@@ -99,7 +97,7 @@ func main() {
 				"default": 3,
 			},
 			ErrorHandler: asynq.ErrorHandlerFunc(func(ctx context.Context, task *asynq.Task, err error) {
-				logger.Error().
+				log.Error().
 					Err(err).
 					Str("task_type", task.Type()).
 					Bytes("payload", task.Payload()).
@@ -113,10 +111,10 @@ func main() {
 	mux.HandleFunc(tasks.TaskTypeSendEmail, emailTaskHandler.ProcessTask)
 
 	// Start server
-	logger.Info().Msg("Starting email worker")
+	log.Info().Msg("Starting email worker")
 	go func() {
 		if err := srv.Run(mux); err != nil {
-			logger.Fatal().Err(err).Msg("Worker failed")
+			log.Fatal().Err(err).Msg("Worker failed")
 		}
 	}()
 
@@ -125,7 +123,7 @@ func main() {
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 
-	logger.Info().Msg("Shutting down worker...")
+	log.Info().Msg("Shutting down worker...")
 	srv.Shutdown()
-	logger.Info().Msg("Worker exited")
+	log.Info().Msg("Worker exited")
 }

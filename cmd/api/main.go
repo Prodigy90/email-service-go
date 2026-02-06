@@ -14,28 +14,26 @@ import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	"github.com/redis/go-redis/v9"
-	"github.com/rs/zerolog"
 
 	"github.com/prodigy90/email-service-go/internal/api/routes"
 	"github.com/prodigy90/email-service-go/internal/config"
 	"github.com/prodigy90/email-service-go/internal/db"
+	"github.com/prodigy90/email-service-go/internal/logger"
 	"github.com/prodigy90/email-service-go/internal/repository/postgres"
 	"github.com/prodigy90/email-service-go/internal/service"
 )
 
 func main() {
-	// Setup logger
-	logger := zerolog.New(os.Stdout).With().Timestamp().Logger()
-	if os.Getenv("ENV") == "development" {
-		logger = logger.Output(zerolog.ConsoleWriter{Out: os.Stdout})
-	}
-
-	// Load config
+	// Load config first so we can use LogLevel
 	cfg := config.Load()
+
+	// Setup logger with configured level
+	logger.Init(cfg.LogLevel)
+	log := *logger.Get()
 
 	// Validate production config
 	if err := config.ValidateProduction(cfg); err != nil {
-		logger.Fatal().Err(err).Msg("Configuration validation failed")
+		log.Fatal().Err(err).Msg("Configuration validation failed")
 	}
 
 	// Set Gin mode
@@ -46,21 +44,21 @@ func main() {
 	// Connect to PostgreSQL
 	sqlxDB, err := sqlx.Connect("postgres", cfg.DatabaseURL)
 	if err != nil {
-		logger.Fatal().Err(err).Msg("Failed to connect to database")
+		log.Fatal().Err(err).Msg("Failed to connect to database")
 	}
 	defer sqlxDB.Close()
-	logger.Info().Msg("Connected to PostgreSQL")
+	log.Info().Msg("Connected to PostgreSQL")
 
 	// Run database migrations
 	if err := db.RunMigrations(sqlxDB.DB, cfg.MigrationsDir); err != nil {
-		logger.Fatal().Err(err).Msg("Failed to run database migrations")
+		log.Fatal().Err(err).Msg("Failed to run database migrations")
 	}
-	logger.Info().Msg("Database migrations completed")
+	log.Info().Msg("Database migrations completed")
 
 	// Connect to Redis
 	redisOpt, err := redis.ParseURL(cfg.RedisURL)
 	if err != nil {
-		logger.Fatal().Err(err).Msg("Failed to parse Redis URL")
+		log.Fatal().Err(err).Msg("Failed to parse Redis URL")
 	}
 
 	// Configure timeouts and pool settings for resilience
@@ -78,9 +76,9 @@ func main() {
 	pingCtx, pingCancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer pingCancel()
 	if err := redisClient.Ping(pingCtx).Err(); err != nil {
-		logger.Fatal().Err(err).Msg("Failed to connect to Redis")
+		log.Fatal().Err(err).Msg("Failed to connect to Redis")
 	}
-	logger.Info().Msg("Connected to Redis")
+	log.Info().Msg("Connected to Redis")
 
 	// Create Asynq client with timeouts
 	asynqClient := asynq.NewClient(asynq.RedisClientOpt{
@@ -96,9 +94,9 @@ func main() {
 
 	// Initialize services
 	emailRepo := postgres.NewEmailRepository(sqlxDB)
-	templateService, err := service.NewTemplateService(cfg.TemplateDir, logger)
+	templateService, err := service.NewTemplateService(cfg.TemplateDir, log)
 	if err != nil {
-		logger.Fatal().Err(err).Msg("Failed to initialize template service")
+		log.Fatal().Err(err).Msg("Failed to initialize template service")
 	}
 
 	// Choose email provider based on config
@@ -106,20 +104,20 @@ func main() {
 	switch cfg.EmailProvider {
 	case "resend":
 		if cfg.Resend.APIKey == "" {
-			logger.Fatal().Msg("RESEND_API_KEY is required when EMAIL_PROVIDER=resend")
+			log.Fatal().Msg("RESEND_API_KEY is required when EMAIL_PROVIDER=resend")
 		}
-		emailSender = service.NewResendClient(cfg.Resend, logger)
-		logger.Info().Msg("Using Resend as email provider")
+		emailSender = service.NewResendClient(cfg.Resend, log)
+		log.Info().Msg("Using Resend as email provider")
 	default:
-		emailSender = service.NewSMTPClient(cfg.SMTP, logger)
-		logger.Info().Msg("Using SMTP as email provider")
+		emailSender = service.NewSMTPClient(cfg.SMTP, log)
+		log.Info().Msg("Using SMTP as email provider")
 	}
 
-	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, logger)
+	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, log)
 
 	// Create router
 	router := routes.New(routes.Deps{
-		Logger:            logger,
+		Logger:            log,
 		EmailService:      emailService,
 		APIKey:            cfg.APIKey,
 		SwaggerAllowedIPs: cfg.SwaggerAllowedIPs,
@@ -135,9 +133,9 @@ func main() {
 	}
 
 	go func() {
-		logger.Info().Str("port", cfg.APIPort).Msg("Starting API server")
+		log.Info().Str("port", cfg.APIPort).Msg("Starting API server")
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			logger.Fatal().Err(err).Msg("Server failed")
+			log.Fatal().Err(err).Msg("Server failed")
 		}
 	}()
 
@@ -146,12 +144,12 @@ func main() {
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 
-	logger.Info().Msg("Shutting down server...")
+	log.Info().Msg("Shutting down server...")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	if err := srv.Shutdown(ctx); err != nil {
-		logger.Fatal().Err(err).Msg("Server forced to shutdown")
+		log.Fatal().Err(err).Msg("Server forced to shutdown")
 	}
 
 	fmt.Println("Server exited")
