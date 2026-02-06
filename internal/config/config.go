@@ -22,6 +22,9 @@ type Config struct {
 	RedisURL string
 	Redis    RedisConfig
 
+	// Logging
+	LogLevel string // debug, info, warn, error (default: info)
+
 	// Email Provider: "smtp" or "resend"
 	EmailProvider string
 
@@ -117,6 +120,7 @@ func Load() *Config {
 			WriteTimeoutSecs: getEnvIntPositive("REDIS_WRITE_TIMEOUT", 30),
 			PoolSize:         getEnvIntPositive("REDIS_POOL_SIZE", 10),
 		},
+		LogLevel:      strings.ToLower(getEnv("LOG_LEVEL", "info")),
 		EmailProvider: getEnv("EMAIL_PROVIDER", "smtp"),
 		SMTP: SMTPConfig{
 			Host:        getEnv("SMTP_HOST", "localhost"),
