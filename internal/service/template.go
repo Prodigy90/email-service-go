@@ -10,6 +10,7 @@ import (
 	"strings"
 	"sync"
 	"text/template"
+	"time"
 
 	"github.com/prodigy90/email-service-go/internal/domain"
 	"github.com/rs/zerolog"
@@ -157,6 +158,7 @@ func (ts *TemplateService) prepareBrandingData(branding *domain.BrandingConfig) 
 		"WebsiteURL":      branding.WebsiteURL,
 		"SocialTwitter":   branding.SocialTwitter,
 		"SocialInstagram": branding.SocialInstagram,
+		"Year":            time.Now().Year(),
 	}
 }
 
@@ -716,12 +718,12 @@ func (ts *TemplateService) wrapHTMLWithBranding(title, content string) string {
                       <tr>
                         <td style="padding: 0 8px;">
                           <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
-                            <img src="https://cdn-icons-png.flaticon.com/32/733/733579.png" alt="Twitter" width="24" height="24" style="opacity: 0.6;">
+                            <img src="https://www.wasbot.app/icons/x.png" alt="X" width="24" height="24" style="opacity: 0.6;">
                           </a>
                         </td>
                         <td style="padding: 0 8px;">
                           <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
-                            <img src="https://cdn-icons-png.flaticon.com/32/2111/2111463.png" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                            <img src="https://www.wasbot.app/icons/instagram.png" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
                           </a>
                         </td>
                       </tr>
@@ -735,7 +737,7 @@ func (ts *TemplateService) wrapHTMLWithBranding(title, content string) string {
 
                     <!-- Legal -->
                     <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
-                      &copy; 2025 {{.Branding.CompanyName}}. All rights reserved.
+                      &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
                     </p>
                   </td>
                 </tr>
@@ -2095,7 +2097,7 @@ func (ts *TemplateService) passwordResetContent() string {
       <!-- CTA Button -->
       <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
         <tr>
-          <td style="border-radius: 8px; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);">
+          <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, {{.Branding.DangerColor}} 100%);">
             <a href="{{.ResetURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
               Reset Password
             </a>

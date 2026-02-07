@@ -60,10 +60,10 @@ type BrandingConfig struct {
 	DangerColor     string `json:"danger_color,omitempty"`     // e.g., "#ef4444"
 	CompanyName     string `json:"company_name,omitempty"`     // e.g., "WASBOT"
 	LogoURL         string `json:"logo_url,omitempty"`         // URL to company logo
-	DashboardURL    string `json:"dashboard_url,omitempty"`    // e.g., "https://wasbot.ng/dashboard"
-	SupportEmail    string `json:"support_email,omitempty"`    // e.g., "support@wasbot.ng"
-	WebsiteURL      string `json:"website_url,omitempty"`      // e.g., "https://wasbot.ng"
-	SocialTwitter   string `json:"social_twitter,omitempty"`   // Twitter URL
+	DashboardURL    string `json:"dashboard_url,omitempty"`    // e.g., "https://www.wasbot.app/dashboard"
+	SupportEmail    string `json:"support_email,omitempty"`    // e.g., "support@wasbot.app"
+	WebsiteURL      string `json:"website_url,omitempty"`      // e.g., "https://www.wasbot.app"
+	SocialTwitter   string `json:"social_twitter,omitempty"`   // X (Twitter) URL
 	SocialInstagram string `json:"social_instagram,omitempty"` // Instagram URL
 }
 

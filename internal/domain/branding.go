@@ -8,10 +8,10 @@ type BrandingConfig struct {
 	DangerColor     string `json:"danger_color"`     // e.g., "#ef4444"
 	CompanyName     string `json:"company_name"`     // e.g., "WASBOT"
 	LogoURL         string `json:"logo_url"`         // URL to company logo
-	DashboardURL    string `json:"dashboard_url"`    // e.g., "https://wasbot.ng/dashboard"
-	SupportEmail    string `json:"support_email"`    // e.g., "support@wasbot.ng"
-	WebsiteURL      string `json:"website_url"`      // e.g., "https://wasbot.ng"
-	SocialTwitter   string `json:"social_twitter"`   // Twitter URL
+	DashboardURL    string `json:"dashboard_url"`    // e.g., "https://www.wasbot.app/dashboard"
+	SupportEmail    string `json:"support_email"`    // e.g., "support@wasbot.app"
+	WebsiteURL      string `json:"website_url"`      // e.g., "https://www.wasbot.app"
+	SocialTwitter   string `json:"social_twitter"`   // X (Twitter) URL
 	SocialInstagram string `json:"social_instagram"` // Instagram URL
 }
 
@@ -23,11 +23,11 @@ func DefaultBranding() *BrandingConfig {
 		AccentColor:     "#047857",
 		DangerColor:     "#ef4444",
 		CompanyName:     "WASBOT",
-		LogoURL:         "",
-		DashboardURL:    "https://wasbot.ng/dashboard",
-		SupportEmail:    "support@wasbot.ng",
-		WebsiteURL:      "https://wasbot.ng",
-		SocialTwitter:   "https://twitter.com/AskWASBOT",
-		SocialInstagram: "https://instagram.com/AskWASBOT",
+		LogoURL:         "https://www.wasbot.app/wasbot-icon.png",
+		DashboardURL:    "https://www.wasbot.app/dashboard",
+		SupportEmail:    "support@wasbot.app",
+		WebsiteURL:      "https://www.wasbot.app",
+		SocialTwitter:   "https://x.com/wasbot",
+		SocialInstagram: "https://instagram.com/wasbot.app",
 	}
 }
