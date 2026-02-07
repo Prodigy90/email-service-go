@@ -158,7 +158,7 @@ func (ts *TemplateService) prepareBrandingData(branding *domain.BrandingConfig) 
 		"WebsiteURL":      branding.WebsiteURL,
 		"SocialTwitter":   branding.SocialTwitter,
 		"SocialInstagram": branding.SocialInstagram,
-		"Year":            time.Now().Year(),
+		"Year":            time.Now().UTC().Year(),
 	}
 }
 
@@ -2097,7 +2097,7 @@ func (ts *TemplateService) passwordResetContent() string {
       <!-- CTA Button -->
       <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
         <tr>
-          <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, {{.Branding.DangerColor}} 100%);">
+          <td style="border-radius: 8px; background: {{.Branding.DangerColor}};">
             <a href="{{.ResetURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
               Reset Password
             </a>
