@@ -23,14 +23,17 @@ func NewEventRepository(db *sqlx.DB) *EventRepository {
 
 // Create inserts a new email event, silently skipping duplicates via resend_event_id.
 func (r *EventRepository) Create(ctx context.Context, event *domain.EmailEvent) error {
-	payload, _ := json.Marshal(event.Payload)
+	payload, err := json.Marshal(event.Payload)
+	if err != nil {
+		payload = []byte("{}")
+	}
 
 	query := `
 		INSERT INTO email_events (id, email_id, event_type, resend_event_id, payload, created_at)
 		VALUES ($1, $2, $3, $4, $5, $6)
 		ON CONFLICT (resend_event_id) DO NOTHING`
 
-	_, err := r.db.ExecContext(ctx, query,
+	_, err = r.db.ExecContext(ctx, query,
 		event.ID,
 		event.EmailID,
 		event.EventType,

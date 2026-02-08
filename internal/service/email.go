@@ -30,11 +30,13 @@ type EmailService struct {
 }
 
 // NewEmailService creates a new email service.
+// The redis client is optional (pass nil to disable caching).
 func NewEmailService(
 	repo *postgres.EmailRepository,
 	sender EmailSender,
 	templates *TemplateService,
 	queue *asynq.Client,
+	redisClient *redis.Client,
 	logger zerolog.Logger,
 ) *EmailService {
 	return &EmailService{
@@ -42,13 +44,9 @@ func NewEmailService(
 		sender:    sender,
 		templates: templates,
 		queue:     queue,
+		redis:     redisClient,
 		logger:    logger.With().Str("component", "email_service").Logger(),
 	}
-}
-
-// SetRedis sets the Redis client for caching (optional).
-func (s *EmailService) SetRedis(r *redis.Client) {
-	s.redis = r
 }
 
 // Send queues an email for delivery.

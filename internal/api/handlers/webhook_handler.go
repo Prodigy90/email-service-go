@@ -8,6 +8,8 @@ import (
 	"github.com/prodigy90/email-service-go/internal/service"
 )
 
+const maxWebhookBodySize = 256 * 1024
+
 // WebhookHandler handles webhook API requests.
 type WebhookHandler struct {
 	webhookService *service.WebhookService
@@ -21,7 +23,7 @@ func NewWebhookHandler(webhookService *service.WebhookService) *WebhookHandler {
 // HandleResendWebhook processes incoming Resend webhook events.
 // Resend uses Svix for webhook delivery with signature verification.
 func (h *WebhookHandler) HandleResendWebhook(c *gin.Context) {
-	body, err := io.ReadAll(c.Request.Body)
+	body, err := io.ReadAll(io.LimitReader(c.Request.Body, maxWebhookBodySize))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, ErrorResponse{Error: "failed to read body"})
 		return

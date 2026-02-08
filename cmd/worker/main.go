@@ -82,7 +82,7 @@ func main() {
 		log.Info().Msg("Using SMTP as email provider")
 	}
 
-	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, log)
+	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, nil, log)
 
 	// Create task handler
 	emailTaskHandler := tasks.NewEmailTaskHandler(emailService, log)

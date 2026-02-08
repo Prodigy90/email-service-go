@@ -203,7 +203,7 @@ func (r *EmailRepository) GetByResendEmailID(ctx context.Context, resendEmailID 
 func (r *EmailRepository) GetCampaignStats(ctx context.Context, campaignTag string) (*domain.CampaignStats, error) {
 	query := `
 		SELECT
-			COUNT(*) AS total_sent,
+			COUNT(DISTINCT e.id) AS total_sent,
 			COUNT(DISTINCT CASE WHEN ev.event_type = 'email.delivered' THEN ev.email_id END) AS delivered,
 			COUNT(DISTINCT CASE WHEN ev.event_type = 'email.opened' THEN ev.email_id END) AS opened,
 			COUNT(DISTINCT CASE WHEN ev.event_type = 'email.clicked' THEN ev.email_id END) AS clicked,

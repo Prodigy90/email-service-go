@@ -113,8 +113,7 @@ func main() {
 		log.Info().Msg("Using SMTP as email provider")
 	}
 
-	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, log)
-	emailService.SetRedis(redisClient)
+	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, redisClient, log)
 
 	// Create event repository and webhook service
 	eventRepo := postgres.NewEventRepository(sqlxDB)

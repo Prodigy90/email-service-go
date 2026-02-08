@@ -105,9 +105,13 @@ func (s *WebhookService) ProcessResendWebhook(ctx context.Context, body []byte, 
 	// Update email status for terminal events
 	switch payload.Type {
 	case "email.bounced":
-		_ = s.emailRepo.UpdateStatus(ctx, email.ID, domain.StatusBounced, "")
+		if err := s.emailRepo.UpdateStatus(ctx, email.ID, domain.StatusBounced, ""); err != nil {
+			s.logger.Error().Err(err).Str("email_id", email.ID.String()).Msg("Failed to update email status to bounced")
+		}
 	case "email.complained":
-		_ = s.emailRepo.UpdateStatus(ctx, email.ID, domain.StatusComplaint, "")
+		if err := s.emailRepo.UpdateStatus(ctx, email.ID, domain.StatusComplaint, ""); err != nil {
+			s.logger.Error().Err(err).Str("email_id", email.ID.String()).Msg("Failed to update email status to complained")
+		}
 	}
 
 	s.logger.Info().

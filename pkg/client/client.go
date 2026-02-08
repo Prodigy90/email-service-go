@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"time"
 
 	"github.com/google/uuid"
@@ -191,7 +192,7 @@ type NonOpenersResponse struct {
 // GetCampaignStats retrieves aggregate stats for a campaign.
 func (c *Client) GetCampaignStats(ctx context.Context, campaignTag string) (*CampaignStatsResponse, error) {
 	var resp CampaignStatsResponse
-	if err := c.doRequest(ctx, "GET", "/api/v1/campaigns/"+campaignTag+"/stats", nil, &resp); err != nil {
+	if err := c.doRequest(ctx, "GET", "/api/v1/campaigns/"+url.PathEscape(campaignTag)+"/stats", nil, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
@@ -200,7 +201,7 @@ func (c *Client) GetCampaignStats(ctx context.Context, campaignTag string) (*Cam
 // GetCampaignNonOpeners retrieves email addresses that haven't opened emails from a campaign.
 func (c *Client) GetCampaignNonOpeners(ctx context.Context, campaignTag string) (*NonOpenersResponse, error) {
 	var resp NonOpenersResponse
-	if err := c.doRequest(ctx, "GET", "/api/v1/campaigns/"+campaignTag+"/non-openers", nil, &resp); err != nil {
+	if err := c.doRequest(ctx, "GET", "/api/v1/campaigns/"+url.PathEscape(campaignTag)+"/non-openers", nil, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
