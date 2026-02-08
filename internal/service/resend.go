@@ -55,11 +55,11 @@ type resendError struct {
 }
 
 // Send sends an email via Resend API.
-func (c *ResendClient) Send(email *domain.Email) error {
+func (c *ResendClient) Send(email *domain.Email) (*SendResult, error) {
 	from := email.From
 	if from == "" {
 		if c.config.FromAddress == "" {
-			return fmt.Errorf("no from address configured: set FROM_EMAIL")
+			return nil, fmt.Errorf("no from address configured: set FROM_EMAIL")
 		}
 		if c.config.FromName != "" {
 			from = fmt.Sprintf("%s <%s>", c.config.FromName, c.config.FromAddress)
@@ -78,12 +78,12 @@ func (c *ResendClient) Send(email *domain.Email) error {
 
 	jsonBody, err := json.Marshal(reqBody)
 	if err != nil {
-		return fmt.Errorf("failed to marshal request: %w", err)
+		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
 
 	req, err := http.NewRequest("POST", resendAPIURL, bytes.NewReader(jsonBody))
 	if err != nil {
-		return fmt.Errorf("failed to create request: %w", err)
+		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
 
 	req.Header.Set("Content-Type", "application/json")
@@ -95,13 +95,13 @@ func (c *ResendClient) Send(email *domain.Email) error {
 			Str("to", email.To).
 			Str("subject", email.Subject).
 			Msg("Failed to send email via Resend")
-		return fmt.Errorf("resend request failed: %w", err)
+		return nil, fmt.Errorf("resend request failed: %w", err)
 	}
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return fmt.Errorf("failed to read response: %w", err)
+		return nil, fmt.Errorf("failed to read response: %w", err)
 	}
 
 	if resp.StatusCode >= 400 {
@@ -112,14 +112,14 @@ func (c *ResendClient) Send(email *domain.Email) error {
 				Str("error", errResp.Message).
 				Str("to", email.To).
 				Msg("Resend API error")
-			return fmt.Errorf("resend API error (%d): %s", resp.StatusCode, errResp.Message)
+			return nil, fmt.Errorf("resend API error (%d): %s", resp.StatusCode, errResp.Message)
 		}
-		return fmt.Errorf("resend API error (%d): %s", resp.StatusCode, string(body))
+		return nil, fmt.Errorf("resend API error (%d): %s", resp.StatusCode, string(body))
 	}
 
 	var result resendResponse
 	if err := json.Unmarshal(body, &result); err != nil {
-		return fmt.Errorf("failed to parse response: %w", err)
+		return nil, fmt.Errorf("failed to parse response: %w", err)
 	}
 
 	c.logger.Info().
@@ -129,5 +129,5 @@ func (c *ResendClient) Send(email *domain.Email) error {
 		Str("resend_id", result.ID).
 		Msg("Email sent successfully via Resend")
 
-	return nil
+	return &SendResult{ProviderID: result.ID}, nil
 }

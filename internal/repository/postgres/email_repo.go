@@ -182,26 +182,100 @@ func (r *EmailRepository) ListByStatus(ctx context.Context, status domain.EmailS
 	return emails, nil
 }
 
+// UpdateResendEmailID stores the Resend provider email ID after sending.
+func (r *EmailRepository) UpdateResendEmailID(ctx context.Context, id uuid.UUID, resendEmailID string) error {
+	query := `UPDATE emails SET resend_email_id = $1, updated_at = $2 WHERE id = $3`
+	_, err := r.db.ExecContext(ctx, query, resendEmailID, time.Now(), id)
+	return err
+}
+
+// GetByResendEmailID looks up an email by its Resend provider ID (for webhook event mapping).
+func (r *EmailRepository) GetByResendEmailID(ctx context.Context, resendEmailID string) (*domain.Email, error) {
+	var email emailRow
+	query := `SELECT * FROM emails WHERE resend_email_id = $1`
+	if err := r.db.GetContext(ctx, &email, query, resendEmailID); err != nil {
+		return nil, err
+	}
+	return email.toDomain(), nil
+}
+
+// GetCampaignStats returns aggregate stats for a campaign tag.
+func (r *EmailRepository) GetCampaignStats(ctx context.Context, campaignTag string) (*domain.CampaignStats, error) {
+	query := `
+		SELECT
+			COUNT(*) AS total_sent,
+			COUNT(DISTINCT CASE WHEN ev.event_type = 'email.delivered' THEN ev.email_id END) AS delivered,
+			COUNT(DISTINCT CASE WHEN ev.event_type = 'email.opened' THEN ev.email_id END) AS opened,
+			COUNT(DISTINCT CASE WHEN ev.event_type = 'email.clicked' THEN ev.email_id END) AS clicked,
+			COUNT(DISTINCT CASE WHEN ev.event_type = 'email.bounced' THEN ev.email_id END) AS bounced,
+			COUNT(DISTINCT CASE WHEN ev.event_type = 'email.complained' THEN ev.email_id END) AS complained
+		FROM emails e
+		LEFT JOIN email_events ev ON ev.email_id = e.id
+		WHERE e.metadata->>'campaign' = $1`
+
+	var stats struct {
+		TotalSent  int `db:"total_sent"`
+		Delivered  int `db:"delivered"`
+		Opened     int `db:"opened"`
+		Clicked    int `db:"clicked"`
+		Bounced    int `db:"bounced"`
+		Complained int `db:"complained"`
+	}
+	if err := r.db.GetContext(ctx, &stats, query, campaignTag); err != nil {
+		return nil, err
+	}
+
+	return &domain.CampaignStats{
+		CampaignTag: campaignTag,
+		TotalSent:   stats.TotalSent,
+		Delivered:   stats.Delivered,
+		Opened:      stats.Opened,
+		Clicked:     stats.Clicked,
+		Bounced:     stats.Bounced,
+		Complained:  stats.Complained,
+	}, nil
+}
+
+// GetCampaignNonOpeners returns email addresses from a campaign that have no "opened" event.
+func (r *EmailRepository) GetCampaignNonOpeners(ctx context.Context, campaignTag string) ([]string, error) {
+	query := `
+		SELECT e.to_address
+		FROM emails e
+		WHERE e.metadata->>'campaign' = $1
+		  AND e.status = 'sent'
+		  AND NOT EXISTS (
+			SELECT 1 FROM email_events ev
+			WHERE ev.email_id = e.id AND ev.event_type = 'email.opened'
+		  )`
+
+	var addresses []string
+	if err := r.db.SelectContext(ctx, &addresses, query, campaignTag); err != nil {
+		return nil, err
+	}
+	return addresses, nil
+}
+
 // emailRow is the database representation.
 type emailRow struct {
-	ID            uuid.UUID       `db:"id"`
-	To            string          `db:"to_address"`
-	From          sql.NullString  `db:"from_address"`
-	Subject       string          `db:"subject"`
-	Body          string          `db:"body"`
-	HTMLBody      sql.NullString  `db:"html_body"`
-	Template      sql.NullString  `db:"template"`
-	TemplateData  []byte          `db:"template_data"`
+	ID            uuid.UUID          `db:"id"`
+	To            string             `db:"to_address"`
+	From          sql.NullString     `db:"from_address"`
+	Subject       string             `db:"subject"`
+	Body          string             `db:"body"`
+	HTMLBody      sql.NullString     `db:"html_body"`
+	Template      sql.NullString     `db:"template"`
+	TemplateData  []byte             `db:"template_data"`
 	Status        domain.EmailStatus `db:"status"`
-	ErrorMessage  sql.NullString  `db:"error_message"`
-	RetryCount    int             `db:"retry_count"`
-	MaxRetries    int             `db:"max_retries"`
-	IdempotencyID sql.NullString  `db:"idempotency_id"`
-	SourceService sql.NullString  `db:"source_service"`
-	Metadata      []byte          `db:"metadata"`
-	SentAt        sql.NullTime    `db:"sent_at"`
-	CreatedAt     time.Time       `db:"created_at"`
-	UpdatedAt     time.Time       `db:"updated_at"`
+	ErrorMessage  sql.NullString     `db:"error_message"`
+	RetryCount    int                `db:"retry_count"`
+	MaxRetries    int                `db:"max_retries"`
+	IdempotencyID sql.NullString     `db:"idempotency_id"`
+	SourceService sql.NullString     `db:"source_service"`
+	Metadata      []byte             `db:"metadata"`
+	ResendEmailID sql.NullString     `db:"resend_email_id"`
+	SentAt        sql.NullTime       `db:"sent_at"`
+	CreatedAt     time.Time          `db:"created_at"`
+	UpdatedAt     time.Time          `db:"updated_at"`
 }
 
 func (r *emailRow) toDomain() *domain.Email {
@@ -234,6 +308,9 @@ func (r *emailRow) toDomain() *domain.Email {
 	}
 	if r.SourceService.Valid {
 		email.SourceService = r.SourceService.String
+	}
+	if r.ResendEmailID.Valid {
+		email.ResendEmailID = r.ResendEmailID.String
 	}
 	if r.SentAt.Valid {
 		email.SentAt = &r.SentAt.Time

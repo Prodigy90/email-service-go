@@ -36,6 +36,7 @@ type Email struct {
 	IdempotencyID string                 `json:"idempotency_id,omitempty" db:"idempotency_id"`
 	SourceService string                 `json:"source_service,omitempty" db:"source_service"`
 	Metadata      map[string]interface{} `json:"metadata,omitempty" db:"-"`
+	ResendEmailID string                 `json:"resend_email_id,omitempty" db:"resend_email_id"`
 	SentAt        *time.Time             `json:"sent_at,omitempty" db:"sent_at"`
 	CreatedAt     time.Time              `json:"created_at" db:"created_at"`
 	UpdatedAt     time.Time              `json:"updated_at" db:"updated_at"`

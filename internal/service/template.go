@@ -562,6 +562,23 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 		HTMLBody:    ts.wrapHTML("Affiliate Link Updated", ts.affiliateLinkUpdatedContent()),
 		Description: "Sent when an affiliate's referral link changes due to product URL updates",
 	}
+
+	// Migration campaign templates
+	ts.templates[domain.TemplateMigrationAnnouncement] = &domain.Template{
+		Name:    domain.TemplateMigrationAnnouncement,
+		Subject: "WasBot has evolved - Your new platform is ready",
+		Body:    "Hi {{.Name}},\n\nWe've rebuilt WasBot from the ground up, and your new platform is ready at wasbot.app.\n\nWhat's new:\n- Lightning-fast dashboard with real-time WhatsApp session monitoring\n- Auto-reply, scheduled messages, and bulk messaging\n- Team collaboration with role-based access\n- Reliable session management that stays connected\n\nYour legacy account will remain active, but all new features are exclusively on the new platform.\n\nGet started: {{.DashboardURL}}\n\nIf you have any questions, just reply to this email.\n\nBest,\nThe WasBot Team",
+		HTMLBody:    ts.wrapHTML("WasBot Has Evolved", ts.migrationAnnouncementContent()),
+		Description: "Migration announcement email for legacy users",
+	}
+
+	ts.templates[domain.TemplateMigrationFollowUp] = &domain.Template{
+		Name:    domain.TemplateMigrationFollowUp,
+		Subject: "Don't miss out - Claim your WasBot account",
+		Body:    "Hi {{.Name}},\n\nWe noticed you haven't set up your new WasBot account yet.\n\nThe new platform at wasbot.app has everything you loved about WasBot, plus:\n- A completely redesigned dashboard\n- Faster, more reliable WhatsApp connections\n- New automation features\n\nIt only takes 2 minutes to get started.\n\nClaim your account: {{.DashboardURL}}\n\nIf you have any questions, just reply to this email.\n\nBest,\nThe WasBot Team",
+		HTMLBody:    ts.wrapHTML("Don't Miss Out", ts.migrationFollowUpContent()),
+		Description: "Follow-up email for legacy users who haven't migrated",
+	}
 }
 
 // wrapHTML wraps content in a professional HTML email template using default branding.
@@ -2199,5 +2216,90 @@ func (ts *TemplateService) affiliateLinkUpdatedContent() string {
 
 <p style="margin: 0; font-size: 14px; color: #6b7280;">If you have any questions about this change, please don't hesitate to contact our support team.</p>
 <p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
+`
+}
+
+func (ts *TemplateService) migrationAnnouncementContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+<p style="margin: 0 0 16px 0; font-size: 16px;">We've rebuilt <strong>WasBot</strong> from the ground up, and your new platform is ready.</p>
+
+<!-- Features card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #ecfdf5; border-radius: 12px; margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 24px;">
+      <p style="margin: 0 0 16px 0; font-weight: 600; color: #065f46;">What's new:</p>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Lightning-fast dashboard with real-time session monitoring</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Auto-reply, scheduled messages, and bulk messaging</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Team collaboration with role-based access</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Reliable session management that stays connected</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 24px 0; color: #6b7280;">Your legacy account will remain active, but all new features are exclusively on the new platform.</p>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        Get Started on WasBot
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0; font-size: 14px; color: #6b7280;">If you have any questions, just reply to this email.</p>
+<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The WasBot Team</p>
+`
+}
+
+func (ts *TemplateService) migrationFollowUpContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+<p style="margin: 0 0 16px 0; font-size: 16px;">We noticed you haven't set up your new <strong>WasBot</strong> account yet.</p>
+
+<p style="margin: 0 0 16px 0; color: #4b5563;">The new platform at <a href="{{.DashboardURL}}" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">wasbot.app</a> has everything you loved about WasBot, plus:</p>
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 8px 0; color: #4b5563; font-size: 14px;">&#8226; A completely redesigned dashboard</td>
+  </tr>
+  <tr>
+    <td style="padding: 8px 0; color: #4b5563; font-size: 14px;">&#8226; Faster, more reliable WhatsApp connections</td>
+  </tr>
+  <tr>
+    <td style="padding: 8px 0; color: #4b5563; font-size: 14px;">&#8226; New automation features</td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 24px 0; color: #6b7280;">It only takes 2 minutes to get started.</p>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        Claim Your Account
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0; font-size: 14px; color: #6b7280;">If you have any questions, just reply to this email.</p>
+<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The WasBot Team</p>
 `
 }

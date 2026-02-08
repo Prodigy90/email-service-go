@@ -114,11 +114,20 @@ func main() {
 	}
 
 	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, log)
+	emailService.SetRedis(redisClient)
+
+	// Create event repository and webhook service
+	eventRepo := postgres.NewEventRepository(sqlxDB)
+	webhookService := service.NewWebhookService(emailRepo, eventRepo, cfg.ResendWebhookSecret, log)
+	if cfg.ResendWebhookSecret == "" {
+		log.Warn().Msg("RESEND_WEBHOOK_SECRET not set, webhook signature verification disabled")
+	}
 
 	// Create router
 	router := routes.New(routes.Deps{
 		Logger:            log,
 		EmailService:      emailService,
+		WebhookService:    webhookService,
 		APIKey:            cfg.APIKey,
 		SwaggerAllowedIPs: cfg.SwaggerAllowedIPs,
 		TrustedProxies:    cfg.TrustedProxies,

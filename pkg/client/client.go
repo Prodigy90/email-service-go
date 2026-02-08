@@ -170,6 +170,42 @@ func (c *Client) ListTemplates(ctx context.Context) (*TemplatesResponse, error) 
 	return &resp, nil
 }
 
+// CampaignStatsResponse represents campaign aggregate stats.
+type CampaignStatsResponse struct {
+	CampaignTag string `json:"campaign_tag"`
+	TotalSent   int    `json:"total_sent"`
+	Delivered   int    `json:"delivered"`
+	Opened      int    `json:"opened"`
+	Clicked     int    `json:"clicked"`
+	Bounced     int    `json:"bounced"`
+	Complained  int    `json:"complained"`
+}
+
+// NonOpenersResponse represents the list of non-opener email addresses.
+type NonOpenersResponse struct {
+	CampaignTag string   `json:"campaign_tag"`
+	Count       int      `json:"count"`
+	Addresses   []string `json:"addresses"`
+}
+
+// GetCampaignStats retrieves aggregate stats for a campaign.
+func (c *Client) GetCampaignStats(ctx context.Context, campaignTag string) (*CampaignStatsResponse, error) {
+	var resp CampaignStatsResponse
+	if err := c.doRequest(ctx, "GET", "/api/v1/campaigns/"+campaignTag+"/stats", nil, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// GetCampaignNonOpeners retrieves email addresses that haven't opened emails from a campaign.
+func (c *Client) GetCampaignNonOpeners(ctx context.Context, campaignTag string) (*NonOpenersResponse, error) {
+	var resp NonOpenersResponse
+	if err := c.doRequest(ctx, "GET", "/api/v1/campaigns/"+campaignTag+"/non-openers", nil, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
 // doRequest performs an HTTP request.
 func (c *Client) doRequest(ctx context.Context, method, path string, body interface{}, result interface{}) error {
 	var bodyReader io.Reader
@@ -259,4 +295,8 @@ const (
 	TemplateWelcome         = "welcome"
 	TemplateTrialExpiring   = "trial_expiring"
 	TemplateAccountUpgraded = "account_upgraded"
+
+	// Migration campaigns
+	TemplateMigrationAnnouncement = "migration_announcement"
+	TemplateMigrationFollowUp     = "migration_follow_up"
 )

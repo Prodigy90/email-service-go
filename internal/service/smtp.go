@@ -26,7 +26,7 @@ func NewSMTPClient(cfg config.SMTPConfig, logger zerolog.Logger) *SMTPClient {
 }
 
 // Send sends an email via SMTP.
-func (c *SMTPClient) Send(email *domain.Email) error {
+func (c *SMTPClient) Send(email *domain.Email) (*SendResult, error) {
 	from := email.From
 	if from == "" {
 		from = c.config.FromAddress
@@ -46,7 +46,10 @@ func (c *SMTPClient) Send(email *domain.Email) error {
 
 	// For port 465 (SSL), we need to use TLS from the start
 	if c.config.Port == 465 {
-		return c.sendWithTLS(addr, auth, from, email.To, msg)
+		if err := c.sendWithTLS(addr, auth, from, email.To, msg); err != nil {
+			return nil, err
+		}
+		return &SendResult{}, nil
 	}
 
 	// For port 587 (STARTTLS) or 25, use standard SendMail
@@ -56,7 +59,7 @@ func (c *SMTPClient) Send(email *domain.Email) error {
 			Str("to", email.To).
 			Str("subject", email.Subject).
 			Msg("Failed to send email")
-		return fmt.Errorf("smtp send failed: %w", err)
+		return nil, fmt.Errorf("smtp send failed: %w", err)
 	}
 
 	c.logger.Info().
@@ -65,7 +68,7 @@ func (c *SMTPClient) Send(email *domain.Email) error {
 		Str("email_id", email.ID.String()).
 		Msg("Email sent successfully")
 
-	return nil
+	return &SendResult{}, nil
 }
 
 // sendWithTLS sends email using implicit TLS (port 465).

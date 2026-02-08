@@ -32,7 +32,8 @@ type Config struct {
 	SMTP SMTPConfig
 
 	// Resend
-	Resend ResendConfig
+	Resend              ResendConfig
+	ResendWebhookSecret string
 
 	// API Authentication
 	APIKey string
@@ -135,7 +136,8 @@ func Load() *Config {
 			FromAddress: getEnvWithFallback("FROM_EMAIL", "RESEND_FROM_ADDRESS", ""),
 			FromName:    getEnvWithFallback("FROM_NAME", "RESEND_FROM_NAME", ""),
 		},
-		APIKey:            getEnv("API_KEY", "dev-api-key"),
+		ResendWebhookSecret: getEnv("RESEND_WEBHOOK_SECRET", ""),
+		APIKey:              getEnv("API_KEY", "dev-api-key"),
 		TemplateDir:       getEnv("TEMPLATE_DIR", "./pkg/templates"),
 		MigrationsDir:     getEnv("MIGRATIONS_DIR", "./migrations"),
 		SwaggerAllowedIPs: getEnv("SWAGGER_ALLOWED_IPS", ""),

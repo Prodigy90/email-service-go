@@ -75,4 +75,8 @@ const (
 
 	// Affiliate link update template
 	TemplateAffiliateLinkUpdated = "affiliate_link_updated"
+
+	// Migration campaign templates
+	TemplateMigrationAnnouncement = "migration_announcement"
+	TemplateMigrationFollowUp     = "migration_follow_up"
 )

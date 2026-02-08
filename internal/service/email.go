@@ -10,6 +10,7 @@ import (
 	"github.com/hibiken/asynq"
 	"github.com/prodigy90/email-service-go/internal/domain"
 	"github.com/prodigy90/email-service-go/internal/repository/postgres"
+	"github.com/redis/go-redis/v9"
 	"github.com/rs/zerolog"
 )
 
@@ -24,6 +25,7 @@ type EmailService struct {
 	sender    EmailSender
 	templates *TemplateService
 	queue     *asynq.Client
+	redis     *redis.Client
 	logger    zerolog.Logger
 }
 
@@ -42,6 +44,11 @@ func NewEmailService(
 		queue:     queue,
 		logger:    logger.With().Str("component", "email_service").Logger(),
 	}
+}
+
+// SetRedis sets the Redis client for caching (optional).
+func (s *EmailService) SetRedis(r *redis.Client) {
+	s.redis = r
 }
 
 // Send queues an email for delivery.
@@ -190,7 +197,8 @@ func (s *EmailService) ProcessEmail(ctx context.Context, emailID uuid.UUID) erro
 	_ = s.repo.UpdateStatus(ctx, emailID, domain.StatusSending, "")
 
 	// Send via configured provider
-	if err := s.sender.Send(email); err != nil {
+	result, err := s.sender.Send(email)
+	if err != nil {
 		// Increment retry count
 		email.RetryCount++
 		_ = s.repo.IncrementRetry(ctx, emailID)
@@ -204,6 +212,13 @@ func (s *EmailService) ProcessEmail(ctx context.Context, emailID uuid.UUID) erro
 		return err // Asynq will retry
 	}
 
+	// Store the provider email ID (e.g., Resend email ID) for webhook event mapping
+	if result != nil && result.ProviderID != "" {
+		if err := s.repo.UpdateResendEmailID(ctx, emailID, result.ProviderID); err != nil {
+			s.logger.Warn().Err(err).Str("email_id", emailID.String()).Msg("Failed to store resend email ID")
+		}
+	}
+
 	// Mark as sent
 	now := time.Now()
 	email.SentAt = &now
@@ -215,6 +230,45 @@ func (s *EmailService) ProcessEmail(ctx context.Context, emailID uuid.UUID) erro
 // ListTemplates returns available templates.
 func (s *EmailService) ListTemplates() []domain.TemplateInfo {
 	return s.templates.List()
+}
+
+// GetCampaignStats returns aggregate stats for a campaign, with 30s Redis cache.
+func (s *EmailService) GetCampaignStats(ctx context.Context, campaignTag string) (*domain.CampaignStats, error) {
+	cacheKey := "campaign_stats:" + campaignTag
+
+	// Try Redis cache first
+	if s.redis != nil {
+		cached, err := s.redis.Get(ctx, cacheKey).Bytes()
+		if err == nil {
+			var stats domain.CampaignStats
+			if json.Unmarshal(cached, &stats) == nil {
+				return &stats, nil
+			}
+		}
+	}
+
+	stats, err := s.repo.GetCampaignStats(ctx, campaignTag)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get campaign stats: %w", err)
+	}
+
+	// Cache for 30 seconds
+	if s.redis != nil {
+		if data, err := json.Marshal(stats); err == nil {
+			_ = s.redis.Set(ctx, cacheKey, data, 30*time.Second).Err()
+		}
+	}
+
+	return stats, nil
+}
+
+// GetCampaignNonOpeners returns email addresses from a campaign that have not opened the email.
+func (s *EmailService) GetCampaignNonOpeners(ctx context.Context, campaignTag string) ([]string, error) {
+	addresses, err := s.repo.GetCampaignNonOpeners(ctx, campaignTag)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get campaign non-openers: %w", err)
+	}
+	return addresses, nil
 }
 
 // enqueue adds an email to the processing queue.

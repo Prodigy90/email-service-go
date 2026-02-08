@@ -15,6 +15,7 @@ import (
 type Deps struct {
 	Logger            zerolog.Logger
 	EmailService      *service.EmailService
+	WebhookService    *service.WebhookService // Optional: if nil, webhook routes are skipped
 	APIKey            string
 	SwaggerAllowedIPs string
 	RateLimiter       *middleware.RateLimiter // Optional: if nil, a default is created
@@ -62,6 +63,12 @@ func New(d Deps) *gin.Engine {
 		swaggerGroup.GET("/index.html", swaggerUI)
 	}
 
+	// Webhook routes (public, verified via Svix signature)
+	if d.WebhookService != nil {
+		webhookHandler := handlers.NewWebhookHandler(d.WebhookService)
+		r.POST("/webhooks/resend", webhookHandler.HandleResendWebhook)
+	}
+
 	// API routes (protected by API key + rate limited)
 	api := r.Group("/api/v1")
 	api.Use(middleware.APIKeyAuth(d.APIKey), middleware.RateLimit(rateLimiter))
@@ -69,6 +76,10 @@ func New(d Deps) *gin.Engine {
 	// Email endpoints
 	emailHandler := handlers.NewEmailHandler(d.EmailService)
 	emailHandler.RegisterRoutes(api)
+
+	// Campaign endpoints
+	campaignHandler := handlers.NewCampaignHandler(d.EmailService)
+	campaignHandler.RegisterRoutes(api)
 
 	return r
 }
