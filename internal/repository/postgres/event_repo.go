@@ -33,7 +33,7 @@ func (r *EventRepository) Create(ctx context.Context, event *domain.EmailEvent) 
 	query := `
 		INSERT INTO email_events (id, email_id, event_type, resend_event_id, payload, created_at)
 		VALUES ($1, $2, $3, $4, $5, $6)
-		ON CONFLICT (resend_event_id) DO NOTHING`
+		ON CONFLICT (resend_event_id) WHERE resend_event_id IS NOT NULL DO NOTHING`
 
 	_, err = r.db.ExecContext(ctx, query,
 		event.ID,
