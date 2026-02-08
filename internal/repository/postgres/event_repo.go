@@ -25,8 +25,10 @@ func NewEventRepository(db *sqlx.DB) *EventRepository {
 func (r *EventRepository) Create(ctx context.Context, event *domain.EmailEvent) error {
 	payload, err := json.Marshal(event.Payload)
 	if err != nil {
+		// Fall back to empty object but still insert the event record
 		payload = []byte("{}")
 	}
+
 
 	query := `
 		INSERT INTO email_events (id, email_id, event_type, resend_event_id, payload, created_at)

@@ -23,9 +23,13 @@ func NewWebhookHandler(webhookService *service.WebhookService) *WebhookHandler {
 // HandleResendWebhook processes incoming Resend webhook events.
 // Resend uses Svix for webhook delivery with signature verification.
 func (h *WebhookHandler) HandleResendWebhook(c *gin.Context) {
-	body, err := io.ReadAll(io.LimitReader(c.Request.Body, maxWebhookBodySize))
+	body, err := io.ReadAll(io.LimitReader(c.Request.Body, maxWebhookBodySize+1))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, ErrorResponse{Error: "failed to read body"})
+		return
+	}
+	if int64(len(body)) > maxWebhookBodySize {
+		c.JSON(http.StatusRequestEntityTooLarge, ErrorResponse{Error: "request body too large"})
 		return
 	}
 
