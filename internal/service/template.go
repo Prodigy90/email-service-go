@@ -566,18 +566,18 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	// Migration campaign templates
 	ts.templates[domain.TemplateMigrationAnnouncement] = &domain.Template{
 		Name:    domain.TemplateMigrationAnnouncement,
-		Subject: "WasBot has evolved - Your new platform is ready",
-		Body:    "Hi {{.Name}},\n\nWe've rebuilt WasBot from the ground up, and your new platform is ready at wasbot.app.\n\nWhat's new:\n- Lightning-fast dashboard with real-time WhatsApp session monitoring\n- Auto-reply, scheduled messages, and bulk messaging\n- Team collaboration with role-based access\n- Reliable session management that stays connected\n\nYour legacy account will remain active, but all new features are exclusively on the new platform.\n\nGet started: {{.DashboardURL}}\n\nIf you have any questions, just reply to this email.\n\nBest,\nThe WasBot Team",
+		Subject: "You have a migration credit waiting - WasBot has evolved",
+		Body:    "Hi {{.Name}},\n\nWe've rebuilt WasBot from the ground up, and your new platform is ready at wasbot.app.\n\nAs a valued legacy user, you have a migration credit waiting for you. Use it on ANY plan — monthly or yearly, any tier.\n\nWhat's new:\n- Lightning-fast dashboard with real-time WhatsApp session monitoring\n- Auto-reply, scheduled messages, and bulk messaging\n- Reliable session management that stays connected\n- New automation features\n\nSee your personalized offer and claim your credit:\n{{.DashboardURL}}\n\nIf you have any questions, just reply to this email.\n\nBest,\nThe WasBot Team",
 		HTMLBody:    ts.wrapHTML("WasBot Has Evolved", ts.migrationAnnouncementContent()),
-		Description: "Migration announcement email for legacy users",
+		Description: "Migration announcement email for legacy users with credit offer",
 	}
 
 	ts.templates[domain.TemplateMigrationFollowUp] = &domain.Template{
 		Name:    domain.TemplateMigrationFollowUp,
-		Subject: "Don't miss out - Claim your WasBot account",
-		Body:    "Hi {{.Name}},\n\nWe noticed you haven't set up your new WasBot account yet.\n\nThe new platform at wasbot.app has everything you loved about WasBot, plus:\n- A completely redesigned dashboard\n- Faster, more reliable WhatsApp connections\n- New automation features\n\nIt only takes 2 minutes to get started.\n\nClaim your account: {{.DashboardURL}}\n\nIf you have any questions, just reply to this email.\n\nBest,\nThe WasBot Team",
+		Subject: "Your migration credit is waiting - Don't miss out",
+		Body:    "Hi {{.Name}},\n\nWe noticed you haven't claimed your WasBot migration credit yet.\n\nYour personalized credit is still available and can be applied to any plan on the new platform. Use it on monthly or yearly billing — your choice.\n\nThe new platform at wasbot.app has everything you loved, plus:\n- A completely redesigned dashboard\n- Faster, more reliable WhatsApp connections\n- New automation features\n\nClaim your credit before it expires:\n{{.DashboardURL}}\n\nIf you have any questions, just reply to this email.\n\nBest,\nThe WasBot Team",
 		HTMLBody:    ts.wrapHTML("Don't Miss Out", ts.migrationFollowUpContent()),
-		Description: "Follow-up email for legacy users who haven't migrated",
+		Description: "Follow-up email for legacy users who haven't claimed their migration credit",
 	}
 }
 
@@ -2225,6 +2225,22 @@ func (ts *TemplateService) migrationAnnouncementContent() string {
 
 <p style="margin: 0 0 16px 0; font-size: 16px;">We've rebuilt <strong>WasBot</strong> from the ground up, and your new platform is ready.</p>
 
+<!-- Credit badge -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td align="center">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="background-color: #0d9488; background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); border-radius: 12px;">
+        <tr>
+          <td style="padding: 16px 28px; text-align: center;">
+            <p style="margin: 0; color: #ffffff; font-size: 18px; font-weight: 700;">You have a migration credit waiting</p>
+            <p style="margin: 8px 0 0 0; color: #ccfbf1; font-size: 14px;">Use it on ANY plan — monthly or yearly, any tier</p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
 <!-- Features card -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #ecfdf5; border-radius: 12px; margin-bottom: 24px;">
   <tr>
@@ -2238,24 +2254,22 @@ func (ts *TemplateService) migrationAnnouncementContent() string {
           <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Auto-reply, scheduled messages, and bulk messaging</td>
         </tr>
         <tr>
-          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Team collaboration with role-based access</td>
+          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Reliable session management that stays connected</td>
         </tr>
         <tr>
-          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Reliable session management that stays connected</td>
+          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; New automation features</td>
         </tr>
       </table>
     </td>
   </tr>
 </table>
 
-<p style="margin: 0 0 24px 0; color: #6b7280;">Your legacy account will remain active, but all new features are exclusively on the new platform.</p>
-
 <!-- CTA Button -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
   <tr>
     <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
       <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
-        Get Started on WasBot
+        See Your Offer
       </a>
     </td>
   </tr>
@@ -2270,7 +2284,17 @@ func (ts *TemplateService) migrationFollowUpContent() string {
 	return `
 <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
 
-<p style="margin: 0 0 16px 0; font-size: 16px;">We noticed you haven't set up your new <strong>WasBot</strong> account yet.</p>
+<p style="margin: 0 0 16px 0; font-size: 16px;">We noticed you haven't claimed your <strong>WasBot</strong> migration credit yet.</p>
+
+<!-- Urgency banner -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-radius: 12px; margin-bottom: 24px; border: 1px solid #fcd34d;">
+  <tr>
+    <td style="padding: 16px 24px;">
+      <p style="margin: 0; color: #92400e; font-size: 15px; font-weight: 600;">Your migration credit is still available</p>
+      <p style="margin: 4px 0 0 0; color: #b45309; font-size: 14px;">Apply it to any plan — monthly or yearly, any tier you choose.</p>
+    </td>
+  </tr>
+</table>
 
 <p style="margin: 0 0 16px 0; color: #4b5563;">The new platform at <a href="{{.DashboardURL}}" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">wasbot.app</a> has everything you loved about WasBot, plus:</p>
 
@@ -2286,14 +2310,12 @@ func (ts *TemplateService) migrationFollowUpContent() string {
   </tr>
 </table>
 
-<p style="margin: 0 0 24px 0; color: #6b7280;">It only takes 2 minutes to get started.</p>
-
 <!-- CTA Button -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
   <tr>
     <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
       <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
-        Claim Your Account
+        Claim Your Credit
       </a>
     </td>
   </tr>
