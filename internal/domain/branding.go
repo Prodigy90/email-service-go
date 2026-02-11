@@ -11,8 +11,10 @@ type BrandingConfig struct {
 	DashboardURL    string `json:"dashboard_url"`    // e.g., "https://www.wasbot.app/dashboard"
 	SupportEmail    string `json:"support_email"`    // e.g., "support@wasbot.app"
 	WebsiteURL      string `json:"website_url"`      // e.g., "https://www.wasbot.app"
-	SocialTwitter   string `json:"social_twitter"`   // X (Twitter) URL
-	SocialInstagram string `json:"social_instagram"` // Instagram URL
+	SocialTwitter      string `json:"social_twitter"`       // X (Twitter) URL
+	SocialInstagram    string `json:"social_instagram"`     // Instagram URL
+	IconTwitterURL     string `json:"icon_twitter_url"`     // URL to X/Twitter icon image
+	IconInstagramURL   string `json:"icon_instagram_url"`   // URL to Instagram icon image
 }
 
 // DefaultBranding returns the default WASBOT branding (for backward compatibility)
@@ -27,7 +29,53 @@ func DefaultBranding() *BrandingConfig {
 		DashboardURL:    "https://www.wasbot.app/dashboard",
 		SupportEmail:    "support@wasbot.app",
 		WebsiteURL:      "https://www.wasbot.app",
-		SocialTwitter:   "https://x.com/wasbot",
-		SocialInstagram: "https://instagram.com/wasbot.app",
+		SocialTwitter:    "https://x.com/wasbot",
+		SocialInstagram:  "https://instagram.com/wasbot.app",
+		IconTwitterURL:   "https://www.wasbot.app/icons/x.png",
+		IconInstagramURL: "https://www.wasbot.app/icons/instagram.png",
+	}
+}
+
+// MergeWithDefaults fills any empty fields in the config with default values.
+func (b *BrandingConfig) MergeWithDefaults() {
+	defaults := DefaultBranding()
+	if b.PrimaryColor == "" {
+		b.PrimaryColor = defaults.PrimaryColor
+	}
+	if b.SecondaryColor == "" {
+		b.SecondaryColor = defaults.SecondaryColor
+	}
+	if b.AccentColor == "" {
+		b.AccentColor = defaults.AccentColor
+	}
+	if b.DangerColor == "" {
+		b.DangerColor = defaults.DangerColor
+	}
+	if b.CompanyName == "" {
+		b.CompanyName = defaults.CompanyName
+	}
+	if b.LogoURL == "" {
+		b.LogoURL = defaults.LogoURL
+	}
+	if b.DashboardURL == "" {
+		b.DashboardURL = defaults.DashboardURL
+	}
+	if b.SupportEmail == "" {
+		b.SupportEmail = defaults.SupportEmail
+	}
+	if b.WebsiteURL == "" {
+		b.WebsiteURL = defaults.WebsiteURL
+	}
+	if b.SocialTwitter == "" {
+		b.SocialTwitter = defaults.SocialTwitter
+	}
+	if b.SocialInstagram == "" {
+		b.SocialInstagram = defaults.SocialInstagram
+	}
+	if b.IconTwitterURL == "" {
+		b.IconTwitterURL = defaults.IconTwitterURL
+	}
+	if b.IconInstagramURL == "" {
+		b.IconInstagramURL = defaults.IconInstagramURL
 	}
 }

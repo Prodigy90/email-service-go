@@ -59,9 +59,11 @@ func (ts *TemplateService) RenderWithBranding(templateName string, data map[stri
 		return "", "", "", fmt.Errorf("template not found: %s", templateName)
 	}
 
-	// Use default branding if not provided
+	// Use default branding if not provided, or merge with defaults for partial configs
 	if branding == nil {
 		branding = domain.DefaultBranding()
+	} else {
+		branding.MergeWithDefaults()
 	}
 
 	// Create a copy of data with branding added for template rendering
@@ -156,9 +158,11 @@ func (ts *TemplateService) prepareBrandingData(branding *domain.BrandingConfig) 
 		"DashboardURL":    branding.DashboardURL,
 		"SupportEmail":    branding.SupportEmail,
 		"WebsiteURL":      branding.WebsiteURL,
-		"SocialTwitter":   branding.SocialTwitter,
-		"SocialInstagram": branding.SocialInstagram,
-		"Year":            time.Now().UTC().Year(),
+		"SocialTwitter":    branding.SocialTwitter,
+		"SocialInstagram":  branding.SocialInstagram,
+		"IconTwitterURL":   branding.IconTwitterURL,
+		"IconInstagramURL": branding.IconInstagramURL,
+		"Year":             time.Now().UTC().Year(),
 	}
 }
 
@@ -735,12 +739,12 @@ func (ts *TemplateService) wrapHTMLWithBranding(title, content string) string {
                       <tr>
                         <td style="padding: 0 8px;">
                           <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
-                            <img src="https://www.wasbot.app/icons/x.png" alt="X" width="24" height="24" style="opacity: 0.6;">
+                            <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
                           </a>
                         </td>
                         <td style="padding: 0 8px;">
                           <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
-                            <img src="https://www.wasbot.app/icons/instagram.png" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                            <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
                           </a>
                         </td>
                       </tr>
