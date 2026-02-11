@@ -63,7 +63,9 @@ func (ts *TemplateService) RenderWithBranding(templateName string, data map[stri
 	if branding == nil {
 		branding = domain.DefaultBranding()
 	} else {
-		branding.MergeWithDefaults()
+		copied := *branding
+		copied.MergeWithDefaults()
+		branding = &copied
 	}
 
 	// Create a copy of data with branding added for template rendering
