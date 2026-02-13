@@ -310,4 +310,6 @@ const (
 	// Migration campaigns
 	TemplateMigrationAnnouncement = "migration_announcement"
 	TemplateMigrationFollowUp     = "migration_follow_up"
+	TemplateMigrationVerifyEmail  = "migration_verify_email"
+	TemplateMigrationUpgradeNudge = "migration_upgrade_nudge"
 )
