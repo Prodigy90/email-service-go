@@ -67,14 +67,14 @@ func TestTemplateService_RenderMigrationAnnouncement(t *testing.T) {
 	if !strings.Contains(body, "John") {
 		t.Errorf("expected body to contain 'John', got body without it")
 	}
-	if !strings.Contains(body, "migration credit") {
-		t.Errorf("expected body to mention migration credit")
+	if !strings.Contains(body, "Paystack subscription plan is being discontinued") {
+		t.Errorf("expected body to mention Paystack deprecation")
 	}
 	if !strings.Contains(htmlBody, "https://wasbot.app/dashboard") {
 		t.Errorf("expected HTML body to contain dashboard URL")
 	}
-	if !strings.Contains(htmlBody, "Claim Your Credit Now") {
-		t.Errorf("expected HTML body to contain CTA text 'Claim Your Credit Now'")
+	if !strings.Contains(htmlBody, "Try the New WASBOT") {
+		t.Errorf("expected HTML body to contain CTA text 'Try the New WASBOT'")
 	}
 }
 
@@ -91,14 +91,14 @@ func TestTemplateService_RenderMigrationFollowUp(t *testing.T) {
 		t.Fatalf("render failed: %v", err)
 	}
 
-	if !strings.Contains(subject, "credit") {
-		t.Errorf("expected follow-up subject to mention credit, got %q", subject)
+	if !strings.Contains(subject, "WASBOT") {
+		t.Errorf("expected follow-up subject to mention WASBOT, got %q", subject)
 	}
 	if !strings.Contains(body, "Jane") {
 		t.Errorf("expected body to contain 'Jane'")
 	}
-	if !strings.Contains(htmlBody, "Claim Your Credit") {
-		t.Errorf("expected HTML body to contain CTA text 'Claim Your Credit'")
+	if !strings.Contains(htmlBody, "Try the New WASBOT") {
+		t.Errorf("expected HTML body to contain CTA text 'Try the New WASBOT'")
 	}
 }
 
