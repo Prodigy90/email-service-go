@@ -572,18 +572,34 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	// Migration campaign templates
 	ts.templates[domain.TemplateMigrationAnnouncement] = &domain.Template{
 		Name:    domain.TemplateMigrationAnnouncement,
-		Subject: "You have a migration credit waiting - WasBot has evolved",
-		Body:    "Hi {{.Name}},\n\nWe've rebuilt WasBot from the ground up, and your new platform is ready at wasbot.app.\n\nAs a valued legacy user, you have a migration credit waiting for you. Use it on ANY plan — monthly or yearly, any tier.\n\nWhat's new:\n- Lightning-fast dashboard with real-time WhatsApp session monitoring\n- Auto-reply, scheduled messages, and bulk messaging\n- Reliable session management that stays connected\n- New automation features\n\nSee your personalized offer and claim your credit:\n{{.DashboardURL}}\n\nIf you have any questions, just reply to this email.\n\nBest,\nThe WasBot Team",
-		HTMLBody:    ts.wrapHTML("WasBot Has Evolved", ts.migrationAnnouncementContent()),
+		Subject: "Important: Your WASBOT plan is changing — claim your credit now",
+		Body:    "Hi {{.Name}},\n\nWe have some important news: we've completely rebuilt WASBOT from the ground up, and your current Paystack subscription plan is being discontinued.\n\nThe WASBOT you've been using is being phased out and replaced by a brand new platform at www.wasbot.app — faster, more powerful, and packed with features.\n\nAs a valued user, we've set aside a migration credit for you based on your history with us. Use it on ANY plan — monthly or yearly, any tier.\n\nHere's what you get on the new WASBOT:\n- Post statuses with custom fonts, colors, and saved presets\n- Auto-save contacts to Google Contacts + bulk save hundreds at once\n- Import contacts from CSV, VCF, or Google Contacts\n- Send messages to multiple groups at once + tag all members\n- DND mode to block unwanted calls\n- Connect up to 3 WhatsApp sessions on one account\n- Real-time dashboard with live session monitoring\n\nYour credit won't last forever — claim it now before it expires:\n{{.DashboardURL}}\n\nIf you have any questions, just reply to this email.\n\n— The WASBOT Team",
+		HTMLBody:    ts.wrapHTML("Important Update", ts.migrationAnnouncementContent()),
 		Description: "Migration announcement email for legacy users with credit offer",
 	}
 
 	ts.templates[domain.TemplateMigrationFollowUp] = &domain.Template{
 		Name:    domain.TemplateMigrationFollowUp,
-		Subject: "Your migration credit is waiting - Don't miss out",
-		Body:    "Hi {{.Name}},\n\nWe noticed you haven't claimed your WasBot migration credit yet.\n\nYour personalized credit is still available and can be applied to any plan on the new platform. Use it on monthly or yearly billing — your choice.\n\nThe new platform at wasbot.app has everything you loved, plus:\n- A completely redesigned dashboard\n- Faster, more reliable WhatsApp connections\n- New automation features\n\nClaim your credit before it expires:\n{{.DashboardURL}}\n\nIf you have any questions, just reply to this email.\n\nBest,\nThe WasBot Team",
-		HTMLBody:    ts.wrapHTML("Don't Miss Out", ts.migrationFollowUpContent()),
+		Subject: "Final reminder: Your WASBOT credit expires soon",
+		Body:    "Hi {{.Name}},\n\nThis is a final reminder — your WASBOT migration credit is still unclaimed.\n\nYour old Paystack plan has been discontinued and the legacy platform is being shut down. The new WASBOT is live at www.wasbot.app and your personalized credit is waiting.\n\nDon't lose it. Claim your credit and pick any plan — monthly or yearly, any tier you want:\n{{.DashboardURL}}\n\nIf you have any questions, just reply to this email.\n\n— The WASBOT Team",
+		HTMLBody:    ts.wrapHTML("Final Reminder", ts.migrationFollowUpContent()),
 		Description: "Follow-up email for legacy users who haven't claimed their migration credit",
+	}
+
+	ts.templates[domain.TemplateMigrationVerifyEmail] = &domain.Template{
+		Name:    domain.TemplateMigrationVerifyEmail,
+		Subject: "One step left — verify your email to unlock your WASBOT credit",
+		Body:    "Hi {{.Name}},\n\nYou're almost there! You created your account on the new WASBOT at www.wasbot.app, but your email isn't verified yet.\n\nVerify your email to unlock your migration credit and get full access to your dashboard.\n\nJust log in and check your inbox for the verification link — or request a new one from your settings:\n{{.DashboardURL}}\n\nYour credit is waiting. Don't let it go to waste.\n\nIf you have any questions, just reply to this email.\n\n— The WASBOT Team",
+		HTMLBody:    ts.wrapHTML("Verify Your Email", ts.migrationVerifyEmailContent()),
+		Description: "Email for migrating users who signed up but haven't verified their email",
+	}
+
+	ts.templates[domain.TemplateMigrationUpgradeNudge] = &domain.Template{
+		Name:    domain.TemplateMigrationUpgradeNudge,
+		Subject: "Your WASBOT credit is expiring — upgrade before it's gone",
+		Body:    "Hi {{.Name}},\n\nYou've signed up for the new WASBOT — great choice! But you still have an unused migration credit sitting in your account.\n\nYour credit can be applied to ANY paid plan — Basic, Premium, or Pro. Monthly or yearly, your choice. But it won't last forever.\n\nUse your credit now and unlock the full power of WASBOT:\n{{.DashboardURL}}\n\nIf you have any questions, just reply to this email.\n\n— The WASBOT Team",
+		HTMLBody:    ts.wrapHTML("Upgrade Your Plan", ts.migrationUpgradeNudgeContent()),
+		Description: "Email for migrating users on trial who haven't upgraded to a paid plan",
 	}
 }
 
@@ -2229,7 +2245,9 @@ func (ts *TemplateService) migrationAnnouncementContent() string {
 	return `
 <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
 
-<p style="margin: 0 0 16px 0; font-size: 16px;">We've rebuilt <strong>WasBot</strong> from the ground up, and your new platform is ready.</p>
+<p style="margin: 0 0 16px 0; font-size: 16px;">We have some important news: we've completely rebuilt <strong>WASBOT</strong> from the ground up, and <strong>your current Paystack subscription plan is being discontinued.</strong></p>
+
+<p style="margin: 0 0 20px 0; font-size: 16px;">The WASBOT you've been using is being phased out and replaced by a brand new platform at <a href="https://www.wasbot.app" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">www.wasbot.app</a> — faster, more powerful, and packed with features.</p>
 
 <!-- Credit badge -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 24px;">
@@ -2251,21 +2269,39 @@ func (ts *TemplateService) migrationAnnouncementContent() string {
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #ecfdf5; border-radius: 12px; margin-bottom: 24px;">
   <tr>
     <td style="padding: 24px;">
-      <p style="margin: 0 0 16px 0; font-weight: 600; color: #065f46;">What's new:</p>
+      <p style="margin: 0 0 16px 0; font-weight: 600; color: #065f46;">Here's what you get on the new WASBOT:</p>
       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
         <tr>
-          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Lightning-fast dashboard with real-time session monitoring</td>
+          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Post statuses with custom fonts, colors, and saved presets</td>
         </tr>
         <tr>
-          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Auto-reply, scheduled messages, and bulk messaging</td>
+          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Auto-save contacts to Google Contacts + bulk save hundreds at once</td>
         </tr>
         <tr>
-          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Reliable session management that stays connected</td>
+          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Import contacts from CSV, VCF, or Google Contacts</td>
         </tr>
         <tr>
-          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; New automation features</td>
+          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Send messages to multiple groups + tag all members</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; DND mode to block unwanted calls</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Connect up to 3 WhatsApp sessions on one account</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; color: #047857; font-size: 14px;">&#10003; Real-time dashboard with live session monitoring</td>
         </tr>
       </table>
+    </td>
+  </tr>
+</table>
+
+<!-- Urgency banner -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-radius: 12px; margin-bottom: 24px; border: 1px solid #fcd34d;">
+  <tr>
+    <td style="padding: 14px 24px; text-align: center;">
+      <p style="margin: 0; color: #92400e; font-size: 14px; font-weight: 600;">Your credit won't last forever — claim it now before it expires</p>
     </td>
   </tr>
 </table>
@@ -2275,14 +2311,14 @@ func (ts *TemplateService) migrationAnnouncementContent() string {
   <tr>
     <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
       <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
-        See Your Offer
+        Claim Your Credit Now
       </a>
     </td>
   </tr>
 </table>
 
 <p style="margin: 0; font-size: 14px; color: #6b7280;">If you have any questions, just reply to this email.</p>
-<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The WasBot Team</p>
+<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
 `
 }
 
@@ -2290,44 +2326,106 @@ func (ts *TemplateService) migrationFollowUpContent() string {
 	return `
 <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
 
-<p style="margin: 0 0 16px 0; font-size: 16px;">We noticed you haven't claimed your <strong>WasBot</strong> migration credit yet.</p>
+<p style="margin: 0 0 16px 0; font-size: 16px;">This is a final reminder — your <strong>WASBOT</strong> migration credit is still unclaimed.</p>
 
 <!-- Urgency banner -->
-<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-radius: 12px; margin-bottom: 24px; border: 1px solid #fcd34d;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-radius: 12px; margin-bottom: 24px; border: 1px solid #fca5a5;">
   <tr>
     <td style="padding: 16px 24px;">
-      <p style="margin: 0; color: #92400e; font-size: 15px; font-weight: 600;">Your migration credit is still available</p>
-      <p style="margin: 4px 0 0 0; color: #b45309; font-size: 14px;">Apply it to any plan — monthly or yearly, any tier you choose.</p>
+      <p style="margin: 0; color: #991b1b; font-size: 15px; font-weight: 600;">Your old Paystack plan has been discontinued</p>
+      <p style="margin: 4px 0 0 0; color: #b91c1c; font-size: 14px;">The legacy platform is being shut down. Don't lose your credit.</p>
     </td>
   </tr>
 </table>
 
-<p style="margin: 0 0 16px 0; color: #4b5563;">The new platform at <a href="{{.DashboardURL}}" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">wasbot.app</a> has everything you loved about WasBot, plus:</p>
-
-<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 24px;">
-  <tr>
-    <td style="padding: 8px 0; color: #4b5563; font-size: 14px;">&#8226; A completely redesigned dashboard</td>
-  </tr>
-  <tr>
-    <td style="padding: 8px 0; color: #4b5563; font-size: 14px;">&#8226; Faster, more reliable WhatsApp connections</td>
-  </tr>
-  <tr>
-    <td style="padding: 8px 0; color: #4b5563; font-size: 14px;">&#8226; New automation features</td>
-  </tr>
-</table>
+<p style="margin: 0 0 20px 0; color: #4b5563; font-size: 16px;">The new WASBOT is live at <a href="https://www.wasbot.app" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">www.wasbot.app</a> and your personalized credit is waiting. Claim it and pick any plan — monthly or yearly, any tier you want.</p>
 
 <!-- CTA Button -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
   <tr>
     <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
       <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
-        Claim Your Credit
+        Claim Your Credit Now
       </a>
     </td>
   </tr>
 </table>
 
 <p style="margin: 0; font-size: 14px; color: #6b7280;">If you have any questions, just reply to this email.</p>
-<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The WasBot Team</p>
+<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+`
+}
+
+func (ts *TemplateService) migrationVerifyEmailContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+<p style="margin: 0 0 16px 0; font-size: 16px;">You're almost there! You created your account on the new <strong>WASBOT</strong> at <a href="https://www.wasbot.app" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">www.wasbot.app</a>, but your email isn't verified yet.</p>
+
+<!-- Info card -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td align="center">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="background-color: #0d9488; background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); border-radius: 12px;">
+        <tr>
+          <td style="padding: 16px 28px; text-align: center;">
+            <p style="margin: 0; color: #ffffff; font-size: 18px; font-weight: 700;">Your account is created — just verify your email</p>
+            <p style="margin: 8px 0 0 0; color: #ccfbf1; font-size: 14px;">Then your migration credit will be ready to use</p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 20px 0; color: #4b5563; font-size: 16px;">Just log in and check your inbox for the verification link — or request a new one from your settings. Your credit is waiting. Don't let it go to waste.</p>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        Verify Your Email
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0; font-size: 14px; color: #6b7280;">If you have any questions, just reply to this email.</p>
+<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+`
+}
+
+func (ts *TemplateService) migrationUpgradeNudgeContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+<p style="margin: 0 0 16px 0; font-size: 16px;">You've signed up for the new <strong>WASBOT</strong> — great choice! But you still have an unused migration credit sitting in your account.</p>
+
+<!-- Urgency banner -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-radius: 12px; margin-bottom: 24px; border: 1px solid #f87171;">
+  <tr>
+    <td style="padding: 16px 24px; text-align: center;">
+      <p style="margin: 0; color: #991b1b; font-size: 18px; font-weight: 700;">Your migration credit is expiring soon</p>
+      <p style="margin: 8px 0 0 0; color: #b91c1c; font-size: 14px;">Apply it to any paid plan before it's gone</p>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 20px 0; color: #4b5563; font-size: 16px;">Your credit can be applied to ANY paid plan — Basic, Premium, or Pro. Monthly or yearly, your choice. Unlock the full power of WASBOT before your credit expires.</p>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+      <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+        Use Your Credit Now
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0; font-size: 14px; color: #6b7280;">If you have any questions, just reply to this email.</p>
+<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
 `
 }
