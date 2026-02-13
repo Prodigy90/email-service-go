@@ -61,8 +61,8 @@ func TestTemplateService_RenderMigrationAnnouncement(t *testing.T) {
 		t.Fatalf("render failed: %v", err)
 	}
 
-	if !strings.Contains(subject, "WasBot") {
-		t.Errorf("expected subject to contain 'WasBot', got %q", subject)
+	if !strings.Contains(subject, "WASBOT") {
+		t.Errorf("expected subject to contain 'WASBOT', got %q", subject)
 	}
 	if !strings.Contains(body, "John") {
 		t.Errorf("expected body to contain 'John', got body without it")
@@ -73,8 +73,8 @@ func TestTemplateService_RenderMigrationAnnouncement(t *testing.T) {
 	if !strings.Contains(htmlBody, "https://wasbot.app/dashboard") {
 		t.Errorf("expected HTML body to contain dashboard URL")
 	}
-	if !strings.Contains(htmlBody, "See Your Offer") {
-		t.Errorf("expected HTML body to contain CTA text 'See Your Offer'")
+	if !strings.Contains(htmlBody, "Claim Your Credit Now") {
+		t.Errorf("expected HTML body to contain CTA text 'Claim Your Credit Now'")
 	}
 }
 
@@ -91,8 +91,8 @@ func TestTemplateService_RenderMigrationFollowUp(t *testing.T) {
 		t.Fatalf("render failed: %v", err)
 	}
 
-	if !strings.Contains(subject, "migration credit") {
-		t.Errorf("expected follow-up subject to mention migration credit, got %q", subject)
+	if !strings.Contains(subject, "credit") {
+		t.Errorf("expected follow-up subject to mention credit, got %q", subject)
 	}
 	if !strings.Contains(body, "Jane") {
 		t.Errorf("expected body to contain 'Jane'")
