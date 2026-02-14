@@ -237,6 +237,15 @@ func (s *EmailService) ProcessEmail(ctx context.Context, emailID uuid.UUID) erro
 	// Update status to sending
 	_ = s.repo.UpdateStatus(ctx, emailID, domain.StatusSending, "")
 
+	// Re-inject unsubscribe headers (not persisted in DB)
+	if s.unsubscribe != nil {
+		unsubURL := s.unsubscribe.GenerateURL(email.To)
+		email.Headers = map[string]string{
+			"List-Unsubscribe":      "<" + unsubURL + ">",
+			"List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+		}
+	}
+
 	// Send via configured provider
 	result, err := s.sender.Send(email)
 	if err != nil {

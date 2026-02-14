@@ -6,19 +6,22 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/prodigy90/email-service-go/internal/repository/postgres"
 	"github.com/prodigy90/email-service-go/internal/service"
+	"github.com/rs/zerolog"
 )
 
 // CampaignHandler handles campaign API requests.
 type CampaignHandler struct {
 	emailService    *service.EmailService
 	suppressionRepo *postgres.SuppressionRepository
+	logger          zerolog.Logger
 }
 
 // NewCampaignHandler creates a new campaign handler.
-func NewCampaignHandler(emailService *service.EmailService, suppressionRepo *postgres.SuppressionRepository) *CampaignHandler {
+func NewCampaignHandler(emailService *service.EmailService, suppressionRepo *postgres.SuppressionRepository, logger zerolog.Logger) *CampaignHandler {
 	return &CampaignHandler{
 		emailService:    emailService,
 		suppressionRepo: suppressionRepo,
+		logger:          logger.With().Str("component", "campaign_handler").Logger(),
 	}
 }
 
@@ -81,7 +84,8 @@ func (h *CampaignHandler) GetBounced(c *gin.Context) {
 
 	addresses, err := h.emailService.GetCampaignBouncedEmails(c.Request.Context(), tag)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: err.Error()})
+		h.logger.Error().Err(err).Str("campaign_tag", tag).Msg("Failed to get bounced emails")
+		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: "internal server error"})
 		return
 	}
 
@@ -102,6 +106,11 @@ func (h *CampaignHandler) CheckSuppressions(c *gin.Context) {
 		return
 	}
 
+	if len(req.Emails) > 10000 {
+		c.JSON(http.StatusBadRequest, ErrorResponse{Error: "too many emails, max 10000"})
+		return
+	}
+
 	if h.suppressionRepo == nil {
 		c.JSON(http.StatusOK, gin.H{
 			"suppressed": []string{},
@@ -112,7 +121,8 @@ func (h *CampaignHandler) CheckSuppressions(c *gin.Context) {
 
 	suppressed, err := h.suppressionRepo.CheckSuppressed(c.Request.Context(), req.Emails)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: err.Error()})
+		h.logger.Error().Err(err).Msg("Failed to check suppressions")
+		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: "internal server error"})
 		return
 	}
 

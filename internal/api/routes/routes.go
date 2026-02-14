@@ -88,7 +88,7 @@ func New(d Deps) *gin.Engine {
 	emailHandler.RegisterRoutes(api)
 
 	// Campaign endpoints
-	campaignHandler := handlers.NewCampaignHandler(d.EmailService, d.SuppressionRepo)
+	campaignHandler := handlers.NewCampaignHandler(d.EmailService, d.SuppressionRepo, d.Logger)
 	campaignHandler.RegisterRoutes(api)
 
 	return r
