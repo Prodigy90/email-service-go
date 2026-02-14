@@ -255,6 +255,21 @@ func (r *EmailRepository) GetCampaignNonOpeners(ctx context.Context, campaignTag
 	return addresses, nil
 }
 
+// GetCampaignBouncedEmails returns email addresses from a campaign that bounced or complained.
+func (r *EmailRepository) GetCampaignBouncedEmails(ctx context.Context, campaignTag string) ([]string, error) {
+	query := `
+		SELECT DISTINCT e.to_address
+		FROM emails e
+		WHERE e.metadata->>'campaign' = $1
+		  AND e.status IN ('bounced', 'complaint')`
+
+	var addresses []string
+	if err := r.db.SelectContext(ctx, &addresses, query, campaignTag); err != nil {
+		return nil, err
+	}
+	return addresses, nil
+}
+
 // emailRow is the database representation.
 type emailRow struct {
 	ID            uuid.UUID          `db:"id"`

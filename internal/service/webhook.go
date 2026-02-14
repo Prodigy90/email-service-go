@@ -20,24 +20,27 @@ import (
 
 // WebhookService processes Resend webhook events.
 type WebhookService struct {
-	emailRepo     *postgres.EmailRepository
-	eventRepo     *postgres.EventRepository
-	signingSecret string
-	logger        zerolog.Logger
+	emailRepo       *postgres.EmailRepository
+	eventRepo       *postgres.EventRepository
+	suppressionRepo *postgres.SuppressionRepository
+	signingSecret   string
+	logger          zerolog.Logger
 }
 
 // NewWebhookService creates a new webhook service.
 func NewWebhookService(
 	emailRepo *postgres.EmailRepository,
 	eventRepo *postgres.EventRepository,
+	suppressionRepo *postgres.SuppressionRepository,
 	signingSecret string,
 	logger zerolog.Logger,
 ) *WebhookService {
 	return &WebhookService{
-		emailRepo:     emailRepo,
-		eventRepo:     eventRepo,
-		signingSecret: signingSecret,
-		logger:        logger.With().Str("component", "webhook").Logger(),
+		emailRepo:       emailRepo,
+		eventRepo:       eventRepo,
+		suppressionRepo: suppressionRepo,
+		signingSecret:   signingSecret,
+		logger:          logger.With().Str("component", "webhook").Logger(),
 	}
 }
 
@@ -102,15 +105,31 @@ func (s *WebhookService) ProcessResendWebhook(ctx context.Context, body []byte, 
 		return nil // Don't retry to avoid duplicate processing
 	}
 
-	// Update email status for terminal events
+	// Update email status for terminal events and auto-suppress
 	switch payload.Type {
 	case "email.bounced":
 		if err := s.emailRepo.UpdateStatus(ctx, email.ID, domain.StatusBounced, ""); err != nil {
 			s.logger.Error().Err(err).Str("email_id", email.ID.String()).Msg("Failed to update email status to bounced")
 		}
+		// Auto-suppress bounced email
+		if s.suppressionRepo != nil {
+			if err := s.suppressionRepo.Add(ctx, email.To, "bounce", "webhook", nil); err != nil {
+				s.logger.Error().Err(err).Str("email", email.To).Msg("Failed to auto-suppress bounced email")
+			} else {
+				s.logger.Info().Str("email", email.To).Msg("Auto-suppressed bounced email")
+			}
+		}
 	case "email.complained":
 		if err := s.emailRepo.UpdateStatus(ctx, email.ID, domain.StatusComplaint, ""); err != nil {
 			s.logger.Error().Err(err).Str("email_id", email.ID.String()).Msg("Failed to update email status to complained")
+		}
+		// Auto-suppress complained email
+		if s.suppressionRepo != nil {
+			if err := s.suppressionRepo.Add(ctx, email.To, "complaint", "webhook", nil); err != nil {
+				s.logger.Error().Err(err).Str("email", email.To).Msg("Failed to auto-suppress complained email")
+			} else {
+				s.logger.Info().Str("email", email.To).Msg("Auto-suppressed complained email")
+			}
 		}
 	}
 

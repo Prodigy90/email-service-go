@@ -7,19 +7,22 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/prodigy90/email-service-go/internal/api/handlers"
 	"github.com/prodigy90/email-service-go/internal/api/middleware"
+	"github.com/prodigy90/email-service-go/internal/repository/postgres"
 	"github.com/prodigy90/email-service-go/internal/service"
 	"github.com/rs/zerolog"
 )
 
 // Deps holds the router dependencies.
 type Deps struct {
-	Logger            zerolog.Logger
-	EmailService      *service.EmailService
-	WebhookService    *service.WebhookService // Optional: if nil, webhook routes are skipped
-	APIKey            string
-	SwaggerAllowedIPs string
-	RateLimiter       *middleware.RateLimiter // Optional: if nil, a default is created
-	TrustedProxies    []string                // Optional: trusted proxy IPs or CIDR ranges
+	Logger             zerolog.Logger
+	EmailService       *service.EmailService
+	WebhookService     *service.WebhookService     // Optional: if nil, webhook routes are skipped
+	UnsubscribeService *service.UnsubscribeService  // Optional: if nil, unsubscribe routes are skipped
+	SuppressionRepo    *postgres.SuppressionRepository // Required if UnsubscribeService is set
+	APIKey             string
+	SwaggerAllowedIPs  string
+	RateLimiter        *middleware.RateLimiter // Optional: if nil, a default is created
+	TrustedProxies     []string                // Optional: trusted proxy IPs or CIDR ranges
 }
 
 // New creates the Gin router with all routes.
@@ -69,6 +72,13 @@ func New(d Deps) *gin.Engine {
 		r.POST("/webhooks/resend", webhookHandler.HandleResendWebhook)
 	}
 
+	// Unsubscribe routes (public, verified via HMAC token)
+	if d.UnsubscribeService != nil && d.SuppressionRepo != nil {
+		unsubHandler := handlers.NewUnsubscribeHandler(d.UnsubscribeService, d.SuppressionRepo, d.Logger)
+		r.GET("/unsubscribe", unsubHandler.GetUnsubscribe)
+		r.POST("/unsubscribe", unsubHandler.PostUnsubscribe)
+	}
+
 	// API routes (protected by API key + rate limited)
 	api := r.Group("/api/v1")
 	api.Use(middleware.APIKeyAuth(d.APIKey), middleware.RateLimit(rateLimiter))
@@ -78,7 +88,7 @@ func New(d Deps) *gin.Engine {
 	emailHandler.RegisterRoutes(api)
 
 	// Campaign endpoints
-	campaignHandler := handlers.NewCampaignHandler(d.EmailService)
+	campaignHandler := handlers.NewCampaignHandler(d.EmailService, d.SuppressionRepo)
 	campaignHandler.RegisterRoutes(api)
 
 	return r

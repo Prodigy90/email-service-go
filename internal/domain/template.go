@@ -77,8 +77,9 @@ const (
 	TemplateAffiliateLinkUpdated = "affiliate_link_updated"
 
 	// Migration campaign templates
-	TemplateMigrationAnnouncement = "migration_announcement"
-	TemplateMigrationFollowUp     = "migration_follow_up"
-	TemplateMigrationVerifyEmail  = "migration_verify_email"
-	TemplateMigrationUpgradeNudge = "migration_upgrade_nudge"
+	TemplateMigrationAnnouncement  = "migration_announcement"
+	TemplateMigrationFollowUp      = "migration_follow_up"
+	TemplateMigrationVerifyEmail   = "migration_verify_email"
+	TemplateMigrationUpgradeNudge  = "migration_upgrade_nudge"
+	TemplateMigrationFinalNotice   = "migration_final_notice"
 )

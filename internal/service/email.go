@@ -21,36 +21,70 @@ const (
 
 // EmailService handles email operations.
 type EmailService struct {
-	repo      *postgres.EmailRepository
-	sender    EmailSender
-	templates *TemplateService
-	queue     *asynq.Client
-	redis     *redis.Client
-	logger    zerolog.Logger
+	repo            *postgres.EmailRepository
+	sender          EmailSender
+	templates       *TemplateService
+	queue           *asynq.Client
+	redis           *redis.Client
+	suppressionRepo *postgres.SuppressionRepository
+	unsubscribe     *UnsubscribeService
+	logger          zerolog.Logger
 }
 
 // NewEmailService creates a new email service.
-// The redis client is optional (pass nil to disable caching).
+// The redis client and suppression repo are optional (pass nil to disable).
 func NewEmailService(
 	repo *postgres.EmailRepository,
 	sender EmailSender,
 	templates *TemplateService,
 	queue *asynq.Client,
 	redisClient *redis.Client,
+	suppressionRepo *postgres.SuppressionRepository,
 	logger zerolog.Logger,
 ) *EmailService {
 	return &EmailService{
-		repo:      repo,
-		sender:    sender,
-		templates: templates,
-		queue:     queue,
-		redis:     redisClient,
-		logger:    logger.With().Str("component", "email_service").Logger(),
+		repo:            repo,
+		sender:          sender,
+		templates:       templates,
+		queue:           queue,
+		redis:           redisClient,
+		suppressionRepo: suppressionRepo,
+		logger:          logger.With().Str("component", "email_service").Logger(),
 	}
+}
+
+// SetUnsubscribeService sets the unsubscribe service for URL generation.
+func (s *EmailService) SetUnsubscribeService(unsub *UnsubscribeService) {
+	s.unsubscribe = unsub
 }
 
 // Send queues an email for delivery.
 func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (*domain.SendEmailResponse, error) {
+	// Pre-send suppression check
+	if s.suppressionRepo != nil {
+		suppressed, err := s.suppressionRepo.IsSuppressed(ctx, req.To)
+		if err != nil {
+			s.logger.Warn().Err(err).Str("to", req.To).Msg("Failed to check suppression list, proceeding with send")
+		} else if suppressed {
+			s.logger.Info().Str("to", req.To).Msg("Email suppressed, skipping send")
+			return &domain.SendEmailResponse{
+				ID:      uuid.Nil,
+				Status:  "suppressed",
+				Message: "Recipient is on the suppression list",
+			}, nil
+		}
+	}
+
+	// Inject UnsubscribeURL into template data if unsubscribe service is available
+	if s.unsubscribe != nil && req.Template != "" {
+		if req.TemplateData == nil {
+			req.TemplateData = make(map[string]interface{})
+		}
+		if _, exists := req.TemplateData["UnsubscribeURL"]; !exists {
+			req.TemplateData["UnsubscribeURL"] = s.unsubscribe.GenerateURL(req.To)
+		}
+	}
+
 	// Build email
 	email := &domain.Email{
 		ID:            uuid.New(),
@@ -67,6 +101,15 @@ func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (
 		Metadata:      req.Metadata,
 		CreatedAt:     time.Now(),
 		UpdatedAt:     time.Now(),
+	}
+
+	// Add List-Unsubscribe headers if unsubscribe URL is available
+	if s.unsubscribe != nil {
+		unsubURL := s.unsubscribe.GenerateURL(req.To)
+		email.Headers = map[string]string{
+			"List-Unsubscribe":      "<" + unsubURL + ">",
+			"List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+		}
 	}
 
 	// If template specified, render it
@@ -267,6 +310,11 @@ func (s *EmailService) GetCampaignNonOpeners(ctx context.Context, campaignTag st
 		return nil, fmt.Errorf("failed to get campaign non-openers: %w", err)
 	}
 	return addresses, nil
+}
+
+// GetCampaignBouncedEmails returns bounced/complained email addresses from a campaign.
+func (s *EmailService) GetCampaignBouncedEmails(ctx context.Context, campaignTag string) ([]string, error) {
+	return s.repo.GetCampaignBouncedEmails(ctx, campaignTag)
 }
 
 // enqueue adds an email to the processing queue.

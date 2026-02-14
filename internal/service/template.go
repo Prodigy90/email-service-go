@@ -601,6 +601,14 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 		HTMLBody:    ts.wrapHTML("Upgrade Your Plan", ts.migrationUpgradeNudgeContent()),
 		Description: "Email for migrating users on trial who haven't upgraded to a paid plan",
 	}
+
+	ts.templates[domain.TemplateMigrationFinalNotice] = &domain.Template{
+		Name:    domain.TemplateMigrationFinalNotice,
+		Subject: "Last chance: old WASBOT shuts down for good",
+		Body:    "Hi {{.Name}},\n\nThis is the final reminder — the old WASBOT is shutting down permanently. After this, your old account and data will no longer be accessible.\n\nWe've rebuilt everything from scratch at www.wasbot.app with a free trial waiting for you. It takes 2 minutes to get started.\n\nClaim your account now:\n{{.DashboardURL}}\n\nDon't miss out.\n\n— The WASBOT Team",
+		HTMLBody:    ts.wrapHTML("Final Notice", ts.migrationFinalNoticeContent()),
+		Description: "Final notice for migrating users who haven't signed up after first follow-up",
+	}
 }
 
 // wrapHTML wraps content in a professional HTML email template using default branding.
@@ -778,6 +786,13 @@ func (ts *TemplateService) wrapHTMLWithBranding(title, content string) string {
                     <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
                       &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
                     </p>
+
+                    <!-- Unsubscribe -->
+                    {{if .UnsubscribeURL}}
+                    <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                      <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                    </p>
+                    {{end}}
                   </td>
                 </tr>
               </table>
@@ -2414,6 +2429,42 @@ func (ts *TemplateService) migrationUpgradeNudgeContent() string {
     <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
       <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
         See Plans
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0; font-size: 14px; color: #6b7280;">If you have any questions, just reply to this email.</p>
+<p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
+`
+}
+
+func (ts *TemplateService) migrationFinalNoticeContent() string {
+	return `
+<p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+<p style="margin: 0 0 16px 0; font-size: 16px;">This is the <strong>final reminder</strong> — the old WASBOT is shutting down permanently.</p>
+
+<!-- Urgent banner -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-radius: 12px; margin-bottom: 24px; border: 2px solid #f87171;">
+  <tr>
+    <td style="padding: 20px 24px; text-align: center;">
+      <p style="margin: 0; color: #991b1b; font-size: 18px; font-weight: 700;">Old WASBOT is shutting down for good</p>
+      <p style="margin: 8px 0 0 0; color: #b91c1c; font-size: 15px;">After this, your old account and data will no longer be accessible.</p>
+    </td>
+  </tr>
+</table>
+
+<p style="margin: 0 0 16px 0; color: #4b5563; font-size: 16px;">We've completely rebuilt WASBOT from scratch — a faster dashboard, better features, and a <strong>free trial</strong> waiting for you.</p>
+
+<p style="margin: 0 0 20px 0; color: #4b5563; font-size: 16px;">It takes <strong>2 minutes</strong> to get started. Don't lose access to WhatsApp automation.</p>
+
+<!-- CTA Button -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
+  <tr>
+    <td style="border-radius: 8px; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);">
+      <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+        Claim Your Account Now
       </a>
     </td>
   </tr>

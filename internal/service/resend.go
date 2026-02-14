@@ -35,11 +35,12 @@ func NewResendClient(cfg config.ResendConfig, logger zerolog.Logger) *ResendClie
 
 // resendRequest is the request body for Resend API.
 type resendRequest struct {
-	From    string   `json:"from"`
-	To      []string `json:"to"`
-	Subject string   `json:"subject"`
-	Text    string   `json:"text,omitempty"`
-	HTML    string   `json:"html,omitempty"`
+	From    string            `json:"from"`
+	To      []string          `json:"to"`
+	Subject string            `json:"subject"`
+	Text    string            `json:"text,omitempty"`
+	HTML    string            `json:"html,omitempty"`
+	Headers map[string]string `json:"headers,omitempty"`
 }
 
 // resendResponse is the response from Resend API.
@@ -74,6 +75,7 @@ func (c *ResendClient) Send(email *domain.Email) (*SendResult, error) {
 		Subject: email.Subject,
 		Text:    email.Body,
 		HTML:    email.HTMLBody,
+		Headers: email.Headers,
 	}
 
 	jsonBody, err := json.Marshal(reqBody)

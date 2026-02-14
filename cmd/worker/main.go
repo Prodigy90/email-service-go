@@ -82,7 +82,12 @@ func main() {
 		log.Info().Msg("Using SMTP as email provider")
 	}
 
-	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, nil, log)
+	suppressionRepo := postgres.NewSuppressionRepository(db)
+	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, nil, suppressionRepo, log)
+
+	// Wire unsubscribe service for List-Unsubscribe headers
+	unsubscribeService := service.NewUnsubscribeService(cfg.UnsubscribeSecret, cfg.UnsubscribeBaseURL)
+	emailService.SetUnsubscribeService(unsubscribeService)
 
 	// Create task handler
 	emailTaskHandler := tasks.NewEmailTaskHandler(emailService, log)

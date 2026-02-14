@@ -38,6 +38,10 @@ type Config struct {
 	// API Authentication
 	APIKey string
 
+	// Unsubscribe
+	UnsubscribeSecret  string
+	UnsubscribeBaseURL string
+
 	// Templates
 	TemplateDir string
 
@@ -138,6 +142,8 @@ func Load() *Config {
 		},
 		ResendWebhookSecret: getEnv("RESEND_WEBHOOK_SECRET", ""),
 		APIKey:              getEnv("API_KEY", "dev-api-key"),
+		UnsubscribeSecret:  getEnv("UNSUBSCRIBE_SECRET", "change-me-unsubscribe-secret"),
+		UnsubscribeBaseURL: getEnv("UNSUBSCRIBE_BASE_URL", "https://emails.wasbot.app"),
 		TemplateDir:       getEnv("TEMPLATE_DIR", "./pkg/templates"),
 		MigrationsDir:     getEnv("MIGRATIONS_DIR", "./migrations"),
 		SwaggerAllowedIPs: getEnv("SWAGGER_ALLOWED_IPS", ""),

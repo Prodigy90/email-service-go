@@ -113,23 +113,32 @@ func main() {
 		log.Info().Msg("Using SMTP as email provider")
 	}
 
-	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, redisClient, log)
+	// Create suppression repository
+	suppressionRepo := postgres.NewSuppressionRepository(sqlxDB)
+
+	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, redisClient, suppressionRepo, log)
 
 	// Create event repository and webhook service
 	eventRepo := postgres.NewEventRepository(sqlxDB)
-	webhookService := service.NewWebhookService(emailRepo, eventRepo, cfg.ResendWebhookSecret, log)
+	webhookService := service.NewWebhookService(emailRepo, eventRepo, suppressionRepo, cfg.ResendWebhookSecret, log)
 	if cfg.ResendWebhookSecret == "" {
 		log.Warn().Msg("RESEND_WEBHOOK_SECRET not set, webhook signature verification disabled")
 	}
 
+	// Create unsubscribe service and wire to email service for auto-injection
+	unsubscribeService := service.NewUnsubscribeService(cfg.UnsubscribeSecret, cfg.UnsubscribeBaseURL)
+	emailService.SetUnsubscribeService(unsubscribeService)
+
 	// Create router
 	router := routes.New(routes.Deps{
-		Logger:            log,
-		EmailService:      emailService,
-		WebhookService:    webhookService,
-		APIKey:            cfg.APIKey,
-		SwaggerAllowedIPs: cfg.SwaggerAllowedIPs,
-		TrustedProxies:    cfg.TrustedProxies,
+		Logger:             log,
+		EmailService:       emailService,
+		WebhookService:     webhookService,
+		UnsubscribeService: unsubscribeService,
+		SuppressionRepo:    suppressionRepo,
+		APIKey:             cfg.APIKey,
+		SwaggerAllowedIPs:  cfg.SwaggerAllowedIPs,
+		TrustedProxies:     cfg.TrustedProxies,
 	})
 
 	// Start server

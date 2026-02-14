@@ -207,6 +207,40 @@ func (c *Client) GetCampaignNonOpeners(ctx context.Context, campaignTag string) 
 	return &resp, nil
 }
 
+// BouncedResponse represents the list of bounced email addresses for a campaign.
+type BouncedResponse struct {
+	CampaignTag string   `json:"campaign_tag"`
+	Count       int      `json:"count"`
+	Addresses   []string `json:"addresses"`
+}
+
+// SuppressionsCheckResponse represents the result of checking emails against the suppression list.
+type SuppressionsCheckResponse struct {
+	Suppressed []string `json:"suppressed"`
+	Count      int      `json:"count"`
+}
+
+// GetCampaignBounced retrieves bounced/complained email addresses for a campaign.
+func (c *Client) GetCampaignBounced(ctx context.Context, campaignTag string) (*BouncedResponse, error) {
+	var resp BouncedResponse
+	if err := c.doRequest(ctx, "GET", "/api/v1/campaigns/"+url.PathEscape(campaignTag)+"/bounced", nil, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// CheckSuppressions checks which emails from a list are in the suppression list.
+func (c *Client) CheckSuppressions(ctx context.Context, emails []string) (*SuppressionsCheckResponse, error) {
+	var resp SuppressionsCheckResponse
+	req := struct {
+		Emails []string `json:"emails"`
+	}{Emails: emails}
+	if err := c.doRequest(ctx, "POST", "/api/v1/suppressions/check", req, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
 // doRequest performs an HTTP request.
 func (c *Client) doRequest(ctx context.Context, method, path string, body interface{}, result interface{}) error {
 	var bodyReader io.Reader
@@ -308,8 +342,9 @@ const (
 	TemplatePasswordReset     = "password_reset"
 
 	// Migration campaigns
-	TemplateMigrationAnnouncement = "migration_announcement"
-	TemplateMigrationFollowUp     = "migration_follow_up"
-	TemplateMigrationVerifyEmail  = "migration_verify_email"
-	TemplateMigrationUpgradeNudge = "migration_upgrade_nudge"
+	TemplateMigrationAnnouncement  = "migration_announcement"
+	TemplateMigrationFollowUp      = "migration_follow_up"
+	TemplateMigrationVerifyEmail   = "migration_verify_email"
+	TemplateMigrationUpgradeNudge  = "migration_upgrade_nudge"
+	TemplateMigrationFinalNotice   = "migration_final_notice"
 )
