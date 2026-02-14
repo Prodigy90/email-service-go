@@ -36,6 +36,11 @@ func main() {
 		log.Fatal().Err(err).Msg("Configuration validation failed")
 	}
 
+	// Warn about optional security config
+	if cfg.UnsubscribeSecret == "" || cfg.UnsubscribeSecret == "change-me-unsubscribe-secret" {
+		log.Warn().Msg("UNSUBSCRIBE_SECRET not configured - unsubscribe links will use default HMAC secret")
+	}
+
 	// Set Gin mode
 	if cfg.Env == "production" {
 		gin.SetMode(gin.ReleaseMode)

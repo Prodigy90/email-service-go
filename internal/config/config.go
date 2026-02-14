@@ -99,9 +99,6 @@ func ValidateProduction(cfg *Config) error {
 	if cfg.APIKey == "" || cfg.APIKey == "dev-api-key" {
 		missing = append(missing, "API_KEY")
 	}
-	if cfg.UnsubscribeSecret == "" || cfg.UnsubscribeSecret == "change-me-unsubscribe-secret" {
-		missing = append(missing, "UNSUBSCRIBE_SECRET")
-	}
 
 	if len(missing) > 0 {
 		return fmt.Errorf("missing required environment variables for production: %s", strings.Join(missing, ", "))
