@@ -31,6 +31,10 @@ tags:
     description: Email sending and status endpoints
   - name: Templates
     description: Email template management
+  - name: Campaigns
+    description: Campaign analytics and bounce tracking
+  - name: Suppressions
+    description: Email suppression list management (unsubscribes, bounces, complaints)
 
 components:
   securitySchemes:
@@ -990,3 +994,242 @@ paths:
                 $ref: '#/components/schemas/Error'
               example:
                 error: "unauthorized: invalid or missing API key"
+
+  /api/v1/campaigns/{tag}/stats:
+    get:
+      tags:
+        - Campaigns
+      summary: Get campaign stats
+      description: Returns aggregate send/delivery stats for a campaign tag.
+      operationId: getCampaignStats
+      parameters:
+        - name: tag
+          in: path
+          required: true
+          description: Campaign tag identifier
+          schema:
+            type: string
+          example: "camp_migration_w1"
+      responses:
+        '200':
+          description: Campaign stats
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Missing campaign tag
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/campaigns/{tag}/bounced:
+    get:
+      tags:
+        - Campaigns
+      summary: Get bounced emails for campaign
+      description: Returns email addresses from a campaign that bounced or received complaints.
+      operationId: getCampaignBounced
+      parameters:
+        - name: tag
+          in: path
+          required: true
+          description: Campaign tag identifier
+          schema:
+            type: string
+          example: "camp_migration_w1"
+      responses:
+        '200':
+          description: List of bounced email addresses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  campaign_tag:
+                    type: string
+                    example: "camp_migration_w1"
+                  count:
+                    type: integer
+                    example: 5
+                  addresses:
+                    type: array
+                    items:
+                      type: string
+                      format: email
+                    example: ["bounced@example.com"]
+        '400':
+          description: Missing campaign tag
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/campaigns/{tag}/non-openers:
+    get:
+      tags:
+        - Campaigns
+      summary: Get non-opener emails for campaign
+      description: Returns email addresses from a campaign that have not opened the email.
+      operationId: getCampaignNonOpeners
+      parameters:
+        - name: tag
+          in: path
+          required: true
+          description: Campaign tag identifier
+          schema:
+            type: string
+          example: "camp_migration_w1"
+      responses:
+        '200':
+          description: List of non-opener email addresses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  campaign_tag:
+                    type: string
+                    example: "camp_migration_w1"
+                  count:
+                    type: integer
+                    example: 42
+                  addresses:
+                    type: array
+                    items:
+                      type: string
+                      format: email
+        '400':
+          description: Missing campaign tag
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/suppressions/check:
+    post:
+      tags:
+        - Suppressions
+      summary: Check suppressed emails
+      description: |
+        Given a list of email addresses, returns which ones are in the suppression list.
+        Maximum 10,000 emails per request.
+      operationId: checkSuppressions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - emails
+              properties:
+                emails:
+                  type: array
+                  items:
+                    type: string
+                    format: email
+                  maxItems: 10000
+                  description: List of emails to check
+                  example: ["user1@example.com", "bounced@example.com"]
+      responses:
+        '200':
+          description: Suppression check results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Number of suppressed emails found
+                    example: 1
+                  suppressed:
+                    type: array
+                    items:
+                      type: string
+                      format: email
+                    description: Email addresses that are suppressed
+                    example: ["bounced@example.com"]
+        '400':
+          description: Invalid request or too many emails
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "too many emails, max 10000"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/suppressions/{email}:
+    delete:
+      tags:
+        - Suppressions
+      summary: Remove email from suppression list
+      description: |
+        Removes an email address from the suppression list, allowing future
+        emails to be sent to it. Use this to re-enable delivery after a user
+        was unsubscribed, bounced, or complained.
+      operationId: removeSuppression
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: Email address to remove from suppression list
+          schema:
+            type: string
+            format: email
+          example: "user@example.com"
+      responses:
+        '200':
+          description: Email removed from suppression list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Email removed from suppression list"
+                  email:
+                    type: string
+                    format: email
+                    example: "user@example.com"
+        '400':
+          description: Missing email parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "email is required"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'

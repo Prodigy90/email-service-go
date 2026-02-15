@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/prodigy90/email-service-go/internal/repository/postgres"
@@ -34,6 +35,7 @@ func (h *CampaignHandler) RegisterRoutes(r *gin.RouterGroup) {
 		campaigns.GET("/:tag/bounced", h.GetBounced)
 	}
 	r.POST("/suppressions/check", h.CheckSuppressions)
+	r.DELETE("/suppressions/:email", h.RemoveSuppression)
 }
 
 // GetStats returns aggregate stats for a campaign.
@@ -129,5 +131,30 @@ func (h *CampaignHandler) CheckSuppressions(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"suppressed": suppressed,
 		"count":      len(suppressed),
+	})
+}
+
+// RemoveSuppression removes an email from the suppression list.
+func (h *CampaignHandler) RemoveSuppression(c *gin.Context) {
+	email := strings.ToLower(strings.TrimSpace(c.Param("email")))
+	if email == "" {
+		c.JSON(http.StatusBadRequest, ErrorResponse{Error: "email is required"})
+		return
+	}
+
+	if h.suppressionRepo == nil {
+		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: "suppression list not configured"})
+		return
+	}
+
+	if err := h.suppressionRepo.Remove(c.Request.Context(), email); err != nil {
+		h.logger.Error().Err(err).Str("email", email).Msg("Failed to remove suppression")
+		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: "internal server error"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Email removed from suppression list",
+		"email":   email,
 	})
 }
