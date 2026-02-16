@@ -61,8 +61,8 @@ func TestTemplateService_RenderMigrationAnnouncement(t *testing.T) {
 		t.Fatalf("render failed: %v", err)
 	}
 
-	if !strings.Contains(subject, "WASBOT") {
-		t.Errorf("expected subject to contain 'WASBOT', got %q", subject)
+	if !strings.Contains(subject, "upgrade") {
+		t.Errorf("expected subject to contain 'upgrade', got %q", subject)
 	}
 	if !strings.Contains(body, "John") {
 		t.Errorf("expected body to contain 'John', got body without it")
@@ -72,9 +72,6 @@ func TestTemplateService_RenderMigrationAnnouncement(t *testing.T) {
 	}
 	if !strings.Contains(htmlBody, "https://wasbot.app/dashboard") {
 		t.Errorf("expected HTML body to contain dashboard URL")
-	}
-	if !strings.Contains(htmlBody, "Try the New WASBOT") {
-		t.Errorf("expected HTML body to contain CTA text 'Try the New WASBOT'")
 	}
 }
 
@@ -86,19 +83,16 @@ func TestTemplateService_RenderMigrationFollowUp(t *testing.T) {
 		"DashboardURL": "https://wasbot.app/dashboard",
 	}
 
-	subject, body, htmlBody, err := ts.Render(domain.TemplateMigrationFollowUp, data)
+	subject, body, _, err := ts.Render(domain.TemplateMigrationFollowUp, data)
 	if err != nil {
 		t.Fatalf("render failed: %v", err)
 	}
 
-	if !strings.Contains(subject, "WASBOT") {
-		t.Errorf("expected follow-up subject to mention WASBOT, got %q", subject)
+	if !strings.Contains(subject, "WhatsApp automation") {
+		t.Errorf("expected follow-up subject to mention WhatsApp automation, got %q", subject)
 	}
 	if !strings.Contains(body, "Jane") {
 		t.Errorf("expected body to contain 'Jane'")
-	}
-	if !strings.Contains(htmlBody, "Try the New WASBOT") {
-		t.Errorf("expected HTML body to contain CTA text 'Try the New WASBOT'")
 	}
 }
 

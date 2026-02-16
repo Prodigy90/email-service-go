@@ -572,7 +572,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 	// Migration campaign templates
 	ts.templates[domain.TemplateMigrationAnnouncement] = &domain.Template{
 		Name:    domain.TemplateMigrationAnnouncement,
-		Subject: "Important: WASBOT is moving — here's what you need to know",
+		Subject: "Your WhatsApp automation just got a major upgrade",
 		Body:    "Hi {{.Name}},\n\nWe have some important news: we've completely rebuilt WASBOT from the ground up, and your current Paystack subscription plan is being discontinued.\n\nThe WASBOT you've been using is being phased out and replaced by a brand new platform at www.wasbot.app — faster, more powerful, and packed with features.\n\nHere's what you get on the new WASBOT:\n- Post statuses with custom fonts, colors, and saved presets\n- Auto-save contacts to Google Contacts + bulk save hundreds at once\n- Import contacts from CSV, VCF, or Google Contacts\n- Send messages to multiple groups at once + tag all members\n- DND mode to block unwanted calls\n- Connect up to 3 WhatsApp sessions on one account\n- Real-time dashboard with live session monitoring\n\nHead over and try it out — your free trial is waiting:\n{{.DashboardURL}}\n\nIf you have any questions, just reply to this email.\n\n— The WASBOT Team",
 		HTMLBody:    ts.wrapHTML("Important Update", ts.migrationAnnouncementContent()),
 		Description: "Migration announcement email for legacy users",
@@ -580,7 +580,7 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 
 	ts.templates[domain.TemplateMigrationFollowUp] = &domain.Template{
 		Name:    domain.TemplateMigrationFollowUp,
-		Subject: "Reminder: The old WASBOT is shutting down",
+		Subject: "You're about to lose your WhatsApp automation — quick fix inside",
 		Body:    "Hi {{.Name}},\n\nJust a reminder — the old WASBOT and your Paystack plan are being discontinued. The new WASBOT is live at www.wasbot.app with a completely rebuilt platform.\n\nDon't get left behind. Head over and start your free trial:\n{{.DashboardURL}}\n\nIf you have any questions, just reply to this email.\n\n— The WASBOT Team",
 		HTMLBody:    ts.wrapHTML("Reminder", ts.migrationFollowUpContent()),
 		Description: "Follow-up email for legacy users who haven't signed up on the new platform",
@@ -604,10 +604,26 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 
 	ts.templates[domain.TemplateMigrationFinalNotice] = &domain.Template{
 		Name:    domain.TemplateMigrationFinalNotice,
-		Subject: "Last chance: old WASBOT shuts down for good",
-		Body:    "Hi {{.Name}},\n\nThis is the final reminder — the old WASBOT is shutting down permanently. After this, your old account and data will no longer be accessible.\n\nWe've rebuilt everything from scratch at www.wasbot.app with a free trial waiting for you. It takes 2 minutes to get started.\n\nClaim your account now:\n{{.DashboardURL}}\n\nDon't miss out.\n\n— The WASBOT Team",
+		Subject: "Final notice: claim your free WASBOT upgrade before {{.ShutdownDate}}",
+		Body:    "Hi {{.Name}},\n\nThis is the final reminder — the old WASBOT is shutting down permanently on {{.ShutdownDate}}. After this date, your old account and data will no longer be accessible.\n\nWe've rebuilt everything from scratch at www.wasbot.app with a free trial waiting for you. It takes 2 minutes to get started.\n\nClaim your account now:\n{{.DashboardURL}}\n\nDon't miss out.\n\n— The WASBOT Team",
 		HTMLBody:    ts.wrapHTML("Final Notice", ts.migrationFinalNoticeContent()),
 		Description: "Final notice for migrating users who haven't signed up after first follow-up",
+	}
+
+	ts.templates[domain.TemplateMigrationVerifyEmailFinal] = &domain.Template{
+		Name:        domain.TemplateMigrationVerifyEmailFinal,
+		Subject:     "Your new WASBOT account will be deleted — verify now",
+		Body:        "Hi {{.Name}},\n\nYour account on the new WASBOT is set up, but your email still isn't verified. Unverified accounts will be removed when the old platform shuts down{{if .ShutdownDate}} on {{.ShutdownDate}}{{end}}.\n\nIt takes 10 seconds — just log in and click the verification link in your inbox:\n{{.DashboardURL}}\n\nDon't lose your account.\n\n— The WASBOT Team",
+		HTMLBody:    ts.wrapHTML("Verify Now — Account at Risk", ts.migrationVerifyEmailFinalContent()),
+		Description: "Final notice for migrating users who signed up but still haven't verified their email",
+	}
+
+	ts.templates[domain.TemplateMigrationUpgradeNudgeFinal] = &domain.Template{
+		Name:        domain.TemplateMigrationUpgradeNudgeFinal,
+		Subject:     "Your WASBOT trial is ending — lock in your plan now",
+		Body:        "Hi {{.Name}},\n\nYour free trial on the new WASBOT is running out. Once it ends, you'll lose access to:\n- Status broadcasting to your contacts\n- Auto-save contacts to Google Contacts\n- Group messaging and member tagging\n\nPick a plan that works for you — starting at just $5.50/month:\n{{.DashboardURL}}\n\nDon't wait until it's too late.\n\n— The WASBOT Team",
+		HTMLBody:    ts.wrapHTML("Trial Ending Soon", ts.migrationUpgradeNudgeFinalContent()),
+		Description: "Final nudge for migrating users on trial who haven't upgraded to a paid plan",
 	}
 }
 
@@ -2443,14 +2459,14 @@ func (ts *TemplateService) migrationFinalNoticeContent() string {
 	return `
 <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
 
-<p style="margin: 0 0 16px 0; font-size: 16px;">This is the <strong>final reminder</strong> — the old WASBOT is shutting down permanently.</p>
+<p style="margin: 0 0 16px 0; font-size: 16px;">This is the <strong>final reminder</strong> — the old WASBOT is shutting down permanently{{if .ShutdownDate}} on <strong>{{.ShutdownDate}}</strong>{{end}}.</p>
 
 <!-- Urgent banner -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-radius: 12px; margin-bottom: 24px; border: 2px solid #f87171;">
   <tr>
     <td style="padding: 20px 24px; text-align: center;">
       <p style="margin: 0; color: #991b1b; font-size: 18px; font-weight: 700;">Old WASBOT is shutting down for good</p>
-      <p style="margin: 8px 0 0 0; color: #b91c1c; font-size: 15px;">After this, your old account and data will no longer be accessible.</p>
+      <p style="margin: 8px 0 0 0; color: #b91c1c; font-size: 15px;">After this date, your old account and data will no longer be accessible.</p>
     </td>
   </tr>
 </table>
@@ -2473,4 +2489,29 @@ func (ts *TemplateService) migrationFinalNoticeContent() string {
 <p style="margin: 0; font-size: 14px; color: #6b7280;">If you have any questions, just reply to this email.</p>
 <p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">— The WASBOT Team</p>
 `
+}
+
+func (ts *TemplateService) migrationVerifyEmailFinalContent() string {
+	return `<p>Hi {{.Name}},</p>
+<p>Your account on the new WASBOT is set up, but your email still isn't verified. <strong>Unverified accounts will be removed</strong> when the old platform shuts down{{if .ShutdownDate}} on <strong>{{.ShutdownDate}}</strong>{{end}}.</p>
+<p>It takes 10 seconds — just log in and click the verification link in your inbox:</p>
+<p style="text-align: center; margin: 32px 0;">
+  <a href="{{.DashboardURL}}" class="btn">Verify My Email</a>
+</p>
+<p>Don't lose your account.</p>`
+}
+
+func (ts *TemplateService) migrationUpgradeNudgeFinalContent() string {
+	return `<p>Hi {{.Name}},</p>
+<p>Your free trial on the new WASBOT is running out. Once it ends, you'll lose access to:</p>
+<ul style="color: #4b5563; line-height: 2;">
+  <li>Status broadcasting to your contacts</li>
+  <li>Auto-save contacts to Google Contacts</li>
+  <li>Group messaging and member tagging</li>
+</ul>
+<p>Pick a plan that works for you — starting at just <strong>$5.50/month</strong>:</p>
+<p style="text-align: center; margin: 32px 0;">
+  <a href="{{.DashboardURL}}" class="btn">Choose Your Plan</a>
+</p>
+<p>Don't wait until it's too late.</p>`
 }

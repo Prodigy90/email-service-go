@@ -82,4 +82,7 @@ const (
 	TemplateMigrationVerifyEmail   = "migration_verify_email"
 	TemplateMigrationUpgradeNudge  = "migration_upgrade_nudge"
 	TemplateMigrationFinalNotice   = "migration_final_notice"
+
+	TemplateMigrationVerifyEmailFinal  = "migration_verify_email_final"
+	TemplateMigrationUpgradeNudgeFinal = "migration_upgrade_nudge_final"
 )
