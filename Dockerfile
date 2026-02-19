@@ -26,19 +26,26 @@ WORKDIR /app
 
 RUN apk add --no-cache ca-certificates tzdata
 
+# Create non-root user
+RUN addgroup -g 1001 -S appgroup && \
+    adduser -u 1001 -S appuser -G appgroup
+
 # Copy both binaries
-COPY --from=builder /api /app/api
-COPY --from=builder /worker /app/worker
+COPY --chown=appuser:appgroup --from=builder /api /app/api
+COPY --chown=appuser:appgroup --from=builder /worker /app/worker
 
 # Copy templates
-COPY --from=builder /app/pkg/templates /app/pkg/templates
+COPY --chown=appuser:appgroup --from=builder /app/pkg/templates /app/pkg/templates
 
 # Copy migrations
-COPY --from=builder /app/migrations /app/migrations
+COPY --chown=appuser:appgroup --from=builder /app/migrations /app/migrations
 ENV MIGRATIONS_DIR=/app/migrations
 
 # Copy OpenAPI docs for Swagger UI
-COPY --from=builder /app/docs /app/docs
+COPY --chown=appuser:appgroup --from=builder /app/docs /app/docs
+
+# Switch to non-root user
+USER appuser
 
 EXPOSE 8083
 
