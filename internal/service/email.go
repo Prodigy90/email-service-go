@@ -175,11 +175,23 @@ func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (
 	}, nil
 }
 
-// SendBulk queues multiple emails for delivery.
+// SendBulk queues multiple emails for delivery with batch throttling.
 func (s *EmailService) SendBulk(ctx context.Context, req *domain.SendBulkRequest) (*domain.SendBulkResponse, error) {
 	emailIDs := make([]uuid.UUID, 0, len(req.Recipients))
+	batchSize := 50
+	totalBatches := (len(req.Recipients) + batchSize - 1) / batchSize
 
-	for _, recipient := range req.Recipients {
+	for i, recipient := range req.Recipients {
+		batchNum := i/batchSize + 1
+
+		// Log batch progress at the start of each batch
+		if i%batchSize == 0 {
+			s.logger.Info().
+				Int("batch", batchNum).
+				Int("total_batches", totalBatches).
+				Msg("Processing batch")
+		}
+
 		singleReq := &domain.SendEmailRequest{
 			To:            recipient,
 			Subject:       req.Subject,
@@ -199,12 +211,77 @@ func (s *EmailService) SendBulk(ctx context.Context, req *domain.SendBulkRequest
 			continue
 		}
 		emailIDs = append(emailIDs, resp.ID)
+
+		// Throttle between batches
+		if (i+1)%batchSize == 0 && i+1 < len(req.Recipients) {
+			time.Sleep(1 * time.Second)
+		}
 	}
 
 	return &domain.SendBulkResponse{
 		TotalQueued: len(emailIDs),
 		EmailIDs:    emailIDs,
 		Message:     fmt.Sprintf("Queued %d of %d emails", len(emailIDs), len(req.Recipients)),
+	}, nil
+}
+
+// SendBulkPersonalized queues personalized emails for delivery with batch throttling.
+// Each recipient can have their own template data that overrides the base template data.
+func (s *EmailService) SendBulkPersonalized(ctx context.Context, req *domain.SendBulkPersonalizedRequest) (*domain.SendBulkResponse, error) {
+	emailIDs := make([]uuid.UUID, 0, len(req.Recipients))
+	batchSize := 50
+	totalBatches := (len(req.Recipients) + batchSize - 1) / batchSize
+
+	for i, recipient := range req.Recipients {
+		batchNum := i/batchSize + 1
+
+		// Log batch progress at the start of each batch
+		if i%batchSize == 0 {
+			s.logger.Info().
+				Int("batch", batchNum).
+				Int("total_batches", totalBatches).
+				Msg("Processing personalized batch")
+		}
+
+		// Merge base template data with per-recipient overrides
+		mergedData := make(map[string]interface{})
+		for k, v := range req.TemplateData {
+			mergedData[k] = v
+		}
+		for k, v := range recipient.TemplateData {
+			mergedData[k] = v
+		}
+
+		singleReq := &domain.SendEmailRequest{
+			To:            recipient.Email,
+			Subject:       req.Subject,
+			Body:          req.Body,
+			HTMLBody:      req.HTMLBody,
+			Template:      req.Template,
+			TemplateData:  mergedData,
+			SourceService: req.SourceService,
+			Metadata:      req.Metadata,
+			ProductID:     req.ProductID,
+			Branding:      req.Branding,
+		}
+
+		resp, err := s.Send(ctx, singleReq)
+		if err != nil {
+			s.logger.Error().Err(err).Str("to", recipient.Email).Msg("Failed to queue personalized bulk email")
+			continue
+		}
+		emailIDs = append(emailIDs, resp.ID)
+
+		// Throttle between batches
+		if (i+1)%batchSize == 0 && i+1 < len(req.Recipients) {
+			time.Sleep(1 * time.Second)
+		}
+	}
+
+	return &domain.SendBulkResponse{
+		TotalQueued: len(emailIDs),
+		EmailIDs:    emailIDs,
+		Message:     fmt.Sprintf("Queued %d of %d personalized emails", len(emailIDs), len(req.Recipients)),
 	}, nil
 }
 

@@ -72,6 +72,27 @@ type SendBulkRequest struct {
 	Branding      *BrandingConfig        `json:"branding,omitempty"`
 }
 
+// RecipientWithData represents a recipient with per-recipient template data overrides.
+type RecipientWithData struct {
+	Email        string                 `json:"email" binding:"required,email"`
+	TemplateData map[string]interface{} `json:"template_data,omitempty"`
+}
+
+// SendBulkPersonalizedRequest represents a request to send personalized emails to multiple recipients.
+// Each recipient can have their own template data that overrides the base template data.
+type SendBulkPersonalizedRequest struct {
+	Recipients    []RecipientWithData    `json:"recipients" binding:"required,min=1"`
+	Subject       string                 `json:"subject,omitempty"`
+	Body          string                 `json:"body,omitempty"`
+	HTMLBody      string                 `json:"html_body,omitempty"`
+	Template      string                 `json:"template,omitempty"`
+	TemplateData  map[string]interface{} `json:"template_data,omitempty"`
+	SourceService string                 `json:"source_service,omitempty"`
+	Metadata      map[string]interface{} `json:"metadata,omitempty"`
+	ProductID     string                 `json:"product_id,omitempty"`
+	Branding      *BrandingConfig        `json:"branding,omitempty"`
+}
+
 // SendEmailResponse represents the response after queuing an email.
 type SendEmailResponse struct {
 	ID      uuid.UUID   `json:"id"`

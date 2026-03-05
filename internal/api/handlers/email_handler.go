@@ -23,6 +23,7 @@ func NewEmailHandler(emailService *service.EmailService) *EmailHandler {
 func (h *EmailHandler) RegisterRoutes(r *gin.RouterGroup) {
 	r.POST("/send", h.Send)
 	r.POST("/send/bulk", h.SendBulk)
+	r.POST("/send/bulk-personalized", h.SendBulkPersonalized)
 	r.GET("/status/:id", h.GetStatus)
 	r.GET("/templates", h.ListTemplates)
 }
@@ -71,6 +72,32 @@ func (h *EmailHandler) SendBulk(c *gin.Context) {
 	}
 
 	resp, err := h.emailService.SendBulk(c.Request.Context(), &req)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusAccepted, resp)
+}
+
+// SendBulkPersonalized handles personalized bulk email sending.
+// @Summary Send personalized emails to multiple recipients
+// @Tags emails
+// @Accept json
+// @Produce json
+// @Param request body domain.SendBulkPersonalizedRequest true "Personalized bulk email request"
+// @Success 202 {object} domain.SendBulkResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /send/bulk-personalized [post]
+func (h *EmailHandler) SendBulkPersonalized(c *gin.Context) {
+	var req domain.SendBulkPersonalizedRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, ErrorResponse{Error: err.Error()})
+		return
+	}
+
+	resp, err := h.emailService.SendBulkPersonalized(c.Request.Context(), &req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: err.Error()})
 		return

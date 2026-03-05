@@ -85,4 +85,7 @@ const (
 
 	TemplateMigrationVerifyEmailFinal  = "migration_verify_email_final"
 	TemplateMigrationUpgradeNudgeFinal = "migration_upgrade_nudge_final"
+
+	// Feature announcement template
+	TemplateFeatureAnnouncement = "feature_announcement"
 )

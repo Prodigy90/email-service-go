@@ -625,6 +625,15 @@ func (ts *TemplateService) loadBuiltinTemplates() {
 		HTMLBody:    ts.wrapHTML("Trial Ending Soon", ts.migrationUpgradeNudgeFinalContent()),
 		Description: "Final nudge for migrating users on trial who haven't upgraded to a paid plan",
 	}
+
+	// Feature announcement template
+	ts.templates[domain.TemplateFeatureAnnouncement] = &domain.Template{
+		Name:        domain.TemplateFeatureAnnouncement,
+		Subject:     "{{if .Headline}}{{.Headline}}{{else}}New Features Just Dropped on WASBOT{{end}}",
+		Body:        "Hi {{.Name}},\n\n{{if .Headline}}{{.Headline}}{{else}}New Features Just Dropped{{end}}\n\n{{if .Subheadline}}{{.Subheadline}}\n\n{{end}}Here's what's new:\n\n1. Cross-Posting to Groups — Send one message to 200+ groups\n2. HD Media Statuses — Bypass WhatsApp compression\n3. Smart Contact Import — Auto-discover unsaved contacts\n4. Status Scheduling — Post to 8,000+ contacts in seconds\n\n{{if .CTAText}}{{.CTAText}}: {{end}}{{if .CTAURL}}{{.CTAURL}}{{else}}{{.DashboardURL}}{{end}}\n\n— The WASBOT Team",
+		HTMLBody:    ts.featureAnnouncementHTML(),
+		Description: "Feature announcement email for showcasing new product features",
+	}
 }
 
 // wrapHTML wraps content in a professional HTML email template using default branding.
@@ -2499,6 +2508,238 @@ func (ts *TemplateService) migrationVerifyEmailFinalContent() string {
   <a href="{{.DashboardURL}}" class="btn">Verify My Email</a>
 </p>
 <p>Don't lose your account.</p>`
+}
+
+// featureAnnouncementHTML returns a dark-themed HTML email for feature announcements.
+// Uses a standalone HTML structure (not wrapHTML) for the dark theme design.
+func (ts *TemplateService) featureAnnouncementHTML() string {
+	return strings.TrimSpace(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{if .Headline}}{{.Headline}}{{else}}New Features Just Dropped{{end}}</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+  <style>
+    body, table, td, p, a, li { -webkit-text-size-adjust: 100%%; -ms-text-size-adjust: 100%%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%%; outline: none; text-decoration: none; }
+    body { margin: 0 !important; padding: 0 !important; width: 100%% !important; }
+    #outlook a { padding: 0; }
+    .ReadMsgBody { width: 100%%; }
+    .ExternalClass { width: 100%%; }
+    .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #0f172a;
+      margin: 0;
+      padding: 0;
+    }
+    a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    @media only screen and (max-width: 620px) {
+      .container { width: 100%% !important; padding: 0 !important; }
+      .content { padding: 24px 20px !important; }
+      .header { padding: 24px 20px !important; }
+      .footer-content { padding: 24px 20px !important; }
+      .feature-icon { width: 40px !important; height: 40px !important; font-size: 20px !important; line-height: 40px !important; }
+    }
+  </style>
+</head>
+<body style="background-color: #0f172a; margin: 0; padding: 0;">
+  <!-- Preview text -->
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    {{if .PreviewText}}{{.PreviewText}}{{else}}{{if .Headline}}{{.Headline}}{{else}}New features just dropped on WASBOT{{end}}{{end}}
+    &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+  </div>
+
+  <!-- Email wrapper -->
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" style="background-color: #0f172a;">
+    <tr>
+      <td style="padding: 40px 20px;">
+        <!-- Main container -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+          <!-- Header with logo -->
+          <tr>
+            <td class="header" style="background: linear-gradient(135deg, #111827 0%%, #1e293b 100%%); padding: 32px 40px; border-radius: 16px 16px 0 0; border: 1px solid #334155; border-bottom: none;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%">
+                <tr>
+                  <td>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td style="vertical-align: middle; padding-right: 14px;">
+                          <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%%, {{.Branding.SecondaryColor}} 100%%); border-radius: 12px; text-align: center; line-height: 44px;">
+                            {{.Branding.LogoContent}}
+                          </div>
+                        </td>
+                        <td style="vertical-align: middle;">
+                          <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Main content -->
+          <tr>
+            <td class="content" style="background-color: #1e293b; padding: 40px; border-left: 1px solid #334155; border-right: 1px solid #334155;">
+              <!-- Greeting -->
+              <p style="margin: 0 0 16px 0; font-size: 16px; color: #94a3b8;">Hi {{.Name}},</p>
+
+              <!-- Headline -->
+              <h1 style="margin: 0 0 12px 0; font-size: 28px; font-weight: 800; color: #f1f5f9; line-height: 1.3;">
+                {{if .Headline}}{{.Headline}}{{else}}New Features Just Dropped{{end}}
+              </h1>
+
+              <!-- Subheadline -->
+              {{if .Subheadline}}
+              <p style="margin: 0 0 32px 0; font-size: 17px; color: #94a3b8; line-height: 1.6;">{{.Subheadline}}</p>
+              {{else}}
+              <p style="margin: 0 0 32px 0; font-size: 17px; color: #94a3b8; line-height: 1.6;">We've been working hard to make your WhatsApp automation even more powerful. Here's what's new:</p>
+              {{end}}
+
+              <!-- Features -->
+              {{if .Features}}
+              <!-- Dynamic features from template data -->
+              {{range .Features}}
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" style="margin-bottom: 20px;">
+                <tr>
+                  <td style="vertical-align: top; width: 52px; padding-right: 16px;">
+                    <div class="feature-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%%, rgba(5, 150, 105, 0.15) 100%%); border-radius: 12px; text-align: center; line-height: 48px; font-size: 24px; border: 1px solid rgba(16, 185, 129, 0.2);">
+                      {{if .Icon}}{{.Icon}}{{else}}&#10024;{{end}}
+                    </div>
+                  </td>
+                  <td style="vertical-align: top;">
+                    <h3 style="margin: 0 0 4px 0; font-size: 16px; font-weight: 700; color: #f1f5f9;">{{.Title}}</h3>
+                    <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">{{.Description}}</p>
+                  </td>
+                </tr>
+              </table>
+              {{end}}
+              {{else}}
+              <!-- Default features -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" style="margin-bottom: 20px;">
+                <tr>
+                  <td style="vertical-align: top; width: 52px; padding-right: 16px;">
+                    <div class="feature-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%%, rgba(5, 150, 105, 0.15) 100%%); border-radius: 12px; text-align: center; line-height: 48px; font-size: 24px; border: 1px solid rgba(16, 185, 129, 0.2);">&#128640;</div>
+                  </td>
+                  <td style="vertical-align: top;">
+                    <h3 style="margin: 0 0 4px 0; font-size: 16px; font-weight: 700; color: #f1f5f9;">Cross-Posting to Groups</h3>
+                    <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">Send one message to 200+ groups in a single action. No more copy-paste across groups.</p>
+                  </td>
+                </tr>
+              </table>
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" style="margin-bottom: 20px;">
+                <tr>
+                  <td style="vertical-align: top; width: 52px; padding-right: 16px;">
+                    <div class="feature-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%%, rgba(5, 150, 105, 0.15) 100%%); border-radius: 12px; text-align: center; line-height: 48px; font-size: 24px; border: 1px solid rgba(16, 185, 129, 0.2);">&#127912;</div>
+                  </td>
+                  <td style="vertical-align: top;">
+                    <h3 style="margin: 0 0 4px 0; font-size: 16px; font-weight: 700; color: #f1f5f9;">HD Media Statuses</h3>
+                    <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">Bypass WhatsApp compression and post crystal-clear images and videos to your status.</p>
+                  </td>
+                </tr>
+              </table>
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" style="margin-bottom: 20px;">
+                <tr>
+                  <td style="vertical-align: top; width: 52px; padding-right: 16px;">
+                    <div class="feature-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%%, rgba(5, 150, 105, 0.15) 100%%); border-radius: 12px; text-align: center; line-height: 48px; font-size: 24px; border: 1px solid rgba(16, 185, 129, 0.2);">&#128209;</div>
+                  </td>
+                  <td style="vertical-align: top;">
+                    <h3 style="margin: 0 0 4px 0; font-size: 16px; font-weight: 700; color: #f1f5f9;">Smart Contact Import</h3>
+                    <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">Auto-discover and save unsaved contacts from your WhatsApp chats. Never miss a lead.</p>
+                  </td>
+                </tr>
+              </table>
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" style="margin-bottom: 20px;">
+                <tr>
+                  <td style="vertical-align: top; width: 52px; padding-right: 16px;">
+                    <div class="feature-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%%, rgba(5, 150, 105, 0.15) 100%%); border-radius: 12px; text-align: center; line-height: 48px; font-size: 24px; border: 1px solid rgba(16, 185, 129, 0.2);">&#9201;</div>
+                  </td>
+                  <td style="vertical-align: top;">
+                    <h3 style="margin: 0 0 4px 0; font-size: 16px; font-weight: 700; color: #f1f5f9;">Status Scheduling</h3>
+                    <p style="margin: 0; font-size: 14px; color: #94a3b8; line-height: 1.5;">Post to 8,000+ contacts in seconds. Schedule your statuses and let WASBOT handle the rest.</p>
+                  </td>
+                </tr>
+              </table>
+              {{end}}
+
+              <!-- CTA Button -->
+              <p style="text-align: center; margin: 36px 0 0 0;">
+                <a href="{{if .CTAURL}}{{.CTAURL}}{{else}}{{.Branding.DashboardURL}}{{end}}" style="display: inline-block; padding: 16px 36px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%%, {{.Branding.SecondaryColor}} 100%%); color: #ffffff !important; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                  {{if .CTAText}}{{.CTAText}}{{else}}Try It Now{{end}}
+                </a>
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #111827; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #334155; border-top: none;">
+              <div style="height: 1px; background: linear-gradient(to right, transparent, #334155, transparent); margin: 0 40px;"></div>
+
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%">
+                <tr>
+                  <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                    <p style="margin: 0 0 20px 0; font-size: 14px; color: #64748b; line-height: 1.6;">
+                      Need help? Simply reply to this email and we'll get back to you.
+                    </p>
+
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="padding: 0 8px;">
+                          <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                            <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.5;">
+                          </a>
+                        </td>
+                        <td style="padding: 0 8px;">
+                          <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                            <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.5;">
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0; font-size: 13px; color: #475569; line-height: 1.5;">
+                      {{.Branding.CompanyName}} Technologies<br>
+                      Lagos, Nigeria
+                    </p>
+
+                    <p style="margin: 16px 0 0 0; font-size: 12px; color: #475569;">
+                      &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                    </p>
+
+                    {{if .UnsubscribeURL}}
+                    <p style="margin: 12px 0 0 0; font-size: 12px; color: #475569;">
+                      <a href="{{.UnsubscribeURL}}" style="color: #475569; text-decoration: underline;">Unsubscribe</a> from these emails.
+                    </p>
+                    {{end}}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`)
 }
 
 func (ts *TemplateService) migrationUpgradeNudgeFinalContent() string {
