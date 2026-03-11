@@ -9,6 +9,10 @@ When making git commits:
 - Do NOT include the "Generated with Claude Code" line
 - Just use a clean commit message with no attribution footer
 
+## Branding
+
+The product name is **WASBOT** — always written in ALL CAPS. Never write it as "WasBot", "Wasbot", or "wasbot" in user-facing text, docs, or code comments.
+
 ## Build & Development Commands
 
 ```bash
