@@ -350,4 +350,8 @@ const (
 
 	TemplateMigrationVerifyEmailFinal  = "migration_verify_email_final"
 	TemplateMigrationUpgradeNudgeFinal = "migration_upgrade_nudge_final"
+
+	// Campaign templates (flexible, content-driven)
+	TemplateCampaignUpdate      = "campaign_update"       // Flexible shell — pass Subject, Intro, HTMLBody, optional VideoURL
+	TemplateFeatureAnnouncement = "feature_announcement"  // Pre-built 4-feature announcement
 )

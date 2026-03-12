@@ -1,19 +1,333 @@
 # Custom email templates
 # These override or extend the built-in templates
 # Variables use Go template syntax: {{.VariableName}}
+#
+# BUILT-IN TEMPLATES (37+ defined in internal/service/template.go):
+# Auth:         email_verification, password_reset
+# Welcome:      welcome, trial_day3/5/6/10, trial_expiring, account_upgraded
+# Payments:     payment_success, payment_failed, payment_success_onetime
+# Subs:         subscription_activated, subscription_renewed, subscription_cancelled,
+#               subscription_reminder_3d/1d, subscription_expiring_3d/1d,
+#               subscription_activated_onetime
+# Refunds:      refund_pending, refund_processed, refund_failed
+# Affiliate:    payout_approved/rejected/processed, commission_earned/refunded,
+#               access_revoked, affiliate_link_updated
+# Migration:    migration_announcement, migration_follow_up, migration_verify_email,
+#               migration_upgrade_nudge, + final variants
+#
+# Templates below are for CAMPAIGNS (marketing emails to existing users).
 
-# Example custom template:
-# custom_notification:
-#   subject: "Custom Alert: {{.Title}}"
-#   body: |
-#     Hi {{.Name}},
+# =============================================================================
+# campaign_update — Flexible campaign email template
+# =============================================================================
+# Supports any combination of content blocks. All fields except Name are optional.
 #
-#     {{.Message}}
-#
-#     Best regards,
-#     {{.AppName}} Team
-#   html_body: |
-#     <p>Hi {{.Name}},</p>
-#     <p>{{.Message}}</p>
-#     <p>Best regards,<br>{{.AppName}} Team</p>
-#   description: "Custom notification template"
+# Variables:
+#   {{.Name}}          - Recipient name (required, falls back to "there")
+#   {{.Subject}}       - Email subject line (used in subject field)
+#   {{.Headline}}      - Header subtitle (e.g., "New features just dropped")
+#   {{.Intro}}         - Opening paragraph
+#   {{.Body}}          - Main content (plain text, for text-only version)
+#   {{.HTMLBody}}      - Main content (HTML, for rich version — rendered raw)
+#   {{.VideoURL}}      - Optional video link (YouTube, etc.)
+#   {{.VideoTitle}}    - Video link label (default: "Watch the demo")
+#   {{.VideoThumb}}    - Optional video thumbnail image URL
+#   {{.CTAText}}       - CTA button text (default: "Open Your Dashboard")
+#   {{.CTAURL}}        - CTA button URL
+#   {{.Closing}}       - Closing paragraph (default: standard sign-off)
+#   {{.UnsubscribeURL}} - Unsubscribe link
+#   {{.DashboardURL}}  - Fallback CTA URL if CTAURL not set
+
+campaign_update:
+  subject: "{{.Subject}}"
+  body: |
+    Hi {{.Name}},
+
+    {{.Intro}}
+
+    {{.Body}}
+
+    {{if .VideoURL}}{{if .VideoTitle}}{{.VideoTitle}}{{else}}Watch the demo{{end}}: {{.VideoURL}}{{end}}
+
+    {{if .CTAURL}}{{if .CTAText}}{{.CTAText}}{{else}}Open Your Dashboard{{end}}: {{.CTAURL}}{{else if .DashboardURL}}Open Your Dashboard: {{.DashboardURL}}{{end}}
+
+    {{if .Closing}}{{.Closing}}{{else}}Talk soon,
+    The WASBOT Team{{end}}
+
+    ---
+    You're receiving this because you have a WASBOT account.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="margin: 0; padding: 0; background-color: #f4f4f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f5; padding: 32px 16px;">
+        <tr>
+          <td align="center">
+            <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; max-width: 600px;">
+
+              <!-- Header -->
+              <tr>
+                <td style="background-color: #14b8a6; padding: 32px 40px; text-align: center;">
+                  <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">WASBOT</h1>
+                  {{if .Headline}}<p style="margin: 8px 0 0; color: #ccfbf1; font-size: 14px;">{{.Headline}}</p>{{end}}
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td style="padding: 40px;">
+                  <p style="margin: 0 0 20px; color: #18181b; font-size: 16px; line-height: 1.6;">
+                    Hi {{.Name}},
+                  </p>
+
+                  {{if .Intro}}<p style="margin: 0 0 24px; color: #3f3f46; font-size: 16px; line-height: 1.6;">{{.Intro}}</p>{{end}}
+
+                  <!-- Main content (raw HTML) -->
+                  {{if .HTMLBody}}{{.HTMLBody}}{{end}}
+
+                  <!-- Optional video -->
+                  {{if .VideoURL}}
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 28px 0;">
+                    <tr>
+                      <td style="background-color: #f0fdfa; border-radius: 8px; padding: 20px; text-align: center;">
+                        {{if .VideoThumb}}<a href="{{.VideoURL}}" style="display: block; margin-bottom: 12px;"><img src="{{.VideoThumb}}" alt="Video preview" style="max-width: 100%; border-radius: 6px;" /></a>{{end}}
+                        <a href="{{.VideoURL}}" style="display: inline-block; color: #0f766e; font-size: 15px; font-weight: 600; text-decoration: none;">
+                          &#9654; {{if .VideoTitle}}{{.VideoTitle}}{{else}}Watch the demo{{end}}
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+                  {{end}}
+
+                  <!-- CTA button -->
+                  {{if or .CTAURL .DashboardURL}}
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 32px 0;">
+                    <tr>
+                      <td align="center">
+                        <a href="{{if .CTAURL}}{{.CTAURL}}{{else}}{{.DashboardURL}}{{end}}" style="display: inline-block; background-color: #14b8a6; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: 600; padding: 14px 32px; border-radius: 6px;">
+                          {{if .CTAText}}{{.CTAText}}{{else}}Open Your Dashboard{{end}}
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+                  {{end}}
+
+                  <!-- Closing -->
+                  {{if .Closing}}
+                  <p style="margin: 0; color: #71717a; font-size: 15px; line-height: 1.6;">{{.Closing}}</p>
+                  {{end}}
+
+                  <p style="margin: 24px 0 0; color: #3f3f46; font-size: 15px; line-height: 1.6;">
+                    Talk soon,<br>
+                    <strong>The WASBOT Team</strong>
+                  </p>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #fafafa; padding: 24px 40px; border-top: 1px solid #e4e4e7;">
+                  <p style="margin: 0; color: #a1a1aa; font-size: 13px; line-height: 1.5; text-align: center;">
+                    You're receiving this because you have a WASBOT account.<br>
+                    <a href="{{.UnsubscribeURL}}" style="color: #14b8a6; text-decoration: underline;">Unsubscribe</a> from updates.
+                  </p>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Flexible campaign email — pass Subject, Intro, HTMLBody, optional VideoURL, CTAText/CTAURL"
+
+# =============================================================================
+# feature_announcement — Pre-built variant for feature launches
+# =============================================================================
+# Uses the same branding shell but with hardcoded feature content.
+# Good for the current campaign. For future campaigns, use campaign_update instead.
+
+feature_announcement:
+  subject: "You asked, we built it — here's what's new on WASBOT"
+  body: |
+    Hi {{.Name}},
+
+    We've been cooking. You told us what you needed, and we went to work. Here's what just dropped on WASBOT:
+
+    1. SCHEDULED MESSAGES
+    You know that thing where you wake up at 5am to post status before people start checking? Or you forget to send a promo to your groups and the whole day's sales is gone? Or your phone starts to lag and fill up with messages before you even finish posting?
+    Now you schedule it. Status posts, group messages, even tagged messages — set the time, WASBOT sends it. You sleep, it works.
+    Learn more: https://www.wasbot.app/blog/scheduled-messages
+
+    2. GROUP COLLECTIONS
+    You're scrolling through 50, 100+ groups trying to find the right ones. You finally select them, send your message, wake up the next day and the group numbers have changed. Start again.
+    Not anymore. Create collections — "Clients", "Resellers", "VIP Buyers" — and message the whole collection in one click. Groups are saved by name, not number. No more guessing.
+    Learn more: https://www.wasbot.app/blog/collections-guide
+
+    3. CROSS-POSTING
+    You have 2, 3, 4 WhatsApp numbers. Every morning you're copying the same message, forwarding the same status, doing the same work multiple times.
+    Now you write it once, select your sessions, and WASBOT delivers everywhere at the same time. The copy-paste-forward era is done.
+    Learn more: https://www.wasbot.app/blog/cross-posting-guide
+
+    4. HD MEDIA EVERYWHERE
+    Your flyers and videos get compressed when you post to status. The quality drops, your clients see blurry images, it looks unprofessional.
+    WASBOT sends media in HD — images, videos, documents, voice notes — to your status AND your groups, bypassing WhatsApp's compression. Upload once, deliver everywhere in full quality.
+    Learn more: https://www.wasbot.app/blog/group-media-sending
+
+    These features are live right now on your dashboard:
+    {{.DashboardURL}}
+
+    If you've been doing WhatsApp marketing manually — those days are done. One dashboard handles everything.
+
+    We're building WASBOT for the way you actually use WhatsApp for business. More updates are coming — but go try these first.
+
+    Talk soon,
+    The WASBOT Team
+
+    ---
+    You're receiving this because you have a WASBOT account.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="margin: 0; padding: 0; background-color: #f4f4f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f5; padding: 32px 16px;">
+        <tr>
+          <td align="center">
+            <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; max-width: 600px;">
+
+              <!-- Header -->
+              <tr>
+                <td style="background-color: #14b8a6; padding: 32px 40px; text-align: center;">
+                  <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">WASBOT</h1>
+                  <p style="margin: 8px 0 0; color: #ccfbf1; font-size: 14px;">New features just dropped</p>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td style="padding: 40px;">
+                  <p style="margin: 0 0 20px; color: #18181b; font-size: 16px; line-height: 1.6;">
+                    Hi {{.Name}},
+                  </p>
+                  <p style="margin: 0 0 24px; color: #3f3f46; font-size: 16px; line-height: 1.6;">
+                    We've been cooking. You told us what you needed, and we went to work. Here's what just dropped:
+                  </p>
+
+                  <!-- Feature 1: Scheduled Messages -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                    <tr>
+                      <td style="background-color: #f0fdfa; border-left: 4px solid #14b8a6; padding: 20px; border-radius: 0 6px 6px 0;">
+                        <h3 style="margin: 0 0 8px; color: #0f766e; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Scheduled Messages</h3>
+                        <p style="margin: 0 0 10px; color: #71717a; font-size: 14px; line-height: 1.5; font-style: italic;">
+                          Waking up at 5am to post status before people start checking? Forgetting to send a promo and losing a whole day's sales? Phone lagging and filling up with messages before you even finish posting?
+                        </p>
+                        <p style="margin: 0 0 8px; color: #3f3f46; font-size: 15px; line-height: 1.5;">
+                          Now you schedule it. Status posts, group messages, even tagged messages &mdash; set the time, WASBOT sends it. You sleep, it works.
+                        </p>
+                        <a href="https://www.wasbot.app/blog/scheduled-messages" style="color: #14b8a6; font-size: 13px; text-decoration: none; font-weight: 600;">Learn more &rarr;</a>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Feature 2: Group Collections -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                    <tr>
+                      <td style="background-color: #f0fdfa; border-left: 4px solid #14b8a6; padding: 20px; border-radius: 0 6px 6px 0;">
+                        <h3 style="margin: 0 0 8px; color: #0f766e; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Group Collections</h3>
+                        <p style="margin: 0 0 10px; color: #71717a; font-size: 14px; line-height: 1.5; font-style: italic;">
+                          Scrolling through 100+ groups to find the right ones? You finally select them, wake up the next day and the group numbers have changed. Start again.
+                        </p>
+                        <p style="margin: 0 0 8px; color: #3f3f46; font-size: 15px; line-height: 1.5;">
+                          Create collections &mdash; "Clients", "Resellers", "VIP Buyers" &mdash; and message the whole collection in one click. Groups saved by name, not number.
+                        </p>
+                        <a href="https://www.wasbot.app/blog/collections-guide" style="color: #14b8a6; font-size: 13px; text-decoration: none; font-weight: 600;">Learn more &rarr;</a>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Feature 3: Cross-Posting -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                    <tr>
+                      <td style="background-color: #f0fdfa; border-left: 4px solid #14b8a6; padding: 20px; border-radius: 0 6px 6px 0;">
+                        <h3 style="margin: 0 0 8px; color: #0f766e; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Cross-Posting</h3>
+                        <p style="margin: 0 0 10px; color: #71717a; font-size: 14px; line-height: 1.5; font-style: italic;">
+                          Running 2, 3, 4 WhatsApp numbers? Every morning you're copying the same message, forwarding the same status, doing the same work multiple times.
+                        </p>
+                        <p style="margin: 0 0 8px; color: #3f3f46; font-size: 15px; line-height: 1.5;">
+                          Write it once, select your sessions, WASBOT delivers everywhere at the same time. The copy-paste-forward era is done.
+                        </p>
+                        <a href="https://www.wasbot.app/blog/cross-posting-guide" style="color: #14b8a6; font-size: 13px; text-decoration: none; font-weight: 600;">Learn more &rarr;</a>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Feature 4: HD Media -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 32px;">
+                    <tr>
+                      <td style="background-color: #f0fdfa; border-left: 4px solid #14b8a6; padding: 20px; border-radius: 0 6px 6px 0;">
+                        <h3 style="margin: 0 0 8px; color: #0f766e; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">HD Media Everywhere</h3>
+                        <p style="margin: 0 0 10px; color: #71717a; font-size: 14px; line-height: 1.5; font-style: italic;">
+                          Your flyers and videos get compressed when you post to status. Quality drops, clients see blurry images, it looks unprofessional.
+                        </p>
+                        <p style="margin: 0 0 8px; color: #3f3f46; font-size: 15px; line-height: 1.5;">
+                          WASBOT sends media in HD &mdash; images, videos, documents, voice notes &mdash; to your status AND your groups, bypassing WhatsApp's compression. Upload once, deliver everywhere in full quality.
+                        </p>
+                        <a href="https://www.wasbot.app/blog/group-media-sending" style="color: #14b8a6; font-size: 13px; text-decoration: none; font-weight: 600;">Learn more &rarr;</a>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- CTA -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 32px;">
+                    <tr>
+                      <td align="center">
+                        <a href="{{.DashboardURL}}" style="display: inline-block; background-color: #14b8a6; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: 600; padding: 14px 32px; border-radius: 6px;">
+                          Open Your Dashboard
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <p style="margin: 0 0 16px; color: #71717a; font-size: 15px; line-height: 1.6;">
+                    If you've been doing WhatsApp marketing manually &mdash; those days are done. One dashboard handles everything.
+                  </p>
+
+                  <p style="margin: 0 0 24px; color: #3f3f46; font-size: 15px; line-height: 1.6;">
+                    We're building WASBOT for the way you actually use WhatsApp for business. More updates are coming &mdash; but go try these first.
+                  </p>
+
+                  <p style="margin: 0; color: #3f3f46; font-size: 15px; line-height: 1.6;">
+                    Talk soon,<br>
+                    <strong>The WASBOT Team</strong>
+                  </p>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #fafafa; padding: 24px 40px; border-top: 1px solid #e4e4e7;">
+                  <p style="margin: 0; color: #a1a1aa; font-size: 13px; line-height: 1.5; text-align: center;">
+                    You're receiving this because you have a WASBOT account.<br>
+                    <a href="{{.UnsubscribeURL}}" style="color: #14b8a6; text-decoration: underline;">Unsubscribe</a> from feature updates.
+                  </p>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Pre-built feature announcement — hardcoded 4 features for current campaign"
