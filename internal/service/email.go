@@ -103,13 +103,30 @@ func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (
 		UpdatedAt:     time.Now(),
 	}
 
+	// Copy allowed request headers (e.g., Reply-To)
+	allowedHeaders := map[string]bool{
+		"Reply-To":              true,
+		"X-Campaign-Tag":       true,
+		"X-Mailer":             true,
+		"X-Entity-Ref-ID":      true,
+	}
+	if len(req.Headers) > 0 {
+		email.Headers = make(map[string]string, len(req.Headers))
+		for k, v := range req.Headers {
+			if allowedHeaders[k] {
+				email.Headers[k] = v
+			}
+		}
+	}
+
 	// Add List-Unsubscribe headers if unsubscribe URL is available
 	if s.unsubscribe != nil {
 		unsubURL := s.unsubscribe.GenerateURL(req.To)
-		email.Headers = map[string]string{
-			"List-Unsubscribe":      "<" + unsubURL + ">",
-			"List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+		if email.Headers == nil {
+			email.Headers = make(map[string]string)
 		}
+		email.Headers["List-Unsubscribe"] = "<" + unsubURL + ">"
+		email.Headers["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click"
 	}
 
 	// If template specified, render it
@@ -317,10 +334,11 @@ func (s *EmailService) ProcessEmail(ctx context.Context, emailID uuid.UUID) erro
 	// Re-inject unsubscribe headers (not persisted in DB)
 	if s.unsubscribe != nil {
 		unsubURL := s.unsubscribe.GenerateURL(email.To)
-		email.Headers = map[string]string{
-			"List-Unsubscribe":      "<" + unsubURL + ">",
-			"List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+		if email.Headers == nil {
+			email.Headers = make(map[string]string)
 		}
+		email.Headers["List-Unsubscribe"] = "<" + unsubURL + ">"
+		email.Headers["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click"
 	}
 
 	// Send via configured provider

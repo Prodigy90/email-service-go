@@ -164,6 +164,8 @@ func (ts *TemplateService) prepareBrandingData(branding *domain.BrandingConfig) 
 		"SocialInstagram":  branding.SocialInstagram,
 		"IconTwitterURL":   branding.IconTwitterURL,
 		"IconInstagramURL": branding.IconInstagramURL,
+		"SocialYouTube":    branding.SocialYouTube,
+		"IconYouTubeURL":   branding.IconYouTubeURL,
 		"Year":             time.Now().UTC().Year(),
 	}
 }
@@ -796,6 +798,11 @@ func (ts *TemplateService) wrapHTMLWithBranding(title, content string) string {
                         <td style="padding: 0 8px;">
                           <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
                             <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                          </a>
+                        </td>
+                        <td style="padding: 0 8px;">
+                          <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                            <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
                           </a>
                         </td>
                       </tr>

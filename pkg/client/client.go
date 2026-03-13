@@ -64,8 +64,12 @@ type BrandingConfig struct {
 	DashboardURL    string `json:"dashboard_url,omitempty"`    // e.g., "https://www.wasbot.app/dashboard"
 	SupportEmail    string `json:"support_email,omitempty"`    // e.g., "support@wasbot.app"
 	WebsiteURL      string `json:"website_url,omitempty"`      // e.g., "https://www.wasbot.app"
-	SocialTwitter   string `json:"social_twitter,omitempty"`   // X (Twitter) URL
-	SocialInstagram string `json:"social_instagram,omitempty"` // Instagram URL
+	SocialTwitter    string `json:"social_twitter,omitempty"`    // X (Twitter) URL
+	SocialInstagram  string `json:"social_instagram,omitempty"`  // Instagram URL
+	IconTwitterURL   string `json:"icon_twitter_url,omitempty"`  // URL to X/Twitter icon image
+	IconInstagramURL string `json:"icon_instagram_url,omitempty"` // URL to Instagram icon image
+	SocialYouTube    string `json:"social_youtube,omitempty"`    // YouTube URL
+	IconYouTubeURL   string `json:"icon_youtube_url,omitempty"`  // URL to YouTube icon image
 }
 
 // SendRequest represents an email send request.
@@ -80,6 +84,7 @@ type SendRequest struct {
 	SourceService string                 `json:"source_service,omitempty"`
 	Metadata      map[string]interface{} `json:"metadata,omitempty"`
 	ProductID     string                 `json:"product_id,omitempty"`
+	Headers       map[string]string      `json:"headers,omitempty"`
 	Branding      *BrandingConfig        `json:"branding,omitempty"`
 }
 

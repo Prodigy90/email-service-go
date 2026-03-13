@@ -16,6 +16,10 @@
 #               migration_upgrade_nudge, + final variants
 #
 # Templates below are for CAMPAIGNS (marketing emails to existing users).
+#
+# ALL templates use the unified branding wrapper (dark header, logo, social footer)
+# matching the built-in templates from wrapHTMLWithBranding() in template.go.
+# Branding variables ({{.Branding.X}}) are injected automatically at render time.
 
 # =============================================================================
 # campaign_update — Flexible campaign email template
@@ -61,81 +65,143 @@ campaign_update:
     <!DOCTYPE html>
     <html lang="en">
     <head>
-      <meta charset="UTF-8">
+      <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>{{.Subject}}</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+      </style>
     </head>
-    <body style="margin: 0; padding: 0; background-color: #f4f4f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f5; padding: 32px 16px;">
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        {{if .Headline}}{{.Headline}}{{else}}{{.Subject}}{{end}}
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
         <tr>
-          <td align="center">
-            <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; max-width: 600px;">
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
 
               <!-- Header -->
               <tr>
-                <td style="background-color: #14b8a6; padding: 32px 40px; text-align: center;">
-                  <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">WASBOT</h1>
-                  {{if .Headline}}<p style="margin: 8px 0 0; color: #ccfbf1; font-size: 14px;">{{.Headline}}</p>{{end}}
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
                 </td>
               </tr>
 
               <!-- Body -->
               <tr>
-                <td style="padding: 40px;">
-                  <p style="margin: 0 0 20px; color: #18181b; font-size: 16px; line-height: 1.6;">
-                    Hi {{.Name}},
-                  </p>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  {{if .Headline}}<h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">{{.Headline}}</h1>{{end}}
 
-                  {{if .Intro}}<p style="margin: 0 0 24px; color: #3f3f46; font-size: 16px; line-height: 1.6;">{{.Intro}}</p>{{end}}
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
 
-                  <!-- Main content (raw HTML) -->
-                  {{if .HTMLBody}}{{.HTMLBody}}{{end}}
+                    {{if .Intro}}<p style="margin: 0 0 24px 0;">{{.Intro}}</p>{{end}}
 
-                  <!-- Optional video -->
-                  {{if .VideoURL}}
-                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 28px 0;">
-                    <tr>
-                      <td style="background-color: #f0fdfa; border-radius: 8px; padding: 20px; text-align: center;">
-                        {{if .VideoThumb}}<a href="{{.VideoURL}}" style="display: block; margin-bottom: 12px;"><img src="{{.VideoThumb}}" alt="Video preview" style="max-width: 100%; border-radius: 6px;" /></a>{{end}}
-                        <a href="{{.VideoURL}}" style="display: inline-block; color: #0f766e; font-size: 15px; font-weight: 600; text-decoration: none;">
-                          &#9654; {{if .VideoTitle}}{{.VideoTitle}}{{else}}Watch the demo{{end}}
-                        </a>
-                      </td>
-                    </tr>
-                  </table>
-                  {{end}}
+                    {{if .HTMLBody}}{{.HTMLBody}}{{end}}
 
-                  <!-- CTA button -->
-                  {{if or .CTAURL .DashboardURL}}
-                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 32px 0;">
-                    <tr>
-                      <td align="center">
-                        <a href="{{if .CTAURL}}{{.CTAURL}}{{else}}{{.DashboardURL}}{{end}}" style="display: inline-block; background-color: #14b8a6; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: 600; padding: 14px 32px; border-radius: 6px;">
-                          {{if .CTAText}}{{.CTAText}}{{else}}Open Your Dashboard{{end}}
-                        </a>
-                      </td>
-                    </tr>
-                  </table>
-                  {{end}}
+                    {{if .VideoURL}}
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 28px 0;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-radius: 12px; padding: 20px; text-align: center;">
+                          {{if .VideoThumb}}<a href="{{.VideoURL}}" style="display: block; margin-bottom: 12px;"><img src="{{.VideoThumb}}" alt="Video preview" style="max-width: 100%; border-radius: 6px;" /></a>{{end}}
+                          <a href="{{.VideoURL}}" style="display: inline-block; color: #166534; font-size: 15px; font-weight: 600; text-decoration: none;">
+                            &#9654; {{if .VideoTitle}}{{.VideoTitle}}{{else}}Watch the demo{{end}}
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                    {{end}}
 
-                  <!-- Closing -->
-                  {{if .Closing}}
-                  <p style="margin: 0; color: #71717a; font-size: 15px; line-height: 1.6;">{{.Closing}}</p>
-                  {{end}}
+                    {{if or .CTAURL .DashboardURL}}
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="{{if .CTAURL}}{{.CTAURL}}{{else}}{{.DashboardURL}}{{end}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 16px; font-weight: 600; color: #ffffff; text-decoration: none;">
+                            {{if .CTAText}}{{.CTAText}}{{else}}Open Your Dashboard{{end}}
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                    {{end}}
 
-                  <p style="margin: 24px 0 0; color: #3f3f46; font-size: 15px; line-height: 1.6;">
-                    Talk soon,<br>
-                    <strong>The WASBOT Team</strong>
-                  </p>
+                    {{if .Closing}}<p style="margin: 0 0 16px 0;">{{.Closing}}</p>{{end}}
+
+                    <p style="margin: 24px 0 0 0;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+                  </div>
                 </td>
               </tr>
 
               <!-- Footer -->
               <tr>
-                <td style="background-color: #fafafa; padding: 24px 40px; border-top: 1px solid #e4e4e7;">
-                  <p style="margin: 0; color: #a1a1aa; font-size: 13px; line-height: 1.5; text-align: center;">
-                    You're receiving this because you have a WASBOT account.<br>
-                    <a href="{{.UnsubscribeURL}}" style="color: #14b8a6; text-decoration: underline;">Unsubscribe</a> from updates.
-                  </p>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria
+                        </p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
                 </td>
               </tr>
 
@@ -163,22 +229,21 @@ feature_announcement:
     1. SCHEDULED MESSAGES
     You know that thing where you wake up at 5am to post status before people start checking? Or you forget to send a promo to your groups and the whole day's sales is gone? Or your phone starts to lag and fill up with messages before you even finish posting?
     Now you schedule it. Status posts, group messages, even tagged messages — set the time, WASBOT sends it. You sleep, it works.
-    Learn more: https://www.wasbot.app/blog/scheduled-messages
 
     2. GROUP COLLECTIONS
     You're scrolling through 50, 100+ groups trying to find the right ones. You finally select them, send your message, wake up the next day and the group numbers have changed. Start again.
     Not anymore. Create collections — "Clients", "Resellers", "VIP Buyers" — and message the whole collection in one click. Groups are saved by name, not number. No more guessing.
-    Learn more: https://www.wasbot.app/blog/collections-guide
 
     3. CROSS-POSTING
     You have 2, 3, 4 WhatsApp numbers. Every morning you're copying the same message, forwarding the same status, doing the same work multiple times.
     Now you write it once, select your sessions, and WASBOT delivers everywhere at the same time. The copy-paste-forward era is done.
-    Learn more: https://www.wasbot.app/blog/cross-posting-guide
 
     4. HD MEDIA EVERYWHERE
     Your flyers and videos get compressed when you post to status. The quality drops, your clients see blurry images, it looks unprofessional.
     WASBOT sends media in HD — images, videos, documents, voice notes — to your status AND your groups, bypassing WhatsApp's compression. Upload once, deliver everywhere in full quality.
-    Learn more: https://www.wasbot.app/blog/group-media-sending
+
+    See how each feature works: https://www.wasbot.app/help
+    Read more on our blog: https://www.wasbot.app/blog
 
     These features are live right now on your dashboard:
     {{.DashboardURL}}
@@ -197,130 +262,193 @@ feature_announcement:
     <!DOCTYPE html>
     <html lang="en">
     <head>
-      <meta charset="UTF-8">
+      <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>New features on WASBOT</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+      </style>
     </head>
-    <body style="margin: 0; padding: 0; background-color: #f4f4f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f5; padding: 32px 16px;">
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        New features just dropped on WASBOT
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
         <tr>
-          <td align="center">
-            <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; max-width: 600px;">
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
 
               <!-- Header -->
               <tr>
-                <td style="background-color: #14b8a6; padding: 32px 40px; text-align: center;">
-                  <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">WASBOT</h1>
-                  <p style="margin: 8px 0 0; color: #ccfbf1; font-size: 14px;">New features just dropped</p>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
                 </td>
               </tr>
 
               <!-- Body -->
               <tr>
-                <td style="padding: 40px;">
-                  <p style="margin: 0 0 20px; color: #18181b; font-size: 16px; line-height: 1.6;">
-                    Hi {{.Name}},
-                  </p>
-                  <p style="margin: 0 0 24px; color: #3f3f46; font-size: 16px; line-height: 1.6;">
-                    We've been cooking. You told us what you needed, and we went to work. Here's what just dropped:
-                  </p>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">New features just dropped</h1>
 
-                  <!-- Feature 1: Scheduled Messages -->
-                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
-                    <tr>
-                      <td style="background-color: #f0fdfa; border-left: 4px solid #14b8a6; padding: 20px; border-radius: 0 6px 6px 0;">
-                        <h3 style="margin: 0 0 8px; color: #0f766e; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Scheduled Messages</h3>
-                        <p style="margin: 0 0 10px; color: #71717a; font-size: 14px; line-height: 1.5; font-style: italic;">
-                          Waking up at 5am to post status before people start checking? Forgetting to send a promo and losing a whole day's sales? Phone lagging and filling up with messages before you even finish posting?
-                        </p>
-                        <p style="margin: 0 0 8px; color: #3f3f46; font-size: 15px; line-height: 1.5;">
-                          Now you schedule it. Status posts, group messages, even tagged messages &mdash; set the time, WASBOT sends it. You sleep, it works.
-                        </p>
-                        <a href="https://www.wasbot.app/blog/scheduled-messages" style="color: #14b8a6; font-size: 13px; text-decoration: none; font-weight: 600;">Learn more &rarr;</a>
-                      </td>
-                    </tr>
-                  </table>
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+                    <p style="margin: 0 0 24px 0;">We've been cooking. You told us what you needed, and we went to work. Here's what just dropped:</p>
 
-                  <!-- Feature 2: Group Collections -->
-                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
-                    <tr>
-                      <td style="background-color: #f0fdfa; border-left: 4px solid #14b8a6; padding: 20px; border-radius: 0 6px 6px 0;">
-                        <h3 style="margin: 0 0 8px; color: #0f766e; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Group Collections</h3>
-                        <p style="margin: 0 0 10px; color: #71717a; font-size: 14px; line-height: 1.5; font-style: italic;">
-                          Scrolling through 100+ groups to find the right ones? You finally select them, wake up the next day and the group numbers have changed. Start again.
-                        </p>
-                        <p style="margin: 0 0 8px; color: #3f3f46; font-size: 15px; line-height: 1.5;">
-                          Create collections &mdash; "Clients", "Resellers", "VIP Buyers" &mdash; and message the whole collection in one click. Groups saved by name, not number.
-                        </p>
-                        <a href="https://www.wasbot.app/blog/collections-guide" style="color: #14b8a6; font-size: 13px; text-decoration: none; font-weight: 600;">Learn more &rarr;</a>
-                      </td>
-                    </tr>
-                  </table>
+                    <!-- Feature 1: Scheduled Messages -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Scheduled Messages</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">
+                            Waking up at 5am to post status before people start checking? Forgetting to send a promo and losing a whole day's sales? Phone lagging before you even finish posting?
+                          </p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">
+                            Now you schedule it. Status posts, group messages, even tagged messages &mdash; set the time, WASBOT sends it. You sleep, it works.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
 
-                  <!-- Feature 3: Cross-Posting -->
-                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
-                    <tr>
-                      <td style="background-color: #f0fdfa; border-left: 4px solid #14b8a6; padding: 20px; border-radius: 0 6px 6px 0;">
-                        <h3 style="margin: 0 0 8px; color: #0f766e; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Cross-Posting</h3>
-                        <p style="margin: 0 0 10px; color: #71717a; font-size: 14px; line-height: 1.5; font-style: italic;">
-                          Running 2, 3, 4 WhatsApp numbers? Every morning you're copying the same message, forwarding the same status, doing the same work multiple times.
-                        </p>
-                        <p style="margin: 0 0 8px; color: #3f3f46; font-size: 15px; line-height: 1.5;">
-                          Write it once, select your sessions, WASBOT delivers everywhere at the same time. The copy-paste-forward era is done.
-                        </p>
-                        <a href="https://www.wasbot.app/blog/cross-posting-guide" style="color: #14b8a6; font-size: 13px; text-decoration: none; font-weight: 600;">Learn more &rarr;</a>
-                      </td>
-                    </tr>
-                  </table>
+                    <!-- Feature 2: Group Collections -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Group Collections</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">
+                            Scrolling through 100+ groups to find the right ones? You finally select them, wake up the next day and the group numbers have changed. Start again.
+                          </p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">
+                            Create collections &mdash; "Clients", "Resellers", "VIP Buyers" &mdash; and message the whole collection in one click. Groups saved by name, not number.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
 
-                  <!-- Feature 4: HD Media -->
-                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 32px;">
-                    <tr>
-                      <td style="background-color: #f0fdfa; border-left: 4px solid #14b8a6; padding: 20px; border-radius: 0 6px 6px 0;">
-                        <h3 style="margin: 0 0 8px; color: #0f766e; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">HD Media Everywhere</h3>
-                        <p style="margin: 0 0 10px; color: #71717a; font-size: 14px; line-height: 1.5; font-style: italic;">
-                          Your flyers and videos get compressed when you post to status. Quality drops, clients see blurry images, it looks unprofessional.
-                        </p>
-                        <p style="margin: 0 0 8px; color: #3f3f46; font-size: 15px; line-height: 1.5;">
-                          WASBOT sends media in HD &mdash; images, videos, documents, voice notes &mdash; to your status AND your groups, bypassing WhatsApp's compression. Upload once, deliver everywhere in full quality.
-                        </p>
-                        <a href="https://www.wasbot.app/blog/group-media-sending" style="color: #14b8a6; font-size: 13px; text-decoration: none; font-weight: 600;">Learn more &rarr;</a>
-                      </td>
-                    </tr>
-                  </table>
+                    <!-- Feature 3: Cross-Posting -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Cross-Posting</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">
+                            Running 2, 3, 4 WhatsApp numbers? Every morning you're copying the same message, forwarding the same status, doing the same work multiple times.
+                          </p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">
+                            Write it once, select your sessions, WASBOT delivers everywhere at the same time. The copy-paste-forward era is done.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
 
-                  <!-- CTA -->
-                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 32px;">
-                    <tr>
-                      <td align="center">
-                        <a href="{{.DashboardURL}}" style="display: inline-block; background-color: #14b8a6; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: 600; padding: 14px 32px; border-radius: 6px;">
-                          Open Your Dashboard
-                        </a>
-                      </td>
-                    </tr>
-                  </table>
+                    <!-- Feature 4: HD Media -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">HD Media Everywhere</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">
+                            Your flyers and videos get compressed when you post to status. Quality drops, clients see blurry images, it looks unprofessional.
+                          </p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">
+                            WASBOT sends media in HD &mdash; images, videos, documents, voice notes &mdash; to your status AND your groups, bypassing WhatsApp's compression. Upload once, deliver everywhere in full quality.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
 
-                  <p style="margin: 0 0 16px; color: #71717a; font-size: 15px; line-height: 1.6;">
-                    If you've been doing WhatsApp marketing manually &mdash; those days are done. One dashboard handles everything.
-                  </p>
+                    <!-- Learn more links -->
+                    <p style="margin: 0 0 28px 0; text-align: center;">
+                      <a href="https://www.wasbot.app/help" style="color: {{.Branding.PrimaryColor}}; font-size: 15px; font-weight: 600;">See how each feature works &rarr;</a>
+                      <br>
+                      <a href="https://www.wasbot.app/blog" style="color: #6b7280; font-size: 13px; margin-top: 8px; display: inline-block;">Read more on our blog</a>
+                    </p>
 
-                  <p style="margin: 0 0 24px; color: #3f3f46; font-size: 15px; line-height: 1.6;">
-                    We're building WASBOT for the way you actually use WhatsApp for business. More updates are coming &mdash; but go try these first.
-                  </p>
+                    <!-- CTA -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 28px;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                            Open Your Dashboard
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
 
-                  <p style="margin: 0; color: #3f3f46; font-size: 15px; line-height: 1.6;">
-                    Talk soon,<br>
-                    <strong>The WASBOT Team</strong>
-                  </p>
+                    <p style="margin: 0 0 16px 0;">If you've been doing WhatsApp marketing manually &mdash; those days are done. One dashboard handles everything.</p>
+                    <p style="margin: 0 0 24px 0;">We're building WASBOT for the way you actually use WhatsApp for business. More updates are coming &mdash; but go try these first.</p>
+                    <p style="margin: 0;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+                  </div>
                 </td>
               </tr>
 
               <!-- Footer -->
               <tr>
-                <td style="background-color: #fafafa; padding: 24px 40px; border-top: 1px solid #e4e4e7;">
-                  <p style="margin: 0; color: #a1a1aa; font-size: 13px; line-height: 1.5; text-align: center;">
-                    You're receiving this because you have a WASBOT account.<br>
-                    <a href="{{.UnsubscribeURL}}" style="color: #14b8a6; text-decoration: underline;">Unsubscribe</a> from feature updates.
-                  </p>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria
+                        </p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
                 </td>
               </tr>
 
@@ -331,3 +459,865 @@ feature_announcement:
     </body>
     </html>
   description: "Pre-built feature announcement — hardcoded 4 features for current campaign"
+
+# =============================================================================
+# legacy_provisioned — Sent when a legacy user is auto-upgraded on signup
+# =============================================================================
+# Triggered in auth_handler.go when a legacy WASBOT user creates an account
+# on wasbot.app and gets auto-provisioned to Basic tier.
+#
+# Variables:
+#   {{.Name}}          - Recipient name
+#   {{.LegacyPlan}}    - Old plan name (e.g., "WASBOT - Essential Saver")
+#   {{.FreeDays}}      - Number of free Basic days (7, 14, or 30)
+#   {{.DiscountUses}}  - Number of 10% discount uses (3)
+#   {{.AppName}}       - "WASBOT"
+#   {{.DashboardURL}}  - Dashboard link
+
+legacy_provisioned:
+  subject: "Welcome back — you've been upgraded!"
+  body: |
+    Hi {{.Name}},
+
+    Welcome back to WASBOT! We recognized your account from the old platform.
+
+    Because you were on the {{.LegacyPlan}} plan, we've pro-rated your remaining time and upgraded you to the Basic plan for {{.FreeDays}} days — completely free. Think of it as a bridge to help you readjust to the new platform.
+
+    On top of that, you have {{.DiscountUses}} uses of 10% off when you're ready to subscribe.
+
+    Your free Basic plan includes:
+    - 10 status posts per day
+    - 50 group messages per day
+    - Contact imports
+    - Scheduled messages
+    - HD media to status & groups
+
+    Head to your dashboard to get started:
+    {{.DashboardURL}}
+
+    The old WASBOT (wasbot.ng) is shutting down on March 31, 2026. Everything you need is on the new platform now — faster, more reliable, and packed with features the old version never had.
+
+    Talk soon,
+    The WASBOT Team
+  html_body: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Welcome back — you've been upgraded!</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        Welcome back — you've been upgraded to Basic for {{.FreeDays}} days free!
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Welcome back!</h1>
+
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+                    <p style="margin: 0 0 24px 0;">Welcome back to WASBOT! We recognized your account from the old platform.</p>
+                    <p style="margin: 0 0 24px 0;">Because you were on the <strong>{{.LegacyPlan}}</strong> plan, we've pro-rated your remaining time and upgraded you to Basic for <strong>{{.FreeDays}} days</strong> &mdash; completely free. Think of it as a bridge to help you readjust to the new platform.</p>
+
+                    <!-- Upgrade card -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border: 2px solid {{.Branding.PrimaryColor}}; border-radius: 12px; padding: 24px; text-align: center;">
+                          <p style="margin: 0 0 4px; color: #166534; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Your Free Upgrade</p>
+                          <p style="margin: 0 0 8px; color: #166534; font-size: 28px; font-weight: 700;">{{.FreeDays}} Days of Basic</p>
+                          <p style="margin: 0; color: {{.Branding.PrimaryColor}}; font-size: 14px;">+ {{.DiscountUses}}x 10% off when you subscribe</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 16px 0;">No payment needed, no strings attached. Your Basic plan includes:</p>
+
+                    <!-- Features list -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+                      <tr>
+                        <td style="padding: 24px;">
+                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;10 status posts per day</td></tr>
+                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;50 group messages per day</td></tr>
+                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;Contact imports</td></tr>
+                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;Scheduled messages</td></tr>
+                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;HD media to status &amp; groups</td></tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- CTA -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 28px;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                            Go to Dashboard &rarr;
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Shutdown notice -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                      <tr>
+                        <td style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px; border-radius: 0 12px 12px 0;">
+                          <p style="margin: 0; color: #92400e; font-size: 14px; line-height: 1.5;">
+                            <strong>Heads up:</strong> The old WASBOT (wasbot.ng) is shutting down on <strong>March 31, 2026</strong>. Everything you need is on the new platform now.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 8px 0; font-size: 14px; color: #6b7280;">Need help getting started? Just reply to this email!</p>
+                    <p style="margin: 0; font-size: 14px; color: #9ca3af;">&mdash; The {{.Branding.CompanyName}} Team</p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria
+                        </p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Sent when a legacy user is auto-provisioned to Basic tier on signup — includes old plan name for context"
+
+# =============================================================================
+# testimonial_request — Ask active users for a testimonial
+# =============================================================================
+# Send to users who've been active 10+ days. Personal, warm tone.
+#
+# Variables:
+#   {{.Name}}           - Recipient name
+#   {{.DashboardURL}}   - Dashboard link
+#   {{.UnsubscribeURL}} - Unsubscribe link
+
+testimonial_request:
+  subject: "Quick favor — can I feature your experience with WASBOT?"
+  body: |
+    Hi {{.Name}},
+
+    Quick one — I noticed you've been using WASBOT for a while now and I really appreciate that.
+
+    I'm putting together real feedback from people who actually use the tool, and I'd love to feature yours on our website and socials.
+
+    Would you mind sharing 2-3 sentences on how WASBOT has helped your business? Something like:
+
+    - What you were doing before (the manual pain)
+    - What changed after you started using WASBOT
+    - Any specific result (time saved, more reach, phone stopped overheating — whatever's real for you)
+
+    Just hit reply and type it out — takes 30 seconds.
+
+    No pressure at all, but it would mean a lot.
+
+    Talk soon,
+    The WASBOT Team
+
+    ---
+    You're receiving this because you have a WASBOT account.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Quick favor</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        We'd love to hear about your WASBOT experience
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Quick favor</h1>
+
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+                    <p style="margin: 0 0 24px 0;">Quick one &mdash; I noticed you've been using WASBOT for a while now and I really appreciate that.</p>
+                    <p style="margin: 0 0 24px 0;">I'm putting together real feedback from people who actually use the tool, and I'd love to feature yours on our website and socials.</p>
+                    <p style="margin: 0 0 16px 0; font-weight: 600; color: #111827;">Would you mind sharing 2-3 sentences on how WASBOT has helped your business?</p>
+
+                    <!-- Prompt card -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <p style="margin: 0 0 8px; color: #166534; font-size: 14px; font-weight: 600;">Something like:</p>
+                          <ul style="margin: 0; padding-left: 20px; color: #374151; font-size: 15px; line-height: 1.8;">
+                            <li>What you were doing before (the manual pain)</li>
+                            <li>What changed after you started using WASBOT</li>
+                            <li>Any specific result &mdash; time saved, more reach, phone stopped overheating</li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 20px 0; color: #6b7280;">Just hit reply and type it out &mdash; takes 30 seconds.</p>
+
+                    <!-- CTA -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 28px;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="mailto:hello@wasbot.app?subject=My%20WASBOT%20Testimonial" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 16px; font-weight: 600; color: #ffffff; text-decoration: none;">
+                            Share Your Experience
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 24px 0; color: #6b7280; font-size: 14px;">No pressure at all &mdash; but it would mean a lot.</p>
+                    <p style="margin: 0;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria
+                        </p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Testimonial request — send to active users (10+ days), asks for 2-3 sentence review"
+
+# =============================================================================
+# migration_announcement — OVERRIDES built-in template from template.go
+# =============================================================================
+# First email in the legacy migration campaign. Explains WHY wasbot.ng is
+# shutting down, what happens to Paystack subscriptions, tiered offers,
+# and how to migrate.
+#
+# Variables:
+#   {{.Name}}           - Recipient name
+#   {{.DashboardURL}}   - Link to wasbot.app
+#   {{.UnsubscribeURL}} - Unsubscribe link
+
+migration_announcement:
+  subject: "Important: wasbot.ng is shutting down March 31 — here's your migration offer"
+  body: |
+    Hi {{.Name}},
+
+    We have some important news.
+
+    wasbot.ng is shutting down on March 31, 2026.
+
+    Why? Honestly — the old WASBOT was built on tech that kept breaking. Sessions dropping randomly, features that worked one day and didn't the next, impossible to add new things without something else falling apart. It couldn't scale and we got tired of patching it.
+
+    So we rebuilt everything from scratch. New backend, new dashboard, new infrastructure. It's faster, more stable, and packed with features the old version could never support.
+
+    Everything is now at www.wasbot.app
+
+    See what's new: https://www.wasbot.app/#features
+
+    WHAT HAPPENS TO YOUR PAYSTACK SUBSCRIPTION
+
+    All existing Paystack plans on wasbot.ng will be cancelled. You will not be charged again on the old platform. No rollovers — the old subscriptions end with the old platform.
+
+    YOUR MIGRATION OFFER
+
+    Because you've been with us, here's what you get when you sign up on the new platform:
+
+    - Ultimate Organizer: 30 days FREE Basic + 3 months 10% off
+    - Efficiency Explorer: 14 days FREE Basic + 3 months 10% off
+    - Essential Saver: 7 days FREE Basic + 3 months 10% off
+    - Everyone else: 7-day free trial + one-time 10% off any plan
+
+    Sign up with the same email you used on wasbot.ng and the offer applies automatically. No codes needed.
+
+    HOW TO MIGRATE
+
+    1. Go to https://www.wasbot.app
+    2. Sign up with your wasbot.ng email
+    3. Your offer is applied instantly
+    4. Connect your WhatsApp — scan QR and you're live
+
+    Deadline: March 31, 2026 — after that, wasbot.ng is gone permanently.
+
+    Migrate now: {{.DashboardURL}}
+
+    Questions? Just reply to this email.
+
+    — The WASBOT Team
+
+    ---
+    You're receiving this because you have a WASBOT account on wasbot.ng.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Important update about your WASBOT account</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        wasbot.ng is shutting down March 31 — here's your migration offer
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Important update</h1>
+
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+                    <!-- Shutdown notice -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                      <tr>
+                        <td style="background-color: #fef2f2; border-left: 4px solid #ef4444; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <p style="margin: 0 0 4px; color: #991b1b; font-size: 16px; font-weight: 700;">wasbot.ng is shutting down on March 31, 2026</p>
+                          <p style="margin: 0; color: #b91c1c; font-size: 14px; line-height: 1.5;">After this date, the old platform will be permanently offline.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 16px 0;">Honestly &mdash; the old WASBOT was built on tech that kept breaking. Sessions dropping randomly, features that worked one day and didn't the next. It couldn't scale and we got tired of patching it.</p>
+                    <p style="margin: 0 0 24px 0;">So we rebuilt everything from scratch. New backend, new dashboard, new infrastructure. It's faster, more stable, and packed with features the old version could never support.</p>
+
+                    <p style="margin: 0 0 24px 0; text-align: center;">
+                      <a href="https://www.wasbot.app/#features" style="color: {{.Branding.PrimaryColor}}; font-size: 15px; font-weight: 600;">See all the new features &rarr;</a>
+                    </p>
+
+                    <!-- Paystack notice -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                      <tr>
+                        <td style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <p style="margin: 0 0 4px; color: #92400e; font-size: 15px; font-weight: 700;">What happens to your Paystack subscription</p>
+                          <p style="margin: 0; color: #a16207; font-size: 14px; line-height: 1.5;">All existing Paystack plans on wasbot.ng will be cancelled. You will <strong>not</strong> be charged again on the old platform. No rollovers &mdash; the old subscriptions end with the old platform.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Offers -->
+                    <p style="margin: 0 0 16px 0; font-weight: 700; color: #111827;">Your migration offer</p>
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border: 2px solid {{.Branding.PrimaryColor}}; border-radius: 12px; padding: 20px;">
+                          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                            <tr><td style="padding: 8px 0; color: #166534; font-size: 14px; line-height: 1.5;"><strong>Ultimate Organizer:</strong> 30 days FREE Basic + 3 months 10% off</td></tr>
+                            <tr><td style="padding: 8px 0; color: #166534; font-size: 14px; line-height: 1.5; border-top: 1px solid #dcfce7;"><strong>Efficiency Explorer:</strong> 14 days FREE Basic + 3 months 10% off</td></tr>
+                            <tr><td style="padding: 8px 0; color: #166534; font-size: 14px; line-height: 1.5; border-top: 1px solid #dcfce7;"><strong>Essential Saver:</strong> 7 days FREE Basic + 3 months 10% off</td></tr>
+                            <tr><td style="padding: 8px 0; color: #166534; font-size: 14px; line-height: 1.5; border-top: 1px solid #dcfce7;"><strong>Everyone else:</strong> 7-day free trial + one-time 10% off any plan</td></tr>
+                          </table>
+                          <p style="margin: 12px 0 0; color: {{.Branding.PrimaryColor}}; font-size: 13px;">Sign up with your wasbot.ng email &mdash; offer applies automatically. No codes.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- How to migrate -->
+                    <p style="margin: 0 0 12px 0; font-weight: 700; color: #111827;">How to migrate (2 minutes)</p>
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
+                      <tr>
+                        <td style="padding: 20px;">
+                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tr>
+                              <td style="padding: 8px 0;">
+                                <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">1</span>
+                                <span style="margin-left: 12px; color: #374151;">Go to <a href="https://www.wasbot.app" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">wasbot.app</a></span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 8px 0;">
+                                <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">2</span>
+                                <span style="margin-left: 12px; color: #374151;">Sign up with your wasbot.ng email</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 8px 0;">
+                                <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">3</span>
+                                <span style="margin-left: 12px; color: #374151;">Your offer is applied instantly</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 8px 0;">
+                                <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">4</span>
+                                <span style="margin-left: 12px; color: #374151;">Connect your WhatsApp &mdash; scan QR and you're live</span>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- CTA -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 28px;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                            Migrate Now &mdash; It's Free
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 8px 0; font-size: 14px; color: #6b7280;">Questions? Just reply to this email.</p>
+                    <p style="margin: 0; font-size: 14px; color: #9ca3af;">&mdash; <strong>The WASBOT Team</strong></p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria
+                        </p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Migration announcement — OVERRIDES built-in. Explains shutdown, Paystack cancellation, tiered offers, migration steps"
+
+# =============================================================================
+# migration_follow_up — OVERRIDES built-in template from template.go
+# =============================================================================
+# Follow-up email for legacy users who haven't migrated yet.
+#
+# Variables:
+#   {{.Name}}           - Recipient name
+#   {{.DashboardURL}}   - Link to wasbot.app
+#   {{.UnsubscribeURL}} - Unsubscribe link
+
+migration_follow_up:
+  subject: "Reminder: wasbot.ng shuts down March 31 — your offer is still active"
+  body: |
+    Hi {{.Name}},
+
+    Just a reminder — wasbot.ng is shutting down on March 31, 2026.
+
+    Your Paystack subscription will be cancelled. No more charges on the old platform.
+
+    Your migration offer is still active. Sign up with the same email and it applies automatically:
+
+    - Ultimate Organizer: 30 days FREE Basic + 3 months 10% off
+    - Efficiency Explorer: 14 days FREE Basic + 3 months 10% off
+    - Essential Saver: 7 days FREE Basic + 3 months 10% off
+    - Everyone else: 7-day free trial + one-time 10% off
+
+    Migrate now (takes 2 minutes): {{.DashboardURL}}
+
+    After March 31, the old platform is gone permanently.
+
+    — The WASBOT Team
+
+    ---
+    You're receiving this because you have a WASBOT account on wasbot.ng.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Migration reminder</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        Your migration offer is still active — wasbot.ng shuts down March 31
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Friendly reminder</h1>
+
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+                    <!-- Urgency banner -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                      <tr>
+                        <td style="background-color: #fef2f2; border-left: 4px solid #ef4444; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <p style="margin: 0 0 4px; color: #991b1b; font-size: 15px; font-weight: 700;">wasbot.ng shuts down March 31, 2026</p>
+                          <p style="margin: 0; color: #b91c1c; font-size: 14px;">Your Paystack subscription will be cancelled. No more charges on the old platform.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 20px 0;">Your migration offer is still active. Sign up with your wasbot.ng email and it applies automatically:</p>
+
+                    <!-- Offers (compact) -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-radius: 12px; padding: 16px;">
+                          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                            <tr><td style="padding: 6px 0; color: #166534; font-size: 14px;"><strong>Ultimate Organizer:</strong> 30 days FREE + 3mo 10% off</td></tr>
+                            <tr><td style="padding: 6px 0; color: #166534; font-size: 14px;"><strong>Efficiency Explorer:</strong> 14 days FREE + 3mo 10% off</td></tr>
+                            <tr><td style="padding: 6px 0; color: #166534; font-size: 14px;"><strong>Essential Saver:</strong> 7 days FREE + 3mo 10% off</td></tr>
+                            <tr><td style="padding: 6px 0; color: #166534; font-size: 14px;"><strong>Everyone else:</strong> 7-day trial + 10% off</td></tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- CTA -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 28px;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                            Migrate Now &mdash; 2 Minutes
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 8px 0; font-size: 14px; color: #6b7280;">After March 31, the old platform is gone permanently.</p>
+                    <p style="margin: 16px 0 0 0; font-size: 14px; color: #9ca3af;">&mdash; <strong>The WASBOT Team</strong></p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria
+                        </p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Migration follow-up — OVERRIDES built-in. Reminder with offers and deadline"

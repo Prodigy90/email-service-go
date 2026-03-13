@@ -15,6 +15,8 @@ type BrandingConfig struct {
 	SocialInstagram    string `json:"social_instagram"`     // Instagram URL
 	IconTwitterURL     string `json:"icon_twitter_url"`     // URL to X/Twitter icon image
 	IconInstagramURL   string `json:"icon_instagram_url"`   // URL to Instagram icon image
+	SocialYouTube      string `json:"social_youtube"`       // YouTube URL
+	IconYouTubeURL     string `json:"icon_youtube_url"`     // URL to YouTube icon image
 }
 
 // DefaultBranding returns the default WASBOT branding (for backward compatibility)
@@ -33,6 +35,8 @@ func DefaultBranding() *BrandingConfig {
 		SocialInstagram:  "https://instagram.com/wasbot.app",
 		IconTwitterURL:   "https://www.wasbot.app/icons/x.png",
 		IconInstagramURL: "https://www.wasbot.app/icons/instagram.png",
+		SocialYouTube:    "https://www.youtube.com/@wasbot_app",
+		IconYouTubeURL:   "https://www.wasbot.app/icons/youtube.png",
 	}
 }
 
@@ -77,5 +81,11 @@ func (b *BrandingConfig) MergeWithDefaults() {
 	}
 	if b.IconInstagramURL == "" {
 		b.IconInstagramURL = defaults.IconInstagramURL
+	}
+	if b.SocialYouTube == "" {
+		b.SocialYouTube = defaults.SocialYouTube
+	}
+	if b.IconYouTubeURL == "" {
+		b.IconYouTubeURL = defaults.IconYouTubeURL
 	}
 }

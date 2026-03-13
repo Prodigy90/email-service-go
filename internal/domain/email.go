@@ -55,6 +55,7 @@ type SendEmailRequest struct {
 	SourceService string                 `json:"source_service,omitempty"`
 	Metadata      map[string]interface{} `json:"metadata,omitempty"`
 	ProductID     string                 `json:"product_id,omitempty"`
+	Headers       map[string]string      `json:"headers,omitempty"`
 	Branding      *BrandingConfig        `json:"branding,omitempty"`
 }
 
