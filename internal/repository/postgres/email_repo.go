@@ -26,14 +26,15 @@ func NewEmailRepository(db *sqlx.DB) *EmailRepository {
 func (r *EmailRepository) Create(ctx context.Context, email *domain.Email) error {
 	metadata, _ := json.Marshal(email.Metadata)
 	templateData, _ := json.Marshal(email.TemplateData)
+	headers, _ := json.Marshal(email.Headers)
 
 	query := `
 		INSERT INTO emails (
 			id, to_address, from_address, subject, body, html_body,
 			template, template_data, status, max_retries, idempotency_id,
-			source_service, metadata, created_at, updated_at
+			source_service, metadata, headers, created_at, updated_at
 		) VALUES (
-			$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15
+			$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16
 		)`
 
 	_, err := r.db.ExecContext(ctx, query,
@@ -50,6 +51,7 @@ func (r *EmailRepository) Create(ctx context.Context, email *domain.Email) error
 		nullString(email.IdempotencyID),
 		nullString(email.SourceService),
 		metadata,
+		headers,
 		email.CreatedAt,
 		email.UpdatedAt,
 	)
@@ -70,6 +72,7 @@ func (r *EmailRepository) CreateOrGetByIdempotencyID(ctx context.Context, email 
 
 	metadata, _ := json.Marshal(email.Metadata)
 	templateData, _ := json.Marshal(email.TemplateData)
+	headers, _ := json.Marshal(email.Headers)
 
 	// Use INSERT ON CONFLICT DO NOTHING to atomically try insertion
 	// If conflict on idempotency_id, nothing is inserted
@@ -77,9 +80,9 @@ func (r *EmailRepository) CreateOrGetByIdempotencyID(ctx context.Context, email 
 		INSERT INTO emails (
 			id, to_address, from_address, subject, body, html_body,
 			template, template_data, status, max_retries, idempotency_id,
-			source_service, metadata, created_at, updated_at
+			source_service, metadata, headers, created_at, updated_at
 		) VALUES (
-			$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15
+			$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16
 		)
 		ON CONFLICT (idempotency_id) DO NOTHING`
 
@@ -97,6 +100,7 @@ func (r *EmailRepository) CreateOrGetByIdempotencyID(ctx context.Context, email 
 		nullString(email.IdempotencyID),
 		nullString(email.SourceService),
 		metadata,
+		headers,
 		email.CreatedAt,
 		email.UpdatedAt,
 	)
@@ -129,7 +133,10 @@ func (r *EmailRepository) CreateOrGetByIdempotencyID(ctx context.Context, email 
 // GetByID retrieves an email by ID.
 func (r *EmailRepository) GetByID(ctx context.Context, id uuid.UUID) (*domain.Email, error) {
 	var email emailRow
-	query := `SELECT * FROM emails WHERE id = $1`
+	query := `SELECT id, to_address, from_address, subject, body, html_body,
+		template, template_data, status, error_message, retry_count, max_retries,
+		idempotency_id, source_service, metadata, headers, resend_email_id,
+		sent_at, created_at, updated_at FROM emails WHERE id = $1`
 	if err := r.db.GetContext(ctx, &email, query, id); err != nil {
 		return nil, err
 	}
@@ -139,7 +146,7 @@ func (r *EmailRepository) GetByID(ctx context.Context, id uuid.UUID) (*domain.Em
 // GetByIdempotencyID retrieves an email by idempotency ID.
 func (r *EmailRepository) GetByIdempotencyID(ctx context.Context, idempotencyID string) (*domain.Email, error) {
 	var email emailRow
-	query := `SELECT * FROM emails WHERE idempotency_id = $1`
+	query := `SELECT id, to_address, from_address, subject, body, html_body, template, template_data, status, error_message, retry_count, max_retries, idempotency_id, source_service, metadata, headers, resend_email_id, sent_at, created_at, updated_at FROM emails WHERE idempotency_id = $1`
 	if err := r.db.GetContext(ctx, &email, query, idempotencyID); err != nil {
 		return nil, err
 	}
@@ -170,7 +177,7 @@ func (r *EmailRepository) MarkSent(ctx context.Context, id uuid.UUID, sentAt tim
 // ListByStatus retrieves emails by status with pagination.
 func (r *EmailRepository) ListByStatus(ctx context.Context, status domain.EmailStatus, limit, offset int) ([]*domain.Email, error) {
 	var rows []emailRow
-	query := `SELECT * FROM emails WHERE status = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3`
+	query := `SELECT id, to_address, from_address, subject, body, html_body, template, template_data, status, error_message, retry_count, max_retries, idempotency_id, source_service, metadata, headers, resend_email_id, sent_at, created_at, updated_at FROM emails WHERE status = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3`
 	if err := r.db.SelectContext(ctx, &rows, query, status, limit, offset); err != nil {
 		return nil, err
 	}
@@ -192,7 +199,7 @@ func (r *EmailRepository) UpdateResendEmailID(ctx context.Context, id uuid.UUID,
 // GetByResendEmailID looks up an email by its Resend provider ID (for webhook event mapping).
 func (r *EmailRepository) GetByResendEmailID(ctx context.Context, resendEmailID string) (*domain.Email, error) {
 	var email emailRow
-	query := `SELECT * FROM emails WHERE resend_email_id = $1`
+	query := `SELECT id, to_address, from_address, subject, body, html_body, template, template_data, status, error_message, retry_count, max_retries, idempotency_id, source_service, metadata, headers, resend_email_id, sent_at, created_at, updated_at FROM emails WHERE resend_email_id = $1`
 	if err := r.db.GetContext(ctx, &email, query, resendEmailID); err != nil {
 		return nil, err
 	}
@@ -287,6 +294,7 @@ type emailRow struct {
 	IdempotencyID sql.NullString     `db:"idempotency_id"`
 	SourceService sql.NullString     `db:"source_service"`
 	Metadata      []byte             `db:"metadata"`
+	Headers       []byte             `db:"headers"`
 	ResendEmailID sql.NullString     `db:"resend_email_id"`
 	SentAt        sql.NullTime       `db:"sent_at"`
 	CreatedAt     time.Time          `db:"created_at"`
@@ -336,6 +344,9 @@ func (r *emailRow) toDomain() *domain.Email {
 	}
 	if len(r.Metadata) > 0 {
 		_ = json.Unmarshal(r.Metadata, &email.Metadata)
+	}
+	if len(r.Headers) > 0 {
+		_ = json.Unmarshal(r.Headers, &email.Headers)
 	}
 
 	return email

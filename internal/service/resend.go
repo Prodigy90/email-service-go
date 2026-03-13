@@ -37,6 +37,7 @@ func NewResendClient(cfg config.ResendConfig, logger zerolog.Logger) *ResendClie
 type resendRequest struct {
 	From    string            `json:"from"`
 	To      []string          `json:"to"`
+	ReplyTo []string          `json:"reply_to,omitempty"`
 	Subject string            `json:"subject"`
 	Text    string            `json:"text,omitempty"`
 	HTML    string            `json:"html,omitempty"`
@@ -69,13 +70,29 @@ func (c *ResendClient) Send(email *domain.Email) (*SendResult, error) {
 		}
 	}
 
+	// Extract Reply-To into Resend's dedicated field
+	headers := email.Headers
+	var replyTo []string
+	if rt, ok := headers["Reply-To"]; ok && rt != "" {
+		replyTo = []string{rt}
+		// Remove from headers map to avoid duplicate
+		headersCopy := make(map[string]string, len(headers)-1)
+		for k, v := range headers {
+			if k != "Reply-To" {
+				headersCopy[k] = v
+			}
+		}
+		headers = headersCopy
+	}
+
 	reqBody := resendRequest{
 		From:    from,
 		To:      []string{email.To},
+		ReplyTo: replyTo,
 		Subject: email.Subject,
 		Text:    email.Body,
 		HTML:    email.HTMLBody,
-		Headers: email.Headers,
+		Headers: headers,
 	}
 
 	jsonBody, err := json.Marshal(reqBody)
