@@ -919,7 +919,7 @@ migration_announcement:
     The new platform is faster, more stable, and supports features the old version
     couldn't. Think of this as your upgrade, not a migration.
 
-    See everything that's new: https://www.wasbot.app/#features
+    See everything that's new: https://www.wasbot.app/{{.RefParam}}#features
 
     -----------------------------------------------------------------------
     WHAT HAPPENS TO YOUR PAYSTACK SUBSCRIPTION
@@ -971,7 +971,7 @@ migration_announcement:
     -----------------------------------------------------------------------
     HOW TO MIGRATE (2 MINUTES)
     -----------------------------------------------------------------------
-    1. Go to https://www.wasbot.app
+    1. Go to https://www.wasbot.app/{{.RefParam}}
        → Your new home
 
     2. Sign up with your wasbot.ng email
@@ -993,7 +993,7 @@ migration_announcement:
     Refer friends and family to WASBOT and earn 20% commission on their first
     3 months of any paid plan. No migration required to start referring.
 
-    Learn how it works: https://www.wasbot.app/blog/affiliate-program
+    Learn how it works: https://www.wasbot.app/blog/affiliate-program{{.RefParam}}
 
     -----------------------------------------------------------------------
 
@@ -1116,7 +1116,7 @@ migration_announcement:
                   </p>
 
                   <p style="margin: 0 0 28px; text-align: center;">
-                    <a href="https://www.wasbot.app/#features"
+                    <a href="https://www.wasbot.app/{{.RefParam}}#features"
                        style="color: {{.Branding.PrimaryColor}}; font-size: 14px; font-weight: 700; border-bottom: 2px solid {{.Branding.PrimaryColor}}; padding-bottom: 2px;">
                       See everything that's new &rarr;
                     </a>
@@ -1237,7 +1237,7 @@ migration_announcement:
                               <div style="background: #2563eb; color: #fff; border-radius: 50%; width: 28px; height: 28px; text-align: center; line-height: 28px; font-size: 13px; font-weight: 700;">1</div>
                             </td>
                             <td style="padding-left: 14px;">
-                              <div style="color: #0f172a; font-weight: 600; font-size: 14px;">Go to <a href="https://www.wasbot.app" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">wasbot.app</a></div>
+                              <div style="color: #0f172a; font-weight: 600; font-size: 14px;">Go to <a href="https://www.wasbot.app/{{.RefParam}}" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">wasbot.app</a></div>
                               <div style="color: #64748b; font-size: 12px;">Your new home</div>
                             </td>
                           </tr>
@@ -1318,7 +1318,7 @@ migration_announcement:
                           Refer friends and family to WASBOT and earn <strong>20% commission</strong>
                           on their first 3 months of any paid plan. No migration required.
                         </p>
-                        <a href="https://www.wasbot.app/blog/affiliate-program"
+                        <a href="https://www.wasbot.app/blog/affiliate-program{{.RefParam}}"
                            style="color: #7c3aed; font-size: 13px; font-weight: 700;">
                           Learn how the affiliate program works &rarr;
                         </a>
