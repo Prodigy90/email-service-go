@@ -1,0 +1,1938 @@
+# Welcome and trial sequence email templates
+# welcome, trial_day3/5/6/10, trial_expiring, account_upgraded
+
+welcome:
+  subject: "Welcome to {{.AppName}} - Your WhatsApp Automation Journey Starts Now!"
+  body: |-
+    Hi {{.Name}},
+
+    Welcome to {{.AppName}}! We're thrilled to have you on board.
+
+    You now have access to:
+    - Broadcast status updates to up to 1,000 contacts
+    - Auto-save new contacts to Google Contacts
+    - Send messages to multiple groups + tag members
+    - Post up to 5 status updates per day
+
+    Here's how to get started:
+    1. Connect your WhatsApp by scanning the QR code
+    2. Link your Google account for contact sync
+    3. Create your first status broadcast
+
+    Your 7-day trial starts now. Make the most of it!
+
+    Best,
+    The {{.AppName}} Team
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>Welcome!</title>
+      <!--[if mso]>
+      <noscript>
+        <xml>
+          <o:OfficeDocumentSettings>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+        </xml>
+      </noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+
+        /* Reset */
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+        /* Client-specific */
+        #outlook a { padding: 0; }
+        .ReadMsgBody { width: 100%; }
+        .ExternalClass { width: 100%; }
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+        /* Base styles */
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          background-color: #f3f4f6;
+          margin: 0;
+          padding: 0;
+        }
+
+        /* Links */
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Button styles */
+        .btn {
+          display: inline-block;
+          padding: 14px 28px;
+          background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+          color: #ffffff !important;
+          text-decoration: none;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 15px;
+          box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+          transition: all 0.2s ease;
+        }
+        .btn:hover {
+          background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+          box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+        }
+        .btn-danger {
+          background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+          box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+
+        /* Dark mode — preserve header text visibility */
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <!-- Preview text - uses PreviewText if set, otherwise falls back to title -->
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        {{if .PreviewText}}{{.PreviewText}}{{else}}Welcome!{{end}}
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+      </div>
+
+      <!-- Email wrapper -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <!-- Main container -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header with logo -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td>
+                        <!-- Logo/Brand -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                          <tr>
+                            <td style="vertical-align: middle; padding-right: 14px;">
+                              <!-- Logo placeholder - uses image if LogoURL provided, otherwise first letter of company name -->
+                              <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                {{.Branding.LogoContent}}
+                              </div>
+                            </td>
+                            <td style="vertical-align: middle;">
+                              <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Main content -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <!-- Title -->
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Welcome!</h1>
+
+                  <!-- Content -->
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    
+    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+    <p style="margin: 0 0 24px 0;">Welcome to <strong>{{.AppName}}</strong>! We're thrilled to have you on board. Your 7-day free trial starts now.</p>
+
+    <!-- What you get -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 24px;">
+          <p style="margin: 0 0 16px 0; font-weight: 600; color: #166534;">Your trial includes:</p>
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tr>
+              <td style="padding: 10px 0;">
+                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">📢</span>
+                <span style="margin-left: 12px; color: #374151;"><strong>Status Broadcasting</strong> - Post to up to 1,000 contacts at once</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0;">
+                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">📇</span>
+                <span style="margin-left: 12px; color: #374151;"><strong>Google Contacts Sync</strong> - Auto-save new contacts automatically</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0;">
+                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">👥</span>
+                <span style="margin-left: 12px; color: #374151;"><strong>Group Messaging</strong> - Send to multiple groups + tag members</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0;">
+                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">📱</span>
+                <span style="margin-left: 12px; color: #374151;"><strong>5 Status/Day</strong> - Post up to 5 status updates daily</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Getting started steps -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 24px;">
+          <p style="margin: 0 0 16px 0; font-weight: 600; color: #1e40af;">Get started in 3 steps:</p>
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tr>
+              <td style="padding: 8px 0;">
+                <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">1</span>
+                <span style="margin-left: 12px; color: #374151;">Connect your WhatsApp by scanning the QR code</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0;">
+                <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">2</span>
+                <span style="margin-left: 12px; color: #374151;">Link your Google account for contact sync</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0;">
+                <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">3</span>
+                <span style="margin-left: 12px; color: #374151;">Create your first status broadcast!</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- CTA Button -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+      <tr>
+        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+          <a href="{{.Branding.DashboardURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+            Go to Dashboard →
+          </a>
+        </td>
+      </tr>
+    </table>
+
+    <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Need help getting started? Just reply to this email!</p>
+    <p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
+
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <!-- Divider -->
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <!-- Help text -->
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+
+                        <!-- Social links -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <!-- Company info -->
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>
+                          Lagos, Nigeria
+                        </p>
+
+                        <!-- Legal -->
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+
+                        <!-- Unsubscribe -->
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Welcome email for new users"
+
+trial_day3:
+  subject: "How's your {{.AppName}} trial going?"
+  body: |-
+    Hi {{.Name}},
+
+    You've been using {{.AppName}} for 3 days now! How's it going?
+
+    Here are some features you might not have tried yet:
+    - Broadcast status updates to all your contacts at once
+    - Auto-save new WhatsApp contacts to Google Contacts
+    - Send messages to multiple groups and tag members
+
+    Need help getting started? Just reply to this email.
+
+    Best,
+    The {{.AppName}} Team
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>How's Your Trial Going?</title>
+      <!--[if mso]>
+      <noscript>
+        <xml>
+          <o:OfficeDocumentSettings>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+        </xml>
+      </noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+
+        /* Reset */
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+        /* Client-specific */
+        #outlook a { padding: 0; }
+        .ReadMsgBody { width: 100%; }
+        .ExternalClass { width: 100%; }
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+        /* Base styles */
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          background-color: #f3f4f6;
+          margin: 0;
+          padding: 0;
+        }
+
+        /* Links */
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Button styles */
+        .btn {
+          display: inline-block;
+          padding: 14px 28px;
+          background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+          color: #ffffff !important;
+          text-decoration: none;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 15px;
+          box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+          transition: all 0.2s ease;
+        }
+        .btn:hover {
+          background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+          box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+        }
+        .btn-danger {
+          background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+          box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+
+        /* Dark mode — preserve header text visibility */
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <!-- Preview text - uses PreviewText if set, otherwise falls back to title -->
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        {{if .PreviewText}}{{.PreviewText}}{{else}}How's Your Trial Going?{{end}}
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+      </div>
+
+      <!-- Email wrapper -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <!-- Main container -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header with logo -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td>
+                        <!-- Logo/Brand -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                          <tr>
+                            <td style="vertical-align: middle; padding-right: 14px;">
+                              <!-- Logo placeholder - uses image if LogoURL provided, otherwise first letter of company name -->
+                              <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                {{.Branding.LogoContent}}
+                              </div>
+                            </td>
+                            <td style="vertical-align: middle;">
+                              <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Main content -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <!-- Title -->
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">How's Your Trial Going?</h1>
+
+                  <!-- Content -->
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    
+    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+    <p style="margin: 0 0 24px 0;">You've been using <strong>{{.AppName}}</strong> for 3 days now! How's it going? We'd love to hear your thoughts.</p>
+
+    <!-- Feature suggestions -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 24px;">
+          <p style="margin: 0 0 16px 0; font-weight: 600; color: #166534;">Have you tried these features yet?</p>
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tr>
+              <td style="padding: 8px 0;">
+                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">📢</span>
+                <span style="margin-left: 12px; color: #374151;"><strong>Status Broadcasting</strong> - Post status updates to all your contacts at once</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0;">
+                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">📇</span>
+                <span style="margin-left: 12px; color: #374151;"><strong>Google Contacts Sync</strong> - Auto-save new WhatsApp contacts</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0;">
+                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">👥</span>
+                <span style="margin-left: 12px; color: #374151;"><strong>Group Messaging</strong> - Send to multiple groups and tag members</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <p style="margin: 0 0 24px 0; color: #6b7280;">Need help getting started? Just reply to this email and we'll walk you through it!</p>
+
+    <!-- CTA Button -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+      <tr>
+        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+          <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+            Continue Exploring →
+          </a>
+        </td>
+      </tr>
+    </table>
+
+    <p style="margin: 24px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
+
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <!-- Divider -->
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <!-- Help text -->
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+
+                        <!-- Social links -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <!-- Company info -->
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>
+                          Lagos, Nigeria
+                        </p>
+
+                        <!-- Legal -->
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+
+                        <!-- Unsubscribe -->
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Day 3 engagement check"
+
+trial_day5:
+  subject: "Unlock the full power of {{.AppName}}"
+  body: |-
+    Hi {{.Name}},
+
+    You're halfway through your trial! Here's what paid users unlock:
+
+    Basic Plan ($5.50/mo):
+    - 15 status updates per day
+    - 5,000 status contacts
+    - 50 group messages/day
+    - 25 tag messages/day
+
+    Premium Plan ($14/mo):
+    - 50 status updates per day
+    - 30,000 status contacts
+    - Bulk import contacts
+    - Delete old status updates
+
+    Upgrade now:
+    {{.UpgradeURL}}
+
+    Best,
+    The {{.AppName}} Team
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>Unlock Full Power</title>
+      <!--[if mso]>
+      <noscript>
+        <xml>
+          <o:OfficeDocumentSettings>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+        </xml>
+      </noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+
+        /* Reset */
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+        /* Client-specific */
+        #outlook a { padding: 0; }
+        .ReadMsgBody { width: 100%; }
+        .ExternalClass { width: 100%; }
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+        /* Base styles */
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          background-color: #f3f4f6;
+          margin: 0;
+          padding: 0;
+        }
+
+        /* Links */
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Button styles */
+        .btn {
+          display: inline-block;
+          padding: 14px 28px;
+          background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+          color: #ffffff !important;
+          text-decoration: none;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 15px;
+          box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+          transition: all 0.2s ease;
+        }
+        .btn:hover {
+          background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+          box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+        }
+        .btn-danger {
+          background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+          box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+
+        /* Dark mode — preserve header text visibility */
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <!-- Preview text - uses PreviewText if set, otherwise falls back to title -->
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        {{if .PreviewText}}{{.PreviewText}}{{else}}Unlock Full Power{{end}}
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+      </div>
+
+      <!-- Email wrapper -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <!-- Main container -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header with logo -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td>
+                        <!-- Logo/Brand -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                          <tr>
+                            <td style="vertical-align: middle; padding-right: 14px;">
+                              <!-- Logo placeholder - uses image if LogoURL provided, otherwise first letter of company name -->
+                              <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                {{.Branding.LogoContent}}
+                              </div>
+                            </td>
+                            <td style="vertical-align: middle;">
+                              <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Main content -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <!-- Title -->
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Unlock Full Power</h1>
+
+                  <!-- Content -->
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    
+    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+    <p style="margin: 0 0 24px 0;">You're <strong>halfway through your trial!</strong> Here's what you unlock when you upgrade:</p>
+
+    <!-- Pricing comparison -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 24px;">
+      <tr>
+        <!-- Basic Plan -->
+        <td width="48%" style="vertical-align: top; padding-right: 2%;">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; border: 2px solid #bbf7d0;">
+            <tr>
+              <td style="padding: 20px;">
+                <p style="margin: 0 0 4px 0; font-size: 14px; color: #166534; font-weight: 600;">BASIC</p>
+                <p style="margin: 0 0 16px 0; font-size: 28px; font-weight: 700; color: #15803d;">$5.50<span style="font-size: 14px; font-weight: 400; color: #6b7280;">/mo</span></p>
+                <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
+                  <li>15 status updates/day</li>
+                  <li>5,000 status contacts</li>
+                  <li>50 group messages/day</li>
+                  <li>25 tag messages/day</li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <!-- Premium Plan -->
+        <td width="48%" style="vertical-align: top; padding-left: 2%;">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; border: 2px solid #3b82f6;">
+            <tr>
+              <td style="padding: 20px;">
+                <p style="margin: 0 0 4px 0; font-size: 14px; color: #1d4ed8; font-weight: 600;">PREMIUM ⭐</p>
+                <p style="margin: 0 0 16px 0; font-size: 28px; font-weight: 700; color: #1e40af;">$14<span style="font-size: 14px; font-weight: 400; color: #6b7280;">/mo</span></p>
+                <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
+                  <li>50 status updates/day</li>
+                  <li>30,000 status contacts</li>
+                  <li><strong>Bulk import contacts</strong></li>
+                  <li><strong>Delete old status</strong></li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Enterprise mention -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #faf5ff; border-left: 4px solid #a855f7; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 16px 20px;">
+          <p style="margin: 0; font-size: 14px; color: #7e22ce;">
+            <strong>Need more?</strong> Enterprise ($35/mo) gives you unlimited status, 3 WhatsApp sessions, and cross-posting across sessions.
+          </p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- CTA Button -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+      <tr>
+        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+          <a href="{{.UpgradeURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+            View Plans & Upgrade
+          </a>
+        </td>
+      </tr>
+    </table>
+
+    <p style="margin: 24px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
+
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <!-- Divider -->
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <!-- Help text -->
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+
+                        <!-- Social links -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <!-- Company info -->
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>
+                          Lagos, Nigeria
+                        </p>
+
+                        <!-- Legal -->
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+
+                        <!-- Unsubscribe -->
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Day 5 feature highlight"
+
+trial_day6:
+  subject: "Your {{.AppName}} trial ends tomorrow!"
+  body: |-
+    Hi {{.Name}},
+
+    Heads up - your {{.AppName}} trial ends tomorrow!
+
+    After your trial:
+    - Status broadcasting will stop working
+    - Contact auto-save to Google Contacts will be disabled
+    - Group messaging and tagging will stop
+
+    Don't lose your WhatsApp automation! Upgrade now:
+    {{.UpgradeURL}}
+
+    Best,
+    The {{.AppName}} Team
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>Trial Ends Tomorrow!</title>
+      <!--[if mso]>
+      <noscript>
+        <xml>
+          <o:OfficeDocumentSettings>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+        </xml>
+      </noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+
+        /* Reset */
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+        /* Client-specific */
+        #outlook a { padding: 0; }
+        .ReadMsgBody { width: 100%; }
+        .ExternalClass { width: 100%; }
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+        /* Base styles */
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          background-color: #f3f4f6;
+          margin: 0;
+          padding: 0;
+        }
+
+        /* Links */
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Button styles */
+        .btn {
+          display: inline-block;
+          padding: 14px 28px;
+          background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+          color: #ffffff !important;
+          text-decoration: none;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 15px;
+          box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+          transition: all 0.2s ease;
+        }
+        .btn:hover {
+          background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+          box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+        }
+        .btn-danger {
+          background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+          box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+
+        /* Dark mode — preserve header text visibility */
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <!-- Preview text - uses PreviewText if set, otherwise falls back to title -->
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        {{if .PreviewText}}{{.PreviewText}}{{else}}Trial Ends Tomorrow!{{end}}
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+      </div>
+
+      <!-- Email wrapper -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <!-- Main container -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header with logo -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td>
+                        <!-- Logo/Brand -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                          <tr>
+                            <td style="vertical-align: middle; padding-right: 14px;">
+                              <!-- Logo placeholder - uses image if LogoURL provided, otherwise first letter of company name -->
+                              <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                {{.Branding.LogoContent}}
+                              </div>
+                            </td>
+                            <td style="vertical-align: middle;">
+                              <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Main content -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <!-- Title -->
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Trial Ends Tomorrow!</h1>
+
+                  <!-- Content -->
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    
+    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+    <p style="margin: 0 0 24px 0;">⚠️ <strong>Your {{.AppName}} trial ends tomorrow!</strong></p>
+
+    <!-- What happens next -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 24px;">
+          <p style="margin: 0 0 16px 0; font-weight: 600; color: #991b1b;">After your trial ends:</p>
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tr>
+              <td style="padding: 8px 0;">
+                <span style="color: #dc2626;">✗</span>
+                <span style="margin-left: 12px; color: #7f1d1d;">Status broadcasting will stop working</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0;">
+                <span style="color: #dc2626;">✗</span>
+                <span style="margin-left: 12px; color: #7f1d1d;">Contact auto-save to Google Contacts will be disabled</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0;">
+                <span style="color: #dc2626;">✗</span>
+                <span style="margin-left: 12px; color: #7f1d1d;">Group messaging and tagging will stop</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Keep your progress -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 20px 24px;">
+          <p style="margin: 0; font-size: 16px; color: #166534;">
+            <strong>Good news:</strong> Upgrade now and keep your WhatsApp connection, contacts, and all your settings intact!
+          </p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- CTA Button -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+      <tr>
+        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);">
+          <a href="{{.UpgradeURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+            Upgrade Now — Keep My Access
+          </a>
+        </td>
+      </tr>
+    </table>
+
+    <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Questions? Reply to this email and we'll help you out.</p>
+    <p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
+
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <!-- Divider -->
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <!-- Help text -->
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+
+                        <!-- Social links -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <!-- Company info -->
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>
+                          Lagos, Nigeria
+                        </p>
+
+                        <!-- Legal -->
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+
+                        <!-- Unsubscribe -->
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Day 6 urgent reminder"
+
+trial_day10:
+  subject: "We miss you! Here's 30% off {{.AppName}}"
+  body: |-
+    Hi {{.Name}},
+
+    Your {{.AppName}} trial ended a few days ago, and we noticed you haven't upgraded yet.
+
+    We'd love to have you back! Use code COMEBACK30 for 30% off your first month.
+
+    With {{.AppName}}, you can:
+    - Broadcast status to thousands of contacts instantly
+    - Auto-save contacts to Google Contacts
+    - Send messages to multiple groups and tag members
+
+    Upgrade now:
+    {{.UpgradeURL}}
+
+    This offer expires in 48 hours.
+
+    Best,
+    The {{.AppName}} Team
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>We Miss You!</title>
+      <!--[if mso]>
+      <noscript>
+        <xml>
+          <o:OfficeDocumentSettings>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+        </xml>
+      </noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+
+        /* Reset */
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+        /* Client-specific */
+        #outlook a { padding: 0; }
+        .ReadMsgBody { width: 100%; }
+        .ExternalClass { width: 100%; }
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+        /* Base styles */
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          background-color: #f3f4f6;
+          margin: 0;
+          padding: 0;
+        }
+
+        /* Links */
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Button styles */
+        .btn {
+          display: inline-block;
+          padding: 14px 28px;
+          background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+          color: #ffffff !important;
+          text-decoration: none;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 15px;
+          box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+          transition: all 0.2s ease;
+        }
+        .btn:hover {
+          background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+          box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+        }
+        .btn-danger {
+          background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+          box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+
+        /* Dark mode — preserve header text visibility */
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <!-- Preview text - uses PreviewText if set, otherwise falls back to title -->
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        {{if .PreviewText}}{{.PreviewText}}{{else}}We Miss You!{{end}}
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+      </div>
+
+      <!-- Email wrapper -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <!-- Main container -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header with logo -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td>
+                        <!-- Logo/Brand -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                          <tr>
+                            <td style="vertical-align: middle; padding-right: 14px;">
+                              <!-- Logo placeholder - uses image if LogoURL provided, otherwise first letter of company name -->
+                              <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                {{.Branding.LogoContent}}
+                              </div>
+                            </td>
+                            <td style="vertical-align: middle;">
+                              <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Main content -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <!-- Title -->
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">We Miss You!</h1>
+
+                  <!-- Content -->
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    
+    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+    <p style="margin: 0 0 24px 0;">Your {{.AppName}} trial ended a few days ago, and we noticed you haven't upgraded yet. <strong>We'd love to have you back!</strong></p>
+
+    <!-- What you're missing -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 20px;">
+          <p style="margin: 0 0 12px 0; font-weight: 600; color: #166534;">What you're missing out on:</p>
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #374151; line-height: 1.8;">
+            <li>Broadcast status to thousands of WhatsApp contacts instantly</li>
+            <li>Auto-save every new contact to Google Contacts</li>
+            <li>Send messages to multiple groups at once</li>
+            <li>Tag and mention members in group messages</li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Special offer -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 32px; text-align: center;">
+          <p style="margin: 0 0 8px 0; font-size: 14px; color: #92400e; text-transform: uppercase; letter-spacing: 1px;">Exclusive Comeback Offer</p>
+          <p style="margin: 0 0 16px 0; font-size: 48px; font-weight: 800; color: #78350f;">30% OFF</p>
+          <p style="margin: 0; font-size: 16px; color: #92400e;">Use code: <strong style="background: #78350f; color: white; padding: 4px 12px; border-radius: 4px; font-family: monospace;">COMEBACK30</strong></p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Urgency -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-left: 4px solid {{.Branding.DangerColor}}; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 16px 20px;">
+          <p style="margin: 0; font-size: 14px; color: #991b1b;">
+            <strong>⏰ This offer expires in 48 hours!</strong>
+          </p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- CTA Button -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+      <tr>
+        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+          <a href="{{.UpgradeURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+            Claim 30% Off Now →
+          </a>
+        </td>
+      </tr>
+    </table>
+
+    <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">If you have any questions or feedback about your trial experience, we'd love to hear from you.</p>
+    <p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
+
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <!-- Divider -->
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <!-- Help text -->
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+
+                        <!-- Social links -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <!-- Company info -->
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>
+                          Lagos, Nigeria
+                        </p>
+
+                        <!-- Legal -->
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+
+                        <!-- Unsubscribe -->
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Day 10 win-back after expiry"
+
+trial_expiring:
+  subject: "Your {{.AppName}} trial expires in {{.Days}} days"
+  body: |-
+    Hi {{.Name}},
+
+    Your free trial of {{.AppName}} expires in {{.Days}} days.
+
+    Don't lose access to:
+    - Status broadcasting to your contacts
+    - Auto-save contacts to Google Contacts
+    - Group messaging and tagging
+
+    Upgrade now to keep your WhatsApp automation running:
+    {{.UpgradeURL}}
+
+    Questions? Reply to this email.
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>Trial Expiring Soon</title>
+      <!--[if mso]>
+      <noscript>
+        <xml>
+          <o:OfficeDocumentSettings>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+        </xml>
+      </noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+
+        /* Reset */
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+        /* Client-specific */
+        #outlook a { padding: 0; }
+        .ReadMsgBody { width: 100%; }
+        .ExternalClass { width: 100%; }
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+        /* Base styles */
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          background-color: #f3f4f6;
+          margin: 0;
+          padding: 0;
+        }
+
+        /* Links */
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Button styles */
+        .btn {
+          display: inline-block;
+          padding: 14px 28px;
+          background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+          color: #ffffff !important;
+          text-decoration: none;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 15px;
+          box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+          transition: all 0.2s ease;
+        }
+        .btn:hover {
+          background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+          box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+        }
+        .btn-danger {
+          background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+          box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+
+        /* Dark mode — preserve header text visibility */
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <!-- Preview text - uses PreviewText if set, otherwise falls back to title -->
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        {{if .PreviewText}}{{.PreviewText}}{{else}}Trial Expiring Soon{{end}}
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+      </div>
+
+      <!-- Email wrapper -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <!-- Main container -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header with logo -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td>
+                        <!-- Logo/Brand -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                          <tr>
+                            <td style="vertical-align: middle; padding-right: 14px;">
+                              <!-- Logo placeholder - uses image if LogoURL provided, otherwise first letter of company name -->
+                              <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                {{.Branding.LogoContent}}
+                              </div>
+                            </td>
+                            <td style="vertical-align: middle;">
+                              <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Main content -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <!-- Title -->
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Trial Expiring Soon</h1>
+
+                  <!-- Content -->
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    
+    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+    <p style="margin: 0 0 24px 0;">Your free trial of <strong>{{.AppName}}</strong> expires in <strong>{{.Days}} days</strong>.</p>
+
+    <!-- What you'll lose -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 24px;">
+          <p style="margin: 0 0 16px 0; font-weight: 600; color: #991b1b;">Don't lose access to:</p>
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tr>
+              <td style="padding: 8px 0;">
+                <span style="color: #dc2626;">✗</span>
+                <span style="margin-left: 12px; color: #7f1d1d;">Status broadcasting to your contacts</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0;">
+                <span style="color: #dc2626;">✗</span>
+                <span style="margin-left: 12px; color: #7f1d1d;">Auto-save contacts to Google Contacts</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0;">
+                <span style="color: #dc2626;">✗</span>
+                <span style="margin-left: 12px; color: #7f1d1d;">Group messaging and tagging</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- CTA Button -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+      <tr>
+        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+          <a href="{{.UpgradeURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+            Upgrade Now
+          </a>
+        </td>
+      </tr>
+    </table>
+
+    <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Questions? Reply to this email.</p>
+    <p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.AppName}} Team</p>
+
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <!-- Divider -->
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <!-- Help text -->
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+
+                        <!-- Social links -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <!-- Company info -->
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>
+                          Lagos, Nigeria
+                        </p>
+
+                        <!-- Legal -->
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+
+                        <!-- Unsubscribe -->
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Sent before trial expires"
+
+account_upgraded:
+  subject: "Welcome to {{.PlanName}} - Your upgrade is complete!"
+  body: |-
+    Hi {{.Name}},
+
+    Congratulations! You've been upgraded to {{.PlanName}}.
+
+    You now have access to:
+    {{.Features}}
+
+    Start using your new features now:
+    {{.DashboardURL}}
+
+    Thank you for your support!
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>Upgrade Complete!</title>
+      <!--[if mso]>
+      <noscript>
+        <xml>
+          <o:OfficeDocumentSettings>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+        </xml>
+      </noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+
+        /* Reset */
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+        /* Client-specific */
+        #outlook a { padding: 0; }
+        .ReadMsgBody { width: 100%; }
+        .ExternalClass { width: 100%; }
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+        /* Base styles */
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          background-color: #f3f4f6;
+          margin: 0;
+          padding: 0;
+        }
+
+        /* Links */
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Button styles */
+        .btn {
+          display: inline-block;
+          padding: 14px 28px;
+          background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+          color: #ffffff !important;
+          text-decoration: none;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 15px;
+          box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+          transition: all 0.2s ease;
+        }
+        .btn:hover {
+          background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+          box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+        }
+        .btn-danger {
+          background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+          box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+
+        /* Dark mode — preserve header text visibility */
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <!-- Preview text - uses PreviewText if set, otherwise falls back to title -->
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        {{if .PreviewText}}{{.PreviewText}}{{else}}Upgrade Complete!{{end}}
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+      </div>
+
+      <!-- Email wrapper -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <!-- Main container -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header with logo -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td>
+                        <!-- Logo/Brand -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                          <tr>
+                            <td style="vertical-align: middle; padding-right: 14px;">
+                              <!-- Logo placeholder - uses image if LogoURL provided, otherwise first letter of company name -->
+                              <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                {{.Branding.LogoContent}}
+                              </div>
+                            </td>
+                            <td style="vertical-align: middle;">
+                              <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Main content -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <!-- Title -->
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Upgrade Complete!</h1>
+
+                  <!-- Content -->
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    
+    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+    <p style="margin: 0 0 24px 0;">Congratulations! 🎉 You've been upgraded to <strong>{{.PlanName}}</strong>.</p>
+
+    <!-- Success message -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 24px; text-align: center;">
+          <div style="font-size: 48px; margin-bottom: 16px;">✓</div>
+          <p style="margin: 0 0 8px 0; font-size: 20px; font-weight: 700; color: #166534;">Upgrade Complete!</p>
+          <p style="margin: 0; font-size: 14px; color: #6b7280;">Your new features are now active</p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- What's unlocked -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 24px;">
+          <p style="margin: 0 0 16px 0; font-weight: 600; color: #1e40af;">You now have access to:</p>
+          <div style="font-size: 14px; color: #374151; line-height: 1.8;">
+            {{.FeaturesHTML}}
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- CTA Button -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+      <tr>
+        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+          <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+            Start Using New Features →
+          </a>
+        </td>
+      </tr>
+    </table>
+
+    <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Thank you for your support! If you have any questions, just reply to this email.</p>
+    <p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
+
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <!-- Divider -->
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <!-- Help text -->
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+
+                        <!-- Social links -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <!-- Company info -->
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>
+                          Lagos, Nigeria
+                        </p>
+
+                        <!-- Legal -->
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+
+                        <!-- Unsubscribe -->
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Sent when user upgrades their plan"
