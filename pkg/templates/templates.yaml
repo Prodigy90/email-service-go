@@ -1141,7 +1141,7 @@ migration_announcement:
                   <!-- Offer -->
                   <p style="margin: 0 0 6px; font-weight: 800; font-size: 16px; color: #0f172a;">What you're getting on the new platform</p>
 
-                  {{if and .IsLegacyUser .LegacyEligible (.OfferFreeDays)}}
+                  {{- if and .IsLegacyUser .LegacyEligible (.OfferFreeDays)}}
                   <!-- Personalized offer for active subscribers -->
                   <p style="margin: 0 0 12px; font-size: 14px; color: #374151; line-height: 1.7;">
                     As a <strong>{{.LegacyPlan}}</strong> subscriber, your paid subscription isn't just being
@@ -1163,7 +1163,7 @@ migration_announcement:
                       </td>
                     </tr>
                   </table>
-                  {{else if .IsLegacyUser}}
+                  {{- else if .IsLegacyUser}}
                   <!-- Offer for legacy users without active subscription -->
                   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
                     <tr>
@@ -1177,7 +1177,7 @@ migration_announcement:
                       </td>
                     </tr>
                   </table>
-                  {{else}}
+                  {{- else}}
                   <!-- Fallback: static tier list when no legacy data available -->
                   <p style="margin: 0 0 8px; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em;">If you had an active subscription on wasbot.ng</p>
                   <p style="margin: 0 0 12px; font-size: 14px; color: #374151; line-height: 1.7;">
@@ -1222,7 +1222,7 @@ migration_announcement:
                       </td>
                     </tr>
                   </table>
-                  {{end}}
+                  {{- end}}
 
                   <!-- Steps -->
                   <p style="margin: 0 0 14px; font-weight: 800; font-size: 16px; color: #0f172a;">How to migrate (2 minutes)</p>
@@ -1509,7 +1509,7 @@ migration_follow_up:
 
                     <p style="margin: 0 0 20px 0;">Your migration offer is still active. Sign up with your wasbot.ng email and it applies automatically:</p>
 
-                    {{if and .IsLegacyUser .LegacyEligible (.OfferFreeDays)}}
+                    {{- if and .IsLegacyUser .LegacyEligible (.OfferFreeDays)}}
                     <!-- Personalized offer -->
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
                       <tr>
@@ -1524,7 +1524,7 @@ migration_follow_up:
                         </td>
                       </tr>
                     </table>
-                    {{else if .IsLegacyUser}}
+                    {{- else if .IsLegacyUser}}
                     <!-- Non-active legacy user offer -->
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
                       <tr>
@@ -1535,7 +1535,7 @@ migration_follow_up:
                         </td>
                       </tr>
                     </table>
-                    {{else}}
+                    {{- else}}
                     <!-- Fallback: static list -->
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
                       <tr>
@@ -1549,7 +1549,7 @@ migration_follow_up:
                         </td>
                       </tr>
                     </table>
-                    {{end}}
+                    {{- end}}
 
                     <!-- CTA -->
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 28px;">
