@@ -93,12 +93,25 @@ Email sending uses a provider interface (`internal/service/sender.go`):
 
 ## Template System
 
-Templates defined in `pkg/templates/templates.yaml`. Each template has:
-- Plain text body
-- HTML body with styling
-- Variable placeholders using Go's `text/template` syntax
+Templates are defined in categorized YAML files under `pkg/templates/`:
+- `auth.yaml` — email_verification, password_reset
+- `welcome.yaml` — welcome, trial_day3/5/6/10, trial_expiring, account_upgraded
+- `payments.yaml` — payment_success/failed, subscription_activated/renewed/cancelled/reminders
+- `refunds.yaml` — refund_pending/processed/failed
+- `affiliate.yaml` — payout_*, commission_*, access_revoked, affiliate_link_updated
+- `migration.yaml` — migration campaign templates + legacy_provisioned
+- `campaigns.yaml` — campaign_update, feature_announcement, testimonial_request
 
-To add a template: edit `templates.yaml` and add subject/body/html_body with `{{.VarName}}` placeholders.
+Each template has:
+- `subject` — email subject line
+- `body` — plain text body
+- `html_body` — HTML body with styling
+- `description` — template purpose (optional)
+- `preview_text` — email preview text (optional)
+- Variable placeholders using Go's `text/template` syntax: `{{.VarName}}`
+
+To add a template: create or edit the appropriate YAML file in `pkg/templates/` and add the template with subject/body/html_body fields.
+All `*.yaml` files in the directory are loaded automatically on startup.
 
 ## Environment Configuration
 
