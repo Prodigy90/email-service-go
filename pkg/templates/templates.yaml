@@ -909,7 +909,7 @@ migration_announcement:
     WASBOT.NG SHUTS DOWN MARCH 31, 2026
     -----------------------------------------------------------------------
     After this date the old platform is gone permanently.
-    Everything you need is at www.wasbot.app
+    Everything you need is at https://www.wasbot.app/{{.RefParam}}
 
     The old WASBOT kept breaking — sessions dropped without warning, features
     stopped working overnight, and scaling was structurally impossible. We stopped
@@ -1099,7 +1099,7 @@ migration_announcement:
                         </p>
                         <p style="margin: 0; color: #b91c1c; font-size: 13px;">
                           After this date the old platform is gone permanently.
-                          Everything you need is at <strong>wasbot.app</strong>.
+                          Everything you need is at <a href="https://www.wasbot.app/{{.RefParam}}" style="color: #b91c1c; font-weight: 700;">wasbot.app</a>.
                         </p>
                       </td>
                     </tr>
