@@ -76,6 +76,11 @@ func (ts *TemplateService) RenderWithBranding(templateName string, data map[stri
 	}
 	templateData["Branding"] = ts.prepareBrandingData(branding)
 
+	// Inject PreviewText from template if not already provided by caller
+	if _, ok := templateData["PreviewText"]; !ok && tmpl.PreviewText != "" {
+		templateData["PreviewText"] = tmpl.PreviewText
+	}
+
 	// Render subject
 	subject, err = ts.renderString(tmpl.Subject, templateData)
 	if err != nil {
@@ -654,6 +659,8 @@ func (ts *TemplateService) wrapHTMLWithBranding(title, content string) string {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
   <title>%s</title>
   <!--[if mso]>
   <noscript>
@@ -665,6 +672,8 @@ func (ts *TemplateService) wrapHTMLWithBranding(title, content string) string {
   </noscript>
   <![endif]-->
   <style>
+    :root { color-scheme: light dark; }
+
     /* Reset */
     body, table, td, p, a, li { -webkit-text-size-adjust: 100%%; -ms-text-size-adjust: 100%%; }
     table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
@@ -718,6 +727,11 @@ func (ts *TemplateService) wrapHTMLWithBranding(title, content string) string {
       .header { padding: 24px 20px !important; }
       .footer-content { padding: 24px 20px !important; }
     }
+
+    /* Dark mode — preserve header text visibility */
+    @media (prefers-color-scheme: dark) {
+      .header-company-name { color: #ffffff !important; }
+    }
   </style>
 </head>
 <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
@@ -750,7 +764,7 @@ func (ts *TemplateService) wrapHTMLWithBranding(title, content string) string {
                           </div>
                         </td>
                         <td style="vertical-align: middle;">
-                          <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                          <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
                         </td>
                       </tr>
                     </table>
@@ -2528,6 +2542,8 @@ func (ts *TemplateService) featureAnnouncementHTML() string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>{{if .Headline}}{{.Headline}}{{else}}New Features Just Dropped{{end}}</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
   <!--[if mso]>
   <noscript>
     <xml>
@@ -2538,6 +2554,7 @@ func (ts *TemplateService) featureAnnouncementHTML() string {
   </noscript>
   <![endif]-->
   <style>
+    :root { color-scheme: light dark; }
     body, table, td, p, a, li { -webkit-text-size-adjust: 100%%; -ms-text-size-adjust: 100%%; }
     table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
     img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%%; outline: none; text-decoration: none; }
@@ -2560,6 +2577,9 @@ func (ts *TemplateService) featureAnnouncementHTML() string {
       .header { padding: 24px 20px !important; }
       .footer-content { padding: 24px 20px !important; }
       .feature-icon { width: 40px !important; height: 40px !important; font-size: 20px !important; line-height: 40px !important; }
+    }
+    @media (prefers-color-scheme: dark) {
+      .header-company-name { color: #ffffff !important; }
     }
   </style>
 </head>
@@ -2591,7 +2611,7 @@ func (ts *TemplateService) featureAnnouncementHTML() string {
                           </div>
                         </td>
                         <td style="vertical-align: middle;">
-                          <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                          <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
                         </td>
                       </tr>
                     </table>

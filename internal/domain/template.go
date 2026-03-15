@@ -4,6 +4,7 @@ package domain
 type Template struct {
 	Name        string `json:"name" yaml:"name"`
 	Subject     string `json:"subject" yaml:"subject"`
+	PreviewText string `json:"preview_text,omitempty" yaml:"preview_text"`
 	Body        string `json:"body" yaml:"body"`
 	HTMLBody    string `json:"html_body,omitempty" yaml:"html_body"`
 	Description string `json:"description,omitempty" yaml:"description"`

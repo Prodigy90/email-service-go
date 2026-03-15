@@ -68,11 +68,14 @@ campaign_update:
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
       <title>{{.Subject}}</title>
       <!--[if mso]>
       <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
       <![endif]-->
       <style>
+        :root { color-scheme: light dark; }
         body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
         table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
         img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
@@ -84,6 +87,9 @@ campaign_update:
           .content { padding: 24px 20px !important; }
           .header { padding: 24px 20px !important; }
           .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
         }
       </style>
     </head>
@@ -108,7 +114,7 @@ campaign_update:
                         </div>
                       </td>
                       <td style="vertical-align: middle;">
-                        <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
                       </td>
                     </tr>
                   </table>
@@ -266,10 +272,13 @@ feature_announcement:
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <title>New features on WASBOT</title>
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
       <!--[if mso]>
       <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
       <![endif]-->
       <style>
+        :root { color-scheme: light dark; }
         body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
         table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
         img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
@@ -281,6 +290,9 @@ feature_announcement:
           .content { padding: 24px 20px !important; }
           .header { padding: 24px 20px !important; }
           .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
         }
       </style>
     </head>
@@ -305,7 +317,7 @@ feature_announcement:
                         </div>
                       </td>
                       <td style="vertical-align: middle;">
-                        <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
                       </td>
                     </tr>
                   </table>
@@ -507,10 +519,13 @@ legacy_provisioned:
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <title>Welcome back — you've been upgraded!</title>
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
       <!--[if mso]>
       <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
       <![endif]-->
       <style>
+        :root { color-scheme: light dark; }
         body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
         table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
         img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
@@ -522,6 +537,9 @@ legacy_provisioned:
           .content { padding: 24px 20px !important; }
           .header { padding: 24px 20px !important; }
           .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
         }
       </style>
     </head>
@@ -546,7 +564,7 @@ legacy_provisioned:
                         </div>
                       </td>
                       <td style="vertical-align: middle;">
-                        <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
                       </td>
                     </tr>
                   </table>
@@ -711,10 +729,13 @@ testimonial_request:
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <title>Quick favor</title>
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
       <!--[if mso]>
       <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
       <![endif]-->
       <style>
+        :root { color-scheme: light dark; }
         body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
         table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
         img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
@@ -726,6 +747,9 @@ testimonial_request:
           .content { padding: 24px 20px !important; }
           .header { padding: 24px 20px !important; }
           .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
         }
       </style>
     </head>
@@ -750,7 +774,7 @@ testimonial_request:
                         </div>
                       </td>
                       <td style="vertical-align: middle;">
-                        <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
                       </td>
                     </tr>
                   </table>
@@ -860,7 +884,10 @@ testimonial_request:
 # =============================================================================
 # First email in the legacy migration campaign. Explains WHY wasbot.ng is
 # shutting down, what happens to Paystack subscriptions, tiered offers,
-# and how to migrate.
+# and how to migrate. Rewritten for maximum opens and hook retention.
+# Lead paragraph answers the 3 core user questions immediately.
+# Tiered migration offers auto-applied by email. CTA reframed as value claim.
+# Affiliate section retained for non-migrators.
 #
 # Variables:
 #   {{.Name}}           - Recipient name
@@ -868,55 +895,93 @@ testimonial_request:
 #   {{.UnsubscribeURL}} - Unsubscribe link
 
 migration_announcement:
-  subject: "Important: wasbot.ng is shutting down March 31 — here's your migration offer"
+  subject: "Your WASBOT account is moving — here's what happens next"
+  preview_text: "wasbot.ng closes March 31. Your new home is ready. Takes 2 minutes."
   body: |
     Hi {{.Name}},
 
-    We have some important news.
+    On March 31, 2026, wasbot.ng goes offline permanently — but this isn't the end.
+    We rebuilt WASBOT from the ground up, and your new account is already waiting.
+    This email tells you exactly what's changing, what you're getting for free,
+    and how to be live again in under 2 minutes.
 
-    wasbot.ng is shutting down on March 31, 2026.
+    -----------------------------------------------------------------------
+    WASBOT.NG SHUTS DOWN MARCH 31, 2026
+    -----------------------------------------------------------------------
+    After this date the old platform is gone permanently.
+    Everything you need is at www.wasbot.app
 
-    Why? Honestly — the old WASBOT was built on tech that kept breaking. Sessions dropping randomly, features that worked one day and didn't the next, impossible to add new things without something else falling apart. It couldn't scale and we got tired of patching it.
+    The old WASBOT kept breaking — sessions dropped without warning, features
+    stopped working overnight, and scaling was structurally impossible. We stopped
+    patching it and rebuilt everything from scratch: new backend, new dashboard,
+    new infrastructure.
 
-    So we rebuilt everything from scratch. New backend, new dashboard, new infrastructure. It's faster, more stable, and packed with features the old version could never support.
+    The new platform is faster, more stable, and supports features the old version
+    couldn't. Think of this as your upgrade, not a migration.
 
-    Everything is now at www.wasbot.app
+    See everything that's new: https://www.wasbot.app/#features
 
-    See what's new: https://www.wasbot.app/#features
-
+    -----------------------------------------------------------------------
     WHAT HAPPENS TO YOUR PAYSTACK SUBSCRIPTION
+    -----------------------------------------------------------------------
+    All existing Paystack plans on wasbot.ng will be cancelled.
+    You will NOT be charged again on the old platform.
+    No rollovers — subscriptions end with the platform.
+    You'll start fresh on wasbot.app.
 
-    All existing Paystack plans on wasbot.ng will be cancelled. You will not be charged again on the old platform. No rollovers — the old subscriptions end with the old platform.
+    -----------------------------------------------------------------------
+    WHAT YOU'RE GETTING ON THE NEW PLATFORM
+    -----------------------------------------------------------------------
 
-    YOUR MIGRATION OFFER
+    IF YOU HAD AN ACTIVE SUBSCRIPTION ON WASBOT.NG
 
-    Because you've been with us, here's what you get when you sign up on the new platform:
+    Your paid subscription isn't just being cancelled — we're converting the
+    remaining value into free time on the new platform:
 
-    - Ultimate Organizer: 30 days FREE Basic + 3 months 10% off
-    - Efficiency Explorer: 14 days FREE Basic + 3 months 10% off
-    - Essential Saver: 7 days FREE Basic + 3 months 10% off
-    - Everyone else: 7-day free trial + one-time 10% off any plan
+      Ultimate Organizer  →  30 days free on Basic, then 10% off for 3 months
+      Efficiency Explorer →  14 days free on Basic, then 10% off for 3 months
+      Essential Saver     →  7 days free on Basic, then 10% off for 3 months
 
-    Sign up with the same email you used on wasbot.ng and the offer applies automatically. No codes needed.
+    Sign up with your wasbot.ng email — your offer is detected and applied
+    automatically. No codes, no support ticket needed.
 
-    HOW TO MIGRATE
+    NEVER HAD A SUBSCRIPTION?
 
+    No worries — you can still try the new WASBOT completely free. Sign up
+    and get a 7-day free trial on any plan, plus a one-time 10% discount.
+    No credit card required. If you decide it's not for you, just don't
+    subscribe. No commitment, no charge.
+
+    -----------------------------------------------------------------------
+    HOW TO MIGRATE (2 MINUTES)
+    -----------------------------------------------------------------------
     1. Go to https://www.wasbot.app
+       → Your new home
+
     2. Sign up with your wasbot.ng email
-    3. Your offer is applied instantly
-    4. Connect your WhatsApp — scan QR and you're live
+       → Same email = offer auto-applied. No codes.
 
-    Deadline: March 31, 2026 — after that, wasbot.ng is gone permanently.
+    3. Your offer activates instantly
+       → No tickets, no support needed
 
-    Migrate now: {{.DashboardURL}}
+    4. Connect WhatsApp — scan QR and you're live
+       → Takes about 60 seconds
 
-    EARN WITH WASBOT
+    DEADLINE: March 31, 2026 — after that, wasbot.ng is permanently offline.
 
-    Not ready to migrate? You can still earn. Refer friends and family to WASBOT and earn 20% commission on their first 3 months of any paid plan.
+    Claim your new account: {{.DashboardURL}}
+
+    -----------------------------------------------------------------------
+    NOT READY YET? YOU CAN STILL EARN.
+    -----------------------------------------------------------------------
+    Refer friends and family to WASBOT and earn 20% commission on their first
+    3 months of any paid plan. No migration required to start referring.
 
     Learn how it works: https://www.wasbot.app/blog/affiliate-program
 
-    Questions? Just reply to this email.
+    -----------------------------------------------------------------------
+
+    Questions? Just reply to this email — we actually read them.
 
     — The WASBOT Team
 
@@ -930,15 +995,19 @@ migration_announcement:
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <title>Important update about your WASBOT account</title>
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>Your WASBOT account is moving</title>
       <!--[if mso]>
       <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
       <![endif]-->
       <style>
+        :root { color-scheme: light dark; }
         body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
         table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
         img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
-        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #f3f4f6;
+               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
         a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
         a:hover { text-decoration: underline; }
         @media only screen and (max-width: 620px) {
@@ -947,13 +1016,19 @@ migration_announcement:
           .header { padding: 24px 20px !important; }
           .footer-content { padding: 24px 20px !important; }
         }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
       </style>
     </head>
     <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+
+      <!-- Preview text -->
       <div style="display: none; max-height: 0; overflow: hidden;">
-        wasbot.ng is shutting down March 31 — here's your migration offer
+        {{if .PreviewText}}{{.PreviewText}}{{else}}wasbot.ng closes March 31. Your new home is ready. Takes 2 minutes.{{end}}
         &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
       </div>
+
       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
         <tr>
           <td style="padding: 40px 20px;">
@@ -961,16 +1036,16 @@ migration_announcement:
 
               <!-- Header -->
               <tr>
-                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                <td class="header" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 28px 36px; border-radius: 16px 16px 0 0;">
                   <table role="presentation" cellspacing="0" cellpadding="0" border="0">
                     <tr>
                       <td style="vertical-align: middle; padding-right: 14px;">
-                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px; font-size: 22px;">
                           {{.Branding.LogoContent}}
                         </div>
                       </td>
                       <td style="vertical-align: middle;">
-                        <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
                       </td>
                     </tr>
                   </table>
@@ -979,129 +1054,241 @@ migration_announcement:
 
               <!-- Body -->
               <tr>
-                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
-                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Important update</h1>
+                <td class="content" style="background-color: #ffffff; padding: 36px; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0;">
 
-                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
-                    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+                  <h1 style="margin: 0 0 20px; font-size: 26px; font-weight: 800; color: #0f172a; line-height: 1.3;">
+                    Your account is moving to a faster, better WASBOT
+                  </h1>
 
-                    <!-- Shutdown notice -->
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
-                      <tr>
-                        <td style="background-color: #fef2f2; border-left: 4px solid #ef4444; padding: 20px; border-radius: 0 12px 12px 0;">
-                          <p style="margin: 0 0 4px; color: #991b1b; font-size: 16px; font-weight: 700;">wasbot.ng is shutting down on March 31, 2026</p>
-                          <p style="margin: 0; color: #b91c1c; font-size: 14px; line-height: 1.5;">After this date, the old platform will be permanently offline.</p>
-                        </td>
-                      </tr>
-                    </table>
+                  <p style="margin: 0 0 20px; font-size: 15px; color: #64748b;">Hi {{.Name}},</p>
 
-                    <p style="margin: 0 0 16px 0;">Honestly &mdash; the old WASBOT was built on tech that kept breaking. Sessions dropping randomly, features that worked one day and didn't the next. It couldn't scale and we got tired of patching it.</p>
-                    <p style="margin: 0 0 24px 0;">So we rebuilt everything from scratch. New backend, new dashboard, new infrastructure. It's faster, more stable, and packed with features the old version could never support.</p>
+                  <!-- Hook -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                    <tr>
+                      <td style="background: #f8fafc; border-left: 3px solid {{.Branding.PrimaryColor}}; border-radius: 0 10px 10px 0; padding: 18px 20px; color: #0f172a; font-size: 15px; font-weight: 500; line-height: 1.8;">
+                        On <strong style="color: #ef4444;">March 31, 2026</strong>, wasbot.ng goes offline
+                        permanently &mdash; but this isn't the end. We rebuilt WASBOT from the ground up,
+                        and your new account is already waiting. This email tells you exactly what's changing,
+                        what you're getting for free, and how to be live again in under 2 minutes.
+                      </td>
+                    </tr>
+                  </table>
 
-                    <p style="margin: 0 0 24px 0; text-align: center;">
-                      <a href="https://www.wasbot.app/#features" style="color: {{.Branding.PrimaryColor}}; font-size: 15px; font-weight: 600;">See all the new features &rarr;</a>
-                    </p>
+                  <!-- Shutdown callout -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                    <tr>
+                      <td style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 18px 20px; border-radius: 0 12px 12px 0;">
+                        <p style="margin: 0 0 4px; color: #ef4444; font-size: 15px; font-weight: 700;">
+                          wasbot.ng shuts down March 31, 2026
+                        </p>
+                        <p style="margin: 0; color: #b91c1c; font-size: 13px;">
+                          After this date the old platform is gone permanently.
+                          Everything you need is at <strong>wasbot.app</strong>.
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
 
-                    <!-- Paystack notice -->
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
-                      <tr>
-                        <td style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 0 12px 12px 0;">
-                          <p style="margin: 0 0 4px; color: #92400e; font-size: 15px; font-weight: 700;">What happens to your Paystack subscription</p>
-                          <p style="margin: 0; color: #a16207; font-size: 14px; line-height: 1.5;">All existing Paystack plans on wasbot.ng will be cancelled. You will <strong>not</strong> be charged again on the old platform. No rollovers &mdash; the old subscriptions end with the old platform.</p>
-                        </td>
-                      </tr>
-                    </table>
+                  <p style="margin: 0 0 14px; font-size: 15px; color: #64748b; line-height: 1.75;">
+                    The old WASBOT kept breaking &mdash; sessions dropped without warning, features stopped
+                    working overnight, and scaling was structurally impossible. We stopped patching it and
+                    rebuilt everything from scratch: new backend, new dashboard, new infrastructure.
+                  </p>
+                  <p style="margin: 0 0 24px; font-size: 15px; color: #64748b; line-height: 1.75;">
+                    The new platform is faster, more stable, and supports features the old version couldn't.
+                    Think of this as your upgrade, not a migration.
+                  </p>
 
-                    <!-- Offers -->
-                    <p style="margin: 0 0 16px 0; font-weight: 700; color: #111827;">Your migration offer</p>
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
-                      <tr>
-                        <td style="background-color: #f0fdf4; border: 2px solid {{.Branding.PrimaryColor}}; border-radius: 12px; padding: 20px;">
-                          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                            <tr><td style="padding: 8px 0; color: #166534; font-size: 14px; line-height: 1.5;"><strong>Ultimate Organizer:</strong> 30 days FREE Basic + 3 months 10% off</td></tr>
-                            <tr><td style="padding: 8px 0; color: #166534; font-size: 14px; line-height: 1.5; border-top: 1px solid #dcfce7;"><strong>Efficiency Explorer:</strong> 14 days FREE Basic + 3 months 10% off</td></tr>
-                            <tr><td style="padding: 8px 0; color: #166534; font-size: 14px; line-height: 1.5; border-top: 1px solid #dcfce7;"><strong>Essential Saver:</strong> 7 days FREE Basic + 3 months 10% off</td></tr>
-                            <tr><td style="padding: 8px 0; color: #166534; font-size: 14px; line-height: 1.5; border-top: 1px solid #dcfce7;"><strong>Everyone else:</strong> 7-day free trial + one-time 10% off any plan</td></tr>
-                          </table>
-                          <p style="margin: 12px 0 0; color: {{.Branding.PrimaryColor}}; font-size: 13px;">Sign up with your wasbot.ng email &mdash; offer applies automatically. No codes.</p>
-                        </td>
-                      </tr>
-                    </table>
+                  <p style="margin: 0 0 28px; text-align: center;">
+                    <a href="https://www.wasbot.app/#features"
+                       style="color: {{.Branding.PrimaryColor}}; font-size: 14px; font-weight: 700; border-bottom: 2px solid {{.Branding.PrimaryColor}}; padding-bottom: 2px;">
+                      See everything that's new &rarr;
+                    </a>
+                  </p>
 
-                    <!-- How to migrate -->
-                    <p style="margin: 0 0 12px 0; font-weight: 700; color: #111827;">How to migrate (2 minutes)</p>
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
-                      <tr>
-                        <td style="padding: 20px;">
-                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                            <tr>
-                              <td style="padding: 8px 0;">
-                                <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">1</span>
-                                <span style="margin-left: 12px; color: #374151;">Go to <a href="https://www.wasbot.app" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">wasbot.app</a></span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td style="padding: 8px 0;">
-                                <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">2</span>
-                                <span style="margin-left: 12px; color: #374151;">Sign up with your wasbot.ng email</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td style="padding: 8px 0;">
-                                <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">3</span>
-                                <span style="margin-left: 12px; color: #374151;">Your offer is applied instantly</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td style="padding: 8px 0;">
-                                <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">4</span>
-                                <span style="margin-left: 12px; color: #374151;">Connect your WhatsApp &mdash; scan QR and you're live</span>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                    </table>
+                  <!-- Paystack -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                    <tr>
+                      <td style="background: #fefce8; border-left: 4px solid #f59e0b; padding: 18px 20px; border-radius: 0 12px 12px 0;">
+                        <p style="margin: 0 0 6px; color: #92400e; font-size: 14px; font-weight: 700;">
+                          What happens to your Paystack subscription
+                        </p>
+                        <p style="margin: 0; color: #a16207; font-size: 13px; line-height: 1.6;">
+                          All existing Paystack plans on wasbot.ng will be <strong>cancelled</strong>.
+                          You will <strong>not</strong> be charged again on the old platform.
+                          No rollovers &mdash; subscriptions end with the platform.
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
 
-                    <!-- CTA -->
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 28px;">
-                      <tr>
-                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
-                          <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
-                            Migrate Now &mdash; It's Free
-                          </a>
-                        </td>
-                      </tr>
-                    </table>
+                  <!-- Offer -->
+                  <p style="margin: 0 0 6px; font-weight: 800; font-size: 16px; color: #0f172a;">What you're getting on the new platform</p>
 
-                    <!-- Affiliate CTA -->
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
-                      <tr>
-                        <td style="background-color: #faf5ff; border-left: 4px solid #8b5cf6; padding: 20px; border-radius: 0 12px 12px 0;">
-                          <p style="margin: 0 0 6px; color: #5b21b6; font-size: 15px; font-weight: 700;">Earn with WASBOT</p>
-                          <p style="margin: 0 0 12px; color: #6d28d9; font-size: 14px; line-height: 1.5;">Not ready to migrate? You can still earn. Refer friends and family to WASBOT and earn <strong>20% commission</strong> on their first 3 months of any paid plan.</p>
-                          <a href="https://www.wasbot.app/blog/affiliate-program" style="color: #7c3aed; font-size: 14px; font-weight: 600; text-decoration: underline;">Learn how it works &rarr;</a>
-                        </td>
-                      </tr>
-                    </table>
+                  <!-- Active subscribers -->
+                  <p style="margin: 0 0 8px; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em;">If you had an active subscription on wasbot.ng</p>
+                  <p style="margin: 0 0 12px; font-size: 14px; color: #374151; line-height: 1.7;">
+                    Your paid subscription isn't just being cancelled &mdash; we're converting the remaining value
+                    into free time on the new platform. Here's what you get based on your old plan:
+                  </p>
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+                         style="background: #f0fdf4; border: 2px solid {{.Branding.PrimaryColor}}; border-radius: 12px; overflow: hidden; margin-bottom: 16px;">
+                    <tr>
+                      <td style="padding: 14px 18px; border-bottom: 1px solid #dcfce7;">
+                        <div style="color: #166534; font-weight: 700; font-size: 14px; margin-bottom: 2px;">Ultimate Organizer</div>
+                        <div style="color: #166534; font-size: 12px;">30 days free on Basic &mdash; then 10% off any paid plan for 3 months</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 14px 18px; border-bottom: 1px solid #dcfce7;">
+                        <div style="color: #166534; font-weight: 700; font-size: 14px; margin-bottom: 2px;">Efficiency Explorer</div>
+                        <div style="color: #166534; font-size: 12px;">14 days free on Basic &mdash; then 10% off any paid plan for 3 months</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 14px 18px; border-bottom: 1px solid #dcfce7;">
+                        <div style="color: #166534; font-weight: 700; font-size: 14px; margin-bottom: 2px;">Essential Saver</div>
+                        <div style="color: #166534; font-size: 12px;">7 days free on Basic &mdash; then 10% off any paid plan for 3 months</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="background: #dcfce7; padding: 12px 18px; color: #166534; font-size: 12px; font-weight: 600;">
+                        &#10003; Sign up with your wasbot.ng email &mdash; your offer is detected and applied automatically. No codes, no support ticket.
+                      </td>
+                    </tr>
+                  </table>
 
-                    <p style="margin: 0 0 8px 0; font-size: 14px; color: #6b7280;">Questions? Just reply to this email.</p>
-                    <p style="margin: 0; font-size: 14px; color: #9ca3af;">&mdash; <strong>The WASBOT Team</strong></p>
-                  </div>
+                  <!-- Never subscribed -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                    <tr>
+                      <td style="background: #eff6ff; border-radius: 12px; padding: 18px 20px;">
+                        <p style="margin: 0 0 6px; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em;">Never had a subscription?</p>
+                        <p style="margin: 0; font-size: 14px; color: #1e3a5f; line-height: 1.7;">
+                          No worries &mdash; you can still try the new WASBOT completely free. Sign up and get a
+                          <strong>7-day free trial</strong> on any plan, plus a <strong>one-time 10% discount</strong>.
+                          No credit card required. If you decide it's not for you, just don't subscribe.
+                          No commitment, no charge.
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Steps -->
+                  <p style="margin: 0 0 14px; font-weight: 800; font-size: 16px; color: #0f172a;">How to migrate (2 minutes)</p>
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+                         style="background: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
+                    <tr>
+                      <td style="padding: 20px;">
+                        <!-- Step 1 -->
+                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 14px;">
+                          <tr>
+                            <td style="width: 28px; vertical-align: top;">
+                              <div style="background: #2563eb; color: #fff; border-radius: 50%; width: 28px; height: 28px; text-align: center; line-height: 28px; font-size: 13px; font-weight: 700;">1</div>
+                            </td>
+                            <td style="padding-left: 14px;">
+                              <div style="color: #0f172a; font-weight: 600; font-size: 14px;">Go to <a href="https://www.wasbot.app" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">wasbot.app</a></div>
+                              <div style="color: #64748b; font-size: 12px;">Your new home</div>
+                            </td>
+                          </tr>
+                        </table>
+                        <!-- Step 2 -->
+                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 14px;">
+                          <tr>
+                            <td style="width: 28px; vertical-align: top;">
+                              <div style="background: #2563eb; color: #fff; border-radius: 50%; width: 28px; height: 28px; text-align: center; line-height: 28px; font-size: 13px; font-weight: 700;">2</div>
+                            </td>
+                            <td style="padding-left: 14px;">
+                              <div style="color: #0f172a; font-weight: 600; font-size: 14px;">Sign up with your wasbot.ng email</div>
+                              <div style="color: #64748b; font-size: 12px;">Same email = offer auto-applied. No codes.</div>
+                            </td>
+                          </tr>
+                        </table>
+                        <!-- Step 3 -->
+                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 14px;">
+                          <tr>
+                            <td style="width: 28px; vertical-align: top;">
+                              <div style="background: #2563eb; color: #fff; border-radius: 50%; width: 28px; height: 28px; text-align: center; line-height: 28px; font-size: 13px; font-weight: 700;">3</div>
+                            </td>
+                            <td style="padding-left: 14px;">
+                              <div style="color: #0f172a; font-weight: 600; font-size: 14px;">Your offer activates instantly</div>
+                              <div style="color: #64748b; font-size: 12px;">No tickets, no support needed</div>
+                            </td>
+                          </tr>
+                        </table>
+                        <!-- Step 4 -->
+                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td style="width: 28px; vertical-align: top;">
+                              <div style="background: #2563eb; color: #fff; border-radius: 50%; width: 28px; height: 28px; text-align: center; line-height: 28px; font-size: 13px; font-weight: 700;">4</div>
+                            </td>
+                            <td style="padding-left: 14px;">
+                              <div style="color: #0f172a; font-weight: 600; font-size: 14px;">Connect WhatsApp &mdash; scan QR, you're live</div>
+                              <div style="color: #64748b; font-size: 12px;">Takes about 60 seconds</div>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Urgency banner -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                    <tr>
+                      <td style="background: #fff1f2; border: 1px solid #fecaca; border-radius: 10px; padding: 14px 18px; text-align: center;">
+                        <div style="color: #ef4444; font-weight: 700; font-size: 14px;">Deadline: March 31, 2026</div>
+                        <div style="color: #b91c1c; font-size: 13px; margin-top: 4px;">After this date wasbot.ng is permanently offline. Don't wait.</div>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- CTA -->
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 32px;">
+                    <tr>
+                      <td style="border-radius: 10px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);">
+                        <a href="{{.DashboardURL}}" target="_blank"
+                           style="display: inline-block; padding: 16px 44px; font-size: 16px; font-weight: 800; color: #ffffff; text-decoration: none; letter-spacing: 0.02em;">
+                          Claim My New Account &rarr;
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+                  <p style="text-align: center; margin: -20px 0 32px; font-size: 12px; color: #94a3b8;">
+                    Free to start &middot; No credit card needed &middot; 2 minutes
+                  </p>
+
+                  <!-- Affiliate -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 28px;">
+                    <tr>
+                      <td style="background: #faf5ff; border-left: 4px solid #8b5cf6; padding: 18px 20px; border-radius: 0 12px 12px 0;">
+                        <p style="margin: 0 0 6px; color: #5b21b6; font-size: 14px; font-weight: 700;">
+                          Not ready yet? You can still earn.
+                        </p>
+                        <p style="margin: 0 0 10px; color: #6d28d9; font-size: 13px; line-height: 1.6;">
+                          Refer friends and family to WASBOT and earn <strong>20% commission</strong>
+                          on their first 3 months of any paid plan. No migration required.
+                        </p>
+                        <a href="https://www.wasbot.app/blog/affiliate-program"
+                           style="color: #7c3aed; font-size: 13px; font-weight: 700;">
+                          Learn how the affiliate program works &rarr;
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <p style="margin: 0 0 6px; font-size: 14px; color: #64748b;">Questions? Just reply to this email &mdash; we actually read them.</p>
+                  <p style="margin: 0; font-size: 14px; color: #64748b;">&mdash; <strong>The WASBOT Team</strong></p>
+
                 </td>
               </tr>
 
               <!-- Footer -->
               <tr>
-                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
-                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                <td style="background-color: #f8fafc; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e2e8f0; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e2e8f0, transparent); margin: 0 36px;"></div>
                   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                     <tr>
-                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
-                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
-                          Need help? Simply reply to this email and we'll get back to you.
-                        </p>
-                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                      <td class="footer-content" style="padding: 28px 36px; text-align: center;">
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 16px;">
                           <tr>
                             <td style="padding: 0 8px;">
                               <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
@@ -1120,15 +1307,15 @@ migration_announcement:
                             </td>
                           </tr>
                         </table>
-                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
-                          {{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria
+                        <p style="margin: 0 0 8px; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} &middot; Lagos, Nigeria
                         </p>
-                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                        <p style="margin: 0 0 8px; font-size: 12px; color: #94a3b8;">
                           &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
                         </p>
                         {{if .UnsubscribeURL}}
-                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
-                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        <p style="margin: 0; font-size: 12px; color: #94a3b8;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #94a3b8; text-decoration: underline;">Unsubscribe</a> from these emails.
                         </p>
                         {{end}}
                       </td>
@@ -1143,7 +1330,12 @@ migration_announcement:
       </table>
     </body>
     </html>
-  description: "Migration announcement — OVERRIDES built-in. Explains shutdown, Paystack cancellation, tiered offers, migration steps"
+  description: >
+    Migration announcement for wasbot.ng shutdown (March 31, 2026).
+    Rewritten for maximum opens and hook retention. Lead paragraph answers
+    the 3 core user questions immediately (account safety, what changes, what to do).
+    Tiered migration offers auto-applied by email. CTA reframed as value claim.
+    Affiliate section retained for non-migrators. OVERRIDES built-in template.
 
 # =============================================================================
 # migration_follow_up — OVERRIDES built-in template from template.go
@@ -1188,10 +1380,13 @@ migration_follow_up:
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <title>Migration reminder</title>
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
       <!--[if mso]>
       <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
       <![endif]-->
       <style>
+        :root { color-scheme: light dark; }
         body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
         table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
         img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
@@ -1203,6 +1398,9 @@ migration_follow_up:
           .content { padding: 24px 20px !important; }
           .header { padding: 24px 20px !important; }
           .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
         }
       </style>
     </head>
@@ -1227,7 +1425,7 @@ migration_follow_up:
                         </div>
                       </td>
                       <td style="vertical-align: middle;">
-                        <span style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
                       </td>
                     </tr>
                   </table>
