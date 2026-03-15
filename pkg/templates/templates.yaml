@@ -933,7 +933,22 @@ migration_announcement:
     WHAT YOU'RE GETTING ON THE NEW PLATFORM
     -----------------------------------------------------------------------
 
-    IF YOU HAD AN ACTIVE SUBSCRIPTION ON WASBOT.NG
+    {{if and .IsLegacyUser .LegacyEligible (gt .OfferFreeDays 0)}}YOUR PERSONAL MIGRATION OFFER
+
+    As a {{.LegacyPlan}} subscriber, your paid subscription isn't just being
+    cancelled — we're converting the remaining value into free time:
+
+      → {{.OfferFreeDays}} days FREE on the Basic plan
+      → {{.OfferDiscountPercent}}% off any paid plan for your next {{.OfferDiscountUses}} payments
+
+    Sign up with your wasbot.ng email — your offer is detected and applied
+    automatically. No codes, no support ticket needed.
+    {{else if .IsLegacyUser}}YOUR MIGRATION OFFER
+
+    Sign up and get a 7-day free trial on any plan{{if gt .OfferDiscountPercent 0}}, plus a
+    one-time {{.OfferDiscountPercent}}% discount on your first payment{{end}}.
+    No credit card required. No commitment, no charge.
+    {{else}}IF YOU HAD AN ACTIVE SUBSCRIPTION ON WASBOT.NG
 
     Your paid subscription isn't just being cancelled — we're converting the
     remaining value into free time on the new platform:
@@ -951,6 +966,7 @@ migration_announcement:
     and get a 7-day free trial on any plan, plus a one-time 10% discount.
     No credit card required. If you decide it's not for you, just don't
     subscribe. No commitment, no charge.
+    {{end}}
 
     -----------------------------------------------------------------------
     HOW TO MIGRATE (2 MINUTES)
@@ -1125,7 +1141,44 @@ migration_announcement:
                   <!-- Offer -->
                   <p style="margin: 0 0 6px; font-weight: 800; font-size: 16px; color: #0f172a;">What you're getting on the new platform</p>
 
-                  <!-- Active subscribers -->
+                  {{if and .IsLegacyUser .LegacyEligible (gt .OfferFreeDays 0)}}
+                  <!-- Personalized offer for active subscribers -->
+                  <p style="margin: 0 0 12px; font-size: 14px; color: #374151; line-height: 1.7;">
+                    As a <strong>{{.LegacyPlan}}</strong> subscriber, your paid subscription isn't just being
+                    cancelled &mdash; we're converting the remaining value into free time on the new platform:
+                  </p>
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+                         style="background: #f0fdf4; border: 2px solid {{.Branding.PrimaryColor}}; border-radius: 12px; overflow: hidden; margin-bottom: 16px;">
+                    <tr>
+                      <td style="padding: 20px;">
+                        <div style="color: #166534; font-weight: 800; font-size: 22px; margin-bottom: 6px;">{{.OfferFreeDays}} days free on Basic</div>
+                        <div style="color: #166534; font-size: 14px; line-height: 1.6;">
+                          then <strong>{{.OfferDiscountPercent}}% off</strong> any paid plan for your next {{.OfferDiscountUses}} payments
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="background: #dcfce7; padding: 12px 18px; color: #166534; font-size: 12px; font-weight: 600;">
+                        &#10003; Sign up with your wasbot.ng email &mdash; your offer is detected and applied automatically. No codes needed.
+                      </td>
+                    </tr>
+                  </table>
+                  {{else if .IsLegacyUser}}
+                  <!-- Offer for legacy users without active subscription -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                    <tr>
+                      <td style="background: #eff6ff; border-radius: 12px; padding: 18px 20px;">
+                        <p style="margin: 0 0 6px; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em;">Your migration offer</p>
+                        <p style="margin: 0; font-size: 14px; color: #1e3a5f; line-height: 1.7;">
+                          Sign up and get a <strong>7-day free trial</strong> on any plan{{if gt .OfferDiscountPercent 0}}, plus a
+                          <strong>one-time {{.OfferDiscountPercent}}% discount</strong> on your first payment{{end}}.
+                          No credit card required. No commitment, no charge.
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                  {{else}}
+                  <!-- Fallback: static tier list when no legacy data available -->
                   <p style="margin: 0 0 8px; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em;">If you had an active subscription on wasbot.ng</p>
                   <p style="margin: 0 0 12px; font-size: 14px; color: #374151; line-height: 1.7;">
                     Your paid subscription isn't just being cancelled &mdash; we're converting the remaining value
@@ -1157,8 +1210,6 @@ migration_announcement:
                       </td>
                     </tr>
                   </table>
-
-                  <!-- Never subscribed -->
                   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
                     <tr>
                       <td style="background: #eff6ff; border-radius: 12px; padding: 18px 20px;">
@@ -1166,12 +1217,12 @@ migration_announcement:
                         <p style="margin: 0; font-size: 14px; color: #1e3a5f; line-height: 1.7;">
                           No worries &mdash; you can still try the new WASBOT completely free. Sign up and get a
                           <strong>7-day free trial</strong> on any plan, plus a <strong>one-time 10% discount</strong>.
-                          No credit card required. If you decide it's not for you, just don't subscribe.
-                          No commitment, no charge.
+                          No credit card required. No commitment, no charge.
                         </p>
                       </td>
                     </tr>
                   </table>
+                  {{end}}
 
                   <!-- Steps -->
                   <p style="margin: 0 0 14px; font-weight: 800; font-size: 16px; color: #0f172a;">How to migrate (2 minutes)</p>
@@ -1356,13 +1407,19 @@ migration_follow_up:
 
     Your Paystack subscription will be cancelled. No more charges on the old platform.
 
-    Your migration offer is still active. Sign up with the same email and it applies automatically:
-
+    Your migration offer is still active. Sign up with your wasbot.ng email and it applies automatically:
+    {{if and .IsLegacyUser .LegacyEligible (gt .OfferFreeDays 0)}}
+    As a {{.LegacyPlan}} subscriber, you get:
+      → {{.OfferFreeDays}} days FREE on the Basic plan
+      → {{.OfferDiscountPercent}}% off any paid plan for your next {{.OfferDiscountUses}} payments
+    {{else if .IsLegacyUser}}
+    → 7-day free trial on any plan{{if gt .OfferDiscountPercent 0}} + one-time {{.OfferDiscountPercent}}% off{{end}}
+    {{else}}
     - Ultimate Organizer: 30 days FREE Basic + 3 months 10% off
     - Efficiency Explorer: 14 days FREE Basic + 3 months 10% off
     - Essential Saver: 7 days FREE Basic + 3 months 10% off
     - Everyone else: 7-day free trial + one-time 10% off
-
+    {{end}}
     Migrate now (takes 2 minutes): {{.DashboardURL}}
 
     After March 31, the old platform is gone permanently.
@@ -1452,7 +1509,34 @@ migration_follow_up:
 
                     <p style="margin: 0 0 20px 0;">Your migration offer is still active. Sign up with your wasbot.ng email and it applies automatically:</p>
 
-                    <!-- Offers (compact) -->
+                    {{if and .IsLegacyUser .LegacyEligible (gt .OfferFreeDays 0)}}
+                    <!-- Personalized offer -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border: 2px solid {{.Branding.PrimaryColor}}; border-radius: 12px; padding: 18px;">
+                          <div style="color: #166534; font-weight: 800; font-size: 20px; margin-bottom: 4px;">{{.OfferFreeDays}} days free on Basic</div>
+                          <div style="color: #166534; font-size: 14px; margin-bottom: 10px;">
+                            then <strong>{{.OfferDiscountPercent}}% off</strong> any paid plan for your next {{.OfferDiscountUses}} payments
+                          </div>
+                          <div style="color: #166534; font-size: 12px; font-weight: 600;">
+                            &#10003; Based on your {{.LegacyPlan}} subscription
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                    {{else if .IsLegacyUser}}
+                    <!-- Non-active legacy user offer -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                      <tr>
+                        <td style="background-color: #eff6ff; border-radius: 12px; padding: 16px;">
+                          <div style="color: #1e3a5f; font-size: 14px;">
+                            <strong>7-day free trial</strong> on any plan{{if gt .OfferDiscountPercent 0}} + <strong>one-time {{.OfferDiscountPercent}}% off</strong>{{end}}
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                    {{else}}
+                    <!-- Fallback: static list -->
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
                       <tr>
                         <td style="background-color: #f0fdf4; border-radius: 12px; padding: 16px;">
@@ -1465,6 +1549,7 @@ migration_follow_up:
                         </td>
                       </tr>
                     </table>
+                    {{end}}
 
                     <!-- CTA -->
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 28px;">
