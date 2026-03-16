@@ -12,7 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/hibiken/asynq"
 	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"
+	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/redis/go-redis/v9"
 
 	"github.com/prodigy90/email-service-go/internal/api/routes"
@@ -47,7 +47,7 @@ func main() {
 	}
 
 	// Connect to PostgreSQL
-	sqlxDB, err := sqlx.Connect("postgres", cfg.DatabaseURL)
+	sqlxDB, err := sqlx.Connect("pgx", cfg.DatabaseURL)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to connect to database")
 	}
