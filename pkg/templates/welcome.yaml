@@ -578,17 +578,20 @@ trial_day5:
 
     You're halfway through your trial! Here's what paid users unlock:
 
-    Basic Plan ($5.50/mo):
+    Basic Plan (₦8,000/mo):
     - 15 status updates per day
-    - 5,000 status contacts
-    - 50 group messages/day
-    - 25 tag messages/day
+    - 10,000 status contacts
+    - 100 group messages/day
+    - 100 tag messages/day
 
-    Premium Plan ($14/mo):
+    Premium Plan (₦20,000/mo):
     - 50 status updates per day
-    - 30,000 status contacts
+    - 35,000 status contacts
+    - 500 group & tag messages/day
     - Bulk import contacts
     - Delete old status updates
+
+    Need more? Pro (₦50,000/mo) gives you unlimited status, 3 WhatsApp sessions, and cross-posting across sessions.
 
     Upgrade now:
     {{.UpgradeURL}}
@@ -739,12 +742,13 @@ trial_day5:
             <tr>
               <td style="padding: 20px;">
                 <p style="margin: 0 0 4px 0; font-size: 14px; color: #166534; font-weight: 600;">BASIC</p>
-                <p style="margin: 0 0 16px 0; font-size: 28px; font-weight: 700; color: #15803d;">$5.50<span style="font-size: 14px; font-weight: 400; color: #6b7280;">/mo</span></p>
+                <p style="margin: 0 0 4px 0; font-size: 28px; font-weight: 700; color: #15803d;">&#8358;8,000<span style="font-size: 14px; font-weight: 400; color: #6b7280;">/mo</span></p>
+                <p style="margin: 0 0 16px 0; font-size: 13px; color: #9ca3af;">or $9/mo</p>
                 <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
                   <li>15 status updates/day</li>
-                  <li>5,000 status contacts</li>
-                  <li>50 group messages/day</li>
-                  <li>25 tag messages/day</li>
+                  <li>10,000 status contacts</li>
+                  <li>100 group messages/day</li>
+                  <li>100 tag messages/day</li>
                 </ul>
               </td>
             </tr>
@@ -755,13 +759,14 @@ trial_day5:
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; border: 2px solid #3b82f6;">
             <tr>
               <td style="padding: 20px;">
-                <p style="margin: 0 0 4px 0; font-size: 14px; color: #1d4ed8; font-weight: 600;">PREMIUM ⭐</p>
-                <p style="margin: 0 0 16px 0; font-size: 28px; font-weight: 700; color: #1e40af;">$14<span style="font-size: 14px; font-weight: 400; color: #6b7280;">/mo</span></p>
+                <p style="margin: 0 0 4px 0; font-size: 14px; color: #1d4ed8; font-weight: 600;">PREMIUM &#11088;</p>
+                <p style="margin: 0 0 4px 0; font-size: 28px; font-weight: 700; color: #1e40af;">&#8358;20,000<span style="font-size: 14px; font-weight: 400; color: #6b7280;">/mo</span></p>
+                <p style="margin: 0 0 16px 0; font-size: 13px; color: #9ca3af;">or $25/mo</p>
                 <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
                   <li>50 status updates/day</li>
-                  <li>30,000 status contacts</li>
-                  <li><strong>Bulk import contacts</strong></li>
-                  <li><strong>Delete old status</strong></li>
+                  <li>35,000 status contacts</li>
+                  <li>500 group & tag messages/day</li>
+                  <li><strong>Bulk import + status deletion</strong></li>
                 </ul>
               </td>
             </tr>
@@ -770,12 +775,12 @@ trial_day5:
       </tr>
     </table>
 
-    <!-- Enterprise mention -->
+    <!-- Pro mention -->
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #faf5ff; border-left: 4px solid #a855f7; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
       <tr>
         <td style="padding: 16px 20px;">
           <p style="margin: 0; font-size: 14px; color: #7e22ce;">
-            <strong>Need more?</strong> Enterprise ($35/mo) gives you unlimited status, 3 WhatsApp sessions, and cross-posting across sessions.
+            <strong>Need more?</strong> Pro (&#8358;50,000/mo) gives you unlimited status, 3 WhatsApp sessions, and cross-posting across sessions.
           </p>
         </td>
       </tr>

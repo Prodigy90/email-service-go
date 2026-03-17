@@ -257,8 +257,9 @@ func (ts *TemplateService) Get(name string) (*domain.Template, bool) {
 }
 
 // renderString renders a template string with data.
+// Uses missingkey=zero so undefined variables render as empty strings instead of "<no value>".
 func (ts *TemplateService) renderString(tmplStr string, data map[string]interface{}) (string, error) {
-	tmpl, err := template.New("").Parse(tmplStr)
+	tmpl, err := template.New("").Option("missingkey=zero").Parse(tmplStr)
 	if err != nil {
 		return "", err
 	}

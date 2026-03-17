@@ -1701,7 +1701,7 @@ migration_upgrade_nudge_final:
     - Auto-save contacts to Google Contacts
     - Group messaging and member tagging
 
-    Pick a plan that works for you — starting at just $5.50/month:
+    Pick a plan that works for you — starting at just ₦8,000/month:
     {{.DashboardURL}}
 
     Don't wait until it's too late.
@@ -1844,7 +1844,7 @@ migration_upgrade_nudge_final:
       <li>Auto-save contacts to Google Contacts</li>
       <li>Group messaging and member tagging</li>
     </ul>
-    <p>Pick a plan that works for you — starting at just <strong>$5.50/month</strong>:</p>
+    <p>Pick a plan that works for you — starting at just <strong>&#8358;8,000/month</strong>:</p>
     <p style="text-align: center; margin: 32px 0;">
       <a href="{{.DashboardURL}}" class="btn">Choose Your Plan</a>
     </p>
@@ -1931,8 +1931,8 @@ legacy_provisioned:
     On top of that, you have {{.DiscountUses}} uses of 10% off when you're ready to subscribe.
 
     Your free Basic plan includes:
-    - 10 status posts per day
-    - 50 group messages per day
+    - 15 status posts per day
+    - 100 group messages per day
     - Contact imports
     - Scheduled messages
     - HD media to status & groups
@@ -2032,8 +2032,8 @@ legacy_provisioned:
                       <tr>
                         <td style="padding: 24px;">
                           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;10 status posts per day</td></tr>
-                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;50 group messages per day</td></tr>
+                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;15 status posts per day</td></tr>
+                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;100 group messages per day</td></tr>
                             <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;Contact imports</td></tr>
                             <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;Scheduled messages</td></tr>
                             <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;HD media to status &amp; groups</td></tr>
