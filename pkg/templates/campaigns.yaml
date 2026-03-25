@@ -620,13 +620,13 @@ limits_upgrade_announcement:
     BASIC (₦8,000/mo):
     - Saved contacts: 2,500 → 5,000 (2x more)
     - Status recipients: 5,000 → 10,000 (2x more reach)
-    - Group messages/day: 50 → 100 (2x more)
-    - Tagged messages/day: 25 → 100 (4x more)
+    - Group messages/day: 50 → 500 (10x more)
+    - Tagged messages/day: 25 → 500 (20x more)
 
     PREMIUM (₦20,000/mo):
     - Saved contacts: 10,000 → 20,000 (2x more)
-    - Group messages/day: 100 → 500 (5x more)
-    - Tagged messages/day: 100 → 500 (5x more)
+    - Group messages/day: 100 → 1,500 (15x more)
+    - Tagged messages/day: 100 → 1,500 (15x more)
 
     PRO (₦50,000/mo):
     - Everything stays unlimited — plus tag groups you're not an admin of is coming soon.
@@ -680,7 +680,7 @@ limits_upgrade_announcement:
     </head>
     <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
       <div style="display: none; max-height: 0; overflow: hidden;">
-        We upgraded your plan limits — 2x to 5x more group messages and status reach, at no extra cost.
+        We upgraded your plan limits — up to 15x more group messages and status reach, at no extra cost.
         &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
       </div>
       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
@@ -734,12 +734,12 @@ limits_upgrade_announcement:
                             <tr>
                               <td style="padding: 4px 0; font-size: 14px; color: #374151;">Group messages/day</td>
                               <td style="padding: 4px 0; font-size: 14px; color: #9ca3af; text-decoration: line-through; text-align: right;">50</td>
-                              <td style="padding: 4px 0 4px 8px; font-size: 14px; color: #166534; font-weight: 700; text-align: right;">100</td>
+                              <td style="padding: 4px 0 4px 8px; font-size: 14px; color: #166534; font-weight: 700; text-align: right;">500</td>
                             </tr>
                             <tr>
                               <td style="padding: 4px 0; font-size: 14px; color: #374151;">Tagged messages/day</td>
                               <td style="padding: 4px 0; font-size: 14px; color: #9ca3af; text-decoration: line-through; text-align: right;">25</td>
-                              <td style="padding: 4px 0 4px 8px; font-size: 14px; color: #166534; font-weight: 700; text-align: right;">100</td>
+                              <td style="padding: 4px 0 4px 8px; font-size: 14px; color: #166534; font-weight: 700; text-align: right;">500</td>
                             </tr>
                           </table>
                         </td>
@@ -760,12 +760,12 @@ limits_upgrade_announcement:
                             <tr>
                               <td style="padding: 4px 0; font-size: 14px; color: #374151;">Group messages/day</td>
                               <td style="padding: 4px 0; font-size: 14px; color: #9ca3af; text-decoration: line-through; text-align: right;">100</td>
-                              <td style="padding: 4px 0 4px 8px; font-size: 14px; color: #1d4ed8; font-weight: 700; text-align: right;">500</td>
+                              <td style="padding: 4px 0 4px 8px; font-size: 14px; color: #1d4ed8; font-weight: 700; text-align: right;">1,500</td>
                             </tr>
                             <tr>
                               <td style="padding: 4px 0; font-size: 14px; color: #374151;">Tagged messages/day</td>
                               <td style="padding: 4px 0; font-size: 14px; color: #9ca3af; text-decoration: line-through; text-align: right;">100</td>
-                              <td style="padding: 4px 0 4px 8px; font-size: 14px; color: #1d4ed8; font-weight: 700; text-align: right;">500</td>
+                              <td style="padding: 4px 0 4px 8px; font-size: 14px; color: #1d4ed8; font-weight: 700; text-align: right;">1,500</td>
                             </tr>
                           </table>
                         </td>
