@@ -581,13 +581,13 @@ trial_day5:
     Basic Plan (₦8,000/mo):
     - 15 status updates per day
     - 10,000 status contacts
-    - 100 group messages/day
-    - 100 tag messages/day
+    - 500 group messages/day
+    - 500 tag messages/day
 
     Premium Plan (₦20,000/mo):
     - 50 status updates per day
     - 35,000 status contacts
-    - 500 group & tag messages/day
+    - 1,500 group & tag messages/day
     - Bulk import contacts
     - Delete old status updates
 
@@ -747,8 +747,8 @@ trial_day5:
                 <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
                   <li>15 status updates/day</li>
                   <li>10,000 status contacts</li>
-                  <li>100 group messages/day</li>
-                  <li>100 tag messages/day</li>
+                  <li>500 group messages/day</li>
+                  <li>500 tag messages/day</li>
                 </ul>
               </td>
             </tr>
@@ -765,7 +765,7 @@ trial_day5:
                 <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #374151; line-height: 1.8;">
                   <li>50 status updates/day</li>
                   <li>35,000 status contacts</li>
-                  <li>500 group & tag messages/day</li>
+                  <li>1,500 group & tag messages/day</li>
                   <li><strong>Bulk import + status deletion</strong></li>
                 </ul>
               </td>

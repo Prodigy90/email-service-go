@@ -1932,7 +1932,7 @@ legacy_provisioned:
 
     Your free Basic plan includes:
     - 15 status posts per day
-    - 100 group messages per day
+    - 500 group messages per day
     - Contact imports
     - Scheduled messages
     - HD media to status & groups
@@ -2033,7 +2033,7 @@ legacy_provisioned:
                         <td style="padding: 24px;">
                           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                             <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;15 status posts per day</td></tr>
-                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;100 group messages per day</td></tr>
+                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;500 group messages per day</td></tr>
                             <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;Contact imports</td></tr>
                             <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;Scheduled messages</td></tr>
                             <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;HD media to status &amp; groups</td></tr>
