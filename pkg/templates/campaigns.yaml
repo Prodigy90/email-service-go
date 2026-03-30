@@ -1349,7 +1349,7 @@ feature_announcement_v2:
   description: "Feature announcement v2 (Mar 28) — Smart Delivery, status view tracking, limits upgrade, billing system with card payments/addons/multi-currency"
 
 march_2026_combined:
-  subject: "7 new features on WASBOT — scheduling, ban protection, view tracking & more"
+  subject: "8 new features on WASBOT — scheduling, ban protection, view tracking & more"
   body: |
     Hi {{.Name}},
 
@@ -1357,32 +1357,36 @@ march_2026_combined:
 
     1. SCHEDULED MESSAGES
     Stop waking up at 5am to post status. Schedule your status posts, group messages, and tagged messages — set the time, WASBOT sends it. You sleep, it works.
-    Read more: https://www.wasbot.app/blog/scheduled-messages
+    Read more: https://www.wasbot.app/blog/scheduled-messages?ref=email_march2026
 
     2. GROUP COLLECTIONS
     Create collections — "Clients", "Resellers", "Lagos Buyers" — and message the whole collection in one click. Groups saved by name, not number. No more scrolling through 100+ groups.
-    Read more: https://www.wasbot.app/blog/collections-guide
+    Read more: https://www.wasbot.app/blog/collections-guide?ref=email_march2026
 
     3. CROSS-POSTING
     Running multiple WhatsApp numbers? Write your status once, select your sessions, WASBOT delivers everywhere simultaneously. No more copy-paste-forward.
-    Read more: https://www.wasbot.app/blog/cross-posting-guide
+    Read more: https://www.wasbot.app/blog/cross-posting-guide?ref=email_march2026
 
     4. HD MEDIA EVERYWHERE
     WASBOT sends images, videos, documents, and voice notes in HD — to status AND groups — bypassing WhatsApp's compression. Upload once, deliver in full quality.
-    Read more: https://www.wasbot.app/blog/group-media-sending
+    Read more: https://www.wasbot.app/blog/group-media-sending?ref=email_march2026
 
     5. SMART DELIVERY (BAN PROTECTION)
     Import 10K contacts and post status without getting banned. Smart Delivery sends your status gradually in phases, building trust with WhatsApp over days instead of blasting everyone at once.
-    Read more: https://www.wasbot.app/blog/smart-delivery
+    Read more: https://www.wasbot.app/blog/smart-delivery?ref=email_march2026
 
     6. STATUS VIEW & DELIVERY TRACKING
     See exactly how many contacts received your status, how many viewed it, and your delivery rate — in real-time. Works even with read receipts off.
-    Read more: https://www.wasbot.app/blog/status-view-tracking
+    Read more: https://www.wasbot.app/blog/status-view-tracking?ref=email_march2026
 
-    7. GROUP & TAG LIMITS INCREASED
-    Basic: 500 group + 500 tag messages/day (was 5). Premium: 1,500 each (was 10). Pro: Still unlimited.
+    7. ADDON SESSIONS (EXTRA WHATSAPP NUMBERS)
+    Need more WhatsApp numbers but don't want to upgrade? Addon sessions let you connect extra numbers at a fraction of the plan price. Prorated billing on first purchase — you only pay for the remaining days. Volume discounts at 4+ addons.
+    Read more: https://www.wasbot.app/blog/addon-sessions?ref=email_march2026
 
-    See the full changelog: https://www.wasbot.app/changelog
+    8. GROUP & TAG LIMITS INCREASED
+    Basic: 500 group + 500 tag messages/day (was 50). Premium: 1,500 each (was 100). Pro: Still unlimited.
+
+    See the full changelog: https://www.wasbot.app/changelog?ref=email_march2026
 
     Open your dashboard: {{.DashboardURL}}
 
@@ -1457,7 +1461,7 @@ march_2026_combined:
               <!-- Body -->
               <tr>
                 <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
-                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">7 new features just dropped</h1>
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">8 new features just dropped</h1>
 
                   <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
                     <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
@@ -1559,13 +1563,29 @@ march_2026_combined:
                       </tr>
                     </table>
 
-                    <!-- Feature 7: Limits Increased -->
+                    <!-- Feature 7: Addon Sessions -->
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
                       <tr>
                         <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
-                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">&#128200; Group &amp; Tag Limits Increased</h3>
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">&#128241; Addon Sessions</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">
+                            Need more WhatsApp numbers but don't want to upgrade your entire plan?
+                          </p>
+                          <p style="margin: 0 0 8px; color: #374151; font-size: 15px; line-height: 1.5;">
+                            Addon sessions let you connect extra numbers at a fraction of the plan price. Each addon gets the same features and limits as your base session. Prorated billing on first purchase &mdash; volume discounts at 4+ addons.
+                          </p>
+                          <a href="https://www.wasbot.app/blog/addon-sessions?ref=email_march2026" style="color: {{.Branding.PrimaryColor}}; font-size: 13px; font-weight: 600;">Read more &rarr;</a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 8: Limits Increased -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">&#128640; Group &amp; Tag Limits Increased</h3>
                           <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">
-                            Basic: 500 group + 500 tag messages/day (was 5). Premium: 1,500 each (was 10). Pro &amp; Enterprise: Still unlimited. If you were hitting limits &mdash; check again.
+                            Basic: 500 group + 500 tag messages/day (was 50). Premium: 1,500 each (was 100). Pro &amp; Enterprise: Still unlimited. If you were hitting limits &mdash; check again.
                           </p>
                         </td>
                       </tr>
@@ -1648,3 +1668,235 @@ march_2026_combined:
     </body>
     </html>
   description: "Combined March 2026 feature announcement — all 7 features: scheduled messages, collections, cross-posting, HD media, smart delivery, view tracking, limits increase"
+
+wasbot_ng_final_notice:
+  subject: "Important: wasbot.ng is no longer accepting payments"
+  body: |
+    Hi {{.Name}},
+
+    This is a final update about wasbot.ng.
+
+    Starting now, wasbot.ng is no longer accepting new payments or subscription renewals. If you have an active subscription, it will continue working until it expires — nothing changes for you until then.
+
+    But once your current subscription ends, wasbot.ng will not renew it. The platform stays online until July 2026, but only for existing active subscriptions to run out.
+
+    WHAT THIS MEANS FOR YOU
+    - Your current wasbot.ng subscription continues until it expires
+    - No new charges will be made on wasbot.ng
+    - When your subscription ends, move to wasbot.app
+    - wasbot.ng stays accessible until July 2026 for active users
+
+    YOUR NEW HOME: WASBOT.APP
+    Everything you used on wasbot.ng is available on wasbot.app — plus features the old platform never had:
+
+    SCHEDULED MESSAGES — Set the time, WASBOT sends it. Status posts, group messages, tagged messages — schedule once, it runs automatically.
+
+    CLOUD POSTING — Post to WhatsApp status directly from your browser. No phone needed, no overheating, full HD quality.
+
+    SMART DELIVERY — Sends your status in phases to build trust with WhatsApp. No more bans from posting to thousands of contacts at once.
+
+    Plus: HD media, cross-posting across multiple sessions, group collections, status view tracking, and more.
+
+    HOW TO MOVE (2 MINUTES)
+    1. Go to https://www.wasbot.app
+    2. Sign up with your email
+    3. Connect your WhatsApp — scan QR and you're live
+
+    Set up your account now: {{.DashboardURL}}
+
+    Don't wait until your subscription expires. Move now and you'll be ready when the time comes.
+
+    Questions? Just reply to this email.
+
+    — The WASBOT Team
+
+    ---
+    You're receiving this because you have a WASBOT account on wasbot.ng.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>wasbot.ng is no longer accepting payments</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        Your current subscription continues &mdash; but new payments and renewals have stopped. Here's what to do next.
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">wasbot.ng is no longer accepting payments</h1>
+
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+                    <p style="margin: 0 0 24px 0;">This is a final update about wasbot.ng.</p>
+
+                    <!-- Key info callout -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 28px;">
+                      <tr>
+                        <td style="background: #f8fafc; border-left: 3px solid {{.Branding.PrimaryColor}}; border-radius: 0 10px 10px 0; padding: 18px 20px; color: #0f172a; font-size: 15px; font-weight: 500; line-height: 1.8;">
+                          wasbot.ng is <strong>no longer accepting new payments or renewals</strong>. Your current subscription continues until it expires &mdash; nothing changes for you until then. But once it ends, wasbot.ng will not renew it.
+                        </td>
+                      </tr>
+                    </table>
+
+                    <h2 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 700; color: #111827;">What this means for you</h2>
+
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 28px;">
+                      <tr>
+                        <td style="background-color: #fffbeb; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tr><td style="padding: 6px 0; font-size: 15px; color: #374151; line-height: 1.6;">&#10003;&nbsp; Your current wasbot.ng subscription <strong>continues until it expires</strong></td></tr>
+                            <tr><td style="padding: 6px 0; font-size: 15px; color: #374151; line-height: 1.6;">&#10003;&nbsp; No new charges will be made on wasbot.ng</td></tr>
+                            <tr><td style="padding: 6px 0; font-size: 15px; color: #374151; line-height: 1.6;">&#10003;&nbsp; When your subscription ends, move to <strong>wasbot.app</strong></td></tr>
+                            <tr><td style="padding: 6px 0; font-size: 15px; color: #374151; line-height: 1.6;">&#10003;&nbsp; wasbot.ng stays accessible until July 2026 for active users</td></tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <h2 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 700; color: #111827;">Your new home: wasbot.app</h2>
+
+                    <p style="margin: 0 0 20px 0;">Everything you used on wasbot.ng is available on wasbot.app &mdash; plus features the old platform never had:</p>
+
+                    <!-- Feature 1 -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 16px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 18px 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 6px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Scheduled Messages</h3>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">Set the time, WASBOT sends it. Status posts, group messages, tagged messages &mdash; schedule once, it runs automatically.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 2 -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 16px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 18px 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 6px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Cloud Posting</h3>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">Post to WhatsApp status directly from your browser. No phone needed, no overheating, full HD quality.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 3 -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 18px 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 6px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Smart Delivery</h3>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">Sends your status in phases to build trust with WhatsApp. No more bans from posting to thousands of contacts at once.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 28px 0; font-size: 14px; color: #6b7280;">Plus: HD media, cross-posting across multiple sessions, group collections, status view tracking, and more.</p>
+
+                    <h2 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 700; color: #111827;">How to move (2 minutes)</h2>
+
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 28px;">
+                      <tr><td style="padding: 8px 0; font-size: 15px; color: #374151; line-height: 1.6;"><span style="display: inline-block; width: 28px; height: 28px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); color: #ffffff; border-radius: 50%; text-align: center; line-height: 28px; font-size: 13px; font-weight: 700; margin-right: 12px; vertical-align: middle;">1</span>Go to <a href="https://www.wasbot.app" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">wasbot.app</a></td></tr>
+                      <tr><td style="padding: 8px 0; font-size: 15px; color: #374151; line-height: 1.6;"><span style="display: inline-block; width: 28px; height: 28px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); color: #ffffff; border-radius: 50%; text-align: center; line-height: 28px; font-size: 13px; font-weight: 700; margin-right: 12px; vertical-align: middle;">2</span>Sign up with your email</td></tr>
+                      <tr><td style="padding: 8px 0; font-size: 15px; color: #374151; line-height: 1.6;"><span style="display: inline-block; width: 28px; height: 28px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); color: #ffffff; border-radius: 50%; text-align: center; line-height: 28px; font-size: 13px; font-weight: 700; margin-right: 12px; vertical-align: middle;">3</span>Connect WhatsApp &mdash; scan QR and you're live</td></tr>
+                    </table>
+
+                    <!-- CTA -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 28px;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                            Set Up Your WASBOT Account
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 24px 0;">Don't wait until your subscription expires to set up. Move now and you'll be ready when the time comes.</p>
+                    <p style="margin: 0 0 24px 0; color: #6b7280; font-size: 14px;">Questions? Just reply to this email &mdash; we actually read them.</p>
+                    <p style="margin: 0;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">Need help? Simply reply to this email and we'll get back to you.</p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialTwitter}}" style="display: inline-block;"><img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;"></a></td>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialInstagram}}" style="display: inline-block;"><img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;"></a></td>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialYouTube}}" style="display: inline-block;"><img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;"></a></td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">{{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria</p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">&copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.</p>
+                        {{if .UnsubscribeURL}}<p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;"><a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.</p>{{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "wasbot.ng sunset final notice — payments stopped, subscriptions run until expiry, move to wasbot.app"
