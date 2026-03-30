@@ -500,7 +500,418 @@ payment_failed:
       </table>
     </body>
     </html>
-  description: "Sent when payment fails"
+  description: "Sent when payment fails (attempt 1)"
+
+payment_failed_attempt2:
+  subject: "Second Payment Attempt Failed — Update Your Card"
+  body: |-
+    Hi {{.CustomerName}},
+
+    We tried to charge your card again for {{.PlanName}} but it failed. We'll make one final attempt in 4 days.
+
+    Please update your payment method at {{.UpdateCardURL}} to avoid losing access to your WhatsApp sessions.
+
+    If you need help, contact our support team at hello@wasbot.app.
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>Second Payment Attempt Failed</title>
+      <!--[if mso]>
+      <noscript>
+        <xml>
+          <o:OfficeDocumentSettings>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+        </xml>
+      </noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+
+        /* Reset */
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+        /* Client-specific */
+        #outlook a { padding: 0; }
+        .ReadMsgBody { width: 100%; }
+        .ExternalClass { width: 100%; }
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+        /* Base styles */
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          background-color: #f3f4f6;
+          margin: 0;
+          padding: 0;
+        }
+
+        /* Links */
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Button styles */
+        .btn {
+          display: inline-block;
+          padding: 14px 28px;
+          background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+          color: #ffffff !important;
+          text-decoration: none;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 15px;
+          box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+          transition: all 0.2s ease;
+        }
+        .btn:hover {
+          background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+          box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+        }
+        .btn-danger {
+          background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+          box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+
+        /* Dark mode — preserve header text visibility */
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <!-- Preview text -->
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        {{if .PreviewText}}{{.PreviewText}}{{else}}Second payment attempt failed — update your card{{end}}
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+      </div>
+
+      <!-- Email wrapper -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <!-- Main container -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header with logo -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td>
+                        <!-- Logo/Brand -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                          <tr>
+                            <td style="vertical-align: middle; padding-right: 14px;">
+                              <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                {{.Branding.LogoContent}}
+                              </div>
+                            </td>
+                            <td style="vertical-align: middle;">
+                              <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Main content -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <!-- Title -->
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Second Payment Attempt Failed</h1>
+
+                  <!-- Content -->
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+                    <p style="margin: 0 0 24px 0;">We tried to charge your card again for <strong>{{.PlanName}}</strong> but it failed. We'll make <strong>one final attempt</strong> in 4 days.</p>
+
+                    <!-- Warning card -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+                      <tr>
+                        <td style="padding: 20px 24px;">
+                          <p style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600; color: #92400e;">One retry left</p>
+                          <p style="margin: 0; font-size: 14px; color: #92400e;">Please update your payment method to avoid losing access to your WhatsApp sessions, status broadcasting, and group messaging.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- CTA Button -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                          <a href="{{.UpdateCardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+                            Update Payment Method
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Questions? Reply to this email and we'll help you out.</p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialTwitter}}" style="display: inline-block;"><img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;"></a></td>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialInstagram}}" style="display: inline-block;"><img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;"></a></td>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialYouTube}}" style="display: inline-block;"><img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;"></a></td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">{{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria</p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">&copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.</p>
+                        {{if .UnsubscribeURL}}<p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;"><a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.</p>{{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Sent on second payment failure attempt — more urgent"
+
+payment_failed_final:
+  subject: "Final Payment Attempt Failed — Subscription Suspended"
+  body: |-
+    Hi {{.CustomerName}},
+
+    Your final payment attempt for {{.PlanName}} has failed. Your subscription has been suspended and all WhatsApp sessions have been disconnected.
+
+    To restore access, update your payment method and renew from your billing page at {{.DashboardURL}}.
+
+    If you need help, contact our support team at hello@wasbot.app.
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>Subscription Suspended</title>
+      <!--[if mso]>
+      <noscript>
+        <xml>
+          <o:OfficeDocumentSettings>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+        </xml>
+      </noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+
+        /* Reset */
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+        /* Client-specific */
+        #outlook a { padding: 0; }
+        .ReadMsgBody { width: 100%; }
+        .ExternalClass { width: 100%; }
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+        /* Base styles */
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          background-color: #f3f4f6;
+          margin: 0;
+          padding: 0;
+        }
+
+        /* Links */
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Button styles */
+        .btn {
+          display: inline-block;
+          padding: 14px 28px;
+          background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+          color: #ffffff !important;
+          text-decoration: none;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 15px;
+          box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+          transition: all 0.2s ease;
+        }
+        .btn:hover {
+          background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+          box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+        }
+        .btn-danger {
+          background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+          box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+
+        /* Dark mode — preserve header text visibility */
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <!-- Preview text -->
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        {{if .PreviewText}}{{.PreviewText}}{{else}}Your subscription has been suspended{{end}}
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+      </div>
+
+      <!-- Email wrapper -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <!-- Main container -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header with logo -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                          <tr>
+                            <td style="vertical-align: middle; padding-right: 14px;">
+                              <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                {{.Branding.LogoContent}}
+                              </div>
+                            </td>
+                            <td style="vertical-align: middle;">
+                              <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Main content -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #991b1b; line-height: 1.3;">Subscription Suspended</h1>
+
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+                    <p style="margin: 0 0 24px 0;">Your final payment attempt for <strong>{{.PlanName}}</strong> has failed. Your subscription has been suspended.</p>
+
+                    <!-- Impact card -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-left: 4px solid {{.Branding.DangerColor}}; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
+                      <tr>
+                        <td style="padding: 20px 24px;">
+                          <p style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600; color: #991b1b;">What this means:</p>
+                          <ul style="margin: 0; padding-left: 20px; color: #b91c1c; font-size: 14px;">
+                            <li style="margin-bottom: 6px;">All WhatsApp sessions have been disconnected</li>
+                            <li style="margin-bottom: 6px;">Status broadcasting has stopped</li>
+                            <li style="margin-bottom: 6px;">Auto-save contacts has stopped</li>
+                            <li style="margin-bottom: 6px;">Group messaging has stopped</li>
+                            <li>You'll need to re-link your WhatsApp after renewing</li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 24px 0; color: #4b5563;">To restore access, update your payment method and renew from your billing page.</p>
+
+                    <!-- CTA Button -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);">
+                          <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                            Restore My Access
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Questions? Reply to this email and we'll help you out.</p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialTwitter}}" style="display: inline-block;"><img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;"></a></td>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialInstagram}}" style="display: inline-block;"><img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;"></a></td>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialYouTube}}" style="display: inline-block;"><img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;"></a></td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">{{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria</p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">&copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.</p>
+                        {{if .UnsubscribeURL}}<p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;"><a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.</p>{{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Sent on final payment failure — subscription suspended"
 
 payment_success_onetime:
   subject: "Payment Confirmed - {{.ProductName}} ({{.Duration}})"
@@ -2065,7 +2476,7 @@ subscription_reminder_3d:
     This is a friendly reminder that your {{.PlanName}} subscription will automatically renew in 3 days.
 
     Renewal Date: {{.RenewalDate}}
-    Amount: {{.Amount}}
+    {{if gt .AddonCount 0}}Amount: {{.Amount}} ({{.PlanName}}) + {{.AddonAmount}} ({{.AddonCount}} addon sessions) = {{.TotalAmount}}{{else}}Amount: {{.Amount}}{{end}}
 
     If you'd like to make any changes to your subscription, you can manage it here:
     {{.ProfileURL}}
@@ -2218,10 +2629,17 @@ subscription_reminder_3d:
               </td>
               <td width="50%" style="vertical-align: top; padding-left: 12px;">
                 <span style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Amount</span><br>
-                <span style="font-size: 18px; font-weight: 600; color: #1e40af;">{{.Amount}}</span>
+                {{if gt .AddonCount 0}}<span style="font-size: 18px; font-weight: 600; color: #1e40af;">{{.TotalAmount}}</span>{{else}}<span style="font-size: 18px; font-weight: 600; color: #1e40af;">{{.Amount}}</span>{{end}}
               </td>
             </tr>
           </table>
+          {{if gt .AddonCount 0}}
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-top: 16px; border-top: 1px solid #bfdbfe; padding-top: 12px;">
+            <tr><td style="font-size: 14px; color: #3b82f6; padding: 4px 0;">{{.PlanName}}: {{.Amount}}</td></tr>
+            <tr><td style="font-size: 14px; color: #3b82f6; padding: 4px 0;">{{.AddonCount}} addon session{{if gt .AddonCount 1}}s{{end}}: {{.AddonAmount}}</td></tr>
+            <tr><td style="font-size: 14px; font-weight: 600; color: #1e40af; padding: 4px 0; border-top: 1px solid #bfdbfe; margin-top: 4px;">Total: {{.TotalAmount}}</td></tr>
+          </table>
+          {{end}}
         </td>
       </tr>
     </table>
@@ -2320,7 +2738,7 @@ subscription_reminder_1d:
 
     This is a final reminder that your {{.PlanName}} subscription will renew tomorrow.
 
-    Amount: {{.Amount}}
+    {{if gt .AddonCount 0}}We'll charge {{.Amount}} ({{.PlanName}}) + {{.AddonAmount}} ({{.AddonCount}} addon sessions) = {{.TotalAmount}} tomorrow.{{else}}Amount: {{.Amount}}{{end}}
 
     If you need to update your payment method or make changes, please do so before the renewal:
     {{.ProfileURL}}
@@ -2465,9 +2883,18 @@ subscription_reminder_1d:
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 0 12px 12px 0; margin-bottom: 24px;">
       <tr>
         <td style="padding: 20px 24px;">
+          {{if gt .AddonCount 0}}
+          <p style="margin: 0 0 8px 0; font-size: 16px; color: #92400e;">
+            <strong>{{.TotalAmount}}</strong> will be charged to your payment method tomorrow.
+          </p>
+          <p style="margin: 0; font-size: 14px; color: #92400e;">
+            {{.Amount}} ({{.PlanName}}) + {{.AddonAmount}} ({{.AddonCount}} addon session{{if gt .AddonCount 1}}s{{end}})
+          </p>
+          {{else}}
           <p style="margin: 0; font-size: 16px; color: #92400e;">
             <strong>{{.Amount}}</strong> will be charged to your payment method tomorrow.
           </p>
+          {{end}}
         </td>
       </tr>
     </table>
@@ -2567,10 +2994,15 @@ subscription_expiring_3d:
 
     Expiry Date: {{.ExpiryDate}}
 
-    To continue enjoying uninterrupted access, renew your subscription before it expires:
-    {{.ProfileURL}}
+    After expiry, here's what will happen:
+    - Your WhatsApp sessions will be disconnected
+    - Auto-save contacts will stop
+    - Status broadcasting will be disabled
+    - Group messaging will stop
+    - You'll need to re-link your WhatsApp after renewing
 
-    Thank you for being a valued customer!
+    Renew now to keep everything running:
+    {{.ProfileURL}}
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -2716,14 +3148,16 @@ subscription_expiring_3d:
       </tr>
     </table>
 
-    <p style="margin: 0 0 8px 0; color: #4b5563;"><strong>What happens after expiry?</strong></p>
+    <p style="margin: 0 0 8px 0; color: #4b5563;"><strong>After expiry, here's what will happen:</strong></p>
     <ul style="margin: 0 0 24px 0; padding-left: 20px; color: #6b7280;">
-      <li style="margin-bottom: 8px;">You'll lose access to all {{.Branding.CompanyName}} features</li>
-      <li style="margin-bottom: 8px;">Your automations will stop running</li>
-      <li>Your data will be preserved for 30 days</li>
+      <li style="margin-bottom: 8px;">Your WhatsApp sessions will be disconnected</li>
+      <li style="margin-bottom: 8px;">Auto-save contacts will stop</li>
+      <li style="margin-bottom: 8px;">Status broadcasting will be disabled</li>
+      <li style="margin-bottom: 8px;">Group messaging will stop</li>
+      <li>You'll need to re-link your WhatsApp after renewing</li>
     </ul>
 
-    <p style="margin: 0 0 24px 0; color: #4b5563;">Renew now to continue enjoying uninterrupted service!</p>
+    <p style="margin: 0 0 24px 0; color: #4b5563;">Renew now to keep everything running.</p>
 
     <!-- CTA Button -->
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
@@ -2807,18 +3241,23 @@ subscription_expiring_3d:
   description: "Sent 3 days before one-off subscription expires"
 
 subscription_expiring_1d:
-  subject: "⚠️ Final Reminder: {{.PlanName}} expires tomorrow"
+  subject: "Final Reminder: {{.PlanName}} expires tomorrow"
   body: |-
     Hi {{.CustomerName}},
 
-    This is a final reminder that your {{.PlanName}} access will expire tomorrow.
+    This is a final reminder that your {{.PlanName}} access expires tomorrow.
 
     Expiry Date: {{.ExpiryDate}}
 
-    Don't lose access! Renew now to continue using all features:
-    {{.ProfileURL}}
+    After expiry, here's what will happen:
+    - Your WhatsApp sessions will be disconnected
+    - Auto-save contacts will stop
+    - Status broadcasting will be disabled
+    - Group messaging will stop
+    - You'll need to re-link your WhatsApp after renewing
 
-    If you have any questions, our support team is here to help.
+    Renew now to keep everything running:
+    {{.ProfileURL}}
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -2961,14 +3400,19 @@ subscription_expiring_1d:
           <p style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600; color: #991b1b;">
             Expiry Date: {{.ExpiryDate}}
           </p>
-          <p style="margin: 0; font-size: 14px; color: #b91c1c;">
-            After this date, your {{.Branding.CompanyName}} automations will stop working.
-          </p>
+          <p style="margin: 0 0 12px 0; font-size: 14px; font-weight: 600; color: #991b1b;">After expiry, here's what will happen:</p>
+          <ul style="margin: 0; padding-left: 20px; color: #b91c1c; font-size: 14px;">
+            <li style="margin-bottom: 6px;">Your WhatsApp sessions will be disconnected</li>
+            <li style="margin-bottom: 6px;">Auto-save contacts will stop</li>
+            <li style="margin-bottom: 6px;">Status broadcasting will be disabled</li>
+            <li style="margin-bottom: 6px;">Group messaging will stop</li>
+            <li>You'll need to re-link your WhatsApp after renewing</li>
+          </ul>
         </td>
       </tr>
     </table>
 
-    <p style="margin: 0 0 24px 0; color: #4b5563;">Don't lose access to your WhatsApp automations! Renew now to keep everything running smoothly.</p>
+    <p style="margin: 0 0 24px 0; color: #4b5563;">Renew now to keep everything running.</p>
 
     <!-- CTA Button -->
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">

@@ -162,6 +162,8 @@ func TestTemplateService_AllDomainTemplatesPresent(t *testing.T) {
 		domain.TemplateCommissionEarned,
 		domain.TemplatePaymentSuccess,
 		domain.TemplatePaymentFailed,
+		domain.TemplatePaymentFailedAttempt2,
+		domain.TemplatePaymentFailedFinal,
 		domain.TemplateSubscriptionRenewed,
 		domain.TemplateSubscriptionExpiring,
 		domain.TemplateSubscriptionCancelled,

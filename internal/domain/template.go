@@ -32,7 +32,9 @@ const (
 
 	// Webhook Router / Payment templates (recurring subscriptions)
 	TemplatePaymentSuccess        = "payment_success"          // Recurring payment success
-	TemplatePaymentFailed         = "payment_failed"           // Payment failure
+	TemplatePaymentFailed         = "payment_failed"           // Payment failure (attempt 1)
+	TemplatePaymentFailedAttempt2 = "payment_failed_attempt2"  // Payment failure (attempt 2 — more urgent)
+	TemplatePaymentFailedFinal    = "payment_failed_final"     // Payment failure (final — subscription suspended)
 	TemplateSubscriptionRenewed   = "subscription_renewed"     // Auto-renewal success
 	TemplateSubscriptionExpiring  = "subscription_expiring"    // Generic expiring (deprecated, use specific ones)
 	TemplateSubscriptionCancelled = "subscription_cancelled"   // Subscription cancelled
