@@ -1347,3 +1347,304 @@ feature_announcement_v2:
     </body>
     </html>
   description: "Feature announcement v2 (Mar 28) — Smart Delivery, status view tracking, limits upgrade, billing system with card payments/addons/multi-currency"
+
+march_2026_combined:
+  subject: "7 new features on WASBOT — scheduling, ban protection, view tracking & more"
+  body: |
+    Hi {{.Name}},
+
+    We've been pushing updates all month. Here's everything new on WASBOT — all live right now:
+
+    1. SCHEDULED MESSAGES
+    Stop waking up at 5am to post status. Schedule your status posts, group messages, and tagged messages — set the time, WASBOT sends it. You sleep, it works.
+    Read more: https://www.wasbot.app/blog/scheduled-messages
+
+    2. GROUP COLLECTIONS
+    Create collections — "Clients", "Resellers", "Lagos Buyers" — and message the whole collection in one click. Groups saved by name, not number. No more scrolling through 100+ groups.
+    Read more: https://www.wasbot.app/blog/collections-guide
+
+    3. CROSS-POSTING
+    Running multiple WhatsApp numbers? Write your status once, select your sessions, WASBOT delivers everywhere simultaneously. No more copy-paste-forward.
+    Read more: https://www.wasbot.app/blog/cross-posting-guide
+
+    4. HD MEDIA EVERYWHERE
+    WASBOT sends images, videos, documents, and voice notes in HD — to status AND groups — bypassing WhatsApp's compression. Upload once, deliver in full quality.
+    Read more: https://www.wasbot.app/blog/group-media-sending
+
+    5. SMART DELIVERY (BAN PROTECTION)
+    Import 10K contacts and post status without getting banned. Smart Delivery sends your status gradually in phases, building trust with WhatsApp over days instead of blasting everyone at once.
+    Read more: https://www.wasbot.app/blog/smart-delivery
+
+    6. STATUS VIEW & DELIVERY TRACKING
+    See exactly how many contacts received your status, how many viewed it, and your delivery rate — in real-time. Works even with read receipts off.
+    Read more: https://www.wasbot.app/blog/status-view-tracking
+
+    7. GROUP & TAG LIMITS INCREASED
+    Basic: 500 group + 500 tag messages/day (was 5). Premium: 1,500 each (was 10). Pro: Still unlimited.
+
+    See the full changelog: https://www.wasbot.app/changelog
+
+    Open your dashboard: {{.DashboardURL}}
+
+    If you've been doing WhatsApp marketing manually — those days are done.
+
+    Talk soon,
+    The WASBOT Team
+
+    ---
+    You're receiving this because you have a WASBOT account.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>What's new on WASBOT — March 2026</title>
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        Scheduled messages, ban protection, view tracking, HD media &amp; more &mdash; all live now
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">7 new features just dropped</h1>
+
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+                    <p style="margin: 0 0 24px 0;">We've been pushing updates all month. Here's everything new on WASBOT &mdash; all live right now:</p>
+
+                    <!-- Feature 1: Scheduled Messages -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">&#128338; Scheduled Messages</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">
+                            Stop waking up at 5am to post status. Stop forgetting to send a promo and losing a whole day's sales.
+                          </p>
+                          <p style="margin: 0 0 8px; color: #374151; font-size: 15px; line-height: 1.5;">
+                            Schedule status posts, group messages, and tagged messages &mdash; set the time, WASBOT sends it. You sleep, it works.
+                          </p>
+                          <a href="https://www.wasbot.app/blog/scheduled-messages?ref=email_march2026" style="color: {{.Branding.PrimaryColor}}; font-size: 13px; font-weight: 600;">Read more &rarr;</a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 2: Group Collections -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">&#128194; Group Collections</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">
+                            Scrolling through 100+ groups to find the right ones? Wake up the next day and the group numbers have changed? Start again.
+                          </p>
+                          <p style="margin: 0 0 8px; color: #374151; font-size: 15px; line-height: 1.5;">
+                            Create collections &mdash; "Clients", "Resellers", "Lagos Buyers" &mdash; and message the whole collection in one click. Groups saved by name, not number.
+                          </p>
+                          <a href="https://www.wasbot.app/blog/collections-guide?ref=email_march2026" style="color: {{.Branding.PrimaryColor}}; font-size: 13px; font-weight: 600;">Read more &rarr;</a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 3: Cross-Posting -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">&#128260; Cross-Posting</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">
+                            Running 2, 3, 4 WhatsApp numbers? Every morning you're copying the same message, forwarding the same status, doing the same work multiple times.
+                          </p>
+                          <p style="margin: 0 0 8px; color: #374151; font-size: 15px; line-height: 1.5;">
+                            Write it once, select your sessions, WASBOT delivers everywhere simultaneously. The copy-paste-forward era is done.
+                          </p>
+                          <a href="https://www.wasbot.app/blog/cross-posting-guide?ref=email_march2026" style="color: {{.Branding.PrimaryColor}}; font-size: 13px; font-weight: 600;">Read more &rarr;</a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 4: HD Media -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">&#127910; HD Media Everywhere</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">
+                            Your flyers and videos get compressed when you post to status. Quality drops, clients see blurry images, it looks unprofessional.
+                          </p>
+                          <p style="margin: 0 0 8px; color: #374151; font-size: 15px; line-height: 1.5;">
+                            WASBOT sends images, videos, documents, and voice notes in HD &mdash; to status AND groups &mdash; bypassing WhatsApp's compression. Upload once, deliver in full quality.
+                          </p>
+                          <a href="https://www.wasbot.app/blog/group-media-sending?ref=email_march2026" style="color: {{.Branding.PrimaryColor}}; font-size: 13px; font-weight: 600;">Read more &rarr;</a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 5: Smart Delivery -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">&#128737; Smart Delivery (Ban Protection)</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">
+                            Import 10K contacts, post one status, WhatsApp bans you. Sound familiar?
+                          </p>
+                          <p style="margin: 0 0 8px; color: #374151; font-size: 15px; line-height: 1.5;">
+                            Smart Delivery sends your status gradually in phases &mdash; building trust with WhatsApp over days instead of blasting everyone at once. No more bans after importing.
+                          </p>
+                          <a href="https://www.wasbot.app/blog/smart-delivery?ref=email_march2026" style="color: {{.Branding.PrimaryColor}}; font-size: 13px; font-weight: 600;">Read more &rarr;</a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 6: Status View Tracking -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">&#128200; Status View &amp; Delivery Tracking</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">
+                            You post status to 20,000 contacts. How many actually received it? How many viewed it? Before, you had no idea.
+                          </p>
+                          <p style="margin: 0 0 8px; color: #374151; font-size: 15px; line-height: 1.5;">
+                            WASBOT tracks sent, delivered, and viewed counts for every status &mdash; in real-time. Even works with read receipts off. Perfect for WhatsApp TV operators showing advertisers real numbers.
+                          </p>
+                          <a href="https://www.wasbot.app/blog/status-view-tracking?ref=email_march2026" style="color: {{.Branding.PrimaryColor}}; font-size: 13px; font-weight: 600;">Read more &rarr;</a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 7: Limits Increased -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">&#128200; Group &amp; Tag Limits Increased</h3>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">
+                            Basic: 500 group + 500 tag messages/day (was 5). Premium: 1,500 each (was 10). Pro &amp; Enterprise: Still unlimited. If you were hitting limits &mdash; check again.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Learn more links -->
+                    <p style="margin: 0 0 28px 0; text-align: center;">
+                      <a href="https://www.wasbot.app/changelog?ref=email_march2026" style="color: {{.Branding.PrimaryColor}}; font-size: 15px; font-weight: 600;">See the full changelog &rarr;</a>
+                      <br>
+                      <a href="https://www.wasbot.app/blog?ref=email_march2026" style="color: #6b7280; font-size: 13px; margin-top: 8px; display: inline-block;">Read more on our blog</a>
+                    </p>
+
+                    <!-- CTA -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 28px;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                            Open Your Dashboard
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 16px 0;">If you've been doing WhatsApp marketing manually &mdash; those days are done. One dashboard handles everything.</p>
+                    <p style="margin: 0;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria
+                        </p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Combined March 2026 feature announcement — all 7 features: scheduled messages, collections, cross-posting, HD media, smart delivery, view tracking, limits increase"
