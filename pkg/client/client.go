@@ -361,4 +361,26 @@ const (
 	// Campaign templates (flexible, content-driven)
 	TemplateCampaignUpdate      = "campaign_update"       // Flexible shell — pass Subject, Intro, HTMLBody, optional VideoURL
 	TemplateFeatureAnnouncement = "feature_announcement"  // Pre-built 4-feature announcement
+
+	// Onboarding sequence (Migration 062)
+	TemplateOnboardingDay0 = "onboarding_day0" // Welcome — what you unlocked
+	TemplateOnboardingDay1 = "onboarding_day1" // Auto-save contacts
+	TemplateOnboardingDay2 = "onboarding_day2" // Status posting
+	TemplateOnboardingDay3 = "onboarding_day3" // Autoresponder
+	TemplateOnboardingDay4 = "onboarding_day4" // Group messaging
+	TemplateOnboardingDay5 = "onboarding_day5" // What premium unlocks
+	TemplateOnboardingDay6 = "onboarding_day6" // Trial ends tomorrow
+	TemplateOnboardingDay7 = "onboarding_day7" // Discount offer
+
+	// Post-trial sequence
+	TemplatePostTrialDay8  = "post_trial_day8"  // Your setup is saved
+	TemplatePostTrialDay9  = "post_trial_day9"  // Social proof
+	TemplatePostTrialDay10 = "post_trial_day10" // Final discount
+
+	// Triggered emails
+	TemplateStalledNoSession = "stalled_no_session" // Signed up but no session created
+	TemplateStalledSession   = "stalled_session"    // Session created but not connected
+
+	// Migration blast (April 2026 — wasbot.ng → wasbot.app)
+	TemplateMigrationBlastApr2026 = "migration_blast_apr2026"
 )

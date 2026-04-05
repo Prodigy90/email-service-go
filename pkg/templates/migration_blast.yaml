@@ -1,0 +1,369 @@
+# Migration blast for 8.7k wasbot.ng legacy users
+# New features announcement + sunset notice + wasbot.app signup CTA
+
+migration_blast_apr2026:
+  subject: "Here's what's new on WASBOT since we last spoke"
+  preview_text: "Autoresponder, scheduled messages, multi-currency payments and more — all live on wasbot.app."
+  description: "Migration follow-up for 8.7k wasbot.ng users — new features added since last email + sunset reminder"
+  body: |-
+    Hi {{.Name}},
+
+    Quick update on what we've shipped since the last time we reached out —
+    and a friendly reminder about the wasbot.ng sunset.
+
+    -----------------------------------------------------------------------
+    WHAT'S NEW SINCE OUR LAST EMAIL
+    -----------------------------------------------------------------------
+
+    AUTORESPONDER — AUTO-REPLY TO DMs
+    Someone DMs "price"? WASBOT replies instantly. Set keyword triggers,
+    multiple keywords per rule, smart cooldowns so you never spam anyone.
+    Reply only to new/unsaved contacts (great for ad leads) or saved
+    contacts only (for VIPs). Human-like typing delays included.
+
+    SCHEDULED MESSAGES
+    Schedule status posts and group messages for any time. Queue tomorrow's
+    promo tonight at 2am and it goes out at 9am. Set your whole week on
+    Sunday and focus on closing sales the rest of the week.
+
+    GROUP COLLECTIONS
+    Organize 100+ groups into named folders ("Sales Groups", "VIP Clients",
+    "Hot Leads"). Select a folder and blast every group in it with one click.
+
+    MULTI-CURRENCY PAYMENTS
+    Pay in USD, GBP, GHS, KES, or ZAR via Flutterwave, or Naira via Paystack
+    as always. Currency is auto-detected based on your location.
+
+    DISCOUNT CODES AT CHECKOUT
+    Apply discount codes at checkout for percentage or fixed-amount savings.
+
+    ADDON SESSIONS
+    Already on Premium but need another WhatsApp number? Add extra sessions
+    on top of your plan — billed alongside your base subscription.
+
+    -----------------------------------------------------------------------
+    FRIENDLY REMINDER: WASBOT.NG SUNSET
+    -----------------------------------------------------------------------
+    - wasbot.ng stays active until July 2026
+    - No new subscriptions can be made on wasbot.ng
+    - If your current subscription expires, you won't be able to renew
+    - All new features are on wasbot.app only
+
+    -----------------------------------------------------------------------
+
+    START FREE ON WASBOT.APP
+    {{.SignupURL}}
+
+    -----------------------------------------------------------------------
+
+    JOIN THE WASBOT COMMUNITY ON WHATSAPP
+    Get help, tips, and connect with other users.
+    {{.WhatsAppGroupURL}}
+
+    -----------------------------------------------------------------------
+
+    Questions? Just reply to this email — we actually read them.
+
+    — The WASBOT Team
+
+    ---
+    You're receiving this because you have a WASBOT account.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>Here's what's new on WASBOT</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #f3f4f6;
+               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
+        #outlook a { padding: 0; }
+        .ReadMsgBody { width: 100%; }
+        .ExternalClass { width: 100%; }
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+          .feature-icon { width: 36px !important; height: 36px !important; line-height: 36px !important; font-size: 18px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+
+      <!-- Preview text -->
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        {{if .PreviewText}}{{.PreviewText}}{{else}}Autoresponder, scheduled messages, multi-currency payments and more — all live on wasbot.app.{{end}}
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 28px 36px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px; font-size: 22px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 36px; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0;">
+
+                  <h1 style="margin: 0 0 20px; font-size: 26px; font-weight: 800; color: #0f172a; line-height: 1.3;">
+                    Here's what's new on WASBOT
+                  </h1>
+
+                  <p style="margin: 0 0 20px; font-size: 15px; color: #64748b;">Hi {{.Name}},</p>
+
+                  <!-- Opening hook -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                    <tr>
+                      <td style="background: #f8fafc; border-left: 3px solid {{.Branding.PrimaryColor}}; border-radius: 0 10px 10px 0; padding: 18px 20px; color: #0f172a; font-size: 15px; font-weight: 500; line-height: 1.8;">
+                        Quick update on what we've shipped since the last time we reached out &mdash;
+                        and a friendly reminder about the wasbot.ng sunset.
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- What's New heading -->
+                  <p style="margin: 0 0 16px; font-weight: 800; font-size: 18px; color: #0f172a;">What's New Since Our Last Email</p>
+
+                  <!-- Feature 1: Autoresponder -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 16px;">
+                    <tr>
+                      <td style="width: 44px; vertical-align: top; padding-top: 2px;">
+                        <div class="feature-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #eff6ff, #dbeafe); border-radius: 10px; text-align: center; line-height: 40px; font-size: 20px;">&#9889;</div>
+                      </td>
+                      <td style="padding-left: 14px;">
+                        <div style="color: #0f172a; font-weight: 700; font-size: 15px; margin-bottom: 4px;">Autoresponder &mdash; Auto-Reply to DMs</div>
+                        <div style="color: #64748b; font-size: 14px; line-height: 1.6;">Someone DMs &ldquo;price&rdquo;? WASBOT replies instantly. Keyword triggers, multiple keywords per rule, smart cooldowns. Reply only to new/unsaved contacts (great for ad leads) or saved contacts only (for VIPs). Human-like typing delays included.</div>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Feature 2: Scheduled Messages -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 16px;">
+                    <tr>
+                      <td style="width: 44px; vertical-align: top; padding-top: 2px;">
+                        <div class="feature-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #fff7ed, #ffedd5); border-radius: 10px; text-align: center; line-height: 40px; font-size: 20px;">&#128197;</div>
+                      </td>
+                      <td style="padding-left: 14px;">
+                        <div style="color: #0f172a; font-weight: 700; font-size: 15px; margin-bottom: 4px;">Scheduled Messages</div>
+                        <div style="color: #64748b; font-size: 14px; line-height: 1.6;">Schedule status posts and group messages for any time. Queue tomorrow's promo tonight at 2am and it goes out at 9am. Set your whole week on Sunday and focus on closing sales the rest of the week.</div>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Feature 3: Group Collections -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 16px;">
+                    <tr>
+                      <td style="width: 44px; vertical-align: top; padding-top: 2px;">
+                        <div class="feature-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #faf5ff, #f3e8ff); border-radius: 10px; text-align: center; line-height: 40px; font-size: 20px;">&#128193;</div>
+                      </td>
+                      <td style="padding-left: 14px;">
+                        <div style="color: #0f172a; font-weight: 700; font-size: 15px; margin-bottom: 4px;">Group Collections</div>
+                        <div style="color: #64748b; font-size: 14px; line-height: 1.6;">Organize 100+ groups into named folders (&ldquo;Sales Groups&rdquo;, &ldquo;VIP Clients&rdquo;, &ldquo;Hot Leads&rdquo;). Select a folder and blast every group in it with one click.</div>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Feature 4: Multi-Currency -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 16px;">
+                    <tr>
+                      <td style="width: 44px; vertical-align: top; padding-top: 2px;">
+                        <div class="feature-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-radius: 10px; text-align: center; line-height: 40px; font-size: 20px;">&#127758;</div>
+                      </td>
+                      <td style="padding-left: 14px;">
+                        <div style="color: #0f172a; font-weight: 700; font-size: 15px; margin-bottom: 4px;">Multi-Currency Payments</div>
+                        <div style="color: #64748b; font-size: 14px; line-height: 1.6;">Pay in USD, GBP, GHS, KES, or ZAR via Flutterwave, or Naira via Paystack as always. Currency auto-detected based on your location.</div>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Feature 5: Discount Codes -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 16px;">
+                    <tr>
+                      <td style="width: 44px; vertical-align: top; padding-top: 2px;">
+                        <div class="feature-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #fefce8, #fef9c3); border-radius: 10px; text-align: center; line-height: 40px; font-size: 20px;">&#127991;&#65039;</div>
+                      </td>
+                      <td style="padding-left: 14px;">
+                        <div style="color: #0f172a; font-weight: 700; font-size: 15px; margin-bottom: 4px;">Discount Codes at Checkout</div>
+                        <div style="color: #64748b; font-size: 14px; line-height: 1.6;">Apply discount codes at checkout for percentage or fixed-amount savings.</div>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Feature 6: Addon Sessions -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 28px;">
+                    <tr>
+                      <td style="width: 44px; vertical-align: top; padding-top: 2px;">
+                        <div class="feature-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border-radius: 10px; text-align: center; line-height: 40px; font-size: 20px;">&#10133;</div>
+                      </td>
+                      <td style="padding-left: 14px;">
+                        <div style="color: #0f172a; font-weight: 700; font-size: 15px; margin-bottom: 4px;">Addon Sessions</div>
+                        <div style="color: #64748b; font-size: 14px; line-height: 1.6;">Already on Premium but need another WhatsApp number? Add extra sessions on top of your plan &mdash; billed alongside your base subscription.</div>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Sunset notice (amber warning box) -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 28px;">
+                    <tr>
+                      <td style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 0 12px 12px 0;">
+                        <p style="margin: 0 0 10px; color: #92400e; font-size: 15px; font-weight: 700;">
+                          &#9888;&#65039; Friendly Reminder: wasbot.ng Sunset
+                        </p>
+                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td style="padding: 4px 0; color: #a16207; font-size: 14px; line-height: 1.6;">
+                              &#8226; wasbot.ng stays active until <strong>July 2026</strong>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 4px 0; color: #a16207; font-size: 14px; line-height: 1.6;">
+                              &#8226; No new subscriptions can be made on wasbot.ng
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 4px 0; color: #a16207; font-size: 14px; line-height: 1.6;">
+                              &#8226; If your current subscription expires, you <strong>won't be able to renew</strong>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 4px 0; color: #a16207; font-size: 14px; line-height: 1.6;">
+                              &#8226; All new features are on <strong>wasbot.app only</strong>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Primary CTA: Sign Up -->
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 8px;">
+                    <tr>
+                      <td style="border-radius: 10px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);">
+                        <a href="{{.SignupURL}}" target="_blank"
+                           style="display: inline-block; padding: 16px 44px; font-size: 16px; font-weight: 800; color: #ffffff; text-decoration: none; letter-spacing: 0.02em;">
+                          Start Free on wasbot.app &rarr;
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+                  <p style="text-align: center; margin: 0 0 32px; font-size: 12px; color: #94a3b8;">
+                    Free to start &middot; No credit card needed &middot; Takes 2 minutes
+                  </p>
+
+                  <!-- WhatsApp Community (green box) -->
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 28px;">
+                    <tr>
+                      <td style="background: #f0fdf4; border-radius: 12px; padding: 24px;">
+                        <p style="margin: 0 0 6px; font-weight: 700; font-size: 16px; color: #166534;">Join the WASBOT Community</p>
+                        <p style="margin: 0 0 16px; font-size: 14px; color: #15803d; line-height: 1.6;">
+                          Get help, tips, and connect with other WASBOT users on WhatsApp.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                          <tr>
+                            <td style="border-radius: 8px; background: #22c55e;">
+                              <a href="{{.WhatsAppGroupURL}}" target="_blank"
+                                 style="display: inline-block; padding: 12px 28px; font-size: 14px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                                Join WhatsApp Group &rarr;
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <p style="margin: 0 0 6px; font-size: 14px; color: #64748b;">Questions? Just reply to this email &mdash; we actually read them.</p>
+                  <p style="margin: 0; font-size: 14px; color: #64748b;">&mdash; <strong>The WASBOT Team</strong></p>
+
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f8fafc; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e2e8f0; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e2e8f0, transparent); margin: 0 36px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 28px 36px; text-align: center;">
+                        <!-- Social links -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 16px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+                        <!-- Company info -->
+                        <p style="margin: 0 0 8px; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} &middot; Lagos, Nigeria
+                        </p>
+                        <p style="margin: 0 0 8px; font-size: 12px; color: #94a3b8;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+                        <!-- Unsubscribe -->
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 0; font-size: 12px; color: #94a3b8;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #94a3b8; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
