@@ -57,6 +57,10 @@ type Config struct {
 	// Set to the ingress/load balancer IP range in production (e.g., "10.0.0.0/8").
 	// If empty, no proxies are trusted (safest default).
 	TrustedProxies []string
+
+	// CORSOrigins is the explicit allowlist of origins permitted for CORS.
+	// If empty, CORS headers are not set (same-origin only). Wildcard is rejected in production.
+	CORSOrigins []string
 }
 
 type SMTPConfig struct {
@@ -98,6 +102,13 @@ func ValidateProduction(cfg *Config) error {
 	}
 	if cfg.APIKey == "" || cfg.APIKey == "dev-api-key" {
 		missing = append(missing, "API_KEY")
+	}
+
+	// Reject wildcard CORS in production.
+	for _, o := range cfg.CORSOrigins {
+		if o == "*" {
+			return fmt.Errorf("CORS_ORIGINS must not contain wildcard (*) in production")
+		}
 	}
 
 	if len(missing) > 0 {
@@ -148,7 +159,23 @@ func Load() *Config {
 		MigrationsDir:     getEnv("MIGRATIONS_DIR", "./migrations"),
 		SwaggerAllowedIPs: getEnv("SWAGGER_ALLOWED_IPS", ""),
 		TrustedProxies:    parseTrustedProxies(getEnv("TRUSTED_PROXIES", "")),
+		CORSOrigins:       parseCSVList(getEnv("CORS_ORIGINS", "")),
 	}
+}
+
+// parseCSVList parses a comma-separated list of values, trimming whitespace
+// and dropping empty entries. Returns nil if the input is empty.
+func parseCSVList(s string) []string {
+	if s == "" {
+		return nil
+	}
+	var out []string
+	for _, v := range strings.Split(s, ",") {
+		if trimmed := strings.TrimSpace(v); trimmed != "" {
+			out = append(out, trimmed)
+		}
+	}
+	return out
 }
 
 // parseTrustedProxies parses a comma-separated list of trusted proxy IPs/CIDRs.

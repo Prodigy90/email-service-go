@@ -144,6 +144,7 @@ func main() {
 		APIKey:             cfg.APIKey,
 		SwaggerAllowedIPs:  cfg.SwaggerAllowedIPs,
 		TrustedProxies:     cfg.TrustedProxies,
+		CORSOrigins:        cfg.CORSOrigins,
 	})
 
 	// Start server

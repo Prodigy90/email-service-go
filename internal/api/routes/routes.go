@@ -23,6 +23,7 @@ type Deps struct {
 	SwaggerAllowedIPs  string
 	RateLimiter        *middleware.RateLimiter // Optional: if nil, a default is created
 	TrustedProxies     []string                // Optional: trusted proxy IPs or CIDR ranges
+	CORSOrigins        []string                // Optional: allowlist of origins; empty = no CORS headers
 }
 
 // New creates the Gin router with all routes.
@@ -41,7 +42,7 @@ func New(d Deps) *gin.Engine {
 		_ = r.SetTrustedProxies(nil)
 	}
 
-	r.Use(gin.Recovery(), middleware.Logger(d.Logger), middleware.CORS())
+	r.Use(gin.Recovery(), middleware.Logger(d.Logger), middleware.CORS(d.CORSOrigins))
 
 	// Use provided rate limiter or create default (100 req/min)
 	rateLimiter := d.RateLimiter
