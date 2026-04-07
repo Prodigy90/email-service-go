@@ -1146,13 +1146,13 @@ trial_day6:
   description: "Day 6 urgent reminder"
 
 trial_day10:
-  subject: "We miss you! Here's 30% off {{.AppName}}"
+  subject: "We miss you! Here's {{.DiscountPercent}}% off {{.AppName}}"
   body: |-
     Hi {{.Name}},
 
     Your {{.AppName}} trial ended a few days ago, and we noticed you haven't upgraded yet.
 
-    We'd love to have you back! Use code COMEBACK30 for 30% off your first month.
+    We'd love to have you back! Use code {{.DiscountCode}} for {{.DiscountPercent}}% off your first month.
 
     With {{.AppName}}, you can:
     - Broadcast status to thousands of contacts instantly
@@ -1320,9 +1320,9 @@ trial_day10:
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; margin-bottom: 24px;">
       <tr>
         <td style="padding: 32px; text-align: center;">
-          <p style="margin: 0 0 8px 0; font-size: 14px; color: #92400e; text-transform: uppercase; letter-spacing: 1px;">Exclusive Comeback Offer</p>
-          <p style="margin: 0 0 16px 0; font-size: 48px; font-weight: 800; color: #78350f;">30% OFF</p>
-          <p style="margin: 0; font-size: 16px; color: #92400e;">Use code: <strong style="background: #78350f; color: white; padding: 4px 12px; border-radius: 4px; font-family: monospace;">COMEBACK30</strong></p>
+          <p style="margin: 0 0 8px 0; font-size: 14px; color: #92400e; text-transform: uppercase; letter-spacing: 1px;">Exclusive Offer</p>
+          <p style="margin: 0 0 16px 0; font-size: 48px; font-weight: 800; color: #78350f;">{{.DiscountPercent}}% OFF</p>
+          <p style="margin: 0; font-size: 16px; color: #92400e;">Use code: <strong style="background: #78350f; color: white; padding: 4px 12px; border-radius: 4px; font-family: monospace;">{{.DiscountCode}}</strong></p>
         </td>
       </tr>
     </table>
