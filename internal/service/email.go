@@ -119,8 +119,10 @@ func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (
 		}
 	}
 
-	// Add List-Unsubscribe headers if unsubscribe URL is available
-	if s.unsubscribe != nil {
+	// Add List-Unsubscribe headers for marketing/bulk emails only.
+	// Transactional emails (auth, payments, refunds) should NOT have unsubscribe
+	// headers — Gmail uses their presence as a signal to classify into Promotions.
+	if s.unsubscribe != nil && !isTransactionalTemplate(req.Template) {
 		unsubURL := s.unsubscribe.GenerateURL(req.To)
 		if email.Headers == nil {
 			email.Headers = make(map[string]string)
@@ -331,8 +333,8 @@ func (s *EmailService) ProcessEmail(ctx context.Context, emailID uuid.UUID) erro
 	// Update status to sending
 	_ = s.repo.UpdateStatus(ctx, emailID, domain.StatusSending, "")
 
-	// Ensure unsubscribe headers are set (may already be persisted from Send)
-	if s.unsubscribe != nil {
+	// Ensure unsubscribe headers are set for non-transactional emails
+	if s.unsubscribe != nil && !isTransactionalTemplate(email.Template) {
 		unsubURL := s.unsubscribe.GenerateURL(email.To)
 		if email.Headers == nil {
 			email.Headers = make(map[string]string)
@@ -419,6 +421,43 @@ func (s *EmailService) GetCampaignNonOpeners(ctx context.Context, campaignTag st
 // GetCampaignBouncedEmails returns bounced/complained email addresses from a campaign.
 func (s *EmailService) GetCampaignBouncedEmails(ctx context.Context, campaignTag string) ([]string, error) {
 	return s.repo.GetCampaignBouncedEmails(ctx, campaignTag)
+}
+
+// transactionalTemplates lists templates that should NOT receive
+// List-Unsubscribe headers or unsubscribe links. These are emails
+// the user explicitly triggered (auth, payments, refunds) and Gmail
+// classifies them as Promotions when unsubscribe headers are present.
+var transactionalTemplates = map[string]bool{
+	// Auth
+	"email_verification": true,
+	"password_reset":     true,
+	// Payments & subscriptions
+	"payment_success":                true,
+	"payment_success_onetime":        true,
+	"payment_failed":                 true,
+	"payment_failed_final":           true,
+	"subscription_activated":         true,
+	"subscription_activated_onetime": true,
+	"subscription_renewed":           true,
+	"subscription_cancelled":         true,
+	"subscription_expiring":          true,
+	"subscription_expiring_3d":       true,
+	"subscription_expiring_1d":       true,
+	"subscription_reminder_3d":       true,
+	"subscription_reminder_1d":       true,
+	// Refunds
+	"refund_pending":   true,
+	"refund_processed": true,
+	"refund_failed":    true,
+	// Account lifecycle
+	"account_upgraded":    true,
+	"legacy_provisioned":  true,
+}
+
+// isTransactionalTemplate returns true if the template is transactional
+// (user-triggered) and should not have unsubscribe/marketing headers.
+func isTransactionalTemplate(template string) bool {
+	return transactionalTemplates[template]
 }
 
 // enqueue adds an email to the processing queue.

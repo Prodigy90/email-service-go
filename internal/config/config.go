@@ -73,9 +73,10 @@ type SMTPConfig struct {
 }
 
 type ResendConfig struct {
-	APIKey      string
-	FromAddress string
-	FromName    string
+	APIKey         string
+	FromAddress    string
+	FromName       string
+	ReplyToAddress string
 }
 
 type RedisConfig struct {
@@ -147,9 +148,10 @@ func Load() *Config {
 			FromName:    getEnvWithFallback("FROM_NAME", "SMTP_FROM_NAME", "Email Service"),
 		},
 		Resend: ResendConfig{
-			APIKey:      getEnv("RESEND_API_KEY", ""),
-			FromAddress: getEnvWithFallback("FROM_EMAIL", "RESEND_FROM_ADDRESS", ""),
-			FromName:    getEnvWithFallback("FROM_NAME", "RESEND_FROM_NAME", ""),
+			APIKey:         getEnv("RESEND_API_KEY", ""),
+			FromAddress:    getEnvWithFallback("FROM_EMAIL", "RESEND_FROM_ADDRESS", ""),
+			FromName:       getEnvWithFallback("FROM_NAME", "RESEND_FROM_NAME", ""),
+			ReplyToAddress: getEnv("REPLY_TO_ADDRESS", ""),
 		},
 		ResendWebhookSecret: getEnv("RESEND_WEBHOOK_SECRET", ""),
 		APIKey:              getEnv("API_KEY", "dev-api-key"),

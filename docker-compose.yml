@@ -81,6 +81,7 @@ services:
       RESEND_API_KEY: ${RESEND_API_KEY}
       RESEND_FROM_ADDRESS: ${RESEND_FROM_ADDRESS:-noreply@notifications.wasbot.ng}
       RESEND_FROM_NAME: ${RESEND_FROM_NAME:-WASBOT Notifications}
+      REPLY_TO_ADDRESS: ${REPLY_TO_ADDRESS:-hello@wasbot.app}
     restart: unless-stopped
 
   worker:
@@ -104,6 +105,7 @@ services:
       RESEND_API_KEY: ${RESEND_API_KEY}
       RESEND_FROM_ADDRESS: ${RESEND_FROM_ADDRESS:-noreply@notifications.wasbot.ng}
       RESEND_FROM_NAME: ${RESEND_FROM_NAME:-WASBOT Notifications}
+      REPLY_TO_ADDRESS: ${REPLY_TO_ADDRESS:-hello@wasbot.app}
     restart: unless-stopped
 
 volumes:

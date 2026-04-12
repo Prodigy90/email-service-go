@@ -83,6 +83,9 @@ func (c *ResendClient) Send(email *domain.Email) (*SendResult, error) {
 			}
 		}
 		headers = headersCopy
+	} else if c.config.ReplyToAddress != "" {
+		// Fall back to global default Reply-To
+		replyTo = []string{c.config.ReplyToAddress}
 	}
 
 	reqBody := resendRequest{

@@ -573,7 +573,7 @@ onboarding_day1:
     </html>
 
 onboarding_day2:
-  subject: "Trouble posting on your status?"
+  subject: "Your phone overheats, statuses take forever — there's a fix"
   description: "Day 2: Status posting feature highlight — pain-led, test-it-yourself angle"
   body: |-
     Hi {{.Name}},
@@ -1782,7 +1782,7 @@ onboarding_day5:
     </html>
 
 onboarding_day6:
-  subject: "Your WASBOT trial ends tomorrow"
+  subject: "Tomorrow, your WhatsApp goes back to manual"
   description: "Day 6: Urgency — trial ending tomorrow with feature recap"
   body: |-
     Hi {{.Name}},
@@ -2313,7 +2313,7 @@ onboarding_day7:
     </html>
 
 post_trial_day8:
-  subject: "Your WASBOT setup is still saved — reactivate anytime"
+  subject: "Everything you configured is still waiting for you"
   description: "Day 8: Post-trial re-engagement — setup preserved"
   body: |-
     Hi {{.Name}},

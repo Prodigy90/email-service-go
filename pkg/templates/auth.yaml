@@ -200,32 +200,6 @@ email_verification:
                   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                     <tr>
                       <td class="footer-content" style="padding: 32px 40px; text-align: center;">
-                        <!-- Help text -->
-                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
-                          Need help? Simply reply to this email and we'll get back to you.
-                        </p>
-
-                        <!-- Social links -->
-                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
-                          <tr>
-                            <td style="padding: 0 8px;">
-                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
-                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
-                              </a>
-                            </td>
-                            <td style="padding: 0 8px;">
-                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
-                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
-                              </a>
-                            </td>
-                            <td style="padding: 0 8px;">
-                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
-                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
-                              </a>
-                            </td>
-                          </tr>
-                        </table>
-
                         <!-- Company info -->
                         <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
                           {{.Branding.CompanyName}} Technologies<br>
@@ -236,13 +210,6 @@ email_verification:
                         <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
                           &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
                         </p>
-
-                        <!-- Unsubscribe -->
-                        {{if .UnsubscribeURL}}
-                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
-                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
-                        </p>
-                        {{end}}
                       </td>
                     </tr>
                   </table>
@@ -456,32 +423,6 @@ password_reset:
                   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                     <tr>
                       <td class="footer-content" style="padding: 32px 40px; text-align: center;">
-                        <!-- Help text -->
-                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
-                          Need help? Simply reply to this email and we'll get back to you.
-                        </p>
-
-                        <!-- Social links -->
-                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
-                          <tr>
-                            <td style="padding: 0 8px;">
-                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
-                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
-                              </a>
-                            </td>
-                            <td style="padding: 0 8px;">
-                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
-                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
-                              </a>
-                            </td>
-                            <td style="padding: 0 8px;">
-                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
-                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
-                              </a>
-                            </td>
-                          </tr>
-                        </table>
-
                         <!-- Company info -->
                         <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
                           {{.Branding.CompanyName}} Technologies<br>
@@ -492,13 +433,6 @@ password_reset:
                         <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
                           &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
                         </p>
-
-                        <!-- Unsubscribe -->
-                        {{if .UnsubscribeURL}}
-                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
-                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
-                        </p>
-                        {{end}}
                       </td>
                     </tr>
                   </table>
