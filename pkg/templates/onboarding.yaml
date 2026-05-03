@@ -298,27 +298,28 @@ onboarding_day0:
     </html>
 
 onboarding_day1:
-  subject: "Your contacts are waiting — start auto-saving them"
-  description: "Day 1: Auto-save contacts feature highlight"
+  subject: "Ada lost ₦600K last month — and didn't know"
+  description: "Day 1: Auto-save — Ada story, conversion-framed (Lekki course creator, 240 lost leads → ₦600K/month)"
   body: |-
     Hi {{.Name}},
 
-    Quick question — how many new people message you on WhatsApp every week?
+    Ada is a course creator in Lekki who runs ads every week. But there was a big problem.
 
-    If you're like most business owners, it's dozens. And most of those contacts? Gone. Lost in your chat list, never saved.
+    Last week, 800 people DMed her. She only managed to reply to 560. The other 240? They just sat there at the bottom of her WhatsApp until she forgot about them. Once a message slides down, it's gone.
 
-    With WASBOT, every new person who sends you a DM gets automatically saved to your Google Contacts with their WhatsApp name. No more phone numbers without names. No more leads you can't reach on status.
+    By the time she remembered on Wednesday, a new set of messages had covered the old ones. By Monday, those leads were gone for good. That's 240 people who would have paid — but she lost them.
 
-    Here's what happens once you connect:
-    1. Someone sends you a DM — WASBOT saves them instantly
-    2. Their WhatsApp name and number are captured into your Google Contacts
-    3. Your Google Contacts stays in sync — access them from any device
+    Then she started using a simple system that automatically saves every new DM to her Google Contacts. No manual typing. No copy-paste.
 
-    No more manually saving numbers. No more lost leads. No more leads you can't reach on status.
+    Two weeks in, her sales went up drastically. Closing an extra ₦600K a month — without spending an extra kobo on ads. She just stopped "dashing" leads to her competitors.
 
-    Connect to Start Auto-Saving: {{.ConnectURL}}
+    Stop losing money on people who already DMed you.
+
+    Connect your WhatsApp and save every lead automatically: {{.ConnectURL}}
 
     — The WASBOT Team
+
+    PS — every contact you save today could be your next customer. That's the only number that matters.
 
     Join the WASBOT Community: {{.WhatsAppGroupURL}}
   html_body: |-
@@ -330,7 +331,7 @@ onboarding_day1:
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="color-scheme" content="light dark">
       <meta name="supported-color-schemes" content="light dark">
-      <title>Auto-Save Contacts</title>
+      <title>Ada lost ₦600K last month</title>
       <!--[if mso]>
       <noscript>
         <xml>
@@ -406,7 +407,7 @@ onboarding_day1:
     <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
       <!-- Preview text -->
       <div style="display: none; max-height: 0; overflow: hidden;">
-        {{if .PreviewText}}{{.PreviewText}}{{else}}Every new person who DMs you gets saved to your Google Contacts automatically.{{end}}
+        {{if .PreviewText}}{{.PreviewText}}{{else}}Ada had 800 DMs last week. She replied to 560. The other 240? Gone.{{end}}
         &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
       </div>
 
@@ -444,59 +445,48 @@ onboarding_day1:
               <!-- Main content -->
               <tr>
                 <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
-                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Your Contacts Are Waiting</h1>
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">The math wasn&rsquo;t adding up</h1>
 
                   <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
 
     <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
 
-    <p style="margin: 0 0 20px 0;">Quick question — how many new people message you on WhatsApp every week?</p>
+    <p style="margin: 0 0 20px 0;">Ada is a course creator in Lekki who runs ads every week. But there was a big problem.</p>
 
-    <p style="margin: 0 0 24px 0;">If you're like most business owners, it's dozens. And most of those contacts? <strong>Gone.</strong> Lost in your chat list, never saved.</p>
+    <p style="margin: 0 0 20px 0;">Last week, 800 people DMed her. She only managed to reply to 560. The other 240? They just sat there at the bottom of her WhatsApp until she forgot about them. <strong>Once a message slides down, it&rsquo;s gone.</strong></p>
 
-    <p style="margin: 0 0 24px 0;">With WASBOT, every new person who sends you a DM gets automatically saved to your Google Contacts with their WhatsApp name. No more phone numbers without names. No more leads you can't reach on status.</p>
+    <p style="margin: 0 0 24px 0;">By the time she remembered on Wednesday, a new set of messages had covered the old ones. By Monday, those leads were gone for good. That&rsquo;s <strong>240 people who would have paid</strong> &mdash; but she lost them.</p>
 
-    <!-- How it works -->
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
+    <p style="margin: 0 0 24px 0;">Then she started using a simple system that automatically saves every new DM to her Google Contacts. No manual typing. No copy-paste.</p>
+
+    <!-- Conversion callout -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
       <tr>
-        <td style="padding: 24px;">
-          <p style="margin: 0 0 16px 0; font-weight: 600; color: #1e40af;">Here's what happens once you connect:</p>
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            <tr>
-              <td style="padding: 8px 0;">
-                <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">1</span>
-                <span style="margin-left: 12px; color: #374151;">Someone sends you a DM — WASBOT saves them instantly</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 8px 0;">
-                <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">2</span>
-                <span style="margin-left: 12px; color: #374151;">Their WhatsApp name and number are captured into your Google Contacts</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 8px 0;">
-                <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">3</span>
-                <span style="margin-left: 12px; color: #374151;">Google Contacts stays in sync — access them from any device</span>
-              </td>
-            </tr>
-          </table>
+        <td style="padding: 28px 24px; text-align: center;">
+          <p style="margin: 0 0 6px 0; font-size: 12px; color: #166534; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;">Two weeks in</p>
+          <p style="margin: 0 0 10px 0; font-size: 32px; color: #064e3b; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em;">+₦600K a month</p>
+          <p style="margin: 0; font-size: 14px; color: #4b5563; line-height: 1.5;">Without spending an extra kobo on ads. She just stopped &ldquo;dashing&rdquo; leads to her competitors.</p>
         </td>
       </tr>
     </table>
 
-    <p style="margin: 0 0 24px 0;">No more manually saving numbers. No more lost leads. No more leads you can't reach on status.</p>
+    <p style="margin: 0 0 24px 0; font-size: 18px; font-weight: 600; color: #111827;">Stop losing money on people who already DMed you.</p>
 
     <!-- CTA Button -->
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
       <tr>
         <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
           <a href="{{.ConnectURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
-            Connect to Start Auto-Saving &#x2192;
+            Connect Your WhatsApp &#x2192;
           </a>
         </td>
       </tr>
     </table>
+
+    <!-- PS -->
+    <p style="margin: 32px 0 0 0; padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 14px; color: #6b7280; font-style: italic; line-height: 1.6;">
+      PS &mdash; every contact you save today could be your next customer. That&rsquo;s the only number that matters.
+    </p>
 
     <!-- WhatsApp Community -->
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-top: 24px;">
