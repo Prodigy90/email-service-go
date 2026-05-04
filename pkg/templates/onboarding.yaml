@@ -563,20 +563,24 @@ onboarding_day1:
     </html>
 
 onboarding_day2:
-  subject: "Your phone overheats, statuses take forever — there's a fix"
-  description: "Day 2: Status posting feature highlight — pain-led, test-it-yourself angle"
+  subject: "Tunde lost ₦1m to refunds last month — and didn't know why"
+  description: "Day 2: Status posting — Tunde story, conversion-framed (Ibadan TV operator, refunds → 100% advert fees kept)"
   body: |-
     Hi {{.Name}},
 
-    Are you struggling to post WhatsApp status? Your phone overheats. Statuses take forever to send. And worst of all — WhatsApp compresses every photo and video you post until your viewers see pixels instead of your content.
+    It's a painful cycle: You spend money on ads to get subscribers. You spend money on VAs to help you post. But when the status gets stuck on "Sending," you end up refunding the advertiser anyway.
 
-    WASBOT posts status from the cloud. HD quality preserved. No phone heat. No compression. No delivery throttling.
+    Tunde was losing ₦1m a month this way. He thought his Tecno was the problem — he was already pricing his third phone this year.
 
-    Skeptical? Post your first status to your first 1,000 contacts and watch the analytics in real-time. Get real view and delivery counts — even with your own read receipts turned off. WASBOT tracks them server-side, so you still see who's opening your stuff.
+    But the phone wasn't the issue. The load was.
 
-    Here's something WhatsApp doesn't tell you: it doesn't show you how many of your contacts are actually active on WhatsApp. WASBOT does. You'll see exactly who's still active so you know your real audience size before you post.
+    He switched his 4 TVs to the cloud with WASBOT. Now, his posts go out instantly, his phone stays cool, and his VAs actually have time to focus on growth instead of "monitoring" status uploads.
 
-    Connect Now: {{.ConnectURL}}
+    He stopped losing money to refunds and started keeping 100% of his advert fees.
+
+    If your status is still hanging, you're losing money.
+
+    Connect your WhatsApp and post from the cloud here: {{.ConnectURL}}
 
     — The WASBOT Team
 
@@ -590,7 +594,7 @@ onboarding_day2:
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="color-scheme" content="light dark">
       <meta name="supported-color-schemes" content="light dark">
-      <title>HD Status Posting</title>
+      <title>Tunde lost ₦1m to refunds last month</title>
       <!--[if mso]>
       <noscript>
         <xml>
@@ -666,7 +670,7 @@ onboarding_day2:
     <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
       <!-- Preview text -->
       <div style="display: none; max-height: 0; overflow: hidden;">
-        {{if .PreviewText}}{{.PreviewText}}{{else}}Your phone overheats, statuses take forever, and WhatsApp compresses your photos. WASBOT fixes all three.{{end}}
+        {{if .PreviewText}}{{.PreviewText}}{{else}}Tunde was losing ₦1m a month thinking his phone was the problem. It wasn't.{{end}}
         &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
       </div>
 
@@ -704,69 +708,30 @@ onboarding_day2:
               <!-- Main content -->
               <tr>
                 <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
-                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Your Phone Is Overheating Posting Status, Right?</h1>
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">₦1m gone to refunds last month</h1>
 
                   <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
 
     <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
 
-    <p style="margin: 0 0 20px 0;">Are you struggling to post WhatsApp status? Your phone overheats. Statuses take forever to send. And worst of all — <strong>WhatsApp compresses every photo and video you post</strong> until your viewers see pixels instead of your content.</p>
+    <p style="margin: 0 0 20px 0;">It&rsquo;s a painful cycle: You spend money on ads to get subscribers. You spend money on VAs to help you post. But when the status gets stuck on &ldquo;Sending,&rdquo; you end up refunding the advertiser anyway.</p>
 
-    <p style="margin: 0 0 24px 0;">WASBOT posts status from the cloud. HD quality preserved. No phone heat. No compression. No delivery throttling.</p>
+    <p style="margin: 0 0 20px 0;">Tunde was losing <strong>₦1m a month</strong> this way. He thought his Tecno was the problem &mdash; he was already pricing his third phone this year.</p>
 
-    <!-- Benefits -->
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
-      <tr>
-        <td style="padding: 24px;">
-          <p style="margin: 0 0 16px 0; font-weight: 600; color: #166534;">What you get:</p>
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            <tr>
-              <td style="padding: 10px 0;">
-                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">&#x1F525;</span>
-                <span style="margin-left: 12px; color: #374151;"><strong>No phone heat</strong> — We post from the cloud, your phone stays cool</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 10px 0;">
-                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">&#x1F4F8;</span>
-                <span style="margin-left: 12px; color: #374151;"><strong>HD quality preserved</strong> — Your photos and videos go out uncompressed</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 10px 0;">
-                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">&#x1F4CA;</span>
-                <span style="margin-left: 12px; color: #374151;"><strong>Real-time analytics</strong> — See delivery + views even with your own read receipts OFF</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 10px 0;">
-                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">&#x26A1;</span>
-                <span style="margin-left: 12px; color: #374151;"><strong>No throttling</strong> — Your status reaches all your active contacts, not a fraction</span>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
+    <p style="margin: 0 0 24px 0; font-size: 18px; font-weight: 600; color: #111827;">But the phone wasn&rsquo;t the issue. The load was.</p>
 
-    <p style="margin: 0 0 20px 0;"><strong>Skeptical?</strong> Post your first status to your first 1,000 contacts and watch the analytics in real-time. Get real view and delivery counts — even with your own read receipts turned off. WASBOT tracks them server-side, so you still see who's opening your stuff.</p>
+    <p style="margin: 0 0 20px 0;">He switched his 4 TVs to the cloud with WASBOT. Now, his posts go out instantly, his phone stays cool, and his VAs actually have time to focus on growth instead of &ldquo;monitoring&rdquo; status uploads.</p>
 
-    <!-- Insight callout -->
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 8px; margin-bottom: 24px;">
-      <tr>
-        <td style="padding: 16px 20px;">
-          <p style="margin: 0 0 8px 0; font-weight: 600; color: #1e40af; font-size: 14px;">Something WhatsApp doesn't tell you</p>
-          <p style="margin: 0; font-size: 14px; color: #374151; line-height: 1.6;">WhatsApp doesn't show you how many of your contacts are actually active on WhatsApp. <strong>WASBOT does.</strong> You'll see exactly who's still active so you know your real audience size before you post.</p>
-        </td>
-      </tr>
-    </table>
+    <p style="margin: 0 0 28px 0;">He stopped losing money to refunds and <strong>started keeping 100% of his advert fees.</strong></p>
+
+    <p style="margin: 0 0 24px 0; font-size: 17px; font-weight: 600; color: #111827;">If your status is still hanging, you&rsquo;re losing money.</p>
 
     <!-- CTA Button -->
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
       <tr>
         <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
           <a href="{{.ConnectURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
-            Connect Now &#x2192;
+            Connect Your WhatsApp &#x2192;
           </a>
         </td>
       </tr>
