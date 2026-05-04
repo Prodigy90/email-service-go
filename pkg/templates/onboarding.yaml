@@ -812,28 +812,32 @@ onboarding_day2:
     </html>
 
 onboarding_day3:
-  subject: "Someone DMs you 'price' at 3am — WASBOT replies instantly"
-  description: "Day 3: Autoresponder feature highlight"
+  subject: "Ada made ₦240K last week — and slept through it"
+  description: "Day 3: Autoresponder — Ada story, gain-framed (3am DM scenario, 6 leads × ₦40K masterclass = ₦240K closed overnight)"
   body: |-
     Hi {{.Name}},
 
-    Your competitors reply in minutes. With WASBOT, you reply in seconds — automatically.
+    3:14am. Ada's phone vibrates.
 
-    Imagine this: Someone sees your product on WhatsApp status at 3am. They DM you "price." Before they even put their phone down, they get your full price list as a text reply.
+    "Hi, I saw your masterclass on status. How much?"
 
-    That's the WASBOT autoresponder.
+    She doesn't see it. She's asleep. By the time she wakes at 7:30am, the lead has scrolled past, found a competitor, and forgotten the question.
 
-    Here's how it works:
-    - Set keyword triggers like "price", "available", "how much"
-    - WASBOT detects the keyword and sends your preset text reply instantly
-    - Add multiple keywords per rule — one setup covers all variations
-    - Contact conditions let you target everyone, saved contacts only, or new contacts only
-    - Human-like typing delays make it feel natural, not robotic
-    - Smart cooldowns stop you from spamming the same person twice
+    That used to happen every night. By Friday, Ada had counted 18 leads she lost to "Hi, how much?" messages she replied to too late.
 
-    You're closing sales while you sleep. Your competitors are leaving customers on read.
+    Then she set up an autoresponder.
 
-    Connect to Set Up Auto-Replies: {{.ConnectURL}}
+    3:14am next time. Same DM: "Hi, I saw your masterclass on status. How much?"
+
+    WASBOT replies in 4 seconds: "Hi! Masterclass is ₦40K. Pay here: paystack.com/ada/class. Reply if you have questions!"
+
+    3:18am. Lead clicks the link. Pays. Ada wakes up to a payment alert.
+
+    Last week she closed ₦240K like that — ₦40K × 6 leads who would've cooled overnight. Her competitors are still typing "received, will get back to you" by 9am. She already cashed out.
+
+    Stop letting leads cool off while you sleep.
+
+    Connect your WhatsApp and reply in seconds: {{.ConnectURL}}
 
     — The WASBOT Team
 
@@ -847,7 +851,7 @@ onboarding_day3:
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="color-scheme" content="light dark">
       <meta name="supported-color-schemes" content="light dark">
-      <title>Autoresponder</title>
+      <title>Ada made ₦240K last week — and slept through it</title>
       <!--[if mso]>
       <noscript>
         <xml>
@@ -923,7 +927,7 @@ onboarding_day3:
     <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
       <!-- Preview text -->
       <div style="display: none; max-height: 0; overflow: hidden;">
-        {{if .PreviewText}}{{.PreviewText}}{{else}}Your competitors reply in minutes. With WASBOT, you reply in seconds — automatically.{{end}}
+        {{if .PreviewText}}{{.PreviewText}}{{else}}3:14am. A lead DMs Ada &ldquo;how much?&rdquo; — by 3:18am they&rsquo;ve paid. Without her lifting a finger.{{end}}
         &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
       </div>
 
@@ -961,73 +965,40 @@ onboarding_day3:
               <!-- Main content -->
               <tr>
                 <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
-                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Auto-Reply While You Sleep</h1>
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">She closed ₦240K while she slept</h1>
 
                   <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
 
     <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
 
-    <p style="margin: 0 0 20px 0;">Your competitors reply in minutes. With WASBOT, you reply in <strong>seconds</strong> — automatically.</p>
+    <p style="margin: 0 0 20px 0;">3:14am. Ada&rsquo;s phone vibrates.</p>
 
-    <p style="margin: 0 0 24px 0;">Imagine this: Someone sees your product on WhatsApp status at 3am. They DM you "price." Before they even put their phone down, they get your full price list as a text reply.</p>
+    <p style="margin: 0 0 20px 0; font-style: italic; color: #6b7280; padding-left: 16px; border-left: 3px solid #e5e7eb;">&ldquo;Hi, I saw your masterclass on status. How much?&rdquo;</p>
 
-    <p style="margin: 0 0 24px 0;">That's the <strong>WASBOT autoresponder</strong>.</p>
+    <p style="margin: 0 0 20px 0;">She doesn&rsquo;t see it. She&rsquo;s asleep. By the time she wakes at 7:30am, the lead has scrolled past, found a competitor, and forgotten the question.</p>
 
-    <!-- How it works -->
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
-      <tr>
-        <td style="padding: 24px;">
-          <p style="margin: 0 0 16px 0; font-weight: 600; color: #166534;">How it works:</p>
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            <tr>
-              <td style="padding: 10px 0;">
-                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">&#x1F3AF;</span>
-                <span style="margin-left: 12px; color: #374151;"><strong>Keyword triggers</strong> — Set words like "price", "available", "how much"</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 10px 0;">
-                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">&#x26A1;</span>
-                <span style="margin-left: 12px; color: #374151;"><strong>Instant text replies</strong> — WASBOT detects the keyword and sends your preset reply</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 10px 0;">
-                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">&#x1F504;</span>
-                <span style="margin-left: 12px; color: #374151;"><strong>Multiple keywords</strong> — One rule covers all message variations</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 10px 0;">
-                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">&#x1F464;</span>
-                <span style="margin-left: 12px; color: #374151;"><strong>Contact conditions</strong> — Target everyone, saved contacts only, or new contacts only</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 10px 0;">
-                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">&#x1F916;</span>
-                <span style="margin-left: 12px; color: #374151;"><strong>Human-like typing delays</strong> — Feels natural, not robotic</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 10px 0;">
-                <span style="color: {{.Branding.PrimaryColor}}; font-size: 18px;">&#x23F1;</span>
-                <span style="margin-left: 12px; color: #374151;"><strong>Smart cooldowns</strong> — Stops you from spamming the same person twice</span>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
+    <p style="margin: 0 0 20px 0;">That used to happen every night. By Friday, Ada had counted <strong>18 leads</strong> she lost to &ldquo;Hi, how much?&rdquo; messages she replied to too late.</p>
 
-    <p style="margin: 0 0 24px 0;">You're closing sales while you sleep. Your competitors are leaving customers on read.</p>
+    <p style="margin: 0 0 20px 0;">Then she set up an autoresponder.</p>
+
+    <p style="margin: 0 0 20px 0;">3:14am next time. Same DM.</p>
+
+    <p style="margin: 0 0 20px 0;">WASBOT replies in 4 seconds:</p>
+
+    <p style="margin: 0 0 20px 0; font-style: italic; color: #166534; padding-left: 16px; border-left: 3px solid #10b981; background-color: #f0fdf4; padding: 12px 16px; border-radius: 0 8px 8px 0;">&ldquo;Hi! Masterclass is ₦40K. Pay here: paystack.com/ada/class. Reply if you have questions!&rdquo;</p>
+
+    <p style="margin: 0 0 24px 0;">3:18am. Lead clicks the link. Pays. Ada wakes up to a payment alert.</p>
+
+    <p style="margin: 0 0 24px 0;">Last week she closed <strong>₦240K</strong> like that &mdash; ₦40K × 6 leads who would&rsquo;ve cooled overnight. Her competitors are still typing &ldquo;received, will get back to you&rdquo; by 9am. She already cashed out.</p>
+
+    <p style="margin: 0 0 24px 0; font-size: 17px; font-weight: 600; color: #111827;">Stop letting leads cool off while you sleep.</p>
 
     <!-- CTA Button -->
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
       <tr>
         <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
           <a href="{{.ConnectURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
-            Connect to Set Up Auto-Replies &#x2192;
+            Connect Your WhatsApp &#x2192;
           </a>
         </td>
       </tr>
