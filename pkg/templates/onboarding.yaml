@@ -563,7 +563,7 @@ onboarding_day1:
     </html>
 
 onboarding_day2:
-  subject: "Tunde lost ₦1m to refunds last month — and didn't know why"
+  subject: "Tunde lost ₦1m to refunds — but it wasn't the phone"
   description: "Day 2: Status posting — Tunde story, conversion-framed (Ibadan TV operator, refunds → 100% advert fees kept)"
   body: |-
     Hi {{.Name}},
