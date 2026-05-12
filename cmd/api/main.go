@@ -11,7 +11,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/hibiken/asynq"
-	"github.com/jmoiron/sqlx"
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/redis/go-redis/v9"
 
@@ -46,8 +45,9 @@ func main() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	// Connect to PostgreSQL
-	sqlxDB, err := sqlx.Connect("pgx", cfg.DatabaseURL)
+	// Connect to PostgreSQL (bounded pool: defaults 10/2, env-overridable
+	// via DB_MAX_OPEN_CONNS / DB_MAX_IDLE_CONNS).
+	sqlxDB, err := db.Connect(cfg.DatabaseURL)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to connect to database")
 	}
