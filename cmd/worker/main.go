@@ -8,11 +8,11 @@ import (
 	"time"
 
 	"github.com/hibiken/asynq"
-	"github.com/jmoiron/sqlx"
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/redis/go-redis/v9"
 
 	"github.com/prodigy90/email-service-go/internal/config"
+	"github.com/prodigy90/email-service-go/internal/db"
 	"github.com/prodigy90/email-service-go/internal/logger"
 	"github.com/prodigy90/email-service-go/internal/repository/postgres"
 	"github.com/prodigy90/email-service-go/internal/service"
@@ -40,12 +40,13 @@ func main() {
 	logger.Init(cfg.LogLevel)
 	log := *logger.Get()
 
-	// Connect to PostgreSQL
-	db, err := sqlx.Connect("pgx", cfg.DatabaseURL)
+	// Connect to PostgreSQL (bounded pool: defaults 10/2, env-overridable
+	// via DB_MAX_OPEN_CONNS / DB_MAX_IDLE_CONNS).
+	sqlxDB, err := db.Connect(cfg.DatabaseURL)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to connect to database")
 	}
-	defer db.Close()
+	defer sqlxDB.Close()
 	log.Info().Msg("Connected to PostgreSQL")
 
 	// Parse Redis URL
@@ -62,7 +63,7 @@ func main() {
 	defer asynqClient.Close()
 
 	// Initialize services
-	emailRepo := postgres.NewEmailRepository(db)
+	emailRepo := postgres.NewEmailRepository(sqlxDB)
 	templateService, err := service.NewTemplateService(cfg.TemplateDir, log)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to initialize template service")
@@ -82,7 +83,7 @@ func main() {
 		log.Info().Msg("Using SMTP as email provider")
 	}
 
-	suppressionRepo := postgres.NewSuppressionRepository(db)
+	suppressionRepo := postgres.NewSuppressionRepository(sqlxDB)
 	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, nil, suppressionRepo, log)
 
 	// Wire unsubscribe service for List-Unsubscribe headers
