@@ -1,5 +1,5 @@
 # Campaign and marketing email templates
-# campaign_update, feature_announcement, product_update_march, testimonial_request, limits_upgrade_announcement
+# campaign_update, feature_announcement, product_update_march, testimonial_request, limits_upgrade_announcement, wasbot_ng_final_notice, broadcasts_launch
 
 campaign_update:
   subject: "{{.Subject}}"
@@ -1900,3 +1900,219 @@ wasbot_ng_final_notice:
     </body>
     </html>
   description: "wasbot.ng sunset final notice — payments stopped, subscriptions run until expiry, move to wasbot.app"
+
+broadcasts_launch:
+  subject: "New: send one DM campaign to your whole saved list"
+  body: |
+    Hi {{.Name}},
+
+    Big one just dropped — Broadcasts. It's live on every plan, including the trial.
+
+    Here's the thing it kills: copy-pasting the same message to 200 people one at a time. Or using WhatsApp's own broadcast that stops at 256 contacts and treats everyone the same.
+
+    WHAT IT DOES
+    Pick a list. Write your message — or a short chain of up to 5 messages. Hit start. WASBOT sends to your whole saved list slowly and safely, drops in each person's first name automatically, and stops sending to anyone who replies STOP.
+
+    Each person gets it privately in their own chat. Their replies land in your normal inbox.
+
+    SENT SLOWLY, ON PURPOSE
+    It sends one message at a time with small random gaps, so the timing looks like a real person typing — not a machine. New numbers go even slower until they warm up. You can stop the whole campaign yourself any time.
+
+    EVERY PLAN, INCLUDING TRIAL
+    - Trial / Free: up to 2,000 recipients per campaign, 8 campaigns a day, with a small www.wasbot.app footer on the messages.
+    - Paid plans: bigger caps (10,000 → 35,000 → unlimited) and no footer.
+
+    The trial is a real taste. Paid lifts the caps and drops the footer.
+
+    ONE THING — USE IT RESPONSIBLY
+    Sending DMs to a lot of people carries a real risk of WhatsApp restricting your number. Only message people who already know you, keep your account warm, and start small. Never blast cold strangers.
+
+    Try it now:
+    {{.DashboardURL}}
+
+    Or read the full guide first:
+    https://www.wasbot.app/blog/broadcasts
+
+    Talk soon,
+    The WASBOT Team
+
+    ---
+    You're receiving this because you have a WASBOT account.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>Broadcasts is live on WASBOT</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        Broadcasts is live — send one DM campaign to your whole saved list, on every plan.
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Send one DM campaign to your whole list</h1>
+
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+                    <p style="margin: 0 0 16px 0;">Big one just dropped &mdash; <strong>Broadcasts</strong>. It's live on every plan, including the trial.</p>
+                    <p style="margin: 0 0 24px 0;">The thing it kills: copy-pasting the same message to 200 people one at a time. Or using WhatsApp's own broadcast that stops at 256 contacts and treats everyone the same.</p>
+
+                    <!-- What it does -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">What it does</h3>
+                          <p style="margin: 0 0 10px; color: #374151; font-size: 15px; line-height: 1.5;">
+                            Pick a list. Write your message &mdash; or a short chain of up to 5 messages. Hit start. WASBOT sends to your whole saved list slowly and safely, drops in each person's first name automatically, and stops sending to anyone who replies STOP.
+                          </p>
+                          <p style="margin: 0; color: #6b7280; font-size: 14px; line-height: 1.5;">
+                            Each person gets it privately in their own chat. Their replies land in your normal inbox.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Sent slowly -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Sent slowly, on purpose</h3>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">
+                            It sends one message at a time with small random gaps, so the timing looks like a real person typing &mdash; not a machine. New numbers go even slower until they warm up. And you can stop the whole campaign yourself, any time.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Every plan -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Every plan, including trial</h3>
+                          <p style="margin: 0 0 8px; color: #374151; font-size: 15px; line-height: 1.5;">
+                            <strong>Trial / Free:</strong> up to 2,000 recipients per campaign, 8 campaigns a day, with a small <code>www.wasbot.app</code> footer on the messages.
+                          </p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">
+                            <strong>Paid plans:</strong> bigger caps (10,000 &rarr; 35,000 &rarr; unlimited) and no footer.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Use responsibly -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                      <tr>
+                        <td style="background-color: #fffbeb; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #92400e; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">One thing &mdash; use it responsibly</h3>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">
+                            Sending DMs to a lot of people carries a real risk of WhatsApp restricting your number. Only message people who already know you, keep your account warm, and start small. Never blast cold strangers.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- CTA -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 20px;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                            Send Your First Broadcast
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 28px 0; text-align: center;">
+                      <a href="https://www.wasbot.app/blog/broadcasts" style="color: {{.Branding.PrimaryColor}}; font-size: 14px; font-weight: 600;">Read the full guide first &rarr;</a>
+                    </p>
+
+                    <p style="margin: 0;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialTwitter}}" style="display: inline-block;"><img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;"></a></td>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialInstagram}}" style="display: inline-block;"><img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;"></a></td>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialYouTube}}" style="display: inline-block;"><img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;"></a></td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">{{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria</p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">&copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.</p>
+                        {{if .UnsubscribeURL}}<p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;"><a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.</p>{{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Broadcasts launch announcement — live on every plan, trial capped + footer, paid lifts caps + drops footer, responsible-use note, CTA to dashboard / blog guide"
