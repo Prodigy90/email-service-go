@@ -2,42 +2,52 @@
 # group_admin_launch — existing-user announcement: groups now have a back office (requests, CSV export, bulk admin)
 
 group_admin_launch:
-  subject: "Your WhatsApp groups now run themselves 🛠️"
-  preview_text: "Approve join requests by name, export any group to a CSV you own, and promote, mute, archive or leave across dozens of groups at once."
+  subject: "Your Groups page now handles the admin side too"
+  preview_text: "Bulk-approve join requests, export any group's members to a CSV you own, and mute, archive or leave dozens of groups at once."
   body: |
     Hi {{.Name}},
 
-    Quick one — if you run WhatsApp groups, this is for you.
+    If you run WhatsApp groups, the messaging was never the hard part — WASBOT
+    already posts to all your groups in one go. The hard part is everything
+    around them: approving join requests one tap at a time, pulling member lists
+    by hand, making someone an admin in each group separately, and hunting
+    through your chats to mute or leave the ones that have gone quiet.
 
-    You already use WASBOT to message all your groups in one click. But the admin
-    work behind those groups still ate your day: tapping Approve, Approve, Approve
-    on join requests, screenshotting member lists for advertisers, making one
-    person admin in 18 groups one at a time.
+    The Groups page handles that side now. Every group you admin is already
+    listed there — so the management you used to do group-by-group on your phone,
+    you can now do across all of them at once, from one screen.
 
-    That's done now. The Groups page runs the admin side too:
+    What you can do now:
 
-      - Approve or reject join requests — you see each person's name and number,
-        or hit "Approve all" to fill every open slot at once
-      - Export any group's members (or its pending requests) to a CSV you own —
-        names and numbers, ready to import and reach on status and broadcasts
-      - Promote or demote a moderator across all your admin groups in one pass
-      - Mute, archive, or leave dozens of groups at once — in the background,
-        paced so WhatsApp doesn't flag you for moving too fast
+      - Approve or reject join requests in one click. See who's asking by name
+        and number, and approve them all at once to fill open slots and keep your
+        groups full — instead of tapping through requests one after another.
 
-    Here's the one marketers love: a 300-member group is 300 leads. Export them,
-    import them into WASBOT, and now they can see your status and get your
-    broadcasts — not just your group posts. That's owning your audience instead
-    of renting it.
+      - Export any admin group's members to a CSV you own. A clean backup of
+        every contact in the group — names and numbers — that stays yours, no
+        matter what happens to the group later.
 
-    Run it now: https://www.wasbot.app/groups
+      - Promote a moderator into several groups at once. Hand someone you trust
+        the keys across all your groups in one pass, so the groups keep running
+        and you don't lose access if your main number ever gets banned.
+
+      - Mute, archive, or leave groups in bulk. WASBOT already lists all your
+        groups — select the ones you want and act on all of them at once, instead
+        of digging through your chats one by one. The actions run in the
+        background, spaced out rather than fired off all at once.
+
+    Then the part worth thinking about:
+
+    Those exported members don't have to stay a spreadsheet. Turn them into a
+    status audience — a custom list built from your group contacts — and your
+    status updates reach them directly, not just the posts you make inside the
+    group. That's how you promote your next class, drop, or offer to the people
+    who already showed up for it. One honest caveat: a contact only sees your
+    status if they've saved your number, so this works best with an audience that
+    already knows you. Used right, it's a real edge.
+
+    Open your Groups page: https://www.wasbot.app/groups
     See exactly how it works: https://www.wasbot.app/blog/group-admin
-
-    It's on every plan, including the free trial. Only the daily message limits
-    change by plan.
-
-    What's coming next
-    A single Group Requests inbox — every group you admin, with its pending
-    count, in one place — plus adding members to a group straight from a CSV.
 
     Tell us what to build
     What's working? What's missing? What group chore do you wish WASBOT could
@@ -45,7 +55,7 @@ group_admin_launch:
       - Join the community: https://chat.whatsapp.com/EoP7wlsiUe4CKKA5E6BXCY?mode=gi_t
       - Or just reply to this email — it comes straight to us.
 
-    We read everything — and a lot of what we ship comes straight from these.
+    We read everything, and a lot of what we ship starts right here.
 
     Talk soon,
     The WASBOT Team
@@ -60,7 +70,7 @@ group_admin_launch:
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <title>Your WhatsApp groups now run themselves</title>
+      <title>Your Groups page now handles the admin side too</title>
       <meta name="color-scheme" content="light dark">
       <meta name="supported-color-schemes" content="light dark">
       <!--[if mso]>
@@ -87,7 +97,7 @@ group_admin_launch:
     </head>
     <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
       <div style="display: none; max-height: 0; overflow: hidden;">
-        The admin work behind your groups — approvals, member lists, bulk actions — done from one screen.
+        The admin work behind your groups — approvals, member lists, bulk actions — handled from one screen.
         &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
       </div>
       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
@@ -116,29 +126,30 @@ group_admin_launch:
               <!-- Body -->
               <tr>
                 <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
-                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Your groups now run themselves</h1>
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Your Groups page now handles the admin side too</h1>
 
                   <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
                     <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
-                    <p style="margin: 0 0 20px 0;">You already use WASBOT to message all your groups in one click. But the admin work behind those groups still ate your day &mdash; tapping Approve, Approve, Approve on join requests, screenshotting member lists for advertisers, making one person admin in 18 groups one at a time.</p>
-                    <p style="margin: 0 0 24px 0;">That's done now. The <strong>Groups page</strong> runs the admin side too:</p>
+                    <p style="margin: 0 0 20px 0;">If you run WhatsApp groups, the messaging was never the hard part &mdash; WASBOT already posts to all your groups in one go. The hard part is everything around them: approving join requests one tap at a time, pulling member lists by hand, making someone an admin in each group separately, and hunting through your chats to mute or leave the ones that have gone quiet.</p>
+                    <p style="margin: 0 0 24px 0;">The <strong>Groups page</strong> handles that side now. Every group you admin is already listed there &mdash; so the management you used to do group-by-group on your phone, you can now do across all of them at once, from one screen.</p>
 
                     <!-- Feature card -->
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
                       <tr>
                         <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px 24px; border-radius: 0 12px 12px 0;">
                           <h3 style="margin: 0 0 12px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">What you can do now</h3>
-                          <ul style="margin: 0; padding-left: 20px; color: #374151; font-size: 15px; line-height: 1.9;">
-                            <li><strong>Approve or reject join requests</strong> &mdash; see each person's name and number, or "Approve all" to fill every open slot at once</li>
-                            <li><strong>Export members to a CSV you own</strong> &mdash; or the pending requests, names and numbers ready to import</li>
-                            <li><strong>Promote a moderator</strong> across all your admin groups in one pass</li>
-                            <li><strong>Mute, archive, or leave</strong> dozens of groups at once, in the background &mdash; paced so WhatsApp doesn't flag you</li>
+                          <ul style="margin: 0; padding-left: 20px; color: #374151; font-size: 15px; line-height: 1.8;">
+                            <li style="margin-bottom: 12px;"><strong>Approve or reject join requests in one click.</strong> See who's asking by name and number, and approve them all at once to fill open slots and keep your groups full &mdash; instead of tapping through requests one after another.</li>
+                            <li style="margin-bottom: 12px;"><strong>Export any admin group's members to a CSV you own.</strong> A clean backup of every contact in the group &mdash; names and numbers &mdash; that stays yours, no matter what happens to the group later.</li>
+                            <li style="margin-bottom: 12px;"><strong>Promote a moderator into several groups at once.</strong> Hand someone you trust the keys across all your groups in one pass, so the groups keep running and you don't lose access if your main number ever gets banned.</li>
+                            <li><strong>Mute, archive, or leave groups in bulk.</strong> WASBOT already lists all your groups &mdash; select the ones you want and act on all of them at once, instead of digging through your chats one by one. The actions run in the background, spaced out rather than fired off all at once.</li>
                           </ul>
                         </td>
                       </tr>
                     </table>
 
-                    <p style="margin: 0 0 24px 0;">Here's the one marketers love: a 300-member group is <strong>300 leads</strong>. Export them, import them into WASBOT, and now they can see your status and get your broadcasts &mdash; not just your group posts. That's owning your audience instead of renting it.</p>
+                    <p style="margin: 0 0 12px 0; font-weight: 600; color: #111827;">Then the part worth thinking about</p>
+                    <p style="margin: 0 0 24px 0;">Those exported members don't have to stay a spreadsheet. Turn them into a status audience &mdash; a custom list built from your group contacts &mdash; and your status updates reach them directly, not just the posts you make inside the group. That's how you promote your next class, drop, or offer to the people who already showed up for it. One honest caveat: a contact only sees your status if they've saved your number, so this works best with an audience that already knows you. Used right, it's a real edge.</p>
 
                     <!-- CTA -->
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 16px;">
@@ -150,22 +161,9 @@ group_admin_launch:
                         </td>
                       </tr>
                     </table>
-                    <p style="margin: 0 0 12px 0; text-align: center;">
+                    <p style="margin: 0 0 28px 0; text-align: center;">
                       <a href="https://www.wasbot.app/blog/group-admin" style="color: {{.Branding.PrimaryColor}}; font-size: 15px; font-weight: 600;">See exactly how it works &rarr;</a>
                     </p>
-                    <p style="margin: 0 0 28px 0; text-align: center; color: #6b7280; font-size: 14px;">It's on every plan, including the free trial.</p>
-
-                    <!-- What's coming card -->
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
-                      <tr>
-                        <td style="background-color: #f9fafb; border: 1px solid #e5e7eb; padding: 20px 24px; border-radius: 12px;">
-                          <h3 style="margin: 0 0 8px; color: #111827; font-size: 15px; font-weight: 700;">What's coming next</h3>
-                          <p style="margin: 0; color: #6b7280; font-size: 15px; line-height: 1.6;">
-                            A single Group Requests inbox &mdash; every group you admin, with its pending count, in one place &mdash; plus adding members to a group straight from a CSV.
-                          </p>
-                        </td>
-                      </tr>
-                    </table>
 
                     <!-- Feedback -->
                     <p style="margin: 0 0 12px 0; font-weight: 600; color: #111827;">Tell us what to build</p>
@@ -174,7 +172,7 @@ group_admin_launch:
                       <li>Join the community: <a href="https://chat.whatsapp.com/EoP7wlsiUe4CKKA5E6BXCY?mode=gi_t" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">our WhatsApp group</a></li>
                       <li>Or just reply to this email &mdash; it comes straight to us.</li>
                     </ul>
-                    <p style="margin: 0 0 24px 0; color: #6b7280;">We read everything &mdash; and a lot of what we ship comes straight from these.</p>
+                    <p style="margin: 0 0 24px 0; color: #6b7280;">We read everything, and a lot of what we ship starts right here.</p>
 
                     <p style="margin: 0;">Talk soon,<br><strong>The WASBOT Team</strong></p>
                   </div>
