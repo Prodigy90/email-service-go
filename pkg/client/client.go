@@ -23,6 +23,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -38,7 +39,7 @@ type Client struct {
 // New creates a new email service client.
 func New(baseURL, apiKey string) *Client {
 	return &Client{
-		baseURL: baseURL,
+		baseURL: strings.TrimRight(baseURL, "/"),
 		apiKey:  apiKey,
 		httpClient: &http.Client{
 			Timeout: 30 * time.Second,
@@ -302,6 +303,7 @@ const (
 	TemplatePayoutRejected       = "payout_rejected"
 	TemplatePayoutProcessed      = "payout_processed"
 	TemplateCommissionEarned     = "commission_earned"
+	TemplateAffiliateSignup      = "affiliate_signup"
 	TemplateAffiliateLinkUpdated = "affiliate_link_updated"
 
 	// Payments (recurring subscriptions)
@@ -363,12 +365,12 @@ const (
 	TemplateFeatureAnnouncement = "feature_announcement"  // Pre-built 4-feature announcement
 
 	// Onboarding sequence (Migration 062)
-	TemplateOnboardingDay0 = "onboarding_day0" // Welcome — what you unlocked
+	TemplateOnboardingDay0 = "onboarding_day0" // Signup — link your WhatsApp
 	TemplateOnboardingDay1 = "onboarding_day1" // Auto-save contacts
-	TemplateOnboardingDay2 = "onboarding_day2" // Status posting
+	TemplateOnboardingDay2 = "onboarding_day2" // Cloud status posting
 	TemplateOnboardingDay3 = "onboarding_day3" // Autoresponder
-	TemplateOnboardingDay4 = "onboarding_day4" // Group messaging
-	TemplateOnboardingDay5 = "onboarding_day5" // What premium unlocks
+	TemplateOnboardingDay4 = "onboarding_day4" // Group blast
+	TemplateOnboardingDay5 = "onboarding_day5" // Tier comparison + social proof
 	TemplateOnboardingDay6 = "onboarding_day6" // Trial ends tomorrow
 	TemplateOnboardingDay7 = "onboarding_day7" // Discount offer
 
