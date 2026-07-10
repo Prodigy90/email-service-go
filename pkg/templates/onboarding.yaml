@@ -24,6 +24,8 @@ onboarding_day0:
 
     All you need to do is connect your WhatsApp to get started.
 
+    {{if .VideoURL}}{{if .VideoTitle}}{{.VideoTitle}}{{else}}Watch the demo{{end}}: {{.VideoURL}}{{end}}
+
     Connect Your WhatsApp: {{.ConnectURL}}
 
     Your 7-day free trial starts now. Let's make the most of it.
@@ -207,6 +209,19 @@ onboarding_day0:
 
     <p style="margin: 0 0 24px 0;">All you need to do is connect your WhatsApp to get started.</p>
 
+    {{if .VideoURL}}
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 0 0 24px 0;">
+      <tr>
+        <td style="background-color: #f0fdf4; border-radius: 12px; padding: 20px; text-align: center;">
+          {{if .VideoThumb}}<a href="{{.VideoURL}}" style="display: block; margin-bottom: 12px;"><img src="{{.VideoThumb}}" alt="Video preview" style="max-width: 100%; border-radius: 6px;" /></a>{{end}}
+          <a href="{{.VideoURL}}" style="display: inline-block; color: #166534; font-size: 15px; font-weight: 600; text-decoration: none;">
+            &#9654; {{if .VideoTitle}}{{.VideoTitle}}{{else}}Watch the demo{{end}}
+          </a>
+        </td>
+      </tr>
+    </table>
+    {{end}}
+
     <!-- CTA Button -->
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
       <tr>
@@ -315,6 +330,8 @@ onboarding_day1:
     3. Your Google Contacts stays in sync — access them from any device
 
     No more manually saving numbers. No more lost leads. No more leads you can't reach on status.
+
+    {{if .VideoURL}}{{if .VideoTitle}}{{.VideoTitle}}{{else}}Watch the demo{{end}}: {{.VideoURL}}{{end}}
 
     Connect to Start Auto-Saving: {{.ConnectURL}}
 
@@ -486,6 +503,19 @@ onboarding_day1:
     </table>
 
     <p style="margin: 0 0 24px 0;">No more manually saving numbers. No more lost leads. No more leads you can't reach on status.</p>
+
+    {{if .VideoURL}}
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 0 0 24px 0;">
+      <tr>
+        <td style="background-color: #f0fdf4; border-radius: 12px; padding: 20px; text-align: center;">
+          {{if .VideoThumb}}<a href="{{.VideoURL}}" style="display: block; margin-bottom: 12px;"><img src="{{.VideoThumb}}" alt="Video preview" style="max-width: 100%; border-radius: 6px;" /></a>{{end}}
+          <a href="{{.VideoURL}}" style="display: inline-block; color: #166534; font-size: 15px; font-weight: 600; text-decoration: none;">
+            &#9654; {{if .VideoTitle}}{{.VideoTitle}}{{else}}Watch the demo{{end}}
+          </a>
+        </td>
+      </tr>
+    </table>
+    {{end}}
 
     <!-- CTA Button -->
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
@@ -878,6 +908,8 @@ onboarding_day3:
 
     You're closing sales while you sleep. Your competitors are leaving customers on read.
 
+    {{if .VideoURL}}{{if .VideoTitle}}{{.VideoTitle}}{{else}}Watch the demo{{end}}: {{.VideoURL}}{{end}}
+
     Connect to Set Up Auto-Replies: {{.ConnectURL}}
 
     — The WASBOT Team
@@ -1067,6 +1099,19 @@ onboarding_day3:
 
     <p style="margin: 0 0 24px 0;">You're closing sales while you sleep. Your competitors are leaving customers on read.</p>
 
+    {{if .VideoURL}}
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 0 0 24px 0;">
+      <tr>
+        <td style="background-color: #f0fdf4; border-radius: 12px; padding: 20px; text-align: center;">
+          {{if .VideoThumb}}<a href="{{.VideoURL}}" style="display: block; margin-bottom: 12px;"><img src="{{.VideoThumb}}" alt="Video preview" style="max-width: 100%; border-radius: 6px;" /></a>{{end}}
+          <a href="{{.VideoURL}}" style="display: inline-block; color: #166534; font-size: 15px; font-weight: 600; text-decoration: none;">
+            &#9654; {{if .VideoTitle}}{{.VideoTitle}}{{else}}Watch the demo{{end}}
+          </a>
+        </td>
+      </tr>
+    </table>
+    {{end}}
+
     <!-- CTA Button -->
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
       <tr>
@@ -1174,6 +1219,8 @@ onboarding_day4:
     And the best part? Schedule your group blasts for any time. Queue up tomorrow's promo at 2am, set it to auto-send at 9am — you're done for the day before breakfast. (Premium feature.)
 
     50 groups. One message. 30 seconds. That's it.
+
+    {{if .VideoURL}}{{if .VideoTitle}}{{.VideoTitle}}{{else}}Watch the demo{{end}}: {{.VideoURL}}{{end}}
 
     Connect to Try Group Messaging: {{.ConnectURL}}
 
@@ -1367,6 +1414,19 @@ onboarding_day4:
     </table>
 
     <p style="margin: 0 0 24px 0;"><strong>50 groups. One message. 30 seconds.</strong> That's it.</p>
+
+    {{if .VideoURL}}
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 0 0 24px 0;">
+      <tr>
+        <td style="background-color: #f0fdf4; border-radius: 12px; padding: 20px; text-align: center;">
+          {{if .VideoThumb}}<a href="{{.VideoURL}}" style="display: block; margin-bottom: 12px;"><img src="{{.VideoThumb}}" alt="Video preview" style="max-width: 100%; border-radius: 6px;" /></a>{{end}}
+          <a href="{{.VideoURL}}" style="display: inline-block; color: #166534; font-size: 15px; font-weight: 600; text-decoration: none;">
+            &#9654; {{if .VideoTitle}}{{.VideoTitle}}{{else}}Watch the demo{{end}}
+          </a>
+        </td>
+      </tr>
+    </table>
+    {{end}}
 
     <!-- CTA Button -->
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
@@ -3333,7 +3393,7 @@ stalled_no_session:
     </table>
 
     {{if .VideoURL}}
-    <p style="margin: 0 0 24px 0; font-size: 14px; color: #6b7280;"><a href="{{.VideoURL}}" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">Watch how it works (2 min video) &#x2192;</a></p>
+    <p style="margin: 0 0 24px 0; font-size: 14px; color: #6b7280;"><a href="{{.VideoURL}}" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">Watch how it works &#x2192;</a></p>
     {{end}}
 
     <p style="margin: 0 0 24px 0;">If anything is confusing, just <strong>reply to this email</strong> — we'll personally walk you through it.</p>
