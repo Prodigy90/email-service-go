@@ -2116,3 +2116,397 @@ broadcasts_launch:
     </body>
     </html>
   description: "Broadcasts launch announcement — live on every plan, trial capped + footer, paid lifts caps + drops footer, responsible-use note, CTA to dashboard / blog guide"
+
+# ---------------------------------------------------------------------------
+# July 2026 drop — two heroes. Copy is intentionally em-dash-free (house rule).
+# status_viewer_names_launch : Email A (primary) — status viewer names + Top Viewers, animated GIF hero.
+# sequences_followup_launch  : Email B (second send) — Sequences no-reply follow-up, card-only.
+# Send via POST /api/v1/send/bulk-personalized with template: "status_viewer_names_launch" (or the other).
+# GIF hero is served from the frontend at /emails/status-viewer-names.gif (deploys with wasbot-frontend).
+# ---------------------------------------------------------------------------
+
+status_viewer_names_launch:
+  subject: "See who's actually watching your status (names, not numbers)"
+  preview_text: "Tap any status and see exactly who watched it, plus who your top viewers are this month."
+  body: |
+    Hi {{.Name}},
+
+    You've been able to see how many people viewed your status. Now you can see who.
+
+    NAMES ON EVERY VIEW
+    A number told you 126 people watched. It never told you which 126. Tap the delivered or viewed count on any status and the Status audience list opens: every contact by name, with the exact time they got it or watched it. Search a long list by name or number.
+
+    TOP VIEWERS, RANKED
+    The new Top Viewers panel ranks your most engaged contacts every month and shows how many of that month's posts each one watched, like "viewed 22 of 24". For a WhatsApp TV, that list is your advertisers in waiting.
+
+    NUMBERS STAY PRIVATE
+    Phone numbers stay masked by default. Names lead, and a number only shows in full when you tap to reveal it. This is about knowing who is engaged, not exposing anyone.
+
+    Also new this drop: Sequences analytics now show contact names and WhatsApp-style read ticks; status deletion is on every plan, including trial; and your saved contacts now sync as named contacts inside WhatsApp itself, not just Google.
+
+    See who's watching: https://www.wasbot.app/status
+
+    Post your next status, then tap the numbers.
+
+    Talk soon,
+    The WASBOT Team
+
+    ---
+    You're receiving this because you have a WASBOT account.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>{{.Subject}}</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        Tap any status and see exactly who watched it, by name.
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Your status views now have names</h1>
+
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 24px 0;">Hi {{.Name}},</p>
+                    <p style="margin: 0 0 24px 0;">You've been able to see <em>how many</em> people viewed your status. Now you can see <em>who</em>.</p>
+
+                    <!-- GIF hero -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 0 0 28px 0;">
+                      <tr>
+                        <td align="center">
+                          <a href="https://www.wasbot.app/status" target="_blank" style="display: inline-block;">
+                            <img src="https://www.wasbot.app/emails/status-viewer-names.gif" alt="Tap a status view count and see who watched, by name, then your Top Viewers ranked" width="320" style="width: 320px; max-width: 100%; border-radius: 18px; display: block;" />
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 1 -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Names On Every View</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">A number told you 126 people watched. It never told you which 126, so you could never follow up with the ones who actually saw you.</p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">Tap the delivered or viewed count on any status and the Status audience list opens: every contact by name, with the exact time they got it or watched it. Search a long list by name or number.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 2 -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Top Viewers, Ranked</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">Which of your contacts watch every single post? Until now you were guessing.</p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">The new Top Viewers panel ranks your most engaged contacts every month and shows how many of that month's posts each one watched, like "viewed 22 of 24". For a WhatsApp TV, that list is your advertisers in waiting.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 3 -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Numbers Stay Private</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">Worried about putting contact numbers up on a screen?</p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">Phone numbers stay masked by default. Names lead, and a number only shows in full when you tap to reveal it. This is about knowing who is engaged, not exposing anyone.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 700; color: #111827;">Also new this drop</p>
+                    <ul style="margin: 0 0 4px 0; padding-left: 20px; color: #4b5563; font-size: 15px; line-height: 1.6;">
+                      <li>Sequences analytics now show contact names and WhatsApp-style read ticks on every step.</li>
+                      <li>Status deletion is on every plan, including trial. One tap pulls a post from everyone who got it.</li>
+                      <li>Saved contacts now sync as named contacts inside WhatsApp itself, not just Google.</li>
+                    </ul>
+
+                    <!-- CTA -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="https://www.wasbot.app/status" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">See who's watching</a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 24px 0;">Post your next status, then tap the numbers.</p>
+                    <p style="margin: 0;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">Need help? Simply reply to this email and we'll get back to you.</p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialTwitter}}" style="display: inline-block;"><img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;"></a></td>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialInstagram}}" style="display: inline-block;"><img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;"></a></td>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialYouTube}}" style="display: inline-block;"><img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;"></a></td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">{{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria</p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">&copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.</p>
+                        {{if .UnsubscribeURL}}<p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;"><a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.</p>{{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "July 2026 hero A — status viewer names + Top Viewers, animated GIF hero, CTA to /status. Em-dash-free."
+
+sequences_followup_launch:
+  subject: "Your Sequences now follow up for you"
+  preview_text: "Set the wait, set the nudge, and Sequences follows up on its own when someone goes quiet."
+  body: |
+    Hi {{.Name}},
+
+    The follow-up you've been doing by hand, WASBOT does now. Add a wait-for-reply step to any Sequence, and if the contact doesn't answer in the time you set, WASBOT sends your follow-up automatically. No going back through chats to see who went quiet.
+
+    IT FOLLOWS UP ON ITS OWN
+    A lead reads your message and goes silent. Set a follow-up window on the wait step, and when the time runs out with no reply, WASBOT nudges them for you. Still nothing? It tries again, up to a limit you set.
+
+    IT RE-ASKS
+    If someone replies with something that doesn't match what you asked, the flow can loop them back to the question instead of dead-ending. It keeps trying to get the answer you actually need.
+
+    IT READS MORE THAN ONE WORD
+    A single reply path can catch several keywords at once. "Yes", "sure", and "oya" can all take the same branch, so you are not building a separate option for every word your customers use.
+
+    IT KNOWS WHEN TO STOP
+    You set how many nudges a contact can get. After that the flow lets them go instead of nudging forever, so nobody gets five "you there?" messages in a row.
+
+    Build your follow-up flow: https://www.wasbot.app/sequences
+
+    Set it once and the follow-up runs itself, while you're doing literally anything else.
+
+    Talk soon,
+    The WASBOT Team
+
+    ---
+    You're receiving this because you have a WASBOT account.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>{{.Subject}}</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        Set the wait, set the nudge, and Sequences follows up on its own.
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">The follow-up you did by hand, WASBOT does now</h1>
+
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 24px 0;">Hi {{.Name}},</p>
+                    <p style="margin: 0 0 24px 0;">Add a wait-for-reply step to any Sequence, and if the contact doesn't answer in the time you set, WASBOT sends your follow-up automatically. No going back through chats to see who went quiet.</p>
+
+                    <!-- Feature 1 -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">It Follows Up On Its Own</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">A lead reads your message and goes silent. You either chase them by hand or lose them.</p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">Set a follow-up window on the wait step. When the time runs out with no reply, WASBOT nudges them for you. Still nothing? It tries again, up to a limit you set.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 2 -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">It Re-Asks</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">Someone replies with something that doesn't match what you asked, and the flow dead-ends.</p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">Loop them back to the question instead of giving up. The flow keeps trying to get the answer you actually need.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 3 -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">It Reads More Than One Word</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">Your customers say "yes", "sure", "oya". Building a separate option for every word is a pain.</p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">A single reply path can catch several keywords at once, so one option covers all the ways people actually answer.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 4 -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">It Knows When To Stop</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">Automated follow-ups can turn into five "you there?" messages in a row.</p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">You set how many nudges a contact can get. After that the flow lets them go, so it never turns into spam.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- CTA -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="https://www.wasbot.app/sequences" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">Build your follow-up flow</a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 24px 0;">Set it once and the follow-up runs itself, while you're doing literally anything else.</p>
+                    <p style="margin: 0;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">Need help? Simply reply to this email and we'll get back to you.</p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialTwitter}}" style="display: inline-block;"><img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;"></a></td>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialInstagram}}" style="display: inline-block;"><img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;"></a></td>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialYouTube}}" style="display: inline-block;"><img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;"></a></td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">{{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria</p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">&copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.</p>
+                        {{if .UnsubscribeURL}}<p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;"><a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.</p>{{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "July 2026 hero B — Sequences no-reply follow-up, four feature cards, CTA to /sequences. Em-dash-free, card-only (no GIF)."
