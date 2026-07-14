@@ -76,6 +76,7 @@ type BrandingConfig struct {
 // SendRequest represents an email send request.
 type SendRequest struct {
 	To            string                 `json:"to"`
+	From          string                 `json:"from,omitempty"` // optional sender override ("Name <addr@domain>"); falls back to configured default
 	Subject       string                 `json:"subject,omitempty"`
 	Body          string                 `json:"body,omitempty"`
 	HTMLBody      string                 `json:"html_body,omitempty"`
