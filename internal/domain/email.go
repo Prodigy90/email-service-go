@@ -46,6 +46,7 @@ type Email struct {
 // SendEmailRequest represents a request to send an email.
 type SendEmailRequest struct {
 	To            string                 `json:"to" binding:"required,email"`
+	From          string                 `json:"from,omitempty"` // optional sender override ("Name <addr@domain>"); falls back to configured default
 	Subject       string                 `json:"subject,omitempty"`
 	Body          string                 `json:"body,omitempty"`
 	HTMLBody      string                 `json:"html_body,omitempty"`

@@ -88,6 +88,7 @@ func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (
 	// Build email
 	email := &domain.Email{
 		ID:            uuid.New(),
+		From:          req.From,
 		To:            req.To,
 		Subject:       req.Subject,
 		Body:          req.Body,
