@@ -2118,11 +2118,12 @@ broadcasts_launch:
   description: "Broadcasts launch announcement — live on every plan, trial capped + footer, paid lifts caps + drops footer, responsible-use note, CTA to dashboard / blog guide"
 
 # ---------------------------------------------------------------------------
-# July 2026 drop — two heroes. Copy is intentionally em-dash-free (house rule).
+# July 2026 drop — three heroes. Copy is intentionally em-dash-free (house rule).
 # status_viewer_names_launch : Email A (primary) — status viewer names + Top Viewers, animated GIF hero.
 # sequences_followup_launch  : Email B (second send) — Sequences no-reply follow-up, card-only.
-# Send via POST /api/v1/send/bulk-personalized with template: "status_viewer_names_launch" (or the other).
-# GIF hero is served from the frontend at /emails/status-viewer-names.gif (deploys with wasbot-frontend).
+# stats_pages_launch         : Email C (third send) — stats pages for all five features, animated GIF hero.
+# Send via POST /api/v1/send/bulk-personalized with template: "status_viewer_names_launch" (or the others).
+# GIF heroes are served from the frontend at /emails/*.gif (deploy with wasbot-frontend).
 # ---------------------------------------------------------------------------
 
 status_viewer_names_launch:
@@ -2510,3 +2511,196 @@ sequences_followup_launch:
     </body>
     </html>
   description: "July 2026 hero B — Sequences no-reply follow-up, four feature cards, CTA to /sequences. Em-dash-free, card-only (no GIF)."
+
+stats_pages_launch:
+  subject: "Your numbers, in charts now"
+  preview_text: "Status, groups, broadcasts, sequences, contacts. Every send, delivery and view, charted over any period you pick."
+  body: |
+    Hi {{.Name}},
+
+    You post, you send, you broadcast. Now you can see all of it.
+
+    Every feature in WASBOT just got a full stats page: Status, Groups, Broadcasts, Sequences, and Contacts. Each one has headline numbers for the period, a growth chart you can flip between volume, reach and rates, and a trend card that tells you whether this period beat the last one.
+
+    YOUR PLATFORM VERDICT
+    Status stats compares your monthly views against every WASBOT account and tells you where you stand, like "Top 8% of WASBOT this month". That is a line you can screenshot for advertisers. Aggregate only: nobody ever sees anybody else's numbers.
+
+    THE MONTH-END WRAP
+    On the 1st of each month WASBOT DMs you your month: total views, your verdict, group sends, and who watched the most. No remembering to check.
+
+    ANY PERIOD YOU WANT
+    7 days to 12 months in one tap, or open the picker for named periods and an exact calendar range. Every number on the page follows the range you pick. Days with no sends show a gap, not a fake zero, so your rates never lie.
+
+    Look for the gold crown View stats button at the top of every page.
+
+    See your numbers: https://www.wasbot.app/status/stats
+
+    Post something today, then watch the chart move.
+
+    Talk soon,
+    The WASBOT Team
+
+    ---
+    You're receiving this because you have a WASBOT account.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>{{.Subject}}</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        Every send, delivery and view, charted over any period you pick.
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Your numbers, in charts now</h1>
+
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 24px 0;">Hi {{.Name}},</p>
+                    <p style="margin: 0 0 24px 0;">You post, you send, you broadcast. Now you can see all of it. <strong>Status, Groups, Broadcasts, Sequences, and Contacts</strong> each have a full stats page: headline numbers for the period, a growth chart you can flip between volume, reach and rates, and a trend card that tells you whether this period beat the last one.</p>
+
+                    <!-- GIF hero -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 0 0 28px 0;">
+                      <tr>
+                        <td align="center">
+                          <a href="https://www.wasbot.app/status/stats" target="_blank" style="display: inline-block;">
+                            <img src="https://www.wasbot.app/emails/stats-pages.gif" alt="A tour of the new stats pages: group sends charted, the broadcasts funnel, sequences and contacts, and your Top 8% of WASBOT verdict" width="480" style="width: 480px; max-width: 100%; border-radius: 18px; display: block;" />
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 1 -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Your Platform Verdict</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">Advertisers ask for proof, and a bare number is easy to doubt.</p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">Status stats compares your monthly views against every WASBOT account and tells you where you stand, like "Top 8% of WASBOT this month". That is a line you can screenshot. Aggregate only: nobody ever sees anybody else's numbers.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 2 -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">The Month-End Wrap</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">Nobody remembers to check their numbers on the 1st.</p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">WASBOT does. On the 1st of each month it DMs you your month: total views, your verdict, group sends, and who watched the most.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 3 -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 8px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Any Period You Want</h3>
+                          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px; line-height: 1.5; font-style: italic;">Last week? Last quarter? The exact run of days your campaign was live?</p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.5;">7 days to 12 months in one tap, or open the picker for named periods and an exact calendar range. Every number on the page follows. Days with no sends show a gap, not a fake zero, so your rates never lie.</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 4px 0;">Look for the gold crown <strong>View stats</strong> button at the top of every page.</p>
+
+                    <!-- CTA -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="https://www.wasbot.app/status/stats" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">See your numbers</a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 24px 0;">Post something today, then watch the chart move.</p>
+                    <p style="margin: 0;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">Need help? Simply reply to this email and we'll get back to you.</p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialTwitter}}" style="display: inline-block;"><img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;"></a></td>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialInstagram}}" style="display: inline-block;"><img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;"></a></td>
+                            <td style="padding: 0 8px;"><a href="{{.Branding.SocialYouTube}}" style="display: inline-block;"><img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;"></a></td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">{{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria</p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">&copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.</p>
+                        {{if .UnsubscribeURL}}<p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;"><a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.</p>{{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "July 2026 hero C — stats pages for all five features, animated GIF hero, three feature cards, CTA to /status/stats. Em-dash-free."
