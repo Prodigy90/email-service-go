@@ -83,8 +83,8 @@ func TestPaymentFailedAttempt2_Renders(t *testing.T) {
 	ts := newTestTemplateService(t)
 
 	data := map[string]interface{}{
-		"CustomerName": "Chinaza",
-		"PlanName":     "Premium",
+		"CustomerName":  "Chinaza",
+		"PlanName":      "Premium",
 		"UpdateCardURL": "https://wasbot.app/billing",
 	}
 
@@ -343,5 +343,127 @@ func TestSubscriptionExpiring1d_HasConsequences(t *testing.T) {
 		if !strings.Contains(htmlBody, c) {
 			t.Errorf("expected HTML body to contain consequence %q", c)
 		}
+	}
+}
+
+// --- Abandoned checkout (migration 159) ---
+
+func TestCheckoutAbandonedTemplateExists(t *testing.T) {
+	ts := newTestTemplateService(t)
+	tmpl, ok := ts.Get(domain.TemplateCheckoutAbandoned)
+	if !ok {
+		t.Fatal("checkout_abandoned template not found")
+	}
+	if tmpl.Subject == "" || tmpl.Body == "" || tmpl.HTMLBody == "" {
+		t.Error("expected subject, body and HTML body to all be non-empty")
+	}
+}
+
+// The whole point of moving this off hand-rolled HTML: it has to come out
+// wearing the same shell as every other WASBOT email — branded header, logo,
+// footer — not a bare white card.
+func TestCheckoutAbandonedRendersHouseShell(t *testing.T) {
+	ts := newTestTemplateService(t)
+	_, _, html, err := ts.Render(domain.TemplateCheckoutAbandoned, map[string]interface{}{
+		"CustomerName": "Victor",
+		"PlanName":     "Premium",
+		"PriceLine":    "Premium is ₦20,000.",
+		"CheckoutURL":  "https://www.wasbot.app/pricing",
+	})
+	if err != nil {
+		t.Fatalf("render failed: %v", err)
+	}
+	for _, want := range []string{
+		"WASBOT",                    // branded header/footer
+		"Technologies",              // footer company block
+		"All rights reserved",       // footer legal
+		"Quick one, Victor.",        // greeting
+		"Premium is ₦20,000.",       // price line
+		"Finish setting up Premium", // CTA
+		"https://www.wasbot.app/pricing",
+	} {
+		if !strings.Contains(html, want) {
+			t.Errorf("rendered HTML missing %q", want)
+		}
+	}
+	// No unresolved placeholders should survive into a sent email.
+	if strings.Contains(html, "{{") {
+		t.Error("rendered HTML still contains template placeholders")
+	}
+}
+
+// Recurring checkouts init from a plan code and carry no amount, so the price
+// line must disappear rather than render an empty paragraph.
+func TestCheckoutAbandonedOmitsEmptyPrice(t *testing.T) {
+	ts := newTestTemplateService(t)
+	_, text, html, err := ts.Render(domain.TemplateCheckoutAbandoned, map[string]interface{}{
+		"CustomerName": "Victor",
+		"PlanName":     "Premium",
+		"PriceLine":    "",
+		"CheckoutURL":  "https://www.wasbot.app/pricing",
+	})
+	if err != nil {
+		t.Fatalf("render failed: %v", err)
+	}
+	if strings.Contains(html, `<p style="margin: 0 0 20px 0;"></p>`) {
+		t.Error("empty price rendered as a blank paragraph")
+	}
+	if !strings.Contains(html, "Finish setting up Premium") {
+		t.Error("CTA missing when price line is absent")
+	}
+	if strings.Contains(text, "\n\n\n") {
+		t.Error("plain-text body has a gap where the price line was")
+	}
+}
+
+// The preheader is the snippet Gmail shows beside the subject in the inbox
+// list. This template was generated from payment_failed, whose fallback text is
+// "Payment Failed" — inheriting that would have previewed an abandoned-checkout
+// nudge as a failed payment.
+func TestCheckoutAbandonedPreheaderIsNotInherited(t *testing.T) {
+	ts := newTestTemplateService(t)
+	_, _, html, err := ts.Render(domain.TemplateCheckoutAbandoned, map[string]interface{}{
+		"CustomerName": "Victor", "PlanName": "Premium", "CheckoutURL": "https://x",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(html, "Payment Failed") {
+		t.Error(`preheader still falls back to "Payment Failed"`)
+	}
+}
+
+// Plenty of accounts carry no display name; "Quick one, ." reads worse than no
+// greeting at all.
+func TestCheckoutAbandonedHandlesMissingName(t *testing.T) {
+	ts := newTestTemplateService(t)
+	_, text, html, err := ts.Render(domain.TemplateCheckoutAbandoned, map[string]interface{}{
+		"CustomerName": "", "PlanName": "Premium", "CheckoutURL": "https://x",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, body := range []string{text, html} {
+		if strings.Contains(body, "Quick one, .") {
+			t.Error("empty name produced a dangling greeting")
+		}
+		if !strings.Contains(body, "Quick one.") {
+			t.Error("expected the nameless greeting")
+		}
+	}
+}
+
+// House voice: no em-dashes in the prose (see the copy guide in CLAUDE.md).
+func TestCheckoutAbandonedHasNoEmDashesInCopy(t *testing.T) {
+	ts := newTestTemplateService(t)
+	_, text, _, err := ts.Render(domain.TemplateCheckoutAbandoned, map[string]interface{}{
+		"CustomerName": "Victor", "PlanName": "Premium",
+		"PriceLine": "Premium is ₦20,000.", "CheckoutURL": "https://x",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(text, "—") {
+		t.Errorf("em-dash in copy: %q", text)
 	}
 }
