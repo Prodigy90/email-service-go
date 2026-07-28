@@ -38,6 +38,7 @@ const (
 	TemplateSubscriptionRenewed   = "subscription_renewed"     // Auto-renewal success
 	TemplateSubscriptionExpiring  = "subscription_expiring"    // Generic expiring (deprecated, use specific ones)
 	TemplateSubscriptionCancelled = "subscription_cancelled"   // Subscription cancelled
+	TemplateCheckoutAbandoned     = "checkout_abandoned"       // Checkout started but never completed
 
 	// One-time payment templates (non-recurring)
 	TemplatePaymentSuccessOnetime     = "payment_success_onetime"     // One-time payment confirmation
