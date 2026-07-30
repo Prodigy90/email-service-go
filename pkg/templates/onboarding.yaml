@@ -3292,7 +3292,7 @@ stalled_no_session:
     </head>
     <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
       <div style="display: none; max-height: 0; overflow: hidden;">
-        60 seconds to link. Then your phone can go back to being a phone.
+        {{if .PreviewText}}{{.PreviewText}}{{else}}60 seconds to link. Then your phone can go back to being a phone.{{end}}
         &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
       </div>
 
