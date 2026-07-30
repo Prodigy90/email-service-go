@@ -3197,33 +3197,37 @@ post_trial_day10:
     </html>
 
 stalled_no_session:
-  subject: "You signed up for WASBOT — here's how to get started"
-  description: "Stalled user: Signed up but never created a session. Guides them through first steps."
+  subject: "You're signed up. WhatsApp isn't linked yet."
+  description: "Stalled user: signed up, never started linking. Sells the payoff first, then pre-frames WhatsApp's scam warning so it can't ambush them the way it does the stalled_session cohort."
+  preview_text: "60 seconds to link. Then your phone can go back to being a phone."
   body: |-
     Hi {{.Name}},
 
-    You signed up for WASBOT but haven't set up your WhatsApp yet. Here's how to get started — it takes less than 2 minutes:
+    Your trial is running, but nothing's linked yet — so WASBOT has nothing to work with.
 
-    1. Log in to your dashboard at {{.DashboardURL}}
-    2. Click "Add Session" to create your WhatsApp session
-    3. Enter your phone number (with country code, no + or spaces, e.g. 2348012345678), click Continue to get a pairing code
-    4. Open WhatsApp → Linked Devices → Link a Device → Link with phone number → enter the code
+    Once your number is linked:
 
-    If you have another device, you can scan a QR code instead. Either method works.
+    - Every new DM saves itself to your contacts. No copy-paste, no missed numbers.
+    - Post once, your whole list sees it — from your laptop, phone stays cool.
+    - Send to every group in one tap instead of an hour of copy-pasting.
+    - Auto-reply to DMs while you sleep.
 
-    Note: WhatsApp may show a "This might be a scam" warning when linking — you can safely ignore it. It's a standard warning WhatsApp shows for all third-party tools.
+    Linking takes 60 seconds:
 
-    Here's what you'll unlock once connected:
-    - Auto-save every new contact to Google Contacts
-    - Post HD status to thousands of contacts in seconds
-    - Auto-reply to DMs with keyword triggers
-    - Send messages to 100+ groups at once
+    1. Open your dashboard and tap "Link your WhatsApp"
+    2. Choose "Use Pairing Code", pick your country, then type your WhatsApp number
+    3. In WhatsApp: Settings → Linked devices → Link a device → Link with phone number instead
+    4. Type the code in
 
-    Watch how it works: {{.VideoURL}}
+    One thing so it doesn't catch you off guard: WhatsApp will say "This may be a scam" and name a device in Montréal, Québec, Canada. That's our server — WASBOT runs your automations from the cloud, which is why your phone doesn't have to stay on. Tap the green "Link device" and you're in.
 
-    If anything is confusing, just reply to this email — we'll personally walk you through it.
+    WhatsApp does that for every pairing code, from every tool. If you'd rather skip it entirely, choose "Scan QR Code" instead — no warning on QR.
 
-    Get Started: {{.DashboardURL}}
+    Watch it happen, start to finish: {{.VideoURL}}
+
+    Anything confusing, reply to this email — a real person reads it.
+
+    Link your WhatsApp: {{.DashboardURL}}
 
     — The WASBOT Team
 
@@ -3237,7 +3241,7 @@ stalled_no_session:
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="color-scheme" content="light dark">
       <meta name="supported-color-schemes" content="light dark">
-      <title>Get Started with WASBOT</title>
+      <title>You're signed up. WhatsApp isn't linked yet.</title>
       <!--[if mso]>
       <noscript>
         <xml>
@@ -3288,7 +3292,7 @@ stalled_no_session:
     </head>
     <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
       <div style="display: none; max-height: 0; overflow: hidden;">
-        You signed up for WASBOT but haven't set up your WhatsApp yet. Here's how — it takes 2 minutes.
+        60 seconds to link. Then your phone can go back to being a phone.
         &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
       </div>
 
@@ -3324,70 +3328,74 @@ stalled_no_session:
               <!-- Content -->
               <tr>
                 <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
-                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Let's Get You Started</h1>
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">You're signed up &mdash; WhatsApp isn't</h1>
 
                   <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
 
     <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
 
-    <p style="margin: 0 0 24px 0;">You signed up for WASBOT but haven't set up your WhatsApp yet. It takes less than 2 minutes — here's how:</p>
+    <p style="margin: 0 0 24px 0;">Your trial is running, but nothing's linked yet &mdash; so WASBOT has nothing to work with.</p>
 
-    <!-- Steps -->
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 16px;">
+    <!-- Payoff first. This cohort never started linking, so the job here is
+         wanting it, not troubleshooting. -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
       <tr>
         <td style="padding: 24px;">
-          <p style="margin: 0 0 16px 0; font-weight: 600; color: #1e40af;">Get started in 4 steps:</p>
+          <p style="margin: 0 0 16px 0; font-weight: 600; color: #166534;">Once your number is linked:</p>
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}};">&#x2714;</span> <span style="margin-left: 8px; color: #374151;">Every new DM saves itself to your contacts. No copy-paste, no missed numbers.</span></td></tr>
+            <tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}};">&#x2714;</span> <span style="margin-left: 8px; color: #374151;">Post once, your whole list sees it &mdash; from your laptop, phone stays cool.</span></td></tr>
+            <tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}};">&#x2714;</span> <span style="margin-left: 8px; color: #374151;">Send to every group in one tap instead of an hour of copy-pasting.</span></td></tr>
+            <tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}};">&#x2714;</span> <span style="margin-left: 8px; color: #374151;">Auto-reply to DMs while you sleep.</span></td></tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Steps -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 24px;">
+          <p style="margin: 0 0 16px 0; font-weight: 600; color: #1e40af;">Linking takes 60 seconds:</p>
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
             <tr>
               <td style="padding: 8px 0;">
                 <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">1</span>
-                <span style="margin-left: 12px; color: #374151;">Log in to your <a href="{{.DashboardURL}}" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">dashboard</a></span>
+                <span style="margin-left: 12px; color: #374151;">Open your <a href="{{.DashboardURL}}" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">dashboard</a> and tap <strong>"Link your WhatsApp"</strong></span>
               </td>
             </tr>
             <tr>
               <td style="padding: 8px 0;">
                 <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">2</span>
-                <span style="margin-left: 12px; color: #374151;">Click <strong>"Add Session"</strong> to create your WhatsApp session</span>
+                <span style="margin-left: 12px; color: #374151;">Choose <strong>"Use Pairing Code"</strong>, pick your country, then type your WhatsApp number</span>
               </td>
             </tr>
             <tr>
               <td style="padding: 8px 0;">
                 <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">3</span>
-                <span style="margin-left: 12px; color: #374151;">Enter your phone number (with country code, no + or spaces, e.g. <strong>2348012345678</strong>) and click Continue to get a pairing code</span>
+                <span style="margin-left: 12px; color: #374151;">In WhatsApp: <strong>Settings</strong> &rarr; <strong>Linked devices</strong> &rarr; Link a device &rarr; <strong>Link with phone number instead</strong></span>
               </td>
             </tr>
             <tr>
               <td style="padding: 8px 0;">
                 <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">4</span>
-                <span style="margin-left: 12px; color: #374151;">Open WhatsApp &rarr; <strong>Linked Devices</strong> &rarr; Link a Device &rarr; <strong>Link with phone number</strong> &rarr; enter the code</span>
+                <span style="margin-left: 12px; color: #374151;">Type the code in</span>
               </td>
             </tr>
           </table>
-          <p style="margin: 16px 0 0 0; font-size: 13px; color: #4b5563; font-style: italic;">If you have another device, you can scan a QR code instead. Either method works.</p>
         </td>
       </tr>
     </table>
 
-    <!-- Scam warning notice -->
+    <!-- Pre-frame, not a footnote. This cohort hasn't met the warning yet, and
+         the whole reason the stalled_session cohort exists is that it ambushed
+         them. Naming the city and the button is what proves it's really us. -->
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 8px; margin-bottom: 24px;">
       <tr>
-        <td style="padding: 14px 18px;">
-          <p style="margin: 0; font-size: 13px; color: #78350f; line-height: 1.6;"><strong>Heads up:</strong> WhatsApp may show a "This might be a scam" warning when linking — you can safely ignore it. It's a standard warning WhatsApp shows for all third-party tools.</p>
-        </td>
-      </tr>
-    </table>
-
-    <!-- What you unlock -->
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
-      <tr>
-        <td style="padding: 24px;">
-          <p style="margin: 0 0 16px 0; font-weight: 600; color: #166534;">What you'll unlock once connected:</p>
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            <tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}};">&#x2714;</span> <span style="margin-left: 8px; color: #374151;">Auto-save every new contact to Google Contacts</span></td></tr>
-            <tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}};">&#x2714;</span> <span style="margin-left: 8px; color: #374151;">Post HD status to thousands of contacts in seconds</span></td></tr>
-            <tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}};">&#x2714;</span> <span style="margin-left: 8px; color: #374151;">Auto-reply to DMs with keyword triggers</span></td></tr>
-            <tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}};">&#x2714;</span> <span style="margin-left: 8px; color: #374151;">Send to 100+ WhatsApp groups at once</span></td></tr>
-          </table>
+        <td style="padding: 16px 18px;">
+          <p style="margin: 0 0 10px 0; font-size: 14px; color: #78350f; line-height: 1.6;"><strong>One thing so it doesn't catch you off guard:</strong> WhatsApp will say <strong>"This may be a scam"</strong> and name a device in <strong>Montr&eacute;al, Qu&eacute;bec, Canada</strong>.</p>
+          <p style="margin: 0 0 10px 0; font-size: 14px; color: #78350f; line-height: 1.6;">That's our server. WASBOT runs your automations from the cloud, which is why your phone doesn't have to stay on. Tap the green <strong>"Link device"</strong> and you're in.</p>
+          <p style="margin: 0; font-size: 14px; color: #78350f; line-height: 1.6;">WhatsApp does that for every pairing code, from every tool. Rather skip it? Choose <strong>"Scan QR Code"</strong> instead &mdash; no warning on QR.</p>
         </td>
       </tr>
     </table>
@@ -3403,7 +3411,7 @@ stalled_no_session:
       <tr>
         <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
           <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
-            Go to Dashboard &#x2192;
+            Link your WhatsApp &#x2192;
           </a>
         </td>
       </tr>
@@ -3466,31 +3474,39 @@ stalled_no_session:
     </html>
 
 stalled_session:
-  subject: "Need help connecting your WhatsApp to WASBOT?"
-  description: "Stalled session: User created a session but hasn't connected"
+  subject: "About that \"This may be a scam\" warning"
+  description: "Stalled session: user started linking and stopped. Assumes they hit WhatsApp's pairing-code security screen — the single biggest drop-off in activation — and answers it head-on."
+  preview_text: "It says Montréal because that's where our server runs. Here's the 60-second version."
   body: |-
     Hi {{.Name}},
 
-    We noticed you created a session on WASBOT but haven't connected your WhatsApp yet.
+    You started linking your WhatsApp and stopped. If you got as far as typing the code in, you probably saw this:
 
-    Is something blocking you? Reply to this email and let us know — even a one-word answer helps us make WASBOT better for everyone.
+      "This may be a scam"
+      Someone is trying to link a device in Montréal, Québec, Canada.
 
-    Connecting takes less than 60 seconds. Here's how using the pairing code method (simplest):
+    That was us. Here's what's actually happening.
 
-    1. Go to your dashboard and click "Connect" on your session
-    2. Enter your phone number (with country code, no + or spaces, e.g. 2348012345678), click Continue to get a pairing code
-    3. Open WhatsApp → Linked Devices → Link a Device → Link with phone number → enter the code
-    4. Done! WASBOT starts working immediately
+    WASBOT runs your automations from the cloud so your phone doesn't have to stay on — that's the entire point of it. Our server sits in Montréal. So when WhatsApp asks who this device in Canada is, it's describing our server, not a stranger.
 
-    If you have another device, you can scan a QR code instead. Either method works.
+    WhatsApp shows that warning for every pairing code, from every tool, every single time. Nobody can switch it off. We're naming the exact city and the exact button because only the people actually running the service can.
 
-    Note: WhatsApp may show a "This might be a scam" warning when linking — you can safely ignore it. It's a standard warning WhatsApp shows for all third-party tools.
+    When you see it, tap the green "Link device". That's the whole thing.
 
-    If you're running into any issues, just reply to this email — we'll help you personally. We've helped hundreds of users through this step, and we're happy to walk you through it.
+    Don't want to deal with the warning at all? Pick "Scan QR Code" instead — WhatsApp doesn't show it for QR.
 
-    You can also check our getting started guide: {{.BlogURL}}
+    The full 60 seconds, either way:
 
-    Connect Now: {{.ConnectURL}}
+    1. Open your dashboard and tap "Link your WhatsApp"
+    2. Choose "Use Pairing Code", pick your country, then type your WhatsApp number
+    3. In WhatsApp: Settings → Linked devices → Link a device → Link with phone number instead
+    4. Type the code, then tap "Link device" when the warning comes up
+
+    Still stuck? Reply to this email. A real person reads it and one word is enough.
+
+    Getting started guide: {{.BlogURL}}
+
+    Link your WhatsApp: {{.ConnectURL}}
 
     — The WASBOT Team
 
@@ -3504,7 +3520,7 @@ stalled_session:
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="color-scheme" content="light dark">
       <meta name="supported-color-schemes" content="light dark">
-      <title>Need Help Connecting?</title>
+      <title>That warning was us</title>
       <!--[if mso]>
       <noscript>
         <xml>
@@ -3580,7 +3596,7 @@ stalled_session:
     <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
       <!-- Preview text -->
       <div style="display: none; max-height: 0; overflow: hidden;">
-        {{if .PreviewText}}{{.PreviewText}}{{else}}Connecting takes less than 60 seconds. Here's how — and we're here to help if you need it.{{end}}
+        {{if .PreviewText}}{{.PreviewText}}{{else}}It says Montréal because that's where our server runs. Here's the 60-second version.{{end}}
         &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
       </div>
 
@@ -3618,62 +3634,81 @@ stalled_session:
               <!-- Main content -->
               <tr>
                 <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
-                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Need Help Connecting?</h1>
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">That warning was us</h1>
 
                   <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
 
     <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
 
-    <p style="margin: 0 0 20px 0;">We noticed you created a session on WASBOT but haven't connected your WhatsApp yet.</p>
+    <p style="margin: 0 0 20px 0;">You started linking your WhatsApp and stopped. If you got as far as typing the code in, you probably saw this:</p>
 
-    <p style="margin: 0 0 24px 0;">Is something blocking you? <strong>Reply to this email and let us know</strong> — even a one-word answer helps us make WASBOT better for everyone. Connecting takes less than 60 seconds:</p>
+    <!-- What WhatsApp actually showed them. Reproduced first, before any
+         explanation — recognition is what defuses it. Naming the precise city
+         and button is the point: only the real operator knows them. -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #111827; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 22px 24px;">
+          <p style="margin: 0 0 8px 0; font-size: 16px; font-weight: 700; color: #fbbf24;">&#9888;&#65039; This may be a scam</p>
+          <p style="margin: 0 0 16px 0; font-size: 14px; color: #d1d5db; line-height: 1.6;">Someone is trying to link a device in <strong style="color: #ffffff;">Montr&eacute;al, Qu&eacute;bec, Canada</strong>. Only continue if you started this.</p>
+          <div style="background: #25D366; border-radius: 8px; padding: 10px; text-align: center; font-size: 14px; font-weight: 700; color: #111827;">Link device</div>
+        </td>
+      </tr>
+    </table>
+
+    <p style="margin: 0 0 20px 0;"><strong>That was us.</strong> Here's what's actually happening.</p>
+
+    <p style="margin: 0 0 20px 0;">WASBOT runs your automations from the cloud so your phone doesn't have to stay on — that's the entire point of it. Our server sits in Montr&eacute;al. So when WhatsApp asks who this device in Canada is, it's describing our server, not a stranger.</p>
+
+    <p style="margin: 0 0 20px 0;">WhatsApp shows that warning for <strong>every pairing code, from every tool, every single time</strong>. Nobody can switch it off. We're naming the exact city and the exact button because only the people actually running the service can.</p>
+
+    <p style="margin: 0 0 24px 0;">When you see it, tap the green <strong>"Link device"</strong>. That's the whole thing.</p>
+
+    <!-- The single most useful line in this email for a spooked user: QR does
+         not trigger the warning at all. -->
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-left: 4px solid #22c55e; border-radius: 8px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 14px 18px;">
+          <p style="margin: 0; font-size: 14px; color: #166534; line-height: 1.6;">Don't want to deal with the warning at all? Pick <strong>"Scan QR Code"</strong> instead &mdash; WhatsApp doesn't show it for QR.</p>
+        </td>
+      </tr>
+    </table>
 
     <!-- Steps -->
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 16px;">
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
       <tr>
         <td style="padding: 24px;">
-          <p style="margin: 0 0 16px 0; font-weight: 600; color: #1e40af;">Pairing code method (simplest):</p>
+          <p style="margin: 0 0 16px 0; font-weight: 600; color: #1e40af;">The full 60 seconds, either way:</p>
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
             <tr>
               <td style="padding: 8px 0;">
                 <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">1</span>
-                <span style="margin-left: 12px; color: #374151;">Go to your dashboard and click <strong>"Connect"</strong> on your session</span>
+                <span style="margin-left: 12px; color: #374151;">Open your dashboard and tap <strong>"Link your WhatsApp"</strong></span>
               </td>
             </tr>
             <tr>
               <td style="padding: 8px 0;">
                 <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">2</span>
-                <span style="margin-left: 12px; color: #374151;">Enter your phone number (with country code, no + or spaces, e.g. <strong>2348012345678</strong>) and click Continue to get a pairing code</span>
+                <span style="margin-left: 12px; color: #374151;">Choose <strong>"Use Pairing Code"</strong>, pick your country, then type your WhatsApp number</span>
               </td>
             </tr>
             <tr>
               <td style="padding: 8px 0;">
                 <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">3</span>
-                <span style="margin-left: 12px; color: #374151;">Open WhatsApp &rarr; <strong>Linked Devices</strong> &rarr; Link a Device &rarr; <strong>Link with phone number</strong> &rarr; enter the code</span>
+                <span style="margin-left: 12px; color: #374151;">In WhatsApp: <strong>Settings</strong> &rarr; <strong>Linked devices</strong> &rarr; Link a device &rarr; <strong>Link with phone number instead</strong></span>
               </td>
             </tr>
             <tr>
               <td style="padding: 8px 0;">
                 <span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">4</span>
-                <span style="margin-left: 12px; color: #374151;"><strong>Done!</strong> WASBOT starts working immediately</span>
+                <span style="margin-left: 12px; color: #374151;">Type the code, then tap <strong>"Link device"</strong> when the warning comes up</span>
               </td>
             </tr>
           </table>
-          <p style="margin: 16px 0 0 0; font-size: 13px; color: #4b5563; font-style: italic;">If you have another device, you can scan a QR code instead. Either method works.</p>
         </td>
       </tr>
     </table>
 
-    <!-- Scam warning notice -->
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 8px; margin-bottom: 24px;">
-      <tr>
-        <td style="padding: 14px 18px;">
-          <p style="margin: 0; font-size: 13px; color: #78350f; line-height: 1.6;"><strong>Heads up:</strong> WhatsApp may show a "This might be a scam" warning when linking — you can safely ignore it. It's a standard warning WhatsApp shows for all third-party tools.</p>
-        </td>
-      </tr>
-    </table>
-
-    <p style="margin: 0 0 24px 0;">If you're running into any issues, just <strong>reply to this email</strong> — we'll help you personally. We've helped hundreds of users through this step.</p>
+    <p style="margin: 0 0 24px 0;">Still stuck? <strong>Reply to this email.</strong> A real person reads it and one word is enough.</p>
 
     <p style="margin: 0 0 24px 0; font-size: 14px; color: #6b7280;">You can also check our <a href="{{.BlogURL}}" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">getting started guide</a> for a detailed walkthrough.</p>
 
@@ -3682,7 +3717,7 @@ stalled_session:
       <tr>
         <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
           <a href="{{.ConnectURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
-            Connect Now &#x2192;
+            Link your WhatsApp &#x2192;
           </a>
         </td>
       </tr>
