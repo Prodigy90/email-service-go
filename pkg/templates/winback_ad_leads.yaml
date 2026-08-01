@@ -1,6 +1,13 @@
 # Win-back campaign — ad-origin leads who signed up but never paid (Ticket A)
 # winback_ad_leads_d0, winback_ad_leads_d3, winback_ad_leads_d7
-# Vars: Name, CheckoutURL (all 3). UnsubscribeURL is auto-injected by the email service.
+#
+# Vars: Name (personalization only — set by campaign-service's Sender from the
+# CSV name column, falls back to "there"). UnsubscribeURL is auto-injected by
+# the email service. The checkout link is a single fixed URL for the whole
+# campaign (tier=basic&discount=WASBOT20), so it's hardcoded directly in the
+# copy rather than templated — campaign-service's Sender.sendBatch() only
+# populates Name/PricingURL/RefParam/DashboardURL, and this campaign has no
+# per-recipient CTA, so there was nothing to gain from wiring a new field.
 
 winback_ad_leads_d0:
   subject: "Quick one — your 20% off is waiting"
@@ -18,7 +25,7 @@ winback_ad_leads_d0:
     Your discount is still active: 20% off your first month. Basic is
     ₦8,000/month — code WASBOT20 makes it ₦6,400.
 
-    Claim 20% off — start for ₦6,400: {{.CheckoutURL}}
+    Claim 20% off — start for ₦6,400: https://wasbot.app/checkout?tier=basic&discount=WASBOT20
 
     One payment, no card stored, cancel anytime.
 
@@ -118,7 +125,7 @@ winback_ad_leads_d0:
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 20px;">
                       <tr>
                         <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
-                          <a href="{{.CheckoutURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                          <a href="https://wasbot.app/checkout?tier=basic&amp;discount=WASBOT20" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
                             Claim 20% off — start for ₦6,400
                           </a>
                         </td>
@@ -205,7 +212,7 @@ winback_ad_leads_d3:
 
     Your 20% is still on: ₦6,400 for your first month with code WASBOT20.
 
-    Start for ₦6,400 — 20% off: {{.CheckoutURL}}
+    Start for ₦6,400 — 20% off: https://wasbot.app/checkout?tier=basic&discount=WASBOT20
 
     — The WASBOT Team
 
@@ -318,7 +325,7 @@ winback_ad_leads_d3:
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
                       <tr>
                         <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
-                          <a href="{{.CheckoutURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                          <a href="https://wasbot.app/checkout?tier=basic&amp;discount=WASBOT20" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
                             Start for ₦6,400 — 20% off
                           </a>
                         </td>
@@ -396,7 +403,7 @@ winback_ad_leads_d7:
     What that buys: every ad lead saved automatically, status posted to your
     whole list from the cloud, every group messaged in one tap.
 
-    Use your 20% before it goes: {{.CheckoutURL}}
+    Use your 20% before it goes: https://wasbot.app/checkout?tier=basic&discount=WASBOT20
 
     If WhatsApp isn't where your business runs, no wahala — this is the last
     email about this offer.
@@ -503,7 +510,7 @@ winback_ad_leads_d7:
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px;">
                       <tr>
                         <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
-                          <a href="{{.CheckoutURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                          <a href="https://wasbot.app/checkout?tier=basic&amp;discount=WASBOT20" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
                             Use your 20% before it goes
                           </a>
                         </td>
