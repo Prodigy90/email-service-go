@@ -10,7 +10,7 @@
 # per-recipient CTA, so there was nothing to gain from wiring a new field.
 
 winback_ad_leads_d0:
-  subject: Quick one — your 20% off is waiting
+  subject: 'Quick one: your 20% off is waiting'
   preview_text: ₦6,400 for your first month. The link is inside.
   body: |-
     Hi {{.Name}},
@@ -19,17 +19,17 @@ winback_ad_leads_d0:
 
     Quick reminder of what you were coming for: every ad lead auto-saves itself
     the moment it lands in your DMs. One click posts your status to your whole
-    list — from the cloud, so your phone stays cool. Every group hears you in
+    list from the cloud, so your phone stays cool. Every group hears you in
     one tap instead of an hour of copy-paste.
 
     Your discount is still active: 20% off your first month. Basic is
-    ₦8,000/month — code WASBOT20 makes it ₦6,400.
+    ₦8,000/month, but code WASBOT20 makes it ₦6,400.
 
-    Claim 20% off — start for ₦6,400: https://wasbot.app/checkout?tier=basic&discount=WASBOT20
+    Claim your 20% off, start for ₦6,400: https://wasbot.app/checkout?tier=basic&discount=WASBOT20
 
-    Pay by transfer or card — cancel anytime, no long contract.
+    Pay by transfer or card. Cancel anytime, no long contract.
 
-    — The WASBOT Team
+    The WASBOT Team
 
     ---
     You're receiving this because you signed up for a WASBOT account.
@@ -105,7 +105,7 @@ winback_ad_leads_d0:
                     <p style="margin: 0 0 24px 0;">
                       Quick reminder of what you were coming for: every ad lead auto-saves
                       itself the moment it lands in your DMs. One click posts your status
-                      to your whole list — from the cloud, so your phone stays cool. Every
+                      to your whole list from the cloud, so your phone stays cool. Every
                       group hears you in one tap instead of an hour of copy-paste.
                     </p>
 
@@ -115,7 +115,7 @@ winback_ad_leads_d0:
                         <td style="background-color: #f0fdf4; border: 2px solid {{.Branding.PrimaryColor}}; border-radius: 12px; padding: 18px;">
                           <div style="color: #166534; font-weight: 800; font-size: 20px; margin-bottom: 4px;">20% off your first month</div>
                           <div style="color: #166534; font-size: 14px;">
-                            Basic is ₦8,000/month — code <strong>WASBOT20</strong> makes it <strong>₦6,400</strong>.
+                            Basic is ₦8,000/month, but code <strong>WASBOT20</strong> makes it <strong>₦6,400</strong>.
                           </div>
                         </td>
                       </tr>
@@ -126,13 +126,13 @@ winback_ad_leads_d0:
                       <tr>
                         <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
                           <a href="https://wasbot.app/checkout?tier=basic&amp;discount=WASBOT20" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
-                            Claim 20% off — start for ₦6,400
+                            Claim your 20% off, start for ₦6,400
                           </a>
                         </td>
                       </tr>
                     </table>
 
-                    <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">Pay by transfer or card — cancel anytime, no long contract.</p>
+                    <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">Pay by transfer or card. Cancel anytime, no long contract.</p>
                   </div>
                 </td>
               </tr>
@@ -193,36 +193,36 @@ winback_ad_leads_d0:
 
 winback_ad_leads_d3:
   subject: Your phone is doing too much
-  preview_text: Lagging, overheating, copy-pasting all day — hand it over.
+  preview_text: Lagging, overheating, copy-pasting all day. Hand it over.
   body: |-
     Hi {{.Name}},
 
     You know the routine: ads running, DMs landing, and your phone doing all
-    the heavy lifting — WhatsApp lagging, battery hot by noon, and the bulk of
+    the heavy lifting: WhatsApp lagging, battery hot by noon, and the bulk of
     your day gone to saving numbers and copy-pasting the same message into
     group after group.
 
     And after all that grind, the status you post barely lands. 30,000
-    contacts on your list can mean barely 150 views — because people who never
+    contacts on your list can mean barely 150 views, because people who never
     saved your number don't see your status at all.
 
     WASBOT takes those off your plate, one by one:
 
-    * Leads that save themselves — the moment a DM lands, the number and name
+    * Leads that save themselves: the moment a DM lands, the number and name
       are saved to your phone and Google. Nothing slips.
-    * Status your whole list actually sees — posted from the cloud to
+    * Status your whole list actually sees: posted from the cloud to
       everyone, saved or not. And you see who got it and who viewed, by name.
-    * Every group in one tap — the hour of copy-paste becomes one send. Text,
+    * Every group in one tap: the hour of copy-paste becomes one send. Text,
       photos, videos.
-    * A phone that's just a phone again — the heavy lifting runs on our
+    * A phone that's just a phone again: the heavy lifting runs on our
       servers. Phone stays cool, battery makes it to night.
 
     Your 20% is still on: ₦6,400 for your first month of Basic with code
     WASBOT20.
 
-    Start for ₦6,400 — 20% off: https://wasbot.app/checkout?tier=basic&discount=WASBOT20
+    Start for ₦6,400 (20% off): https://wasbot.app/checkout?tier=basic&discount=WASBOT20
 
-    — The WASBOT Team
+    The WASBOT Team
 
     ---
     You're receiving this because you signed up for a WASBOT account.
@@ -261,7 +261,7 @@ winback_ad_leads_d3:
     </head>
     <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
       <div style="display: none; max-height: 0; overflow: hidden;">
-        Lagging, overheating, copy-pasting all day &mdash; hand it over.
+        Lagging, overheating, copy-pasting all day. Hand it over.
         &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
       </div>
       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
@@ -292,20 +292,20 @@ winback_ad_leads_d3:
                 <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
                   <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
                     <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
-                    <p style="margin: 0 0 20px 0;">You know the routine: ads running, DMs landing, and your phone doing all the heavy lifting &mdash; WhatsApp lagging, battery hot by noon, and the bulk of your day gone to saving numbers and copy-pasting the same message into group after group.</p>
-                    <p style="margin: 0 0 20px 0;">And after all that grind, the status you post barely lands. <strong style="color: #1f2937;">30,000 contacts on your list can mean barely 150 views</strong> &mdash; because people who never saved your number don&rsquo;t see your status at all.</p>
+                    <p style="margin: 0 0 20px 0;">You know the routine: ads running, DMs landing, and your phone doing all the heavy lifting: WhatsApp lagging, battery hot by noon, and the bulk of your day gone to saving numbers and copy-pasting the same message into group after group.</p>
+                    <p style="margin: 0 0 20px 0;">And after all that grind, the status you post barely lands. <strong style="color: #1f2937;">30,000 contacts on your list can mean barely 150 views</strong>, because people who never saved your number don&rsquo;t see your status at all.</p>
                     <p style="margin: 0 0 16px 0;">WASBOT takes those off your plate, one by one:</p>
                     <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 0 24px 0; font-size: 15px; line-height: 1.6; color: #4b5563;">
-    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Leads that save themselves</strong> &mdash; the moment a DM lands, the number and name are saved to your phone and Google. Nothing slips.</td></tr>
-    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Status your whole list actually sees</strong> &mdash; posted from the cloud to everyone, saved or not. And you see who got it and who viewed, by name.</td></tr>
-    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Every group in one tap</strong> &mdash; the hour of copy-paste becomes one send. Text, photos, videos.</td></tr>
-    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">A phone that&rsquo;s just a phone again</strong> &mdash; the heavy lifting runs on our servers. Phone stays cool, battery makes it to night.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Leads that save themselves:</strong> the moment a DM lands, the number and name are saved to your phone and Google. Nothing slips.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Status your whole list actually sees:</strong> posted from the cloud to everyone, saved or not. And you see who got it and who viewed, by name.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Every group in one tap:</strong> the hour of copy-paste becomes one send. Text, photos, videos.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">A phone that&rsquo;s just a phone again:</strong> the heavy lifting runs on our servers. Phone stays cool, battery makes it to night.</td></tr>
     </table>
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 28px;">
                       <tr>
                         <td style="background-color: #f0fdf4; border: 2px solid {{.Branding.PrimaryColor}}; border-radius: 12px; padding: 18px;">
                           <div style="color: #166534; font-weight: 800; font-size: 20px; margin-bottom: 4px;">Your 20% is still on</div>
-                          <div style="color: #166534; font-size: 14px;">Basic is &#8358;8,000/month &mdash; code <strong>WASBOT20</strong> makes your first month <strong>&#8358;6,400</strong>.</div>
+                          <div style="color: #166534; font-size: 14px;">Basic is &#8358;8,000/month, but code <strong>WASBOT20</strong> makes your first month <strong>&#8358;6,400</strong>.</div>
                         </td>
                       </tr>
                     </table>
@@ -313,12 +313,12 @@ winback_ad_leads_d3:
                       <tr>
                         <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
                           <a href="https://wasbot.app/checkout?tier=basic&amp;discount=WASBOT20" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
-                            Start for &#8358;6,400 &mdash; 20% off
+                            Start for &#8358;6,400 (20% off)
                           </a>
                         </td>
                       </tr>
                     </table>
-                    <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">Pay by transfer or card &mdash; cancel anytime, no long contract.</p>
+                    <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">Pay by transfer or card. Cancel anytime, no long contract.</p>
                   </div>
                 </td>
               </tr>
@@ -382,36 +382,36 @@ winback_ad_leads_d7:
   body: |-
     Hi {{.Name}},
 
-    Last one from us about this — we're closing out your signup discount.
+    Last one from us about this: we're closing out your signup discount.
 
     ₦6,400 for your first month of WASBOT Basic (then ₦8,000/month, and you
-    can cancel anytime — keep it only if it's earning its keep).
+    can cancel anytime. Keep it only if it's earning its keep).
 
     People think WASBOT is one big feature. It's not. It's the small things,
     running every day, that stack up:
 
-    * Auto-save — every lead that DMs you is saved to your phone and Google,
+    * Auto-save: every lead that DMs you is saved to your phone and Google,
       instantly.
-    * Cloud status — post once, your whole list gets it, saved or not. Phone
+    * Cloud status: post once, your whole list gets it, saved or not. Phone
       stays cool.
-    * Who-viewed, by name — delivery and view numbers you can screenshot,
+    * Who-viewed, by name: delivery and view numbers you can screenshot,
       instead of "trust me."
-    * Group blast — every group in one tap: text, photos, videos.
-    * Group actions — approve join requests, export members, manage dozens of
+    * Group blast: every group in one tap: text, photos, videos.
+    * Group actions: approve join requests, export members, manage dozens of
       groups in one go.
-    * Scheduling — queue status posts and group sends; they go out while
+    * Scheduling: queue status posts and group sends; they go out while
       you're with customers.
-    * Broadcasts — DM campaigns straight to your contacts, no group needed.
-    * Autoresponder — every new lead gets an instant reply, even at 2am.
+    * Broadcasts: DM campaigns straight to your contacts, no group needed.
+    * Autoresponder: every new lead gets an instant reply, even at 2am.
 
     Each one hands you back minutes. Together they hand you back your day.
 
     Use your 20% before it goes: https://wasbot.app/checkout?tier=basic&discount=WASBOT20
 
-    If WhatsApp isn't where your business runs, no wahala — this is the last
+    If WhatsApp isn't where your business runs, no wahala. This is the last
     email about this offer.
 
-    — The WASBOT Team
+    The WASBOT Team
 
     ---
     You're receiving this because you signed up for a WASBOT account.
@@ -481,25 +481,25 @@ winback_ad_leads_d7:
                 <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
                   <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
                     <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
-                    <p style="margin: 0 0 20px 0;">Last one from us about this &mdash; we&rsquo;re closing out your signup discount.</p>
+                    <p style="margin: 0 0 20px 0;">Last one from us about this: we&rsquo;re closing out your signup discount.</p>
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 28px;">
                       <tr>
                         <td style="background-color: #f0fdf4; border: 2px solid {{.Branding.PrimaryColor}}; border-radius: 12px; padding: 18px;">
                           <div style="color: #166534; font-weight: 800; font-size: 20px; margin-bottom: 4px;">&#8358;6,400 for your first month</div>
-                          <div style="color: #166534; font-size: 14px;">of WASBOT Basic (then &#8358;8,000/month, and you can cancel anytime &mdash; keep it only if it&rsquo;s earning its keep).</div>
+                          <div style="color: #166534; font-size: 14px;">of WASBOT Basic (then &#8358;8,000/month, and you can cancel anytime. Keep it only if it&rsquo;s earning its keep).</div>
                         </td>
                       </tr>
                     </table>
                     <p style="margin: 0 0 16px 0;">People think WASBOT is one big feature. It&rsquo;s not. It&rsquo;s the small things, running every day, that stack up:</p>
                     <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 0 24px 0; font-size: 15px; line-height: 1.6; color: #4b5563;">
-    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Auto-save</strong> &mdash; every lead that DMs you is saved to your phone and Google, instantly.</td></tr>
-    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Cloud status</strong> &mdash; post once, your whole list gets it, saved or not. Phone stays cool.</td></tr>
-    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Who-viewed, by name</strong> &mdash; delivery and view numbers you can screenshot, instead of &ldquo;trust me.&rdquo;</td></tr>
-    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Group blast</strong> &mdash; every group in one tap: text, photos, videos.</td></tr>
-    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Group actions</strong> &mdash; approve join requests, export members, manage dozens of groups in one go.</td></tr>
-    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Scheduling</strong> &mdash; queue status posts and group sends; they go out while you&rsquo;re with customers.</td></tr>
-    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Broadcasts</strong> &mdash; DM campaigns straight to your contacts, no group needed.</td></tr>
-    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Autoresponder</strong> &mdash; every new lead gets an instant reply, even at 2am.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Auto-save:</strong> every lead that DMs you is saved to your phone and Google, instantly.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Cloud status:</strong> post once, your whole list gets it, saved or not. Phone stays cool.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Who-viewed, by name:</strong> delivery and view numbers you can screenshot, instead of &ldquo;trust me.&rdquo;</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Group blast:</strong> every group in one tap: text, photos, videos.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Group actions:</strong> approve join requests, export members, manage dozens of groups in one go.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Scheduling:</strong> queue status posts and group sends; they go out while you&rsquo;re with customers.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Broadcasts:</strong> DM campaigns straight to your contacts, no group needed.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Autoresponder:</strong> every new lead gets an instant reply, even at 2am.</td></tr>
     </table>
                     <p style="margin: 0 0 20px 0;">Each one hands you back minutes. Together they hand you back your day.</p>
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 20px;">
@@ -511,7 +511,7 @@ winback_ad_leads_d7:
                         </td>
                       </tr>
                     </table>
-                    <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">If WhatsApp isn&rsquo;t where your business runs, no wahala &mdash; this is the last email about this offer.</p>
+                    <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">If WhatsApp isn&rsquo;t where your business runs, no wahala. This is the last email about this offer.</p>
                   </div>
                 </td>
               </tr>
