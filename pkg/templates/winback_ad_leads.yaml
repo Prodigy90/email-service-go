@@ -27,7 +27,7 @@ winback_ad_leads_d0:
 
     Claim 20% off — start for ₦6,400: https://wasbot.app/checkout?tier=basic&discount=WASBOT20
 
-    One payment, no card stored, cancel anytime.
+    Pay by transfer or card — cancel anytime, no long contract.
 
     — The WASBOT Team
 
@@ -132,7 +132,7 @@ winback_ad_leads_d0:
                       </tr>
                     </table>
 
-                    <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">One payment, no card stored, cancel anytime.</p>
+                    <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">Pay by transfer or card — cancel anytime, no long contract.</p>
                   </div>
                 </td>
               </tr>
@@ -397,8 +397,8 @@ winback_ad_leads_d7:
 
     Last one from us about this — we're closing out your signup discount.
 
-    ₦6,400 for your first month of WASBOT Basic (then ₦8,000/month, renew
-    only if it's earning its keep — no card stored, nothing auto-charges).
+    ₦6,400 for your first month of WASBOT Basic (then ₦8,000/month, and you
+    can cancel anytime — keep it only if it's earning its keep).
 
     What that buys: every ad lead saved automatically, status posted to your
     whole list from the cloud, every group messaged in one tap.
@@ -494,8 +494,8 @@ winback_ad_leads_d7:
                         <td style="background-color: #f0fdf4; border: 2px solid {{.Branding.PrimaryColor}}; border-radius: 12px; padding: 18px;">
                           <div style="color: #166534; font-weight: 800; font-size: 20px; margin-bottom: 4px;">₦6,400 for your first month</div>
                           <div style="color: #166534; font-size: 14px;">
-                            of WASBOT Basic (then ₦8,000/month, renew only if it's earning
-                            its keep — no card stored, nothing auto-charges).
+                            of WASBOT Basic (then ₦8,000/month, and you can cancel
+                            anytime — keep it only if it's earning its keep).
                           </div>
                         </td>
                       </tr>
