@@ -1,0 +1,571 @@
+# Win-back campaign — ad-origin leads who signed up but never paid (Ticket A)
+# winback_ad_leads_d0, winback_ad_leads_d3, winback_ad_leads_d7
+#
+# Vars: Name (personalization only — set by campaign-service's Sender from the
+# CSV name column, falls back to "there"). UnsubscribeURL is auto-injected by
+# the email service. The checkout link is a single fixed URL for the whole
+# campaign (tier=basic&discount=WASBOT20), so it's hardcoded directly in the
+# copy rather than templated — campaign-service's Sender.sendBatch() only
+# populates Name/PricingURL/RefParam/DashboardURL, and this campaign has no
+# per-recipient CTA, so there was nothing to gain from wiring a new field.
+
+winback_ad_leads_d0:
+  subject: 'Quick one: your 20% off is waiting'
+  preview_text: ₦6,400 for your first month. The link is inside.
+  body: |-
+    Hi {{.Name}},
+
+    You signed up for WASBOT a few days back but didn't get to try it out.
+
+    Quick reminder of what you were coming for: every ad lead auto-saves itself
+    the moment it lands in your DMs. One click posts your status to your whole
+    list from the cloud, so your phone stays cool. Every group hears you in
+    one tap instead of an hour of copy-paste.
+
+    Your discount is still active: 20% off your first month. Basic is
+    ₦8,000/month, but code WASBOT20 makes it ₦6,400.
+
+    Claim your 20% off, start for ₦6,400: https://wasbot.app/checkout?tier=basic&discount=WASBOT20
+
+    Pay by transfer or card. Cancel anytime, no long contract.
+
+    The WASBOT Team
+
+    ---
+    You're receiving this because you signed up for a WASBOT account.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>Your 20% off is waiting</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        ₦6,400 for your first month. The link is inside.
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+                    <p style="margin: 0 0 20px 0;">You signed up for WASBOT a few days back but didn't get to try it out.</p>
+
+                    <p style="margin: 0 0 24px 0;">
+                      Quick reminder of what you were coming for: every ad lead auto-saves
+                      itself the moment it lands in your DMs. One click posts your status
+                      to your whole list from the cloud, so your phone stays cool. Every
+                      group hears you in one tap instead of an hour of copy-paste.
+                    </p>
+
+                    <!-- Offer -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 28px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border: 2px solid {{.Branding.PrimaryColor}}; border-radius: 12px; padding: 18px;">
+                          <div style="color: #166534; font-weight: 800; font-size: 20px; margin-bottom: 4px;">20% off your first month</div>
+                          <div style="color: #166534; font-size: 14px;">
+                            Basic is ₦8,000/month, but code <strong>WASBOT20</strong> makes it <strong>₦6,400</strong>.
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- CTA -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 20px;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="https://wasbot.app/checkout?tier=basic&amp;discount=WASBOT20" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                            Claim your 20% off, start for ₦6,400
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">Pay by transfer or card. Cancel anytime, no long contract.</p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria
+                        </p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: Win-back Day 0 — ad-origin signup, never paid. 20% off Basic (WASBOT20 -> ₦6,400)
+
+winback_ad_leads_d3:
+  subject: Your phone is doing too much
+  preview_text: Lagging, overheating, copy-pasting all day. Hand it over.
+  body: |-
+    Hi {{.Name}},
+
+    You know the routine: ads running, DMs landing, and your phone doing all
+    the heavy lifting: WhatsApp lagging, battery hot by noon, and the bulk of
+    your day gone to saving numbers and copy-pasting the same message into
+    group after group.
+
+    And after all that grind, the status you post barely lands. 30,000
+    contacts on your list can mean barely 150 views, because people who never
+    saved your number don't see your status at all.
+
+    WASBOT takes those off your plate, one by one:
+
+    * Leads that save themselves: the moment a DM lands, the number and name
+      are saved to your phone and Google. Nothing slips.
+    * Status your whole list actually sees: posted from the cloud to
+      everyone, saved or not. And you see who got it and who viewed, by name.
+    * Every group in one tap: the hour of copy-paste becomes one send. Text,
+      photos, videos.
+    * A phone that's just a phone again: the heavy lifting runs on our
+      servers. Phone stays cool, battery makes it to night.
+
+    Your 20% is still on: ₦6,400 for your first month of Basic with code
+    WASBOT20.
+
+    Start for ₦6,400 (20% off): https://wasbot.app/checkout?tier=basic&discount=WASBOT20
+
+    The WASBOT Team
+
+    ---
+    You're receiving this because you signed up for a WASBOT account.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>Your phone is doing too much</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        Lagging, overheating, copy-pasting all day. Hand it over.
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+                    <p style="margin: 0 0 20px 0;">You know the routine: ads running, DMs landing, and your phone doing all the heavy lifting: WhatsApp lagging, battery hot by noon, and the bulk of your day gone to saving numbers and copy-pasting the same message into group after group.</p>
+                    <p style="margin: 0 0 20px 0;">And after all that grind, the status you post barely lands. <strong style="color: #1f2937;">30,000 contacts on your list can mean barely 150 views</strong>, because people who never saved your number don&rsquo;t see your status at all.</p>
+                    <p style="margin: 0 0 16px 0;">WASBOT takes those off your plate, one by one:</p>
+                    <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 0 24px 0; font-size: 15px; line-height: 1.6; color: #4b5563;">
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Leads that save themselves:</strong> the moment a DM lands, the number and name are saved to your phone and Google. Nothing slips.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Status your whole list actually sees:</strong> posted from the cloud to everyone, saved or not. And you see who got it and who viewed, by name.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Every group in one tap:</strong> the hour of copy-paste becomes one send. Text, photos, videos.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">A phone that&rsquo;s just a phone again:</strong> the heavy lifting runs on our servers. Phone stays cool, battery makes it to night.</td></tr>
+    </table>
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 28px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border: 2px solid {{.Branding.PrimaryColor}}; border-radius: 12px; padding: 18px;">
+                          <div style="color: #166534; font-weight: 800; font-size: 20px; margin-bottom: 4px;">Your 20% is still on</div>
+                          <div style="color: #166534; font-size: 14px;">Basic is &#8358;8,000/month, but code <strong>WASBOT20</strong> makes your first month <strong>&#8358;6,400</strong>.</div>
+                        </td>
+                      </tr>
+                    </table>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 20px;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="https://wasbot.app/checkout?tier=basic&amp;discount=WASBOT20" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                            Start for &#8358;6,400 (20% off)
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                    <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">Pay by transfer or card. Cancel anytime, no long contract.</p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria
+                        </p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+
+winback_ad_leads_d7:
+  subject: Last call on your 20% off
+  preview_text: After this, Basic goes back to ₦8,000.
+  body: |-
+    Hi {{.Name}},
+
+    Last one from us about this: we're closing out your signup discount.
+
+    ₦6,400 for your first month of WASBOT Basic (then ₦8,000/month, and you
+    can cancel anytime. Keep it only if it's earning its keep).
+
+    People think WASBOT is one big feature. It's not. It's the small things,
+    running every day, that stack up:
+
+    * Auto-save: every lead that DMs you is saved to your phone and Google,
+      instantly.
+    * Cloud status: post once, your whole list gets it, saved or not. Phone
+      stays cool.
+    * Who-viewed, by name: delivery and view numbers you can screenshot,
+      instead of "trust me."
+    * Group blast: every group in one tap: text, photos, videos.
+    * Group actions: approve join requests, export members, manage dozens of
+      groups in one go.
+    * Scheduling: queue status posts and group sends; they go out while
+      you're with customers.
+    * Broadcasts: DM campaigns straight to your contacts, no group needed.
+    * Autoresponder: every new lead gets an instant reply, even at 2am.
+
+    Each one hands you back minutes. Together they hand you back your day.
+
+    Use your 20% before it goes: https://wasbot.app/checkout?tier=basic&discount=WASBOT20
+
+    If WhatsApp isn't where your business runs, no wahala. This is the last
+    email about this offer.
+
+    The WASBOT Team
+
+    ---
+    You're receiving this because you signed up for a WASBOT account.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>Last call on your 20% off</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        After this, Basic goes back to &#8358;8,000.
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+                    <p style="margin: 0 0 20px 0;">Last one from us about this: we&rsquo;re closing out your signup discount.</p>
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 28px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border: 2px solid {{.Branding.PrimaryColor}}; border-radius: 12px; padding: 18px;">
+                          <div style="color: #166534; font-weight: 800; font-size: 20px; margin-bottom: 4px;">&#8358;6,400 for your first month</div>
+                          <div style="color: #166534; font-size: 14px;">of WASBOT Basic (then &#8358;8,000/month, and you can cancel anytime. Keep it only if it&rsquo;s earning its keep).</div>
+                        </td>
+                      </tr>
+                    </table>
+                    <p style="margin: 0 0 16px 0;">People think WASBOT is one big feature. It&rsquo;s not. It&rsquo;s the small things, running every day, that stack up:</p>
+                    <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 0 24px 0; font-size: 15px; line-height: 1.6; color: #4b5563;">
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Auto-save:</strong> every lead that DMs you is saved to your phone and Google, instantly.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Cloud status:</strong> post once, your whole list gets it, saved or not. Phone stays cool.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Who-viewed, by name:</strong> delivery and view numbers you can screenshot, instead of &ldquo;trust me.&rdquo;</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Group blast:</strong> every group in one tap: text, photos, videos.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Group actions:</strong> approve join requests, export members, manage dozens of groups in one go.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Scheduling:</strong> queue status posts and group sends; they go out while you&rsquo;re with customers.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Broadcasts:</strong> DM campaigns straight to your contacts, no group needed.</td></tr>
+    <tr><td style="padding: 0 10px 12px 0; vertical-align: top; color: {{.Branding.PrimaryColor}}; font-weight: 700;">&bull;</td><td style="padding: 0 0 12px 0;"><strong style="color: #1f2937;">Autoresponder:</strong> every new lead gets an instant reply, even at 2am.</td></tr>
+    </table>
+                    <p style="margin: 0 0 20px 0;">Each one hands you back minutes. Together they hand you back your day.</p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 20px;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="https://wasbot.app/checkout?tier=basic&amp;discount=WASBOT20" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                            Use your 20% before it goes
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                    <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">If WhatsApp isn&rsquo;t where your business runs, no wahala. This is the last email about this offer.</p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria
+                        </p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+

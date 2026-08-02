@@ -387,4 +387,9 @@ const (
 
 	// Migration blast (April 2026 — wasbot.ng → wasbot.app)
 	TemplateMigrationBlastApr2026 = "migration_blast_apr2026"
+
+	// Win-back campaign — ad-origin leads who signed up but never paid (Ticket A)
+	TemplateWinbackAdLeadsD0 = "winback_ad_leads_d0" // Day 0: reminder + 20% off
+	TemplateWinbackAdLeadsD3 = "winback_ad_leads_d3" // Day 3: auto-save + full-reach status pitch
+	TemplateWinbackAdLeadsD7 = "winback_ad_leads_d7" // Day 7: last call, offer sunsets
 )
