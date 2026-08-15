@@ -1701,7 +1701,7 @@ migration_upgrade_nudge_final:
     - Auto-save contacts to Google Contacts
     - Group messaging and member tagging
 
-    Pick a plan that works for you — starting at just ₦8,000/month:
+    Pick a plan that works for you. Plans start small, see yours in your currency:
     {{.DashboardURL}}
 
     Don't wait until it's too late.
@@ -1844,7 +1844,7 @@ migration_upgrade_nudge_final:
       <li>Auto-save contacts to Google Contacts</li>
       <li>Group messaging and member tagging</li>
     </ul>
-    <p>Pick a plan that works for you — starting at just <strong>&#8358;8,000/month</strong>:</p>
+    <p>Pick a plan that works for you. Plans start small, see yours in your currency:</p>
     <p style="text-align: center; margin: 32px 0;">
       <a href="{{.DashboardURL}}" class="btn">Choose Your Plan</a>
     </p>
