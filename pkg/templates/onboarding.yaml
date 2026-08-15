@@ -1470,7 +1470,7 @@ onboarding_day6:
   body: |-
     Hi {{.Name}},
 
-    Your trial ends {{if .TrialEnd}}{{.TrialEnd}}{{else}}soon{{end}}. Before you decide, here's your week with WASBOT:
+    Your trial ends {{if .TrialEnd}}{{.TrialEnd}}{{else}}soon{{end}}. {{if .HasActivity}}Before you decide, here's your week with WASBOT:{{else}}Before you decide, one honest word.{{end}}
 
     {{if .HasActivity}}{{if .ContactsSaved}}- {{.ContactsSaved}} contacts saved automatically
     {{end}}{{if .StatusesPosted}}- {{.StatusesPosted}} statuses posted, {{.StatusViews}} views counted
@@ -1620,7 +1620,7 @@ onboarding_day6:
                   <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
     <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
 
-    <p style="margin: 0 0 20px 0;">Your trial ends <strong>{{if .TrialEnd}}{{.TrialEnd}}{{else}}soon{{end}}</strong>. Before you decide, here's your week with WASBOT:</p>
+    <p style="margin: 0 0 20px 0;">Your trial ends <strong>{{if .TrialEnd}}{{.TrialEnd}}{{else}}soon{{end}}</strong>. {{if .HasActivity}}Before you decide, here's your week with WASBOT:{{else}}Before you decide, one honest word.{{end}}</p>
 
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
       <tr>
