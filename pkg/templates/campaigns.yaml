@@ -117,9 +117,7 @@ campaign_update:
                     </table>
                     {{end}}
 
-                    {{if .Closing}}<p style="margin: 0 0 16px 0;">{{.Closing}}</p>{{end}}
-
-                    <p style="margin: 24px 0 0 0;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+                    {{if .Closing}}<p style="margin: 24px 0 0 0;">{{.Closing}}</p>{{else}}<p style="margin: 24px 0 0 0;">Talk soon,<br><strong>The WASBOT Team</strong></p>{{end}}
                   </div>
                 </td>
               </tr>
