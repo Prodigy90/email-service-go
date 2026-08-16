@@ -176,3 +176,30 @@ func TestLifecycleTemplates_QuoteNoAbsolutePrices(t *testing.T) {
 		}
 	}
 }
+
+// Plaintext and HTML must carry exactly one sign-off each. The two branches of
+// a template are written and edited separately, so they drift: campaign_update
+// shipped with two stacked sign-offs in HTML (guarded in plaintext, not in
+// HTML) and the whole lifecycle set shipped with a sign-off in plaintext and
+// none in HTML, which is what almost every reader sees.
+func TestLifecycleTemplates_HaveExactlyOneSignoffPerBranch(t *testing.T) {
+	ts := newTestTemplateService(t)
+	branding := domain.DefaultBranding()
+
+	for _, name := range append(lifecycleTemplates, "post_trial_day10") {
+		for _, st := range lifecycleStates() {
+			_, body, html, err := ts.RenderWithBranding(name, st.data, branding)
+			if err != nil {
+				t.Fatalf("%s [%s]: render failed: %v", name, st.name, err)
+			}
+			if got := strings.Count(body, "The WASBOT Team"); got != 1 {
+				t.Errorf("%s [%s]: plaintext has %d sign-offs, want 1", name, st.name, got)
+			}
+			// The chassis footer names the company but never signs off, so any
+			// count other than 1 here is the template's own doing.
+			if got := strings.Count(html, "The WASBOT Team"); got != 1 {
+				t.Errorf("%s [%s]: HTML has %d sign-offs, want 1", name, st.name, got)
+			}
+		}
+	}
+}
