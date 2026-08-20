@@ -164,3 +164,90 @@ func TestLegacyWinbackA2ToA4Render(t *testing.T) {
 		})
 	}
 }
+
+// Lapsed-believer templates (L1/L2) carry no per-row vars: 14 days and 20% are
+// frozen copy backed by the LapsedBeliever* constants in wasbot-backend. The
+// rewritten legacy_provisioned welcome renders per-pct (30 owed-days / 20 lapsed).
+func TestLapsedWinbackAndProvisionedRender(t *testing.T) {
+	ts := newTestTemplateService(t)
+
+	for _, tmpl := range []string{"legacy_winback_lapsed_l1", "legacy_winback_lapsed_l2"} {
+		t.Run(tmpl, func(t *testing.T) {
+			subject, body, htmlBody, err := ts.Render(tmpl, map[string]interface{}{
+				"UnsubscribeURL": "https://wasbot.app/u/x",
+			})
+			if err != nil {
+				t.Fatalf("render failed: %v", err)
+			}
+			for surface, s := range map[string]string{"subject": subject, "body": body, "html": htmlBody} {
+				if strings.Contains(s, "<no value>") {
+					t.Errorf("%s leaks <no value>", surface)
+				}
+				if strings.Contains(s, "—") {
+					t.Errorf("%s contains an em-dash", surface)
+				}
+			}
+			for _, want := range []string{
+				"14 free days", "20% discount",
+				"THIS SAME EMAIL ADDRESS",
+				"https://www.wasbot.app/signup",
+				"August 31st",
+			} {
+				if !strings.Contains(body, want) {
+					t.Errorf("text body missing %q", want)
+				}
+			}
+		})
+	}
+
+	t.Run("legacy_winback_lapsed_l1 pricing math", func(t *testing.T) {
+		_, body, htmlBody, err := ts.Render("legacy_winback_lapsed_l1", map[string]interface{}{
+			"UnsubscribeURL": "https://wasbot.app/u/x",
+		})
+		if err != nil {
+			t.Fatalf("render failed: %v", err)
+		}
+		for _, want := range []string{"₦8,000", "₦6,400", "₦20,000", "₦16,000", "₦50,000", "₦40,000"} {
+			if !strings.Contains(body, want) || !strings.Contains(htmlBody, want) {
+				t.Errorf("missing 20%% pricing fact %q", want)
+			}
+		}
+		// The 30% believer numbers must NOT appear in the 20% email.
+		for _, bad := range []string{"₦5,600", "₦14,000", "₦35,000", "30%"} {
+			if strings.Contains(body, bad) || strings.Contains(htmlBody, bad) {
+				t.Errorf("30%% cohort fact %q leaked into lapsed email", bad)
+			}
+		}
+	})
+
+	for _, pct := range []string{"30", "20"} {
+		t.Run("legacy_provisioned pct "+pct, func(t *testing.T) {
+			subject, body, htmlBody, err := ts.Render("legacy_provisioned", map[string]interface{}{
+				"Name": "Ada", "FreeDays": "14", "DiscountPct": pct,
+				"DashboardURL": "https://wasbot.app/dashboard",
+			})
+			if err != nil {
+				t.Fatalf("render failed: %v", err)
+			}
+			for surface, s := range map[string]string{"subject": subject, "body": body, "html": htmlBody} {
+				if strings.Contains(s, "<no value>") {
+					t.Errorf("%s leaks <no value>", surface)
+				}
+				if strings.Contains(s, "—") {
+					t.Errorf("%s contains an em-dash", surface)
+				}
+			}
+			for _, bad := range []string{"10% off", "March 31", "uses of"} {
+				if strings.Contains(body, bad) || strings.Contains(htmlBody, bad) {
+					t.Errorf("stale copy %q still renders", bad)
+				}
+			}
+			if !strings.Contains(body, pct+"% discount") {
+				t.Errorf("text body missing %q", pct+"% discount")
+			}
+			if !strings.Contains(htmlBody, pct+"% off any plan for life") {
+				t.Errorf("html missing pct offer line")
+			}
+		})
+	}
+}

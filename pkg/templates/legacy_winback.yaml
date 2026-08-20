@@ -937,3 +937,430 @@ legacy_winback_a4:
     </body>
     </html>
   description: "Legacy winback A4 (Day 12, Aug 31) — final deadline call, still-unsigned wasbot.ng payers. Vars: FreeDays."
+
+legacy_winback_lapsed_l1:
+  subject: "You paid for WASBOT once. I owe you a look at the new one"
+  preview_text: "14 free days and a lifetime 20% rate, for early paying supporters only."
+  body: |-
+    Hi there,
+
+    Back when WASBOT was still wasbot.ng, you didn't just use the platform, you paid for it and believed in it while the system was actively making your day harder.
+
+    You endured it: group messages stalling, status queues failing, contacts stopping midway, and sessions logging out out of nowhere.
+
+    Your plan ran out before we could make it right. That never sat well with me. Your patience is the reason we scrapped the old codebase completely and rebuilt WASBOT from the ground up so none of that could ever happen again.
+
+    The new platform at wasbot.app is built strictly for high performance:
+
+    * Dedicated Resources: Every account gets its own isolated server. No queueing behind other users, no freezing.
+    * Instant Delivery: Statuses, broadcasts, and group messages go out in seconds, whether your phone is on, off, or dead in your bag.
+    * Real-Time Contact Saving: Instant saving with zero drop-offs.
+    * Scaled Stability: Our largest accounts now post to 47,000+ contacts in a single run with live view and delivery tracking.
+
+    Beyond statuses, WASBOT now runs completely on autopilot. You can schedule your content ahead of time, auto-delete posts, track viewers live, broadcast to DMs and groups, run multiple WhatsApp numbers at once, and set up automatic AI replies for incoming messages. Set it up once, step away, and let it handle the rest.
+
+    Because you paid for WASBOT when it was still rough, I want you back to test the new system:
+
+    We've set aside 14 free days on our Basic Plan for you, no credit card required. Your days only start counting from the moment you sign up, so nothing is wasted while you decide when to start.
+
+    ⚠️ Crucial: You MUST sign up with THIS SAME EMAIL ADDRESS so the system can match your old account and credit your free days automatically.
+
+    Our standard plans today:
+    * Basic (₦8,000/mo): Perfect for individual marketers starting out.
+    * Premium (₦20,000/mo): Built for mid-tier WhatsApp TVs and growing businesses (our most popular tier).
+    * Pro (₦50,000/mo): Built for top 10% WhatsApp TVs and high-volume marketers.
+
+    As an early paying supporter, you also get a permanent 20% discount ACROSS ALL PLANS for life. That brings Basic to ₦6,400/mo, Premium to ₦16,000/mo, and Pro to ₦40,000/mo. It locks in for life once you make your first payment before your free days finish.
+
+    Claim your free Basic days and experience the new WASBOT: https://www.wasbot.app/signup
+
+    Note: This invitation closes on August 31st. Sign up before then to claim your free days and lock in your discount.
+
+    Thank you for backing us when we were still figuring things out. I'd love to welcome you back.
+
+    Talk soon,
+    Victor
+
+    ---
+    You're receiving this because you had a paid plan on wasbot.ng.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>You paid for WASBOT once. I owe you a look at the new one</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        14 free days and a lifetime 20% rate, for early paying supporters only.
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;</div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi there,</p>
+
+                    <p style="margin: 0 0 20px 0;">Back when WASBOT was still wasbot.ng, you didn't just use the platform, you paid for it and believed in it while the system was actively making your day harder.</p>
+
+                    <p style="margin: 0 0 20px 0;">You endured it: group messages stalling, status queues failing, contacts stopping midway, and sessions logging out out of nowhere.</p>
+
+                    <p style="margin: 0 0 24px 0;">Your plan ran out before we could make it right. That never sat well with me. Your patience is the reason we scrapped the old codebase completely and rebuilt WASBOT from the ground up so none of that could ever happen again.</p>
+
+                    <p style="margin: 0 0 12px 0;"><strong>The new platform at wasbot.app is built strictly for high performance:</strong></p>
+
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                    <tr>
+                      <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; border-radius: 8px; padding: 14px 16px;">
+                        <div style="color: #166534; font-weight: 700; font-size: 15px;">Dedicated Resources</div>
+                        <div style="color: #374151; font-size: 14px;">Every account gets its own isolated server. No queueing behind other users, no freezing.</div>
+                      </td>
+                    </tr>
+                    <tr><td style="height: 10px; line-height: 10px;">&nbsp;</td></tr>
+                    <tr>
+                      <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; border-radius: 8px; padding: 14px 16px;">
+                        <div style="color: #166534; font-weight: 700; font-size: 15px;">Instant Delivery</div>
+                        <div style="color: #374151; font-size: 14px;">Statuses, broadcasts, and group messages go out in seconds, whether your phone is on, off, or dead in your bag.</div>
+                      </td>
+                    </tr>
+                    <tr><td style="height: 10px; line-height: 10px;">&nbsp;</td></tr>
+                    <tr>
+                      <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; border-radius: 8px; padding: 14px 16px;">
+                        <div style="color: #166534; font-weight: 700; font-size: 15px;">Real-Time Contact Saving</div>
+                        <div style="color: #374151; font-size: 14px;">Instant saving with zero drop-offs.</div>
+                      </td>
+                    </tr>
+                    <tr><td style="height: 10px; line-height: 10px;">&nbsp;</td></tr>
+                    <tr>
+                      <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; border-radius: 8px; padding: 14px 16px;">
+                        <div style="color: #166534; font-weight: 700; font-size: 15px;">Scaled Stability</div>
+                        <div style="color: #374151; font-size: 14px;">Our largest accounts now post to 47,000+ contacts in a single run with live view and delivery tracking.</div>
+                      </td>
+                    </tr>
+                    </table>
+
+                    <p style="margin: 0 0 24px 0;">Beyond statuses, WASBOT now runs completely on autopilot. You can schedule your content ahead of time, auto-delete posts, track viewers live, broadcast to DMs and groups, run multiple WhatsApp numbers at once, and set up automatic AI replies for incoming messages. Set it up once, step away, and let it handle the rest.</p>
+
+                    <p style="margin: 0 0 16px 0;">Because you paid for WASBOT when it was still rough, I want you back to test the new system:</p>
+
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border: 2px solid {{.Branding.PrimaryColor}}; border-radius: 12px; padding: 18px;">
+                          <div style="color: #166534; font-weight: 800; font-size: 20px; margin-bottom: 4px;">14 free days on the Basic Plan</div>
+                          <div style="color: #166534; font-size: 14px;">Credited to your account the moment you sign up. No credit card required, and your days only start counting from signup, so nothing is wasted while you decide when to start.</div>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 28px;">
+                      <tr>
+                        <td style="background-color: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; padding: 14px 16px;">
+                          <div style="color: #92400e; font-size: 14px;"><strong>⚠️ Crucial:</strong> You MUST sign up with <strong>THIS SAME EMAIL ADDRESS</strong> so the system can match your old account and credit your free days automatically.</div>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 8px 0;"><strong>Our standard plans today:</strong></p>
+
+                    <ul style="margin: 0 0 20px 0; padding-left: 20px; color: #4b5563; font-size: 15px; line-height: 1.8;">
+                      <li><strong>Basic (₦8,000/mo):</strong> Perfect for individual marketers starting out.</li>
+                      <li><strong>Premium (₦20,000/mo):</strong> Built for mid-tier WhatsApp TVs and growing businesses (our most popular tier).</li>
+                      <li><strong>Pro (₦50,000/mo):</strong> Built for top 10% WhatsApp TVs and high-volume marketers.</li>
+                    </ul>
+
+                    <p style="margin: 0 0 20px 0;">As an early paying supporter, you also get a permanent <strong>20% discount ACROSS ALL PLANS for life</strong>. That brings Basic to <strong>₦6,400/mo</strong>, Premium to <strong>₦16,000/mo</strong>, and Pro to <strong>₦40,000/mo</strong>. It locks in for life once you make your first payment before your free days finish.</p>
+
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 20px;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="https://www.wasbot.app/signup" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                            Claim your free Basic days
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 24px 0; font-size: 14px; color: #6b7280; text-align: center;">This invitation closes on August 31st. Sign up before then to claim your free days and lock in your discount.</p>
+
+                    <p style="margin: 0 0 20px 0;">Thank you for backing us when we were still figuring things out. I'd love to welcome you back.</p>
+
+                    <p style="margin: 0;">Talk soon,<br><strong>Victor</strong></p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria
+                        </p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Lapsed believer winback L1 — wasbot.ng payers with no time left at shutdown. 14 free days + 20% for life (LapsedBeliever constants in wasbot-backend). No per-row vars."
+
+legacy_winback_lapsed_l2:
+  subject: "Your 14 free days close tomorrow"
+  preview_text: "Last call for the early supporter rate."
+  body: |-
+    Hi there,
+
+    Quick one. The invitation I sent you closes tomorrow, August 31st.
+
+    You paid for WASBOT back in the day, so your account has 14 free days on our Basic plan waiting, plus a permanent 20% discount across all plans that locks in for life once you make your first payment.
+
+    After tomorrow, both are off the table for good.
+
+    ⚠️ Remember: Sign up with THIS SAME EMAIL ADDRESS so the system can match your old account automatically.
+
+    👉 Claim your free days: https://www.wasbot.app/signup
+
+    If you have moved on, I completely understand, and thank you for supporting me back then.
+
+    Talk soon,
+    Victor
+
+    ---
+    You're receiving this because you had a paid plan on wasbot.ng.
+    Unsubscribe: {{.UnsubscribeURL}}
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>Your 14 free days close tomorrow</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        Last call for the early supporter rate.
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;</div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 20px 0;">Hi there,</p>
+
+                    <p style="margin: 0 0 20px 0;">Quick one. The invitation I sent you closes tomorrow, <strong>August 31st</strong>.</p>
+
+                    <p style="margin: 0 0 20px 0;">You paid for WASBOT back in the day, so your account has <strong>14 free days</strong> on our Basic plan waiting, plus a permanent <strong>20% discount across all plans</strong> that locks in for life once you make your first payment.</p>
+
+                    <p style="margin: 0 0 24px 0;">After tomorrow, both are off the table for good.</p>
+
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 28px;">
+                      <tr>
+                        <td style="background-color: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; padding: 14px 16px;">
+                          <div style="color: #92400e; font-size: 14px;"><strong>⚠️ Remember:</strong> Sign up with <strong>THIS SAME EMAIL ADDRESS</strong> so the system can match your old account automatically.</div>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 20px;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="https://www.wasbot.app/signup" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                            Claim your free days
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 20px 0;">If you have moved on, I completely understand, and thank you for supporting me back then.</p>
+
+                    <p style="margin: 0;">Talk soon,<br><strong>Victor</strong></p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria
+                        </p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Lapsed believer winback L2 — deadline call, day before the Aug 31 close. No per-row vars."
