@@ -77,3 +77,90 @@ func TestLegacyWinbackA1RendersPerCohort(t *testing.T) {
 		})
 	}
 }
+
+// A2-A4 (the founder's storified drip) only consume FreeDays. Each case pins the
+// facts its copy quotes plus the three fixes approved 2026-08-20: the discount-lock
+// clause in A2, the softened multi-account bullet, and the "TVs" typo fix in A3.
+func TestLegacyWinbackA2ToA4Render(t *testing.T) {
+	ts := newTestTemplateService(t)
+
+	emails := []struct {
+		template string
+		want     []string
+		absent   []string
+	}{
+		{"legacy_winback_a2",
+			[]string{
+				"That is why I built WASBOT",
+				"Add more WhatsApp numbers to your plan whenever you need them",
+				"locks in for life once you make your first payment",
+				"THIS SAME EMAIL ADDRESS",
+				"https://www.wasbot.app/signup",
+				"https://www.youtube.com/@wasbot_app",
+				"August 31st",
+				"30 free days",
+			},
+			[]string{"Link multiple WhatsApp numbers under one plan", "permanent 30% Legacy Believer discount across all plans. No card"},
+		},
+		{"legacy_winback_a3",
+			[]string{
+				"₦2,000", "₦3,000",
+				"₦8,000", "₦5,600", "₦28,800",
+				"₦20,000", "₦14,000", "₦72,000",
+				"₦50,000", "₦35,000", "₦180,000",
+				"Pay once for any plan before your free days run out",
+				"THIS SAME EMAIL ADDRESS",
+				"https://www.wasbot.app/signup",
+				"August 31st",
+				"marketers & TVs",
+			},
+			[]string{"TV’s", "TV's"},
+		},
+		{"legacy_winback_a4",
+			[]string{
+				"August 31st",
+				"30% off any plan for life",
+				"pay once before your free days finish",
+				"THIS SAME EMAIL ADDRESS",
+				"https://www.wasbot.app/signup",
+				"30 free",
+			},
+			nil,
+		},
+	}
+
+	for _, e := range emails {
+		t.Run(e.template, func(t *testing.T) {
+			data := map[string]interface{}{
+				"FreeDays":       "30",
+				"UnsubscribeURL": "https://wasbot.app/u/x",
+			}
+			subject, body, htmlBody, err := ts.Render(e.template, data)
+			if err != nil {
+				t.Fatalf("render failed: %v", err)
+			}
+			for surface, s := range map[string]string{"subject": subject, "body": body, "html": htmlBody} {
+				if strings.Contains(s, "<no value>") {
+					t.Errorf("%s leaks <no value>", surface)
+				}
+				if strings.Contains(s, "—") {
+					t.Errorf("%s contains an em-dash", surface)
+				}
+			}
+			for _, want := range e.want {
+				htmlWant := strings.ReplaceAll(want, "&", "&amp;")
+				if !strings.Contains(body, want) {
+					t.Errorf("text body missing %q", want)
+				}
+				if !strings.Contains(htmlBody, want) && !strings.Contains(htmlBody, htmlWant) {
+					t.Errorf("html body missing %q", want)
+				}
+			}
+			for _, bad := range e.absent {
+				if strings.Contains(body, bad) || strings.Contains(htmlBody, bad) {
+					t.Errorf("stale copy present: %q", bad)
+				}
+			}
+		})
+	}
+}
