@@ -1920,38 +1920,39 @@ migration_upgrade_nudge_final:
   description: "Final nudge for migrating users on trial who haven't upgraded to a paid plan"
 
 legacy_provisioned:
-  subject: "Welcome back — you've been upgraded!"
-  body: |
+  subject: "Welcome back, you've been upgraded!"
+  body: |-
     Hi {{.Name}},
 
     Welcome back to WASBOT! We recognized your account from the old platform.
 
-    Because you were on the {{.LegacyPlan}} plan, we've pro-rated your remaining time and upgraded you to the Basic plan for {{.FreeDays}} days — completely free. Think of it as a bridge to help you readjust to the new platform.
+    Because you supported us back then, we've credited your account with {{.FreeDays}} free days on the Basic plan. No payment needed, no card required.
 
-    On top of that, you have {{.DiscountUses}} uses of 10% off when you're ready to subscribe.
+    On top of that, you have a {{.DiscountPct}}% discount off any plan, for life. It locks in permanently the moment your first payment lands, as long as that payment happens before your free days run out. Once your free window closes, the rate is gone for good.
 
     Your free Basic plan includes:
-    - 15 status posts per day
-    - 500 group messages per day
-    - Contact imports
-    - Scheduled messages
+    - Status posting and scheduling
+    - Group broadcasts
+    - Automatic contact saving
+    - Auto replies and message flows
     - HD media to status & groups
 
     Head to your dashboard to get started:
     {{.DashboardURL}}
 
-    The old WASBOT (wasbot.ng) is shutting down on March 31, 2026. Everything you need is on the new platform now — faster, more reliable, and packed with features the old version never had.
+    New to the rebuilt platform? Our walkthroughs cover everything: https://www.youtube.com/@wasbot_app
 
     Talk soon,
-    The WASBOT Team
-  html_body: |
+    Victor
+
+  html_body: |-
     <!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <title>Welcome back — you've been upgraded!</title>
+      <title>Welcome back, you've been upgraded!</title>
       <meta name="color-scheme" content="light dark">
       <meta name="supported-color-schemes" content="light dark">
       <!--[if mso]>
@@ -1978,7 +1979,7 @@ legacy_provisioned:
     </head>
     <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
       <div style="display: none; max-height: 0; overflow: hidden;">
-        Welcome back — you've been upgraded to Basic for {{.FreeDays}} days free!
+        Welcome back, you've been upgraded to Basic for {{.FreeDays}} days free!
         &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
       </div>
       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
@@ -2012,7 +2013,7 @@ legacy_provisioned:
                   <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
                     <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
                     <p style="margin: 0 0 24px 0;">Welcome back to WASBOT! We recognized your account from the old platform.</p>
-                    <p style="margin: 0 0 24px 0;">Because you were on the <strong>{{.LegacyPlan}}</strong> plan, we've pro-rated your remaining time and upgraded you to Basic for <strong>{{.FreeDays}} days</strong> &mdash; completely free. Think of it as a bridge to help you readjust to the new platform.</p>
+                    <p style="margin: 0 0 24px 0;">Because you supported us back then, we've credited your account with <strong>{{.FreeDays}} free days</strong> on the Basic plan. No payment needed, no card required.</p>
 
                     <!-- Upgrade card -->
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
@@ -2020,22 +2021,24 @@ legacy_provisioned:
                         <td style="background-color: #f0fdf4; border: 2px solid {{.Branding.PrimaryColor}}; border-radius: 12px; padding: 24px; text-align: center;">
                           <p style="margin: 0 0 4px; color: #166534; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Your Free Upgrade</p>
                           <p style="margin: 0 0 8px; color: #166534; font-size: 28px; font-weight: 700;">{{.FreeDays}} Days of Basic</p>
-                          <p style="margin: 0; color: {{.Branding.PrimaryColor}}; font-size: 14px;">+ {{.DiscountUses}}x 10% off when you subscribe</p>
+                          <p style="margin: 0; color: {{.Branding.PrimaryColor}}; font-size: 14px;">+ {{.DiscountPct}}% off any plan for life when you pay once before your free days end</p>
                         </td>
                       </tr>
                     </table>
 
-                    <p style="margin: 0 0 16px 0;">No payment needed, no strings attached. Your Basic plan includes:</p>
+                    <p style="margin: 0 0 16px 0;">Your {{.DiscountPct}}% rate locks in permanently the moment your first payment lands, as long as that payment happens before your free days run out. Once your free window closes, the rate is gone for good.</p>
+
+                    <p style="margin: 0 0 16px 0;">Your free Basic plan includes:</p>
 
                     <!-- Features list -->
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
                       <tr>
                         <td style="padding: 24px;">
                           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;15 status posts per day</td></tr>
-                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;500 group messages per day</td></tr>
-                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;Contact imports</td></tr>
-                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;Scheduled messages</td></tr>
+                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;Status posting and scheduling</td></tr>
+                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;Group broadcasts</td></tr>
+                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;Automatic contact saving</td></tr>
+                            <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;Auto replies and message flows</td></tr>
                             <tr><td style="padding: 8px 0; color: #374151;">&#10003;&nbsp;&nbsp;HD media to status &amp; groups</td></tr>
                           </table>
                         </td>
@@ -2053,19 +2056,9 @@ legacy_provisioned:
                       </tr>
                     </table>
 
-                    <!-- Shutdown notice -->
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
-                      <tr>
-                        <td style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px; border-radius: 0 12px 12px 0;">
-                          <p style="margin: 0; color: #92400e; font-size: 14px; line-height: 1.5;">
-                            <strong>Heads up:</strong> The old WASBOT (wasbot.ng) is shutting down on <strong>March 31, 2026</strong>. Everything you need is on the new platform now.
-                          </p>
-                        </td>
-                      </tr>
-                    </table>
 
                     <p style="margin: 0 0 8px 0; font-size: 14px; color: #6b7280;">Need help getting started? Just reply to this email!</p>
-                    <p style="margin: 0; font-size: 14px; color: #9ca3af;">&mdash; The {{.Branding.CompanyName}} Team</p>
+                    <p style="margin: 0; font-size: 14px; color: #9ca3af;">The {{.Branding.CompanyName}} Team</p>
                   </div>
                 </td>
               </tr>
@@ -2117,4 +2110,5 @@ legacy_provisioned:
       </table>
     </body>
     </html>
-  description: "Sent when a legacy user is auto-provisioned to Basic tier on signup — includes old plan name for context"
+
+  description: "Auto-provisioning welcome for legacy signups. Vars: Name, FreeDays, DiscountPct (30 owed-days believers / 20 lapsed), DashboardURL. Offer semantics: pct locks on first payment inside the free window."
