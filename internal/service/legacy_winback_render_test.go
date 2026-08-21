@@ -129,11 +129,23 @@ func TestLegacyWinbackA2ToA4Render(t *testing.T) {
 		},
 	}
 
+	// A3/A4 are dual-cohort since 2026-08-21: rate facts arrive as vars.
+	// This test renders them with the BELIEVER profile; the lapsed profile is
+	// pinned in TestA3A4LapsedProfile.
+	believer := map[string]interface{}{
+		"DiscountPct": "30", "RateName": "Legacy Believer rate",
+		"BasicNow": "₦5,600", "PremiumNow": "₦14,000", "ProNow": "₦35,000",
+		"SaveBasic": "₦28,800", "SavePremium": "₦72,000", "SavePro": "₦180,000",
+	}
+
 	for _, e := range emails {
 		t.Run(e.template, func(t *testing.T) {
 			data := map[string]interface{}{
 				"FreeDays":       "30",
 				"UnsubscribeURL": "https://wasbot.app/u/x",
+			}
+			for k, v := range believer {
+				data[k] = v
 			}
 			subject, body, htmlBody, err := ts.Render(e.template, data)
 			if err != nil {
@@ -249,5 +261,62 @@ func TestLapsedWinbackAndProvisionedRender(t *testing.T) {
 				t.Errorf("html missing pct offer line")
 			}
 		})
+	}
+}
+
+
+// TestA3A4LapsedProfile renders the shared A3/A4 templates with the lapsed
+// profile (14 days / 20% / early supporter rate) and pins that the believer
+// numbers cannot leak in. Also proves the SUBJECT goes through the template
+// engine (A3's subject carries {{.BasicNow}}).
+func TestA3A4LapsedProfile(t *testing.T) {
+	ts := newTestTemplateService(t)
+
+	lapsed := map[string]interface{}{
+		"FreeDays": "14", "UnsubscribeURL": "https://wasbot.app/u/x",
+		"DiscountPct": "20", "RateName": "early supporter rate",
+		"BasicNow": "₦6,400", "PremiumNow": "₦16,000", "ProNow": "₦40,000",
+		"SaveBasic": "₦19,200", "SavePremium": "₦48,000", "SavePro": "₦120,000",
+	}
+
+	subject, body, htmlBody, err := ts.Render("legacy_winback_a3", lapsed)
+	if err != nil {
+		t.Fatalf("a3 render failed: %v", err)
+	}
+	if !strings.Contains(subject, "₦6,400 a month") {
+		t.Errorf("a3 subject not templated: %q", subject)
+	}
+	for _, want := range []string{
+		"₦8,000", "₦6,400", "₦19,200",
+		"₦20,000", "₦16,000", "₦48,000",
+		"₦50,000", "₦40,000", "₦120,000",
+		"20% discount", "early supporter rate", "14 free days",
+	} {
+		if !strings.Contains(body, want) {
+			t.Errorf("a3 text body missing %q", want)
+		}
+		if !strings.Contains(htmlBody, want) {
+			t.Errorf("a3 html missing %q", want)
+		}
+	}
+	for _, bad := range []string{"₦5,600", "₦28,800", "30%", "Legacy Believer", "<no value>", "—"} {
+		if strings.Contains(body, bad) || strings.Contains(htmlBody, bad) || strings.Contains(subject, bad) {
+			t.Errorf("believer fact %q leaked into lapsed a3", bad)
+		}
+	}
+
+	subject4, body4, html4, err := ts.Render("legacy_winback_a4", lapsed)
+	if err != nil {
+		t.Fatalf("a4 render failed: %v", err)
+	}
+	for _, want := range []string{"14 free", "20% off any plan for life", "early supporter rate"} {
+		if !strings.Contains(body4, want) || !strings.Contains(html4, want) {
+			t.Errorf("a4 missing %q", want)
+		}
+	}
+	for _, bad := range []string{"30%", "Legacy Believer", "<no value>", "—"} {
+		if strings.Contains(body4, bad) || strings.Contains(html4, bad) || strings.Contains(subject4, bad) {
+			t.Errorf("believer fact %q leaked into lapsed a4", bad)
+		}
 	}
 }
