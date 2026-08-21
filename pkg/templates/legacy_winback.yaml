@@ -524,7 +524,7 @@ legacy_winback_a2:
   description: "Legacy winback A2 (Day 4) — founder origin story, still-unsigned wasbot.ng payers. Vars: FreeDays."
 
 legacy_winback_a3:
-  subject: "₦5,600 a month, and the real cost of keeping your phone online"
+  subject: "{{.BasicNow}} a month, and the real cost of keeping your phone online"
   preview_text: "Why cheap automation always breaks when you need it most."
   body: |-
     Hi there,
@@ -547,11 +547,11 @@ legacy_winback_a3:
 
     Instead of squeezing everyone together, every account now runs on its own dedicated cloud machine. It stays online day and night, whether your phone is on, off, or dead in your bag. That costs real money to run, but it guarantees your business never stalls.
 
-    Because you stood by me during those early days, your Legacy Believer rate gives you a permanent 30% discount across every plan for life:
+    Because you stood by me during those early days, your {{.RateName}} gives you a permanent {{.DiscountPct}}% discount across every plan for life:
 
-    * Basic (₦8,000/mo) ➔ ₦5,600/mo (Save ₦28,800/yr)
-    * Premium (₦20,000/mo) ➔ ₦14,000/mo (Save ₦72,000/yr)
-    * Pro (₦50,000/mo) ➔ ₦35,000/mo (Save ₦180,000/yr)
+    * Basic (₦8,000/mo) ➔ {{.BasicNow}}/mo (Save {{.SaveBasic}}/yr)
+    * Premium (₦20,000/mo) ➔ {{.PremiumNow}}/mo (Save {{.SavePremium}}/yr)
+    * Pro (₦50,000/mo) ➔ {{.ProNow}}/mo (Save {{.SavePro}}/yr)
 
     Nobody signing up today can ever get these prices.
 
@@ -562,7 +562,7 @@ legacy_winback_a3:
 
     👉 Lock in your rate: https://www.wasbot.app/signup
 
-    Note: This invitation and your Legacy Believer rate expire in 3 days, on August 31st.
+    Note: This invitation and your {{.RateName}} expire in 3 days, on August 31st.
 
     Talk soon,
     Victor
@@ -579,7 +579,7 @@ legacy_winback_a3:
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="color-scheme" content="light dark">
       <meta name="supported-color-schemes" content="light dark">
-      <title>₦5,600 a month, and the real cost of keeping your phone online</title>
+      <title>{{.BasicNow}} a month, and the real cost of keeping your phone online</title>
       <!--[if mso]>
       <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
       <![endif]-->
@@ -654,27 +654,27 @@ legacy_winback_a3:
 
                     <p style="margin: 0 0 20px 0;">Instead of squeezing everyone together, every account now runs on its own dedicated cloud machine. It stays online day and night, whether your phone is on, off, or dead in your bag. That costs real money to run, but it guarantees your business never stalls.</p>
 
-                    <p style="margin: 0 0 12px 0;">Because you stood by me during those early days, your Legacy Believer rate gives you a <strong>permanent 30% discount across every plan for life</strong>:</p>
+                    <p style="margin: 0 0 12px 0;">Because you stood by me during those early days, your {{.RateName}} gives you a <strong>permanent {{.DiscountPct}}% discount across every plan for life</strong>:</p>
 
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
                     <tr>
                       <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; border-radius: 8px; padding: 14px 16px;">
-                        <div style="color: #166534; font-weight: 700; font-size: 15px;">Basic: ₦8,000/mo ➔ ₦5,600/mo</div>
-                        <div style="color: #374151; font-size: 14px;">Save ₦28,800/yr</div>
+                        <div style="color: #166534; font-weight: 700; font-size: 15px;">Basic: ₦8,000/mo ➔ {{.BasicNow}}/mo</div>
+                        <div style="color: #374151; font-size: 14px;">Save {{.SaveBasic}}/yr</div>
                       </td>
                     </tr>
                     <tr><td style="height: 10px; line-height: 10px;">&nbsp;</td></tr>
                     <tr>
                       <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; border-radius: 8px; padding: 14px 16px;">
-                        <div style="color: #166534; font-weight: 700; font-size: 15px;">Premium: ₦20,000/mo ➔ ₦14,000/mo</div>
-                        <div style="color: #374151; font-size: 14px;">Save ₦72,000/yr</div>
+                        <div style="color: #166534; font-weight: 700; font-size: 15px;">Premium: ₦20,000/mo ➔ {{.PremiumNow}}/mo</div>
+                        <div style="color: #374151; font-size: 14px;">Save {{.SavePremium}}/yr</div>
                       </td>
                     </tr>
                     <tr><td style="height: 10px; line-height: 10px;">&nbsp;</td></tr>
                     <tr>
                       <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; border-radius: 8px; padding: 14px 16px;">
-                        <div style="color: #166534; font-weight: 700; font-size: 15px;">Pro: ₦50,000/mo ➔ ₦35,000/mo</div>
-                        <div style="color: #374151; font-size: 14px;">Save ₦180,000/yr</div>
+                        <div style="color: #166534; font-weight: 700; font-size: 15px;">Pro: ₦50,000/mo ➔ {{.ProNow}}/mo</div>
+                        <div style="color: #374151; font-size: 14px;">Save {{.SavePro}}/yr</div>
                       </td>
                     </tr>
                     </table>
@@ -698,7 +698,7 @@ legacy_winback_a3:
                       </tr>
                     </table>
 
-                    <p style="margin: 0 0 24px 0; font-size: 14px; color: #6b7280; text-align: center;">This invitation and your Legacy Believer rate expire in 3 days, on August 31st.</p>
+                    <p style="margin: 0 0 24px 0; font-size: 14px; color: #6b7280; text-align: center;">This invitation and your {{.RateName}} expire in 3 days, on August 31st.</p>
 
                     <p style="margin: 0;">Talk soon,<br><strong>Victor</strong></p>
                   </div>
@@ -757,7 +757,7 @@ legacy_winback_a3:
       </table>
     </body>
     </html>
-  description: "Legacy winback A3 (Day 9) — pricing history and value, still-unsigned wasbot.ng payers. Vars: FreeDays."
+  description: "Legacy winback A3 (Day 9) — pricing history and value, still-unsigned wasbot.ng payers, BOTH cohorts. Vars: FreeDays, DiscountPct, RateName, BasicNow/PremiumNow/ProNow, SaveBasic/SavePremium/SavePro (pre-formatted ₦ strings)."
 
 legacy_winback_a4:
   subject: "Today is the last day"
@@ -769,7 +769,7 @@ legacy_winback_a4:
 
     I spent years going through the pain of missed leads, frozen phones, and unreliable apps so I could build a tool that actually works for serious marketers and WhatsApp TVs.
 
-    Sign up before today ends to claim your {{.FreeDays}} free Basic days and lock in your Legacy Believer rate. That is 30% off any plan for life, as long as you pay once before your free days finish.
+    Sign up before today ends to claim your {{.FreeDays}} free Basic days and lock in your {{.RateName}}. That is {{.DiscountPct}}% off any plan for life, as long as you pay once before your free days finish.
 
     After tonight, both the free days and the permanent discount are off the table for good.
 
@@ -855,7 +855,7 @@ legacy_winback_a4:
 
                     <p style="margin: 0 0 20px 0;">I spent years going through the pain of missed leads, frozen phones, and unreliable apps so I could build a tool that actually works for serious marketers and WhatsApp TVs.</p>
 
-                    <p style="margin: 0 0 20px 0;">Sign up before today ends to claim your <strong>{{.FreeDays}} free Basic days</strong> and lock in your Legacy Believer rate. That is <strong>30% off any plan for life</strong>, as long as you pay once before your free days finish.</p>
+                    <p style="margin: 0 0 20px 0;">Sign up before today ends to claim your <strong>{{.FreeDays}} free Basic days</strong> and lock in your {{.RateName}}. That is <strong>{{.DiscountPct}}% off any plan for life</strong>, as long as you pay once before your free days finish.</p>
 
                     <p style="margin: 0 0 24px 0;">After tonight, both the free days and the permanent discount are off the table for good.</p>
 
@@ -936,7 +936,7 @@ legacy_winback_a4:
       </table>
     </body>
     </html>
-  description: "Legacy winback A4 (Day 12, Aug 31) — final deadline call, still-unsigned wasbot.ng payers. Vars: FreeDays."
+  description: "Legacy winback A4 (Day 12, Aug 31) — final deadline call, still-unsigned wasbot.ng payers, BOTH cohorts. Vars: FreeDays, DiscountPct, RateName."
 
 legacy_winback_lapsed_l1:
   subject: "You paid for WASBOT once. I owe you a look at the new one"
