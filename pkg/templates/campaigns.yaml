@@ -2704,3 +2704,159 @@ stats_pages_launch:
     </body>
     </html>
   description: "July 2026 hero C — stats pages for all five features, animated GIF hero, three feature cards, CTA to /status/stats. Em-dash-free."
+
+media_reupload_notice:
+  subject: "Please re-upload your sequence media"
+  preview_text: "A storage bug on our side deleted some attached files. One minute to fix."
+  body: |
+    Hi {{.Name}},
+
+    Quick heads up. We found and fixed a storage bug on our side yesterday. Before the fix, it deleted some of the image and video files that users attached to sequences and broadcasts. These of yours were affected:
+
+    {{.ItemsText}}
+
+    Your text steps still send fine. But a step with media can fail to send because the file is no longer on our server. The fix takes about a minute:
+
+    1. Open it in WASBOT
+    2. The step with the image or video now shows a "Click to re-upload" notice. Click it and upload the file again
+    3. Save and republish
+
+    That is it. New uploads are safe, the bug is fully fixed on our end.
+
+    Sorry for the trouble. If anything is unclear, just reply to this email and I will sort it out with you.
+
+    Victor
+
+    ---
+    You're receiving this because your WASBOT account was affected by this issue.
+  html_body: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>{{.Subject}}</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        A storage bug on our side deleted some attached files. One minute to fix.
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Please re-upload your media</h1>
+
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 24px 0;">Hi {{.Name}},</p>
+                    <p style="margin: 0 0 24px 0;">Quick heads up. We found and fixed a storage bug on our side yesterday. Before the fix, it deleted some of the image and video files that users attached to sequences and broadcasts. These of yours were affected:</p>
+
+                    <!-- Affected items -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                      <tr>
+                        <td style="background-color: #fffbeb; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <h3 style="margin: 0 0 10px; color: #92400e; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Affected</h3>
+                          {{.ItemsHTML}}
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 24px 0;">Your text steps still send fine. But a step with media can fail to send because the file is no longer on our server. The fix takes about a minute:</p>
+
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                      <tr>
+                        <td style="background-color: #f0fdf4; border-left: 4px solid {{.Branding.PrimaryColor}}; padding: 20px; border-radius: 0 12px 12px 0;">
+                          <p style="margin: 0 0 10px; color: #374151; font-size: 15px; line-height: 1.6;"><strong>1.</strong> Open it in WASBOT</p>
+                          <p style="margin: 0 0 10px; color: #374151; font-size: 15px; line-height: 1.6;"><strong>2.</strong> The step with the image or video now shows a <strong>Click to re-upload</strong> notice. Click it and upload the file again</p>
+                          <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.6;"><strong>3.</strong> Save and republish</p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 4px 0;">That is it. New uploads are safe, the bug is fully fixed on our end.</p>
+
+                    <!-- CTA -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="https://www.wasbot.app/sequences" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">Open WASBOT</a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 24px 0;">Sorry for the trouble. If anything is unclear, just reply to this email and I will sort it out with you.</p>
+                    <p style="margin: 0;"><strong>Victor</strong></p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">Need help? Simply reply to this email and we'll get back to you.</p>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">{{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria</p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">&copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.</p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Media re-upload notice (Aug 2026) — sent to the users whose sequence/broadcast media was lost to the MinIO expiry bug. Pass Name, ItemsText (plain bullets), ItemsHTML (styled <p> rows). Em-dash-free."
