@@ -850,18 +850,18 @@ limits_upgrade_announcement:
 
     Here's what changed:
 
-    BASIC (₦8,000/mo):
+    BASIC:
     - Saved contacts: 2,500 → 5,000 (2x more)
     - Status recipients: 5,000 → 10,000 (2x more reach)
     - Group messages/day: 50 → 500 (10x more)
     - Tagged messages/day: 25 → 500 (20x more)
 
-    PREMIUM (₦20,000/mo):
+    PREMIUM:
     - Saved contacts: 10,000 → 20,000 (2x more)
     - Group messages/day: 100 → 1,500 (15x more)
     - Tagged messages/day: 100 → 1,500 (15x more)
 
-    PRO (₦50,000/mo):
+    PRO:
     - Everything stays unlimited — plus tag groups you're not an admin of is coming soon.
 
     Why? We looked at how you actually use WASBOT and realized the old limits were holding you back. If you were hitting the daily cap on group messages or couldn't reach enough contacts with status — that's fixed now.
@@ -869,7 +869,7 @@ limits_upgrade_announcement:
     Your new limits are already active. Go try them:
     {{.DashboardURL}}
 
-    If you're on the free trial — these limits apply when you upgrade. Check out the plans:
+    If you're on the free trial, these limits apply when you upgrade. See plans in your currency:
     {{.PricingURL}}
 
     Talk soon,
@@ -952,7 +952,7 @@ limits_upgrade_announcement:
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 16px;">
                       <tr>
                         <td style="background-color: #f0fdf4; border-left: 4px solid #22c55e; padding: 20px; border-radius: 0 12px 12px 0;">
-                          <h3 style="margin: 0 0 12px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Basic &mdash; &#8358;8,000/mo</h3>
+                          <h3 style="margin: 0 0 12px; color: #166534; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Basic</h3>
                           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                             <tr>
                               <td style="padding: 4px 0; font-size: 14px; color: #374151;">Saved contacts</td>
@@ -983,7 +983,7 @@ limits_upgrade_announcement:
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 16px;">
                       <tr>
                         <td style="background-color: #eff6ff; border-left: 4px solid #3b82f6; padding: 20px; border-radius: 0 12px 12px 0;">
-                          <h3 style="margin: 0 0 12px; color: #1d4ed8; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Premium &mdash; &#8358;20,000/mo</h3>
+                          <h3 style="margin: 0 0 12px; color: #1d4ed8; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Premium</h3>
                           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                             <tr>
                               <td style="padding: 4px 0; font-size: 14px; color: #374151;">Saved contacts</td>
@@ -1009,7 +1009,7 @@ limits_upgrade_announcement:
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
                       <tr>
                         <td style="background-color: #faf5ff; border-left: 4px solid #a855f7; padding: 20px; border-radius: 0 12px 12px 0;">
-                          <h3 style="margin: 0 0 8px; color: #7e22ce; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Pro &mdash; &#8358;50,000/mo</h3>
+                          <h3 style="margin: 0 0 8px; color: #7e22ce; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Pro</h3>
                           <p style="margin: 0; font-size: 14px; color: #374151; line-height: 1.5;">
                             Everything stays <strong>unlimited</strong>. Plus: <strong>tag groups you're not an admin of</strong> &mdash; coming soon.
                           </p>
@@ -1030,7 +1030,7 @@ limits_upgrade_announcement:
                       </tr>
                     </table>
 
-                    <p style="margin: 0 0 16px 0; font-size: 14px; color: #6b7280;">On the free trial? These limits apply when you upgrade. <a href="{{.PricingURL}}" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">See the plans &rarr;</a></p>
+                    <p style="margin: 0 0 16px 0; font-size: 14px; color: #6b7280;">On the free trial? These limits apply when you upgrade. <a href="{{.PricingURL}}" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">See plans in your currency &rarr;</a></p>
 
                     <p style="margin: 0;">Talk soon,<br><strong>The WASBOT Team</strong></p>
                   </div>

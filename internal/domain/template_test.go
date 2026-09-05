@@ -47,12 +47,7 @@ func TestTemplateConstants(t *testing.T) {
 
 		// WASBOT templates
 		{TemplateWelcome, "welcome"},
-		{TemplateTrialExpiring, "trial_expiring"},
 		{TemplateAccountUpgraded, "account_upgraded"},
-		{TemplateTrialDay3, "trial_day3"},
-		{TemplateTrialDay5, "trial_day5"},
-		{TemplateTrialDay6, "trial_day6"},
-		{TemplateTrialDay10, "trial_day10"},
 
 		// Refund templates
 		{TemplateRefundPending, "refund_pending"},
@@ -109,12 +104,7 @@ func TestTemplateConstantsNotEmpty(t *testing.T) {
 		TemplateEmailVerification,
 		TemplatePasswordReset,
 		TemplateWelcome,
-		TemplateTrialExpiring,
 		TemplateAccountUpgraded,
-		TemplateTrialDay3,
-		TemplateTrialDay5,
-		TemplateTrialDay6,
-		TemplateTrialDay10,
 		TemplateRefundPending,
 		TemplateRefundProcessed,
 		TemplateRefundFailed,
