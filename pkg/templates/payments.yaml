@@ -850,9 +850,49 @@ payment_failed_final:
   description: "Sent on final payment failure — subscription suspended"
 
 payment_success_onetime:
-  subject: "Payment Confirmed - {{.ProductName}} ({{.Duration}})"
+  subject: "{{if .FirstPayment}}You're in{{if .FirstName}}, {{.FirstName}}{{end}}. Welcome to WASBOT {{.ProductName}}{{else}}Payment Confirmed - {{.ProductName}} ({{.Duration}}){{end}}"
   body: |-
-    Hi {{.CustomerName}},
+    {{if .FirstPayment}}Hi {{.CustomerName}},
+
+    Payment received. Welcome to WASBOT.
+
+    Your plan: {{.ProductName}}{{if .ExpiryDate}}
+    Active until {{.ExpiryDate}}. We will remind you before it ends.{{end}}
+
+    If you haven't linked your WhatsApp yet, start here:
+
+    Link your WhatsApp (about a minute). This video walks you through linking and setting up contact saving (9 min): https://youtu.be/eYCPi68WpKM
+
+    What you now have running for you:
+
+    - Status posted from the cloud, full quality, phone in your pocket
+    - Every new chat saved for you, so they can all see your status
+    - Messages to all your groups at once, with tag everyone
+    - Broadcasts and follow-up sequences, replies while you sleep
+    - Stats on who sees your status
+    - Posting to more than one number when you add numbers
+
+    Need help? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
+
+    Community:
+    WhatsApp group: {{if .WhatsAppGroupURL}}{{.WhatsAppGroupURL}}{{else}}https://chat.whatsapp.com/EoP7wlsiUe4CKKA5E6BXCY{{end}}
+    WhatsApp channel: https://whatsapp.com/channel/0029VbDZGfB17EmsMzdM8f31
+    Instagram: https://instagram.com/wasbot.app
+    X: https://x.com/wasbot
+    YouTube: https://www.youtube.com/@wasbot_app
+
+    Your receipt
+    Amount paid: {{.Amount}}
+    Duration: {{.Duration}}
+    Transaction ID: {{.TransactionID}}
+    This is a one-time purchase. It will not renew automatically.
+
+    Thank you for choosing WASBOT.
+    Victor
+
+    {{if .PaidSeriesFollows}}Tomorrow: how to get every new chat saved to your contacts, without typing a thing.
+
+    {{end}}{{else}}Hi {{.CustomerName}},
 
     Thank you for your payment of {{.Amount}}.
 
@@ -863,7 +903,7 @@ payment_success_onetime:
 
     IMPORTANT: This is a one-time purchase. Your subscription will NOT automatically renew. You'll need to manually renew before {{.ExpiryDate}} to continue access.
 
-    We'll send you a reminder before your access expires.
+    We'll send you a reminder before your access expires.{{end}}
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -873,7 +913,7 @@ payment_success_onetime:
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="color-scheme" content="light dark">
       <meta name="supported-color-schemes" content="light dark">
-      <title>Payment Confirmed</title>
+      <title>{{if .FirstPayment}}Welcome to WASBOT{{else}}Payment Confirmed{{end}}</title>
       <!--[if mso]>
       <noscript>
         <xml>
@@ -940,7 +980,7 @@ payment_success_onetime:
           .footer-content { padding: 24px 20px !important; }
         }
 
-        /* Dark mode — preserve header text visibility */
+        /* Dark mode: preserve header text visibility */
         @media (prefers-color-scheme: dark) {
           .header-company-name { color: #ffffff !important; }
         }
@@ -949,7 +989,7 @@ payment_success_onetime:
     <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
       <!-- Preview text - uses PreviewText if set, otherwise falls back to title -->
       <div style="display: none; max-height: 0; overflow: hidden;">
-        {{if .PreviewText}}{{.PreviewText}}{{else}}Payment Confirmed{{end}}
+        {{if .PreviewText}}{{.PreviewText}}{{else}}{{if .FirstPayment}}Payment received. Here is how to get started.{{else}}Payment Confirmed{{end}}{{end}}
         &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
       </div>
 
@@ -990,10 +1030,72 @@ payment_success_onetime:
               <tr>
                 <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
                   <!-- Title -->
-                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Payment Confirmed</h1>
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">{{if .FirstPayment}}Welcome to WASBOT{{else}}Payment Confirmed{{end}}</h1>
 
                   <!-- Content -->
                   <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+    {{if .FirstPayment}}
+    <p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
+
+    <p style="margin: 0 0 20px 0;">Payment received. Welcome to WASBOT.</p>
+
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 16px 20px; font-size: 15px; color: #374151; line-height: 1.7;">Your plan: <strong>{{.ProductName}}</strong>{{if .ExpiryDate}}<br>Active until {{.ExpiryDate}}. We will remind you before it ends.{{end}}</td>
+      </tr>
+    </table>
+
+    <p style="margin: 0 0 12px 0; color: #111827;"><strong>If you haven't linked your WhatsApp yet, start here:</strong></p>
+
+    <p style="margin: 0 0 20px 0;">Link your WhatsApp (about a minute). This video walks you through linking and setting up contact saving: <a href="https://youtu.be/eYCPi68WpKM" target="_blank" style="font-weight: 600;">Full setup video (9 min)</a></p>
+
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
+      <tr>
+        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+          <a href="{{if .DashboardURL}}{{.DashboardURL}}{{else}}{{.Branding.DashboardURL}}{{end}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+            Link your WhatsApp &#x2192;
+          </a>
+        </td>
+      </tr>
+    </table>
+
+    <p style="margin: 0 0 20px 0;">What you now have running for you:</p>
+
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 24px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Status posted from the cloud, full quality, phone in your pocket</span></td></tr>
+                <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Every new chat saved for you, so they can all see your status</span></td></tr>
+                <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Messages to all your groups at once, with tag everyone</span></td></tr>
+                <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Broadcasts and follow-up sequences, replies while you sleep</span></td></tr>
+                <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Stats on who sees your status</span></td></tr>
+                <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Posting to more than one number when you add numbers</span></td></tr>
+              </table>
+        </td>
+      </tr>
+    </table>
+
+    <p style="margin: 0 0 20px 0;">Need help? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
+
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 16px 20px; font-size: 15px; color: #374151; line-height: 1.8;">Community:<br><a href="{{if .WhatsAppGroupURL}}{{.WhatsAppGroupURL}}{{else}}https://chat.whatsapp.com/EoP7wlsiUe4CKKA5E6BXCY{{end}}" target="_blank" style="font-weight: 600;">WhatsApp group</a> &middot; <a href="https://whatsapp.com/channel/0029VbDZGfB17EmsMzdM8f31" target="_blank" style="font-weight: 600;">WhatsApp channel</a> &middot; <a href="https://instagram.com/wasbot.app" target="_blank" style="font-weight: 600;">Instagram</a> &middot; <a href="https://x.com/wasbot" target="_blank" style="font-weight: 600;">X</a> &middot; <a href="https://www.youtube.com/@wasbot_app" target="_blank" style="font-weight: 600;">YouTube</a></td>
+      </tr>
+    </table>
+
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 16px 20px; font-size: 14px; color: #4b5563; line-height: 1.7;"><strong style="color: #111827;">Your receipt</strong><br>Amount paid: {{.Amount}}<br>Duration: {{.Duration}}<br>Transaction ID: {{.TransactionID}}<br>This is a one-time purchase. It will not renew automatically.</td>
+      </tr>
+    </table>
+
+    <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Thank you for choosing WASBOT.<br><strong>Victor</strong></p>
+
+    {{if .PaidSeriesFollows}}
+    <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> how to get every new chat saved to your contacts, without typing a thing.</p>
+    {{end}}
+    {{else}}
                     
     <p style="margin: 0 0 20px 0;">Hi {{.CustomerName}},</p>
 
@@ -1052,7 +1154,7 @@ payment_success_onetime:
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
       <tr>
         <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
-          <a href="{{.DashboardURL}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
+          <a href="{{if .DashboardURL}}{{.DashboardURL}}{{else}}{{.Branding.DashboardURL}}{{end}}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 600; color: #ffffff; text-decoration: none;">
             Go to Dashboard →
           </a>
         </td>
@@ -1060,8 +1162,8 @@ payment_success_onetime:
     </table>
 
     <p style="margin: 24px 0 0 0; font-size: 14px; color: #6b7280;">Transaction ID: {{.TransactionID}}</p>
-    <p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">— The {{.Branding.CompanyName}} Team</p>
-
+    <p style="margin: 8px 0 0 0; font-size: 14px; color: #9ca3af;">The {{.Branding.CompanyName}} Team</p>
+    {{end}}
                   </div>
                 </td>
               </tr>
@@ -1098,7 +1200,7 @@ payment_success_onetime:
       </table>
     </body>
     </html>
-  description: "Sent after successful one-time payment"
+  description: "Sent after a successful one-time payment. On the user's FIRST plan payment (FirstPayment) it is also the paid welcome, step 0 of the paid onboarding series; renewals get the plain receipt. Welcome refresh 2026-10-12."
 
 subscription_activated:
   subject: "Welcome to {{.PlanName}} - Subscription Activated!"

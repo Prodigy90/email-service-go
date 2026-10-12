@@ -95,7 +95,9 @@ Email sending uses a provider interface (`internal/service/sender.go`):
 
 Templates are defined in categorized YAML files under `pkg/templates/`:
 - `auth.yaml` — email_verification, password_reset
-- `welcome.yaml` — welcome, trial_day3/5/6/10, trial_expiring, account_upgraded
+- `welcome.yaml` — account_upgraded
+- `onboarding.yaml` — onboarding_day0-7 (day0 is the signup welcome), onboarding_unlinked_day1-7, post_trial_*
+- `onboarding_paid.yaml` — onboarding_paid_day1-7 (first-time payers who never had the trial series)
 - `payments.yaml` — payment_success/failed, subscription_activated/renewed/cancelled/reminders
 - `refunds.yaml` — refund_pending/processed/failed
 - `affiliate.yaml` — payout_*, commission_*, access_revoked, affiliate_link_updated

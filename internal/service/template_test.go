@@ -170,7 +170,6 @@ func TestTemplateService_AllDomainTemplatesPresent(t *testing.T) {
 		domain.TemplatePaymentSuccessOnetime,
 		domain.TemplateSubscriptionActivated,
 		domain.TemplateSubscriptionActivatedOnetime,
-		domain.TemplateWelcome,
 		domain.TemplateAccountUpgraded,
 		domain.TemplateRefundPending,
 		domain.TemplateRefundProcessed,
@@ -206,30 +205,6 @@ func TestTemplateService_AllDomainTemplatesPresent(t *testing.T) {
 		if tmpl.Body == "" {
 			t.Errorf("template %q has empty body", name)
 		}
-	}
-}
-
-func TestTemplateService_RenderWelcome(t *testing.T) {
-	ts := newTestTemplateService(t)
-
-	data := map[string]interface{}{
-		"Name":    "Alice",
-		"AppName": "WASBOT",
-	}
-
-	subject, body, htmlBody, err := ts.Render(domain.TemplateWelcome, data)
-	if err != nil {
-		t.Fatalf("render failed: %v", err)
-	}
-
-	if !strings.Contains(subject, "WASBOT") {
-		t.Errorf("expected subject to contain 'WASBOT', got %q", subject)
-	}
-	if !strings.Contains(body, "Alice") {
-		t.Errorf("expected body to contain 'Alice'")
-	}
-	if htmlBody == "" {
-		t.Error("expected non-empty HTML body")
 	}
 }
 
