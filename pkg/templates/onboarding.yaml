@@ -554,7 +554,7 @@ onboarding_day2:
 
     Post one now: {{if .StatusURL}}{{.StatusURL}}{{else}}{{.DashboardURL}}{{end}}
 
-    {{if .Code}}Quick reminder: your code {{.Code}} is live for the rest of your trial. {{.CodePct}}% off your first month.
+    {{if .Code}}Quick reminder: your code {{.Code}} is live for the rest of your trial. {{.CodePct}}% off your first payment, any plan, monthly or yearly.
 
     {{end}}Talk soon,
     The WASBOT Team
@@ -713,7 +713,7 @@ onboarding_day2:
     </table>
 
     {{if .Code}}
-    <p style="margin: 0 0 24px 0; font-size: 14px; color: #6b7280; text-align: center;">Quick reminder: your code <strong style="color: #b45309;">{{.Code}}</strong> is live for the rest of your trial. {{.CodePct}}% off your first month.</p>
+    <p style="margin: 0 0 24px 0; font-size: 14px; color: #6b7280; text-align: center;">Quick reminder: your code <strong style="color: #b45309;">{{.Code}}</strong> is live for the rest of your trial. {{.CodePct}}% off your first payment, any plan, monthly or yearly.</p>
     {{end}}
                     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
     <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> how WASBOT replies to your customers while you sleep.</p>
@@ -1286,7 +1286,7 @@ onboarding_day5:
     Subscribe to any plan before your trial ends and your price is locked. When WASBOT prices rise later, yours stays exactly where it is today, for as long as you stay subscribed.
 
     {{if .Code}}**YOUR CODE STILL WORKS**
-    {{.Code}} takes {{.CodePct}}% off your first month, on top of the lock. It's yours alone and it dies with your trial.
+    {{.Code}} takes {{.CodePct}}% off your first payment, any plan, monthly or yearly, on top of the lock. It's yours alone and it dies with your trial.
 
     {{end}}**WHAT PAID UNLOCKS**
     Bigger limits on everything you've been using: more statuses per day, more status viewers, more saved contacts, more group sends. The watermark comes off your posts. Higher plans add scheduled posts and more.
@@ -1441,7 +1441,7 @@ onboarding_day5:
       <tr>
         <td style="padding: 18px 20px;">
           <p style="margin: 0 0 8px 0; font-weight: 700; color: #854d0e; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Your Code Still Works</p>
-          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;"><strong>{{.Code}}</strong> takes <strong>{{.CodePct}}% off</strong> your first month, on top of the lock. It's yours alone and it dies with your trial.</p>
+          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;"><strong>{{.Code}}</strong> takes <strong>{{.CodePct}}% off</strong> your first payment, any plan, monthly or yearly, on top of the lock. It's yours alone and it dies with your trial.</p>
         </td>
       </tr>
     </table>
@@ -1548,7 +1548,7 @@ onboarding_day6:
 
     Deciding today gets you {{if .Code}}three things{{else}}two things{{end}}:
 
-    {{if .Code}}1. {{.CodePct}}% off your first month with your code {{.Code}}
+    {{if .Code}}1. {{.CodePct}}% off your first payment, any plan, monthly or yearly, with your code {{.Code}}
     2. Your price locked forever. Increases never touch you
     3. Everything you set up keeps running without a break{{else}}1. Your price locked forever. Increases never touch you
     2. Everything you set up keeps running without a break{{end}}
@@ -1716,7 +1716,7 @@ onboarding_day6:
         <td style="padding: 24px;">
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
             {{if .Code}}
-            <tr><td style="padding: 8px 0;"><span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">1</span> <span style="margin-left: 12px; color: #374151;">{{.CodePct}}% off your first month with your code <strong>{{.Code}}</strong></span></td></tr>
+            <tr><td style="padding: 8px 0;"><span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">1</span> <span style="margin-left: 12px; color: #374151;">{{.CodePct}}% off your first payment, any plan, monthly or yearly, with your code <strong>{{.Code}}</strong></span></td></tr>
             <tr><td style="padding: 8px 0;"><span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">2</span> <span style="margin-left: 12px; color: #374151;">Your price locked forever. Increases never touch you</span></td></tr>
             <tr><td style="padding: 8px 0;"><span style="background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 600;">3</span> <span style="margin-left: 12px; color: #374151;">Everything you set up keeps running without a break</span></td></tr>
             {{else}}
@@ -2045,7 +2045,7 @@ onboarding_unlinked_day1:
 
     None of it has started yet because your WhatsApp isn't linked. Linking is one scan and takes about a minute.
 
-    {{if .Code}}One more thing: your code {{.Code}} is already on your account. {{.CodePct}}% off your first month, only while your trial runs.
+    {{if .Code}}One more thing: your code {{.Code}} is already on your account. {{.CodePct}}% off your first payment, any plan, monthly or yearly, only while your trial runs.
 
     {{end}}Link your WhatsApp: {{.ConnectURL}}
 
@@ -2197,7 +2197,7 @@ onboarding_unlinked_day1:
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fefce8; border: 2px dashed #eab308; border-radius: 12px; margin-bottom: 24px;">
       <tr>
         <td style="padding: 20px 24px;">
-          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;">One more thing: your code <strong style="color: #b45309;">{{.Code}}</strong> is already on your account. <strong>{{.CodePct}}% off</strong> your first month, only while your trial runs.</p>
+          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;">One more thing: your code <strong style="color: #b45309;">{{.Code}}</strong> is already on your account. <strong>{{.CodePct}}% off</strong> your first payment, any plan, monthly or yearly, only while your trial runs.</p>
         </td>
       </tr>
     </table>
@@ -2290,7 +2290,7 @@ onboarding_unlinked_day2:
 
     All of that is waiting behind one QR scan. Link, post one status, and watch it hit your whole list in seconds.
 
-    {{if .Code}}Your code {{.Code}} takes {{.CodePct}}% off your first month when you're ready. It dies with your trial, so the earlier you test, the more time you have to decide.
+    {{if .Code}}Your code {{.Code}} takes {{.CodePct}}% off your first payment, any plan, monthly or yearly, when you're ready. It dies with your trial, so the earlier you test, the more time you have to decide.
 
     {{end}}Link and post your first one: {{.ConnectURL}}
 
@@ -2442,7 +2442,7 @@ onboarding_unlinked_day2:
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fefce8; border: 2px dashed #eab308; border-radius: 12px; margin-bottom: 24px;">
       <tr>
         <td style="padding: 20px 24px;">
-          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;">Your code <strong style="color: #b45309;">{{.Code}}</strong> takes <strong>{{.CodePct}}% off</strong> your first month when you're ready. It dies with your trial, so the earlier you test, the more time you have to decide.</p>
+          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;">Your code <strong style="color: #b45309;">{{.Code}}</strong> takes <strong>{{.CodePct}}% off</strong> your first payment, any plan, monthly or yearly, when you're ready. It dies with your trial, so the earlier you test, the more time you have to decide.</p>
         </td>
       </tr>
     </table>
@@ -2535,7 +2535,7 @@ onboarding_unlinked_day3:
 
     All of it switches on with one scan.
 
-    And a heads up on the money side: {{if .Code}}{{.Code}} is {{.CodePct}}% off your first month, and {{end}}if you pay before your trial ends your price gets locked forever, increases never touch you. {{if .Code}}Both die{{else}}That dies{{end}} with the trial, and right now the clock is running on a tool you haven't even opened.
+    And a heads up on the money side: {{if .Code}}{{.Code}} is {{.CodePct}}% off your first payment, any plan, monthly or yearly, and {{end}}if you pay before your trial ends your price gets locked forever, increases never touch you. {{if .Code}}Both die{{else}}That dies{{end}} with the trial, and right now the clock is running on a tool you haven't even opened.
 
     Link your WhatsApp: {{.ConnectURL}}
 
@@ -2686,7 +2686,7 @@ onboarding_unlinked_day3:
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fefce8; border-left: 4px solid #eab308; border-radius: 8px; margin-bottom: 24px;">
       <tr>
         <td style="padding: 16px 20px;">
-          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;">And a heads up on the money side: {{if .Code}}<strong>{{.Code}}</strong> is <strong>{{.CodePct}}% off</strong> your first month, and {{end}}if you pay before your trial ends your price gets locked forever, increases never touch you. {{if .Code}}Both die{{else}}That dies{{end}} with the trial, and right now the clock is running on a tool you haven't even opened.</p>
+          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;">And a heads up on the money side: {{if .Code}}<strong>{{.Code}}</strong> is <strong>{{.CodePct}}% off</strong> your first payment, any plan, monthly or yearly, and {{end}}if you pay before your trial ends your price gets locked forever, increases never touch you. {{if .Code}}Both die{{else}}That dies{{end}} with the trial, and right now the clock is running on a tool you haven't even opened.</p>
         </td>
       </tr>
     </table>
@@ -2778,7 +2778,7 @@ onboarding_unlinked_day4:
 
     People who linked this week are already running all of this every day. You have the exact same tools sitting behind one QR scan.
 
-    {{if .Code}}Your code {{.Code}} is still live. {{.CodePct}}% off your first month, gone when the trial ends.
+    {{if .Code}}Your code {{.Code}} is still live. {{.CodePct}}% off your first payment, any plan, monthly or yearly, gone when the trial ends.
 
     {{end}}Link your WhatsApp: {{.ConnectURL}}
 
@@ -2935,7 +2935,7 @@ onboarding_unlinked_day4:
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fefce8; border: 2px dashed #eab308; border-radius: 12px; margin-bottom: 24px;">
       <tr>
         <td style="padding: 20px 24px;">
-          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;">Your code <strong style="color: #b45309;">{{.Code}}</strong> is still live. <strong>{{.CodePct}}% off</strong> your first month, gone when the trial ends.</p>
+          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;">Your code <strong style="color: #b45309;">{{.Code}}</strong> is still live. <strong>{{.CodePct}}% off</strong> your first payment, any plan, monthly or yearly, gone when the trial ends.</p>
         </td>
       </tr>
     </table>
@@ -3028,7 +3028,7 @@ onboarding_unlinked_day5:
     Subscribe to any plan before your trial ends and your price is locked. When WASBOT prices rise later, yours never moves, for as long as you stay subscribed.
 
     {{if .Code}}**YOUR CODE STILL WORKS**
-    {{.Code}} takes {{.CodePct}}% off your first month, on top of the lock.
+    {{.Code}} takes {{.CodePct}}% off your first payment, any plan, monthly or yearly, on top of the lock.
 
     But be honest with yourself: right now that's {{.CodePct}}% off a tool you haven't tried. Cloud statuses, auto-saved contacts, group blasts, broadcasts, an autoresponder that never sleeps. One scan and you can judge all of it with your own eyes before you pay anything.{{else}}But be honest with yourself: right now that's a lock on a tool you haven't tried. Cloud statuses, auto-saved contacts, group blasts, broadcasts, an autoresponder that never sleeps. One scan and you can judge all of it with your own eyes before you pay anything.{{end}}
 
@@ -3183,7 +3183,7 @@ onboarding_unlinked_day5:
       <tr>
         <td style="padding: 18px 20px;">
           <p style="margin: 0 0 8px 0; font-weight: 700; color: #854d0e; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Your Code Still Works</p>
-          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;"><strong>{{.Code}}</strong> takes <strong>{{.CodePct}}% off</strong> your first month, on top of the lock.</p>
+          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;"><strong>{{.Code}}</strong> takes <strong>{{.CodePct}}% off</strong> your first payment, any plan, monthly or yearly, on top of the lock.</p>
         </td>
       </tr>
     </table>
@@ -3291,7 +3291,7 @@ onboarding_unlinked_day6:
     - All your groups messaged in one send, plus broadcasts and scheduling
     - An autoresponder answering "price" at 3am while you sleep
 
-    And what deciding today gets you: {{if .Code}}{{.CodePct}}% off your first month with {{.Code}}, and {{end}}your price locked forever. {{if .Code}}Both die{{else}}It dies{{end}} tomorrow.
+    And what deciding today gets you: {{if .Code}}{{.CodePct}}% off your first payment, any plan, monthly or yearly, with {{.Code}}, and {{end}}your price locked forever. {{if .Code}}Both die{{else}}It dies{{end}} tomorrow.
 
     Give it one honest test today. Link, post one status, then decide with your own eyes.
 
@@ -3447,7 +3447,7 @@ onboarding_unlinked_day6:
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fefce8; border-left: 4px solid #eab308; border-radius: 8px; margin-bottom: 24px;">
       <tr>
         <td style="padding: 16px 20px;">
-          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;">And what deciding today gets you: {{if .Code}}<strong>{{.CodePct}}% off</strong> your first month with <strong>{{.Code}}</strong>, and {{end}}your price locked forever. {{if .Code}}Both die{{else}}It dies{{end}} tomorrow.</p>
+          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;">And what deciding today gets you: {{if .Code}}<strong>{{.CodePct}}% off</strong> your first payment, any plan, monthly or yearly, with <strong>{{.Code}}</strong>, and {{end}}your price locked forever. {{if .Code}}Both die{{else}}It dies{{end}} tomorrow.</p>
         </td>
       </tr>
     </table>
