@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 	"sync"
 	"text/template"
@@ -259,7 +260,7 @@ func (ts *TemplateService) Get(name string) (*domain.Template, bool) {
 // renderString renders a template string with data.
 // Uses missingkey=zero so undefined variables render as empty strings instead of "<no value>".
 func (ts *TemplateService) renderString(tmplStr string, data map[string]interface{}) (string, error) {
-	tmpl, err := template.New("").Option("missingkey=zero").Parse(tmplStr)
+	tmpl, err := template.New("").Funcs(templateFuncs).Option("missingkey=zero").Parse(tmplStr)
 	if err != nil {
 		return "", err
 	}
@@ -331,4 +332,47 @@ func (ts *TemplateService) loadFromDirectory(dir string) error {
 	}
 
 	return nil
+}
+
+// templateFuncs are the helpers every template may call.
+var templateFuncs = template.FuncMap{"num": formatCount}
+
+// formatCount renders a count with thousands separators ("3,412"), so a stat
+// reads like a number a person wrote. Counts arrive as JSON numbers (float64)
+// over the API and as ints from in-process callers; anything else prints as is.
+func formatCount(v interface{}) string {
+	var n int64
+	switch x := v.(type) {
+	case int:
+		n = int64(x)
+	case int64:
+		n = x
+	case int32:
+		n = int64(x)
+	case float64:
+		if x != float64(int64(x)) {
+			return fmt.Sprint(x)
+		}
+		n = int64(x)
+	case nil:
+		return ""
+	default:
+		return fmt.Sprint(x)
+	}
+	neg := n < 0
+	if neg {
+		n = -n
+	}
+	digits := strconv.FormatInt(n, 10)
+	var b strings.Builder
+	for i, d := range digits {
+		if i > 0 && (len(digits)-i)%3 == 0 {
+			b.WriteByte(',')
+		}
+		b.WriteRune(d)
+	}
+	if neg {
+		return "-" + b.String()
+	}
+	return b.String()
 }

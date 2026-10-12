@@ -17,7 +17,7 @@ onboarding_paid_day1:
 
     Every new person who messages you can be saved to your contacts for you. Name, number, done. No more typing "customer 234" at midnight.
 
-    {{if .ContactsSaved}}WASBOT has already saved {{.ContactsSaved}} contacts for you. That's {{.ContactsSaved}} more people who can see your next status.{{else}}Set up contact saving once and watch your list grow on its own.{{end}}
+    {{if .ContactsSaved}}WASBOT has already saved {{num .ContactsSaved}} contacts for you. That's {{num .ContactsSaved}} more people who can see your next status.{{else}}Set up contact saving once and watch your list grow on its own.{{end}}
 
     Why it matters: people who are not saved usually never see your status. Every contact WASBOT saves is one more person your next post reaches.
 
@@ -26,7 +26,7 @@ onboarding_paid_day1:
 
     {{if .NeedsLink}}Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}
 
-    {{end}}Need a hand? WhatsApp us: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help. (0901 894 3768).
+    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Talk soon,
     The WASBOT Team
@@ -163,7 +163,7 @@ onboarding_paid_day1:
     <p style="margin: 0 0 20px 0;">Every new person who messages you can be saved to your contacts for you. Name, number, done. No more typing "customer 234" at midnight.</p>
 
     {{if .ContactsSaved}}
-    <p style="margin: 0 0 20px 0;">WASBOT has already saved {{.ContactsSaved}} contacts for you. That's {{.ContactsSaved}} more people who can see your next status.</p>
+    <p style="margin: 0 0 20px 0;">WASBOT has already saved {{num .ContactsSaved}} contacts for you. That's {{num .ContactsSaved}} more people who can see your next status.</p>
     {{else}}
     <p style="margin: 0 0 20px 0;">Set up contact saving once and watch your list grow on its own.</p>
     {{end}}
@@ -176,7 +176,7 @@ onboarding_paid_day1:
     <p style="margin: 0 0 20px 0;">Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}</p>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Need a hand? WhatsApp us: <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">0901 894 3768</a>.</p>
+    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
 
@@ -255,13 +255,13 @@ onboarding_paid_day2:
 
     WASBOT posts your status from the cloud. Upload once, it goes out in full quality, and your phone does nothing. You can post with your phone off.
 
-    {{if .StatusesPosted}}You've posted {{.StatusesPosted}} statuses with WASBOT so far, reaching {{.StatusRecipients}} contacts.{{else}}You haven't posted one yet. Try it today. It takes a minute.{{end}}
+    {{if .StatusesPosted}}You've posted {{num .StatusesPosted}} statuses with WASBOT so far, reaching {{num .StatusRecipients}} contacts.{{else}}You haven't posted one yet. Try it today. It takes a minute.{{end}}
 
     Post a status: {{if .StatusURL}}{{.StatusURL}}{{else}}{{.DashboardURL}}{{end}}
 
     {{if .NeedsLink}}Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}
 
-    {{end}}Need a hand? WhatsApp us: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help. (0901 894 3768).
+    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Talk soon,
     The WASBOT Team
@@ -400,7 +400,7 @@ onboarding_paid_day2:
     <p style="margin: 0 0 20px 0;">WASBOT posts your status from the cloud. Upload once, it goes out in full quality, and your phone does nothing. You can post with your phone off.</p>
 
     {{if .StatusesPosted}}
-    <p style="margin: 0 0 20px 0;">You've posted {{.StatusesPosted}} statuses with WASBOT so far, reaching {{.StatusRecipients}} contacts.</p>
+    <p style="margin: 0 0 20px 0;">You've posted {{num .StatusesPosted}} statuses with WASBOT so far, reaching {{num .StatusRecipients}} contacts.</p>
     {{else}}
     <p style="margin: 0 0 20px 0;">You haven't posted one yet. Try it today. It takes a minute.</p>
     {{end}}
@@ -419,7 +419,7 @@ onboarding_paid_day2:
     <p style="margin: 0 0 20px 0;">Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}</p>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Need a hand? WhatsApp us: <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">0901 894 3768</a>.</p>
+    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
 
@@ -504,7 +504,7 @@ onboarding_paid_day3:
 
     {{if .NeedsLink}}Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}
 
-    {{end}}Need a hand? WhatsApp us: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help. (0901 894 3768).
+    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Talk soon,
     The WASBOT Team
@@ -658,7 +658,7 @@ onboarding_paid_day3:
     <p style="margin: 0 0 20px 0;">Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}</p>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Need a hand? WhatsApp us: <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">0901 894 3768</a>.</p>
+    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
 
@@ -737,7 +737,7 @@ onboarding_paid_day4:
 
     WASBOT sends to all your groups at once. Pick the groups, write once, send. Tag everyone in a group so nobody misses it.
 
-    {{if .GroupSends}}You've already sent {{.GroupSends}} group blasts with WASBOT.{{else}}Try it with 3 groups today and time it.{{end}}
+    {{if .GroupSends}}You've already sent {{num .GroupSends}} group blasts with WASBOT.{{else}}Try it with 3 groups today and time it.{{end}}
 
     Broadcasts work the same way for your contacts: one personal message to each person on your list, no group needed.
 
@@ -747,7 +747,7 @@ onboarding_paid_day4:
 
     {{if .NeedsLink}}Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}
 
-    {{end}}Need a hand? WhatsApp us: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help. (0901 894 3768).
+    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Talk soon,
     The WASBOT Team
@@ -886,7 +886,7 @@ onboarding_paid_day4:
     <p style="margin: 0 0 20px 0;">WASBOT sends to all your groups at once. Pick the groups, write once, send. Tag everyone in a group so nobody misses it.</p>
 
     {{if .GroupSends}}
-    <p style="margin: 0 0 20px 0;">You've already sent {{.GroupSends}} group blasts with WASBOT.</p>
+    <p style="margin: 0 0 20px 0;">You've already sent {{num .GroupSends}} group blasts with WASBOT.</p>
     {{else}}
     <p style="margin: 0 0 20px 0;">Try it with 3 groups today and time it.</p>
     {{end}}
@@ -899,7 +899,7 @@ onboarding_paid_day4:
     <p style="margin: 0 0 20px 0;">Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}</p>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Need a hand? WhatsApp us: <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">0901 894 3768</a>.</p>
+    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
 
@@ -978,14 +978,14 @@ onboarding_paid_day5:
 
     A follow-up sequence is a set of messages that go out over days, one after the other. Start one when someone sends a keyword, and WASBOT keeps the chat warm for you.
 
-    {{if .SequencesActive}}You already have {{.SequencesActive}} running. Add one for your best seller.{{else}}Start with one: a thank you today, a reminder in two days, an offer at the end of the week.{{end}}
+    {{if .SequencesActive}}You already have {{num .SequencesActive}} running. Add one for your best seller.{{else}}Start with one: a thank you today, a reminder in two days, an offer at the end of the week.{{end}}
 
     Watch how (15 min): {{if .VideoURL}}{{.VideoURL}}{{else}}https://youtu.be/UbRkNE8muGY{{end}}
     Build one: {{if .SequencesURL}}{{.SequencesURL}}{{else}}{{.DashboardURL}}{{end}}
 
     {{if .NeedsLink}}Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}
 
-    {{end}}Need a hand? WhatsApp us: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help. (0901 894 3768).
+    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Talk soon,
     The WASBOT Team
@@ -1124,7 +1124,7 @@ onboarding_paid_day5:
     <p style="margin: 0 0 20px 0;">A follow-up sequence is a set of messages that go out over days, one after the other. Start one when someone sends a keyword, and WASBOT keeps the chat warm for you.</p>
 
     {{if .SequencesActive}}
-    <p style="margin: 0 0 20px 0;">You already have {{.SequencesActive}} running. Add one for your best seller.</p>
+    <p style="margin: 0 0 20px 0;">You already have {{num .SequencesActive}} running. Add one for your best seller.</p>
     {{else}}
     <p style="margin: 0 0 20px 0;">Start with one: a thank you today, a reminder in two days, an offer at the end of the week.</p>
     {{end}}
@@ -1135,7 +1135,7 @@ onboarding_paid_day5:
     <p style="margin: 0 0 20px 0;">Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}</p>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Need a hand? WhatsApp us: <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">0901 894 3768</a>.</p>
+    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
 
@@ -1212,15 +1212,15 @@ onboarding_paid_day6:
 
     Posting is half of it. The other half is knowing who saw it.
 
-    Every status you post with WASBOT shows delivered and viewed counts, even for viewers who turned read receipts off.
+    Every status you post with WASBOT shows how many people it was delivered to and how many viewed it.
 
-    {{if .StatusViews}}Your statuses have been viewed {{.StatusViews}} times so far.{{else}}Post one today and check the numbers tonight.{{end}}
+    {{if .StatusViews}}Your statuses have been viewed {{num .StatusViews}} times so far.{{else}}Post one today and check the numbers tonight.{{end}}
 
     See your status stats: {{if .StatusURL}}{{.StatusURL}}{{else}}{{.DashboardURL}}{{end}}
 
     {{if .NeedsLink}}Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}
 
-    {{end}}Need a hand? WhatsApp us: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help. (0901 894 3768).
+    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Talk soon,
     The WASBOT Team
@@ -1356,10 +1356,10 @@ onboarding_paid_day6:
 
     <p style="margin: 0 0 20px 0;">Posting is half of it. The other half is knowing who saw it.</p>
 
-    <p style="margin: 0 0 20px 0;">Every status you post with WASBOT shows delivered and viewed counts, even for viewers who turned read receipts off.</p>
+    <p style="margin: 0 0 20px 0;">Every status you post with WASBOT shows how many people it was delivered to and how many viewed it.</p>
 
     {{if .StatusViews}}
-    <p style="margin: 0 0 20px 0;">Your statuses have been viewed {{.StatusViews}} times so far.</p>
+    <p style="margin: 0 0 20px 0;">Your statuses have been viewed {{num .StatusViews}} times so far.</p>
     {{else}}
     <p style="margin: 0 0 20px 0;">Post one today and check the numbers tonight.</p>
     {{end}}
@@ -1378,7 +1378,7 @@ onboarding_paid_day6:
     <p style="margin: 0 0 20px 0;">Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}</p>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Need a hand? WhatsApp us: <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">0901 894 3768</a>.</p>
+    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
 
@@ -1455,15 +1455,15 @@ onboarding_paid_day7:
 
     {{if .HasActivity}}You've had WASBOT for a week. Here's what it has done for you so far:
 
-    {{if .ContactsSaved}}- {{.ContactsSaved}} contacts saved for you
-    {{end}}{{if .StatusesPosted}}- {{.StatusesPosted}} statuses posted, {{.StatusViews}} views counted
-    {{end}}{{if .GroupSends}}- {{.GroupSends}} group blasts sent
-    {{end}}{{if .TimeSavedHours}}- Roughly {{.TimeSavedHours}} hours of manual work you did not do
+    {{if .ContactsSaved}}- {{num .ContactsSaved}} contacts saved for you
+    {{end}}{{if .StatusesPosted}}- {{num .StatusesPosted}} statuses posted, {{num .StatusViews}} views counted
+    {{end}}{{if .GroupSends}}- {{num .GroupSends}} group blasts sent
+    {{end}}{{if .TimeSavedHours}}- Roughly {{num .TimeSavedHours}} hours of manual work you did not do
     {{end}}{{else}}You've had WASBOT for a week. Whether you've used it a lot or a little, here's everything you need in one place.{{end}}
 
     {{if .NeedsLink}}Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}
 
-    {{end}}Anytime you're stuck, WhatsApp us: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help. (0901 894 3768). A real person replies.
+    {{end}}Anytime you're stuck, message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Videos worth keeping:
 
@@ -1614,7 +1614,7 @@ onboarding_paid_day7:
 
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
       <tr>
-        <td style="padding: 20px 24px; font-size: 15px; color: #374151; line-height: 1.9;">{{if .ContactsSaved}}&#x2714; {{.ContactsSaved}} contacts saved for you<br>{{end}}{{if .StatusesPosted}}&#x2714; {{.StatusesPosted}} statuses posted, {{.StatusViews}} views counted<br>{{end}}{{if .GroupSends}}&#x2714; {{.GroupSends}} group blasts sent<br>{{end}}{{if .TimeSavedHours}}&#x2714; Roughly {{.TimeSavedHours}} hours of manual work you did not do{{end}}</td>
+        <td style="padding: 20px 24px; font-size: 15px; color: #374151; line-height: 1.9;">{{if .ContactsSaved}}&#x2714; {{num .ContactsSaved}} contacts saved for you<br>{{end}}{{if .StatusesPosted}}&#x2714; {{num .StatusesPosted}} statuses posted, {{num .StatusViews}} views counted<br>{{end}}{{if .GroupSends}}&#x2714; {{num .GroupSends}} group blasts sent<br>{{end}}{{if .TimeSavedHours}}&#x2714; Roughly {{num .TimeSavedHours}} hours of manual work you did not do{{end}}</td>
       </tr>
     </table>
     {{else}}
@@ -1625,7 +1625,7 @@ onboarding_paid_day7:
     <p style="margin: 0 0 20px 0;">Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}</p>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Anytime you're stuck, WhatsApp us: <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">0901 894 3768</a>. A real person replies.</p>
+    <p style="margin: 0 0 20px 0;">Anytime you're stuck, <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <p style="margin: 0 0 12px 0; color: #111827;"><strong>Videos worth keeping:</strong></p>
 

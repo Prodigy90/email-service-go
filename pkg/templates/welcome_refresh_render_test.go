@@ -233,7 +233,7 @@ func TestWelcome_Day0RendersInEveryState(t *testing.T) {
 			group = "https://chat.whatsapp.com/EoP7wlsiUe4CKKA5E6BXCY" // template fallback
 		}
 		for _, must := range []string{
-			"https://youtu.be/eYCPi68WpKM", "https://www.wasbot.app/watch/contacts", group,
+			"https://youtu.be/eYCPi68WpKM", group,
 			"https://whatsapp.com/channel/0029VbDZGfB17EmsMzdM8f31",
 			"https://instagram.com/wasbot.app", "https://x.com/wasbot", "https://www.youtube.com/@wasbot_app",
 		} {
@@ -241,6 +241,11 @@ func TestWelcome_Day0RendersInEveryState(t *testing.T) {
 			if !strings.Contains(body, must) || !strings.Contains(html, must) {
 				t.Errorf("%s: missing %s", label, must)
 			}
+		}
+		// One video only: the 9-minute setup covers linking AND contact saving,
+		// so a second contacts link would be a duplicate (founder 2026-10-12).
+		if strings.Contains(body, "/watch/contacts") || strings.Contains(html, "/watch/contacts") {
+			t.Errorf("%s: day0 carries a second (contacts) video link", label)
 		}
 		// The trial lines only appear while a trial is running.
 		_, hasTrial := st.data["TrialEnd"]
@@ -250,6 +255,15 @@ func TestWelcome_Day0RendersInEveryState(t *testing.T) {
 		_, hasCode := st.data["Code"]
 		if got := strings.Contains(body, "discount code"); got != hasCode {
 			t.Errorf("%s: code paragraph shown=%v, want %v", label, got, hasCode)
+		}
+		// The code paragraph must say what makes it worth using now: any plan,
+		// any period, trial-only, full price after.
+		if hasCode {
+			for _, must := range []string{"any plan", "a full year", "only works while your free trial is active", "full price"} {
+				if !strings.Contains(body, must) || !strings.Contains(html, must) {
+					t.Errorf("%s: code paragraph missing %q", label, must)
+				}
+			}
 		}
 		if fn, ok := st.data["FirstName"]; ok && subject != "Welcome to WASBOT, "+fn.(string)+". Start here" {
 			t.Errorf("%s: subject %q", label, subject)
@@ -342,6 +356,63 @@ func TestWelcome_TrialSeriesTeasers(t *testing.T) {
 			}
 			assertClean(t, label, subject, body, html)
 			assertTeaser(t, label, want, body, html)
+		}
+	}
+}
+
+// The help line is a link only: the founder's number never appears as text to
+// copy, and nobody is promised "a real person" (founder 2026-10-12).
+func TestWelcome_HelpLineIsLinkOnly(t *testing.T) {
+	ts := newTestTemplateService(t)
+	check := func(label, body, html string) {
+		for _, banned := range []string{"0901 894 3768", "09018943768", "real person replies"} {
+			if strings.Contains(body, banned) || strings.Contains(html, banned) {
+				t.Errorf("%s: help line contains %q", label, banned)
+			}
+		}
+		if !strings.Contains(body, "representative will respond as soon as possible") {
+			t.Errorf("%s: help line missing the representative wording", label)
+		}
+	}
+	for _, st := range day0States() {
+		_, b, h, err := ts.RenderWithBranding("onboarding_day0", st.data, domain.DefaultBranding())
+		if err != nil {
+			t.Fatal(err)
+		}
+		check("onboarding_day0 ["+st.name+"]", b, h)
+	}
+	for _, name := range paidTemplates {
+		_, b, h, err := ts.RenderWithBranding(name, paidStates()[0].data, domain.DefaultBranding())
+		if err != nil {
+			t.Fatal(err)
+		}
+		check(name, b, h)
+	}
+	for _, st := range receiptStates() {
+		if first, _ := st.data["FirstPayment"].(bool); !first {
+			continue
+		}
+		_, b, h, err := ts.RenderWithBranding("payment_success_onetime", st.data, domain.DefaultBranding())
+		if err != nil {
+			t.Fatal(err)
+		}
+		check("payment_success_onetime ["+st.name+"]", b, h)
+	}
+}
+
+// Stats print with thousands separators. The data arrives as JSON numbers
+// (float64) in production, so render both shapes.
+func TestWelcome_StatsUseThousandsSeparators(t *testing.T) {
+	ts := newTestTemplateService(t)
+	for _, v := range []interface{}{3412, float64(3412)} {
+		data := paidStates()[0].data
+		data["ContactsSaved"] = v
+		_, b, h, err := ts.RenderWithBranding("onboarding_paid_day1", data, domain.DefaultBranding())
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !strings.Contains(b, "3,412 contacts") || !strings.Contains(h, "3,412") || strings.Contains(b, "3412") {
+			t.Errorf("ContactsSaved %T: not rendered as 3,412", v)
 		}
 	}
 }

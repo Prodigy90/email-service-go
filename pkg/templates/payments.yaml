@@ -859,10 +859,9 @@ payment_success_onetime:
     Your plan: {{.ProductName}}{{if .ExpiryDate}}
     Active until {{.ExpiryDate}}. We will remind you before it ends.{{end}}
 
-    If you have not linked your WhatsApp yet, start here:
+    If you haven't linked your WhatsApp yet, start here:
 
-    1. Link your WhatsApp (about a minute). Full setup video (9 min): https://youtu.be/eYCPi68WpKM
-    2. Set up contact saving: https://www.wasbot.app/watch/contacts
+    Link your WhatsApp (about a minute). This video walks you through linking and setting up contact saving (9 min): https://youtu.be/eYCPi68WpKM
 
     What you now have running for you:
 
@@ -873,7 +872,7 @@ payment_success_onetime:
     - Stats on who sees your status
     - Posting to more than one number when you add numbers
 
-    Need help? WhatsApp us: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help. (0901 894 3768).
+    Need help? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Community:
     WhatsApp group: {{if .WhatsAppGroupURL}}{{.WhatsAppGroupURL}}{{else}}https://chat.whatsapp.com/EoP7wlsiUe4CKKA5E6BXCY{{end}}
@@ -1046,9 +1045,9 @@ payment_success_onetime:
       </tr>
     </table>
 
-    <p style="margin: 0 0 12px 0; color: #111827;"><strong>If you have not linked your WhatsApp yet, start here:</strong></p>
+    <p style="margin: 0 0 12px 0; color: #111827;"><strong>If you haven't linked your WhatsApp yet, start here:</strong></p>
 
-    <p style="margin: 0 0 20px 0;">1. Link your WhatsApp (about a minute). <a href="https://youtu.be/eYCPi68WpKM" target="_blank" style="font-weight: 600;">Full setup video (9 min)</a><br>2. Set up contact saving. <a href="https://www.wasbot.app/watch/contacts" target="_blank" style="font-weight: 600;">Watch how (3 min)</a></p>
+    <p style="margin: 0 0 20px 0;">Link your WhatsApp (about a minute). This video walks you through linking and setting up contact saving: <a href="https://youtu.be/eYCPi68WpKM" target="_blank" style="font-weight: 600;">Full setup video (9 min)</a></p>
 
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
       <tr>
@@ -1077,7 +1076,7 @@ payment_success_onetime:
       </tr>
     </table>
 
-    <p style="margin: 0 0 20px 0;">Need help? WhatsApp us: <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">0901 894 3768</a>.</p>
+    <p style="margin: 0 0 20px 0;">Need help? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 24px;">
       <tr>

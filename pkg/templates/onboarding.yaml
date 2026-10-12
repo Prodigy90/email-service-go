@@ -18,14 +18,9 @@ onboarding_day0:
     {{if .TrialEnd}}Your plan: Free trial
     Ends: {{.TrialEnd}}
 
-    {{end}}Do these two things first:
-
-    1. Link your WhatsApp. It takes about a minute.
+    {{end}}Start here: link your WhatsApp. It takes about a minute, and this video walks you through linking and setting up contact saving.
        Full setup video (9 min): {{if .VideoURL}}{{.VideoURL}}{{else}}https://youtu.be/eYCPi68WpKM{{end}}
        Link now: {{.ConnectURL}}
-
-    2. Set up contact saving, so every new chat is saved for you.
-       Watch how (3 min): https://www.wasbot.app/watch/contacts
 
     Here is what WASBOT does for you:
 
@@ -37,9 +32,9 @@ onboarding_day0:
     - Shows you who actually sees your status
     - Posts to more than one WhatsApp number at once when you add numbers
 
-    {{if .Code}}Also, there is a discount code with your name on it, {{.Code}}. It takes {{.CodePct}}% off your first month and only works while your trial is running.
+    {{if .Code}}Your personal discount code: {{.Code}}. It takes {{.CodePct}}% off your first payment on any plan, for a month or a full year, so the longer you pick, the more you save. It only works while your free trial is active. Once your trial ends, it's full price.
 
-    {{end}}Stuck anywhere? Message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help. (0901 894 3768). A real person replies.
+    {{end}}Stuck anywhere? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Join the community, we share tips and updates there:
     WhatsApp group: {{if .WhatsAppGroupURL}}{{.WhatsAppGroupURL}}{{else}}https://chat.whatsapp.com/EoP7wlsiUe4CKKA5E6BXCY{{end}}
@@ -190,9 +185,7 @@ onboarding_day0:
     </table>
     {{end}}
 
-    <p style="margin: 0 0 12px 0; color: #111827;"><strong>Do these two things first:</strong></p>
-
-    <p style="margin: 0 0 20px 0;"><strong>1. Link your WhatsApp.</strong> It takes about a minute.<br><a href="{{if .VideoURL}}{{.VideoURL}}{{else}}https://youtu.be/eYCPi68WpKM{{end}}" target="_blank" style="font-weight: 600;">Full setup video (9 min)</a></p>
+    <p style="margin: 0 0 20px 0;"><strong>Start here: link your WhatsApp.</strong> It takes about a minute, and this video walks you through linking and setting up contact saving.<br><a href="{{if .VideoURL}}{{.VideoURL}}{{else}}https://youtu.be/eYCPi68WpKM{{end}}" target="_blank" style="font-weight: 600;">Full setup video (9 min)</a></p>
 
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
       <tr>
@@ -203,8 +196,6 @@ onboarding_day0:
         </td>
       </tr>
     </table>
-
-    <p style="margin: 0 0 20px 0;"><strong>2. Set up contact saving</strong>, so every new chat is saved for you.<br><a href="https://www.wasbot.app/watch/contacts" target="_blank" style="font-weight: 600;">Watch how (3 min)</a></p>
 
     <p style="margin: 0 0 20px 0;">Here is what WASBOT does for you:</p>
 
@@ -228,13 +219,13 @@ onboarding_day0:
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fefce8; border: 2px dashed #eab308; border-radius: 12px; margin-bottom: 24px;">
       <tr>
         <td style="padding: 20px 24px;">
-          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;">Also, there is a discount code with your name on it, <strong style="color: #b45309;">{{.Code}}</strong>. It takes <strong>{{.CodePct}}% off</strong> your first month and only works while your trial is running.</p>
+          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;">Your personal discount code: <strong style="color: #b45309;">{{.Code}}</strong>. It takes <strong>{{.CodePct}}% off your first payment</strong> on any plan, for a month or a full year, so the longer you pick, the more you save. It only works while your free trial is active. Once your trial ends, it's full price.</p>
         </td>
       </tr>
     </table>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Stuck anywhere? Message us on WhatsApp: <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">0901 894 3768</a>. A real person replies.</p>
+    <p style="margin: 0 0 20px 0;">Stuck anywhere? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 24px;">
       <tr>
@@ -318,7 +309,7 @@ onboarding_day1:
 
     Every new person who messages you can be saved to your contacts automatically. Name, number, done. You never type "customer 234" at midnight again.
 
-    {{if .ContactsSaved}}WASBOT has already saved {{.ContactsSaved}} contacts for you. That's {{.ContactsSaved}} more people who can see your next status.{{else}}Turn on auto-save in your dashboard and watch your contact list grow on its own.{{end}}
+    {{if .ContactsSaved}}WASBOT has already saved {{num .ContactsSaved}} contacts for you. That's {{num .ContactsSaved}} more people who can see your next status.{{else}}Turn on auto-save in your dashboard and watch your contact list grow on its own.{{end}}
 
     Why it matters: people who are not saved usually never see your status. Every contact WASBOT saves is one more person your next post reaches.
 
@@ -463,7 +454,7 @@ onboarding_day1:
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
       <tr>
         <td style="padding: 20px 24px;">
-          <p style="margin: 0; font-size: 15px; color: #1e40af; line-height: 1.6;">{{if .ContactsSaved}}WASBOT has already saved <strong>{{.ContactsSaved}} contacts</strong> for you. That's {{.ContactsSaved}} more people who can see your next status.{{else}}Turn on auto-save in your dashboard and watch your contact list grow on its own.{{end}}</p>
+          <p style="margin: 0; font-size: 15px; color: #1e40af; line-height: 1.6;">{{if .ContactsSaved}}WASBOT has already saved <strong>{{num .ContactsSaved}} contacts</strong> for you. That's {{num .ContactsSaved}} more people who can see your next status.{{else}}Turn on auto-save in your dashboard and watch your contact list grow on its own.{{end}}</p>
         </td>
       </tr>
     </table>
@@ -557,9 +548,9 @@ onboarding_day2:
 
     WASBOT posts your status from the cloud. Upload once, it goes out in full quality, and your phone does nothing. You can post with your phone off.
 
-    {{if .StatusesPosted}}You've posted {{.StatusesPosted}} statuses with WASBOT so far, reaching {{.StatusRecipients}} contacts.{{else}}You haven't posted one yet. Try it today. It takes a minute and you'll see the difference immediately.{{end}}
+    {{if .StatusesPosted}}You've posted {{num .StatusesPosted}} statuses with WASBOT so far, reaching {{num .StatusRecipients}} contacts.{{else}}You haven't posted one yet. Try it today. It takes a minute and you'll see the difference immediately.{{end}}
 
-    And you get real numbers: delivered and viewed counts on every post, even for viewers who turned read receipts off.
+    And you get real numbers: delivered and viewed counts on every post.
 
     Post one now: {{if .StatusURL}}{{.StatusURL}}{{else}}{{.DashboardURL}}{{end}}
 
@@ -704,12 +695,12 @@ onboarding_day2:
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
       <tr>
         <td style="padding: 20px 24px;">
-          <p style="margin: 0; font-size: 15px; color: #166534; line-height: 1.6;">{{if .StatusesPosted}}You've posted <strong>{{.StatusesPosted}} statuses</strong> with WASBOT so far, reaching <strong>{{.StatusRecipients}} contacts</strong>.{{else}}You haven't posted one yet. Try it today. It takes a minute and you'll see the difference immediately.{{end}}</p>
+          <p style="margin: 0; font-size: 15px; color: #166534; line-height: 1.6;">{{if .StatusesPosted}}You've posted <strong>{{num .StatusesPosted}} statuses</strong> with WASBOT so far, reaching <strong>{{num .StatusRecipients}} contacts</strong>.{{else}}You haven't posted one yet. Try it today. It takes a minute and you'll see the difference immediately.{{end}}</p>
         </td>
       </tr>
     </table>
 
-    <p style="margin: 0 0 24px 0;">And you get real numbers: delivered and viewed counts on every post, even for viewers who turned read receipts off.</p>
+    <p style="margin: 0 0 24px 0;">And you get real numbers: delivered and viewed counts on every post.</p>
 
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 20px;">
       <tr>
@@ -800,7 +791,7 @@ onboarding_day3:
 
     Set it up once and WASBOT answers instantly, any hour. Keyword replies for "price", "location", "delivery". Follow-up sequences that keep a chat warm for days without you touching your phone.
 
-    {{if .SequencesActive}}You already have {{.SequencesActive}} running. Add one for the question you get asked most and your reply time drops to zero.{{else}}Start with one rule: the question you get asked most, answered automatically.{{end}}
+    {{if .SequencesActive}}You already have {{num .SequencesActive}} running. Add one for the question you get asked most and your reply time drops to zero.{{else}}Start with one rule: the question you get asked most, answered automatically.{{end}}
 
     Set it up: {{if .AutoresponderURL}}{{.AutoresponderURL}}{{else}}{{.DashboardURL}}{{end}}
 
@@ -943,7 +934,7 @@ onboarding_day3:
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
       <tr>
         <td style="padding: 20px 24px;">
-          <p style="margin: 0; font-size: 15px; color: #1e40af; line-height: 1.6;">{{if .SequencesActive}}You already have <strong>{{.SequencesActive}}</strong> running. Add one for the question you get asked most and your reply time drops to zero.{{else}}Start with one rule: the question you get asked most, answered automatically.{{end}}</p>
+          <p style="margin: 0; font-size: 15px; color: #1e40af; line-height: 1.6;">{{if .SequencesActive}}You already have <strong>{{num .SequencesActive}}</strong> running. Add one for the question you get asked most and your reply time drops to zero.{{else}}Start with one rule: the question you get asked most, answered automatically.{{end}}</p>
         </td>
       </tr>
     </table>
@@ -1031,7 +1022,7 @@ onboarding_day4:
 
     If you sell in groups you know the pain. Copy, paste, next group, copy, paste, an hour gone.
 
-    WASBOT sends to all your groups at once. Pick the groups, write once, send. {{if .GroupSends}}You've already sent {{.GroupSends}} group blasts this week.{{else}}Try it with 3 groups today and time it.{{end}}
+    WASBOT sends to all your groups at once. Pick the groups, write once, send. {{if .GroupSends}}You've already sent {{num .GroupSends}} group blasts this week.{{else}}Try it with 3 groups today and time it.{{end}}
 
     Same family, more weapons:
 
@@ -1178,7 +1169,7 @@ onboarding_day4:
 
     <p style="margin: 0 0 20px 0;">If you sell in groups you know the pain. Copy, paste, next group, copy, paste, an hour gone.</p>
 
-    <p style="margin: 0 0 24px 0;">WASBOT sends to all your groups at once. Pick the groups, write once, send. {{if .GroupSends}}You've already sent <strong>{{.GroupSends}} group blasts</strong> this week.{{else}}Try it with 3 groups today and time it.{{end}}</p>
+    <p style="margin: 0 0 24px 0;">WASBOT sends to all your groups at once. Pick the groups, write once, send. {{if .GroupSends}}You've already sent <strong>{{num .GroupSends}} group blasts</strong> this week.{{else}}Try it with 3 groups today and time it.{{end}}</p>
 
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
       <tr>
@@ -1548,10 +1539,10 @@ onboarding_day6:
 
     Your trial ends {{if .TrialEnd}}{{.TrialEnd}}{{else}}soon{{end}}. {{if .HasActivity}}Before you decide, here's your week with WASBOT:{{else}}Before you decide, one honest word.{{end}}
 
-    {{if .HasActivity}}{{if .ContactsSaved}}- {{.ContactsSaved}} contacts saved automatically
-    {{end}}{{if .StatusesPosted}}- {{.StatusesPosted}} statuses posted, {{.StatusViews}} views counted
-    {{end}}{{if .GroupSends}}- {{.GroupSends}} group blasts sent
-    {{end}}{{if .TimeSavedHours}}- Roughly {{.TimeSavedHours}} hours of manual work you did not do
+    {{if .HasActivity}}{{if .ContactsSaved}}- {{num .ContactsSaved}} contacts saved automatically
+    {{end}}{{if .StatusesPosted}}- {{num .StatusesPosted}} statuses posted, {{num .StatusViews}} views counted
+    {{end}}{{if .GroupSends}}- {{num .GroupSends}} group blasts sent
+    {{end}}{{if .TimeSavedHours}}- Roughly {{num .TimeSavedHours}} hours of manual work you did not do
     {{end}}
     All of it stops tomorrow unless you subscribe.{{else}}You didn't get much time with it this week. That's fine. The offer below still stands today.{{end}}
 
@@ -1705,10 +1696,10 @@ onboarding_day6:
         <td style="padding: 24px;">
           {{if .HasActivity}}
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            {{if .ContactsSaved}}<tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">{{.ContactsSaved}} contacts saved automatically</span></td></tr>{{end}}
-            {{if .StatusesPosted}}<tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">{{.StatusesPosted}} statuses posted, {{.StatusViews}} views counted</span></td></tr>{{end}}
-            {{if .GroupSends}}<tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">{{.GroupSends}} group blasts sent</span></td></tr>{{end}}
-            {{if .TimeSavedHours}}<tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Roughly {{.TimeSavedHours}} hours of manual work you did not do</span></td></tr>{{end}}
+            {{if .ContactsSaved}}<tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">{{num .ContactsSaved}} contacts saved automatically</span></td></tr>{{end}}
+            {{if .StatusesPosted}}<tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">{{num .StatusesPosted}} statuses posted, {{num .StatusViews}} views counted</span></td></tr>{{end}}
+            {{if .GroupSends}}<tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">{{num .GroupSends}} group blasts sent</span></td></tr>{{end}}
+            {{if .TimeSavedHours}}<tr><td style="padding: 6px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Roughly {{num .TimeSavedHours}} hours of manual work you did not do</span></td></tr>{{end}}
           </table>
           <p style="margin: 16px 0 0 0; color: #374151; font-size: 15px;">All of it stops tomorrow unless you subscribe.</p>
           {{else}}
@@ -2295,7 +2286,7 @@ onboarding_unlinked_day2:
 
     You know the routine. Status takes forever to send, phone gets hot, WhatsApp lags, and half your contacts never even see it.
 
-    WASBOT posts your status from the cloud. Upload once, it goes out in full quality, and your phone does nothing. You can post with your phone completely off. And you get real numbers on every post: delivered and viewed counts, even for viewers who turned read receipts off.
+    WASBOT posts your status from the cloud. Upload once, it goes out in full quality, and your phone does nothing. You can post with your phone completely off. And you get real numbers on every post: delivered and viewed counts.
 
     All of that is waiting behind one QR scan. Link, post one status, and watch it hit your whole list in seconds.
 
@@ -2437,7 +2428,7 @@ onboarding_unlinked_day2:
 
     <p style="margin: 0 0 20px 0;">You know the routine. Status takes forever to send, phone gets hot, WhatsApp lags, and half your contacts never even see it.</p>
 
-    <p style="margin: 0 0 24px 0;">WASBOT posts your status from the cloud. Upload once, it goes out in full quality, and your phone does nothing. You can post with your phone completely off. And you get real numbers on every post: delivered and viewed counts, even for viewers who turned read receipts off.</p>
+    <p style="margin: 0 0 24px 0;">WASBOT posts your status from the cloud. Upload once, it goes out in full quality, and your phone does nothing. You can post with your phone completely off. And you get real numbers on every post: delivered and viewed counts.</p>
 
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin-bottom: 24px;">
       <tr>
