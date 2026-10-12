@@ -1,31 +1,57 @@
 # Trial onboarding email sequence (Days 0-7), unlinked Track A variants (U1-U7),
 # post-trial re-engagement (Days 8-10), stalled session. Rebuilt per
 # docs/templates/trial-lifecycle-rebuild-2026-08.md (2026-08-15).
+# Teasers: every email from day0 to day6 ends with a "Tomorrow: ..." line
+# naming the next step's topic (founder decision 2026-10-12); day7 has none.
+# The paid series lives in onboarding_paid.yaml.
 # Templates: onboarding_day0 through day7, onboarding_unlinked_day1 through day7,
 # post_trial_day8/9/10, stalled_session, onboarding_unlinked_mid/lastcall (DEPRECATED)
 
 onboarding_day0:
-  subject: "Welcome to WASBOT. Here's everything you just unlocked"
-  description: "Day 0: instant, on signup. Full stack overview + link CTA + code introduced by name (trial lifecycle rebuild 2026-08)."
-  preview_text: "Your 7 day free trial is on. Here's what starts working right now."
+  subject: "Welcome to WASBOT{{if .FirstName}}, {{.FirstName}}{{end}}. Start here"
+  description: "Step 0: instant, on signup (SendWelcome) and the first email of re-engagement. Two first steps, setup video, features, help line, community. Welcome refresh 2026-10-12."
   body: |-
     Hi {{.Name}},
 
-    Your 7 day free trial is on. Here's what WASBOT does for you starting now:
+    Welcome to WASBOT.{{if .TrialEnd}} Your 7 day free trial is on.{{end}}
 
-    - Posts your status from the cloud. Full quality, no lag, phone in your pocket.
-    - Saves everyone who messages you straight to your contacts, automatically.
-    - Messages all your groups at once instead of one by one.
-    - Replies for you while you sleep, runs follow-up sequences, schedules posts, and shows you who actually sees your status.
+    {{if .TrialEnd}}Your plan: Free trial
+    Ends: {{.TrialEnd}}
 
-    First step takes 60 seconds: link your WhatsApp. Scan one code and you're in.
+    {{end}}Do these two things first:
 
-    {{if .Code}}One more thing. There's a discount code with your name on it, {{.Code}}. It takes {{.CodePct}}% off your first month and it only works while your trial is running. More on that later.
+    1. Link your WhatsApp. It takes about a minute.
+       Full setup video (9 min): {{if .VideoURL}}{{.VideoURL}}{{else}}https://youtu.be/eYCPi68WpKM{{end}}
+       Link now: {{.ConnectURL}}
 
-    {{end}}Link your WhatsApp: {{.ConnectURL}}
+    2. Set up contact saving, so every new chat is saved for you.
+       Watch how (3 min): https://www.wasbot.app/watch/contacts
+
+    Here is what WASBOT does for you:
+
+    - Posts your status from the cloud, full quality, phone in your pocket
+    - Saves everyone who messages you, so they can all see your status
+    - Messages all your groups at once, and tags everyone
+    - Broadcasts to your list, one personal message at a time
+    - Replies for you while you sleep, and runs follow-up sequences
+    - Shows you who actually sees your status
+    - Posts to more than one WhatsApp number at once when you add numbers
+
+    {{if .Code}}Also, there is a discount code with your name on it, {{.Code}}. It takes {{.CodePct}}% off your first month and only works while your trial is running.
+
+    {{end}}Stuck anywhere? Message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help. (0901 894 3768). A real person replies.
+
+    Join the community, we share tips and updates there:
+    WhatsApp group: {{if .WhatsAppGroupURL}}{{.WhatsAppGroupURL}}{{else}}https://chat.whatsapp.com/EoP7wlsiUe4CKKA5E6BXCY{{end}}
+    WhatsApp channel: https://whatsapp.com/channel/0029VbDZGfB17EmsMzdM8f31
+    Instagram: https://instagram.com/wasbot.app
+    X: https://x.com/wasbot
+    YouTube: https://www.youtube.com/@wasbot_app
 
     Talk soon,
-    The WASBOT Team
+    Victor
+
+    Tomorrow: how to get every new chat saved to your contacts, without typing a thing.
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -111,7 +137,7 @@ onboarding_day0:
     <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
       <!-- Preview text -->
       <div style="display: none; max-height: 0; overflow: hidden;">
-        {{if .PreviewText}}{{.PreviewText}}{{else}}Your 7 day free trial is on. Here&#39;s what starts working right now.{{end}}
+        {{if .PreviewText}}{{.PreviewText}}{{else}}{{if .TrialEnd}}Your 7 day free trial is on. {{end}}Two steps and you are running.{{end}}
         &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
       </div>
 
@@ -149,39 +175,26 @@ onboarding_day0:
               <!-- Main content -->
               <tr>
                 <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
-                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Here's Everything You Just Unlocked</h1>
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Welcome to WASBOT. Start here</h1>
 
                   <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
     <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
 
-    <p style="margin: 0 0 24px 0;">Your 7 day free trial is on. Here's what <strong>WASBOT</strong> does for you starting now:</p>
+    <p style="margin: 0 0 20px 0;">Welcome to WASBOT.{{if .TrialEnd}} Your 7 day free trial is on.{{end}}</p>
 
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+    {{if .TrialEnd}}
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 24px;">
       <tr>
-        <td style="padding: 24px;">
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Posts your status from the cloud. Full quality, no lag, phone in your pocket.</span></td></tr>
-            <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Saves everyone who messages you straight to your contacts, automatically.</span></td></tr>
-            <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Messages all your groups at once instead of one by one.</span></td></tr>
-            <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Replies for you while you sleep, runs follow-up sequences, schedules posts, and shows you who actually sees your status.</span></td></tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-
-    <p style="margin: 0 0 24px 0;">First step takes 60 seconds: link your WhatsApp. Scan one code and you're in.</p>
-
-    {{if .Code}}
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fefce8; border: 2px dashed #eab308; border-radius: 12px; margin-bottom: 24px;">
-      <tr>
-        <td style="padding: 20px 24px;">
-          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;">One more thing. There's a discount code with your name on it, <strong style="color: #b45309;">{{.Code}}</strong>. It takes <strong>{{.CodePct}}% off</strong> your first month and it only works while your trial is running. More on that later.</p>
-        </td>
+        <td style="padding: 16px 20px; font-size: 15px; color: #374151; line-height: 1.7;">Your plan: Free trial<br>Ends: {{.TrialEnd}}</td>
       </tr>
     </table>
     {{end}}
 
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+    <p style="margin: 0 0 12px 0; color: #111827;"><strong>Do these two things first:</strong></p>
+
+    <p style="margin: 0 0 20px 0;"><strong>1. Link your WhatsApp.</strong> It takes about a minute.<br><a href="{{if .VideoURL}}{{.VideoURL}}{{else}}https://youtu.be/eYCPi68WpKM{{end}}" target="_blank" style="font-weight: 600;">Full setup video (9 min)</a></p>
+
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
       <tr>
         <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
           <a href="{{.ConnectURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
@@ -190,7 +203,48 @@ onboarding_day0:
         </td>
       </tr>
     </table>
-                    <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+
+    <p style="margin: 0 0 20px 0;"><strong>2. Set up contact saving</strong>, so every new chat is saved for you.<br><a href="https://www.wasbot.app/watch/contacts" target="_blank" style="font-weight: 600;">Watch how (3 min)</a></p>
+
+    <p style="margin: 0 0 20px 0;">Here is what WASBOT does for you:</p>
+
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 24px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Posts your status from the cloud, full quality, phone in your pocket</span></td></tr>
+                <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Saves everyone who messages you, so they can all see your status</span></td></tr>
+                <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Messages all your groups at once, and tags everyone</span></td></tr>
+                <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Broadcasts to your list, one personal message at a time</span></td></tr>
+                <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Replies for you while you sleep, and runs follow-up sequences</span></td></tr>
+                <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Shows you who actually sees your status</span></td></tr>
+                <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Posts to more than one WhatsApp number at once when you add numbers</span></td></tr>
+              </table>
+        </td>
+      </tr>
+    </table>
+
+    {{if .Code}}
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fefce8; border: 2px dashed #eab308; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 20px 24px;">
+          <p style="margin: 0; font-size: 15px; color: #374151; line-height: 1.6;">Also, there is a discount code with your name on it, <strong style="color: #b45309;">{{.Code}}</strong>. It takes <strong>{{.CodePct}}% off</strong> your first month and only works while your trial is running.</p>
+        </td>
+      </tr>
+    </table>
+    {{end}}
+
+    <p style="margin: 0 0 20px 0;">Stuck anywhere? Message us on WhatsApp: <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">0901 894 3768</a>. A real person replies.</p>
+
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 16px 20px; font-size: 15px; color: #374151; line-height: 1.8;">Join the community, we share tips and updates there:<br><a href="{{if .WhatsAppGroupURL}}{{.WhatsAppGroupURL}}{{else}}https://chat.whatsapp.com/EoP7wlsiUe4CKKA5E6BXCY{{end}}" target="_blank" style="font-weight: 600;">WhatsApp group</a> &middot; <a href="https://whatsapp.com/channel/0029VbDZGfB17EmsMzdM8f31" target="_blank" style="font-weight: 600;">WhatsApp channel</a> &middot; <a href="https://instagram.com/wasbot.app" target="_blank" style="font-weight: 600;">Instagram</a> &middot; <a href="https://x.com/wasbot" target="_blank" style="font-weight: 600;">X</a> &middot; <a href="https://www.youtube.com/@wasbot_app" target="_blank" style="font-weight: 600;">YouTube</a></td>
+      </tr>
+    </table>
+
+    <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
+
+    <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> how to get every new chat saved to your contacts, without typing a thing.</p>
                   </div>
                 </td>
               </tr>
@@ -254,6 +308,7 @@ onboarding_day0:
     </body>
     </html>
 
+
 onboarding_day1:
   subject: "Never save a contact by hand again"
   description: "Day 1: contacts engine (auto-save, import, why unsaved contacts can't see status). Trial lifecycle rebuild 2026-08."
@@ -273,6 +328,8 @@ onboarding_day1:
 
     Talk soon,
     The WASBOT Team
+
+    Tomorrow: how to post your status from the cloud, with your phone in your pocket.
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -425,6 +482,7 @@ onboarding_day1:
       </tr>
     </table>
                     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+    <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> how to post your status from the cloud, with your phone in your pocket.</p>
                   </div>
                 </td>
               </tr>
@@ -509,6 +567,8 @@ onboarding_day2:
 
     {{end}}Talk soon,
     The WASBOT Team
+
+    Tomorrow: how WASBOT replies to your customers while you sleep.
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -665,6 +725,7 @@ onboarding_day2:
     <p style="margin: 0 0 24px 0; font-size: 14px; color: #6b7280; text-align: center;">Quick reminder: your code <strong style="color: #b45309;">{{.Code}}</strong> is live for the rest of your trial. {{.CodePct}}% off your first month.</p>
     {{end}}
                     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+    <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> how WASBOT replies to your customers while you sleep.</p>
                   </div>
                 </td>
               </tr>
@@ -745,6 +806,8 @@ onboarding_day3:
 
     Talk soon,
     The WASBOT Team
+
+    Tomorrow: how to send one message to all your groups at once.
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -895,6 +958,7 @@ onboarding_day3:
       </tr>
     </table>
                     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+    <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> how to send one message to all your groups at once.</p>
                   </div>
                 </td>
               </tr>
@@ -982,6 +1046,8 @@ onboarding_day4:
 
     {{end}}Talk soon,
     The WASBOT Team
+
+    Tomorrow: how to keep today's price for as long as you stay.
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -1152,6 +1218,7 @@ onboarding_day4:
     <p style="margin: 0; font-size: 14px; color: #6b7280; text-align: center;">Your code <strong style="color: #b45309;">{{.Code}}</strong> is still live. It goes when your trial goes.</p>
     {{end}}
                     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+    <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> how to keep today's price for as long as you stay.</p>
                   </div>
                 </td>
               </tr>
@@ -1237,6 +1304,8 @@ onboarding_day5:
 
     Talk soon,
     The WASBOT Team
+
+    Tomorrow: what you get if you decide before your trial ends.
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -1406,6 +1475,7 @@ onboarding_day5:
       </tr>
     </table>
                     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+    <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> what you get if you decide before your trial ends.</p>
                   </div>
                 </td>
               </tr>
@@ -1498,6 +1568,8 @@ onboarding_day6:
 
     Talk soon,
     The WASBOT Team
+
+    Next, and last: a short reminder a few hours before your trial ends.
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -1677,6 +1749,7 @@ onboarding_day6:
       </tr>
     </table>
                     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+    <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Next, and last:</strong> a short reminder a few hours before your trial ends.</p>
                   </div>
                 </td>
               </tr>
@@ -1987,6 +2060,8 @@ onboarding_unlinked_day1:
 
     Talk soon,
     The WASBOT Team
+
+    Tomorrow: how to post your status from the cloud, with your phone in your pocket.
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -2147,6 +2222,7 @@ onboarding_unlinked_day1:
       </tr>
     </table>
                     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+    <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> how to post your status from the cloud, with your phone in your pocket.</p>
                   </div>
                 </td>
               </tr>
@@ -2229,6 +2305,8 @@ onboarding_unlinked_day2:
 
     Talk soon,
     The WASBOT Team
+
+    Tomorrow: how WASBOT replies to your customers while you sleep.
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -2389,6 +2467,7 @@ onboarding_unlinked_day2:
       </tr>
     </table>
                     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+    <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> how WASBOT replies to your customers while you sleep.</p>
                   </div>
                 </td>
               </tr>
@@ -2471,6 +2550,8 @@ onboarding_unlinked_day3:
 
     Talk soon,
     The WASBOT Team
+
+    Tomorrow: how to send one message to all your groups at once.
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -2629,6 +2710,7 @@ onboarding_unlinked_day3:
       </tr>
     </table>
                     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+    <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> how to send one message to all your groups at once.</p>
                   </div>
                 </td>
               </tr>
@@ -2711,6 +2793,8 @@ onboarding_unlinked_day4:
 
     Talk soon,
     The WASBOT Team
+
+    Tomorrow: how to keep today's price for as long as you stay.
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -2876,6 +2960,7 @@ onboarding_unlinked_day4:
       </tr>
     </table>
                     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+    <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> how to keep today's price for as long as you stay.</p>
                   </div>
                 </td>
               </tr>
@@ -2961,6 +3046,8 @@ onboarding_unlinked_day5:
 
     Talk soon,
     The WASBOT Team
+
+    Tomorrow: what you get if you decide before your trial ends.
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -3135,6 +3222,7 @@ onboarding_unlinked_day5:
       </tr>
     </table>
                     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+    <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> what you get if you decide before your trial ends.</p>
                   </div>
                 </td>
               </tr>
@@ -3220,6 +3308,8 @@ onboarding_unlinked_day6:
 
     Talk soon,
     The WASBOT Team
+
+    Next, and last: a short reminder a few hours before your trial ends.
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -3383,6 +3473,7 @@ onboarding_unlinked_day6:
       </tr>
     </table>
                     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
+    <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Next, and last:</strong> a short reminder a few hours before your trial ends.</p>
                   </div>
                 </td>
               </tr>

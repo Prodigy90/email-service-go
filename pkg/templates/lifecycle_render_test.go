@@ -192,13 +192,13 @@ func TestLifecycleTemplates_HaveExactlyOneSignoffPerBranch(t *testing.T) {
 			if err != nil {
 				t.Fatalf("%s [%s]: render failed: %v", name, st.name, err)
 			}
-			if got := strings.Count(body, "The WASBOT Team"); got != 1 {
-				t.Errorf("%s [%s]: plaintext has %d sign-offs, want 1", name, st.name, got)
+			if got := countSignoffs(body, html); got[0] != 1 {
+				t.Errorf("%s [%s]: plaintext has %d sign-offs, want 1", name, st.name, got[0])
 			}
 			// The chassis footer names the company but never signs off, so any
 			// count other than 1 here is the template's own doing.
-			if got := strings.Count(html, "The WASBOT Team"); got != 1 {
-				t.Errorf("%s [%s]: HTML has %d sign-offs, want 1", name, st.name, got)
+			if got := countSignoffs(body, html); got[1] != 1 {
+				t.Errorf("%s [%s]: HTML has %d sign-offs, want 1", name, st.name, got[1])
 			}
 		}
 	}

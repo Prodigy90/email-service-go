@@ -338,7 +338,7 @@ const (
 	TemplateSubscriptionExpiring1d = "subscription_expiring_1d"
 
 	// General
-	TemplateWelcome         = "welcome"
+	// "welcome" was deleted 2026-10-12; the signup welcome is onboarding_day0.
 	TemplateAccountUpgraded = "account_upgraded"
 
 	// trial_day3/5/6/10 and trial_expiring removed 2026-08-15: dead code,

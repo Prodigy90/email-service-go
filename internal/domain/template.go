@@ -45,8 +45,8 @@ const (
 	TemplateSubscriptionActivated     = "subscription_activated"      // New recurring subscription activated
 	TemplateSubscriptionActivatedOnetime = "subscription_activated_onetime" // One-time subscription activated
 
-	// WasBot templates
-	TemplateWelcome          = "welcome"
+	// WASBOT templates. "welcome" was deleted 2026-10-12 (unsent since
+	// 2026-04; the signup welcome is onboarding_day0).
 	TemplateAccountUpgraded  = "account_upgraded"
 
 	// trial_day3/5/6/10 and trial_expiring removed 2026-08-15: dead code,
