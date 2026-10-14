@@ -741,7 +741,7 @@ onboarding_paid_day4:
 
     Broadcasts work the same way for your contacts: one personal message to each person on your list, no group needed.
 
-    Watch how (8 min): {{if .VideoURL}}{{.VideoURL}}{{else}}https://youtu.be/a_Gm5Tp7TSw{{end}}
+    {{if .VideoTitle}}{{.VideoTitle}}{{else}}Watch how (4 min){{end}}: {{if .VideoURL}}{{.VideoURL}}{{else}}https://www.wasbot.app/watch/groups{{end}}
     Send to your groups: {{if .GroupsURL}}{{.GroupsURL}}{{else}}{{.DashboardURL}}{{end}}
     Try a broadcast: {{if .BroadcastsURL}}{{.BroadcastsURL}}{{else}}{{.DashboardURL}}{{end}}
 
@@ -893,7 +893,7 @@ onboarding_paid_day4:
 
     <p style="margin: 0 0 20px 0;">Broadcasts work the same way for your contacts: one personal message to each person on your list, no group needed.</p>
 
-    <p style="margin: 0 0 20px 0;"><a href="{{if .VideoURL}}{{.VideoURL}}{{else}}https://youtu.be/a_Gm5Tp7TSw{{end}}" target="_blank" style="font-weight: 600;">Watch how (8 min)</a><br><a href="{{if .GroupsURL}}{{.GroupsURL}}{{else}}{{.DashboardURL}}{{end}}" target="_blank" style="font-weight: 600;">Send to your groups</a><br><a href="{{if .BroadcastsURL}}{{.BroadcastsURL}}{{else}}{{.DashboardURL}}{{end}}" target="_blank" style="font-weight: 600;">Try a broadcast</a></p>
+    <p style="margin: 0 0 20px 0;"><a href="{{if .VideoURL}}{{.VideoURL}}{{else}}https://www.wasbot.app/watch/groups{{end}}" target="_blank" style="font-weight: 600;">{{if .VideoTitle}}{{.VideoTitle}}{{else}}Watch how (4 min){{end}}</a><br><a href="{{if .GroupsURL}}{{.GroupsURL}}{{else}}{{.DashboardURL}}{{end}}" target="_blank" style="font-weight: 600;">Send to your groups</a><br><a href="{{if .BroadcastsURL}}{{.BroadcastsURL}}{{else}}{{.DashboardURL}}{{end}}" target="_blank" style="font-weight: 600;">Try a broadcast</a></p>
 
     {{if .NeedsLink}}
     <p style="margin: 0 0 20px 0;">Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}</p>
@@ -1469,7 +1469,7 @@ onboarding_paid_day7:
 
     Full setup (9 min): https://youtu.be/eYCPi68WpKM
     Contact saving (3 min): https://www.wasbot.app/watch/contacts
-    Your groups on autopilot (8 min): https://youtu.be/a_Gm5Tp7TSw
+    Send to all your groups (4 min): https://www.wasbot.app/watch/groups
     Follow-up sequences (15 min): https://youtu.be/UbRkNE8muGY
 
     Join the community, we share tips and updates there:
@@ -1629,7 +1629,7 @@ onboarding_paid_day7:
 
     <p style="margin: 0 0 12px 0; color: #111827;"><strong>Videos worth keeping:</strong></p>
 
-    <p style="margin: 0 0 20px 0;"><a href="https://youtu.be/eYCPi68WpKM" target="_blank" style="font-weight: 600;">Full setup (9 min)</a><br><a href="https://www.wasbot.app/watch/contacts" target="_blank" style="font-weight: 600;">Contact saving (3 min)</a><br><a href="https://youtu.be/a_Gm5Tp7TSw" target="_blank" style="font-weight: 600;">Your groups on autopilot (8 min)</a><br><a href="https://youtu.be/UbRkNE8muGY" target="_blank" style="font-weight: 600;">Follow-up sequences (15 min)</a></p>
+    <p style="margin: 0 0 20px 0;"><a href="https://youtu.be/eYCPi68WpKM" target="_blank" style="font-weight: 600;">Full setup (9 min)</a><br><a href="https://www.wasbot.app/watch/contacts" target="_blank" style="font-weight: 600;">Contact saving (3 min)</a><br><a href="https://www.wasbot.app/watch/groups" target="_blank" style="font-weight: 600;">Send to all your groups (4 min)</a><br><a href="https://youtu.be/UbRkNE8muGY" target="_blank" style="font-weight: 600;">Follow-up sequences (15 min)</a></p>
 
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 24px;">
       <tr>
