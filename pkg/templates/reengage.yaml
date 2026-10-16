@@ -1,0 +1,276 @@
+# Re-engagement series step 0 (item 76, 2026-10-16). The re-engagement
+# series (churned paid users) used to open with onboarding_day0, which since
+# the 2026-10-12 welcome refresh reads as a first welcome. This is its own
+# opener: the plan ended, the account is still here, what they got from
+# WASBOT, how to come back. Steps 1-7 still reuse the trial templates.
+# FOUNDER-REVIEW-GATED COPY: do not deploy before the founder has read it.
+
+reengage_day0:
+  subject: "Your WASBOT setup is still here{{if .FirstName}}, {{.FirstName}}{{end}}"
+  description: "Re-engagement step 0 (churned paid users): plan ended, account kept, their numbers, how to come back. No trial, no code. Item 76, 2026-10-16."
+  preview_text: "Nothing was deleted. Pick up where you stopped."
+  body: |-
+    Hi {{.Name}},
+
+    Your WASBOT plan has ended, but your account is still here. Your lists, your auto-replies and your sequences are saved and waiting for you.
+
+    {{if .HasActivity}}Here is what WASBOT did for you while you were with us:
+    {{if .ContactsSaved}}- Saved {{num .ContactsSaved}} contacts for you
+    {{end}}{{if .StatusesPosted}}- Posted {{num .StatusesPosted}} statuses{{if .StatusViews}}, seen {{num .StatusViews}} times{{end}}
+    {{end}}{{if .GroupSends}}- Sent {{num .GroupSends}} group blasts
+    {{end}}
+    {{end}}Coming back takes two minutes:
+    1. Pick your plan: {{.PricingURL}}
+    2. Open your dashboard and check your WhatsApp is still linked: {{.DashboardURL}}
+
+    Here is what is waiting for you:
+
+    - Posts your status from the cloud, full quality, phone in your pocket
+    - Saves everyone who messages you, so they can all see your status
+    - Messages all your groups at once, and tags everyone
+    - Broadcasts to your list, one personal message at a time
+    - Replies for you while you sleep, and runs follow-up sequences
+    - Shows you who actually sees your status
+    - Posts to more than one WhatsApp number at once when you add numbers
+
+    If something made you stop, I want to hear it. Reply to this email or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+
+    Talk soon,
+    Victor
+
+    Tomorrow: how to get every new chat saved to your contacts, without typing a thing.
+  html_body: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>Your WASBOT setup is still here</title>
+      <!--[if mso]>
+      <noscript>
+        <xml>
+          <o:OfficeDocumentSettings>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+        </xml>
+      </noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+
+        /* Reset */
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+        /* Client-specific */
+        #outlook a { padding: 0; }
+        .ReadMsgBody { width: 100%; }
+        .ExternalClass { width: 100%; }
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+        /* Base styles */
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          background-color: #f3f4f6;
+          margin: 0;
+          padding: 0;
+        }
+
+        /* Links */
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Button styles */
+        .btn {
+          display: inline-block;
+          padding: 14px 28px;
+          background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+          color: #ffffff !important;
+          text-decoration: none;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 15px;
+          box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+          transition: all 0.2s ease;
+        }
+        .btn:hover {
+          background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+          box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+        }
+        .btn-danger {
+          background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+          box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+
+        /* Dark mode: preserve header text visibility */
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <!-- Preview text -->
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        {{if .PreviewText}}{{.PreviewText}}{{else}}Nothing was deleted. Pick up where you stopped.{{end}}
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+      </div>
+
+      <!-- Email wrapper -->
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <!-- Main container -->
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header with logo -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td>
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                          <tr>
+                            <td style="vertical-align: middle; padding-right: 14px;">
+                              <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                {{.Branding.LogoContent}}
+                              </div>
+                            </td>
+                            <td style="vertical-align: middle;">
+                              <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Main content -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Your WASBOT setup is still here</h1>
+
+                      <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+        <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+        <p style="margin: 0 0 20px 0;">Your WASBOT plan has ended, but your account is still here. Your lists, your auto-replies and your sequences are saved and waiting for you.</p>
+
+        {{if .HasActivity}}
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 24px;">
+          <tr>
+            <td style="padding: 16px 20px; font-size: 15px; color: #374151; line-height: 1.8;">Here is what WASBOT did for you while you were with us:{{if .ContactsSaved}}<br>Saved <strong>{{num .ContactsSaved}}</strong> contacts for you{{end}}{{if .StatusesPosted}}<br>Posted <strong>{{num .StatusesPosted}}</strong> statuses{{if .StatusViews}}, seen <strong>{{num .StatusViews}}</strong> times{{end}}{{end}}{{if .GroupSends}}<br>Sent <strong>{{num .GroupSends}}</strong> group blasts{{end}}</td>
+          </tr>
+        </table>
+        {{end}}
+
+        <p style="margin: 0 0 20px 0;"><strong>Coming back takes two minutes.</strong> Pick your plan, then open your dashboard and check your WhatsApp is still linked.<br><a href="{{.DashboardURL}}" target="_blank" style="font-weight: 600;">Open your dashboard</a></p>
+
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
+          <tr>
+            <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+              <a href="{{.PricingURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                Pick your plan &#x2192;
+              </a>
+            </td>
+          </tr>
+        </table>
+
+        <p style="margin: 0 0 20px 0;">Here is what is waiting for you:</p>
+
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f0fdf4; border-radius: 12px; margin-bottom: 24px;">
+          <tr>
+            <td style="padding: 24px;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Posts your status from the cloud, full quality, phone in your pocket</span></td></tr>
+                    <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Saves everyone who messages you, so they can all see your status</span></td></tr>
+                    <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Messages all your groups at once, and tags everyone</span></td></tr>
+                    <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Broadcasts to your list, one personal message at a time</span></td></tr>
+                    <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Replies for you while you sleep, and runs follow-up sequences</span></td></tr>
+                    <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Shows you who actually sees your status</span></td></tr>
+                    <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Posts to more than one WhatsApp number at once when you add numbers</span></td></tr>
+                  </table>
+            </td>
+          </tr>
+        </table>
+
+        <p style="margin: 0 0 20px 0;">If something made you stop, I want to hear it. Reply to this email or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+
+        <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
+
+        <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> how to get every new chat saved to your contacts, without typing a thing.</p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                          Need help? Simply reply to this email and we'll get back to you.
+                        </p>
+
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                          <tr>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                            <td style="padding: 0 8px;">
+                              <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                          {{.Branding.CompanyName}} Technologies<br>
+                          Lagos, Nigeria
+                        </p>
+
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                        </p>
+
+                        {{if .UnsubscribeURL}}
+                        <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                          <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                        </p>
+                        {{end}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
