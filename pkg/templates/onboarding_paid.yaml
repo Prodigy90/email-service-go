@@ -17,9 +17,9 @@ onboarding_paid_day1:
 
     Every new person who messages you can be saved to your contacts for you. Name, number, done. No more typing "customer 234" at midnight.
 
-    {{if .ContactsSaved}}WASBOT has already saved {{num .ContactsSaved}} contacts for you. That's {{num .ContactsSaved}} more people who can see your next status.{{else}}Set up contact saving once and watch your list grow on its own.{{end}}
+    {{if .ContactsSaved}}WASBOT has already saved {{num .ContactsSaved}} contacts for you. Everyone who saves your number back can see your status.{{else}}Set up contact saving once and watch your list grow on its own.{{end}}
 
-    Why it matters: people who are not saved usually never see your status. Every contact WASBOT saves is one more person your next post reaches.
+    Why it matters: people who are not saved usually never see your status. Every contact WASBOT saves can see your status once they save your number back.
 
     Watch how (3 min): https://www.wasbot.app/watch/contacts
     Set it up: {{if .ContactsURL}}{{.ContactsURL}}{{else}}{{.DashboardURL}}{{end}}
@@ -163,12 +163,12 @@ onboarding_paid_day1:
     <p style="margin: 0 0 20px 0;">Every new person who messages you can be saved to your contacts for you. Name, number, done. No more typing "customer 234" at midnight.</p>
 
     {{if .ContactsSaved}}
-    <p style="margin: 0 0 20px 0;">WASBOT has already saved {{num .ContactsSaved}} contacts for you. That's {{num .ContactsSaved}} more people who can see your next status.</p>
+    <p style="margin: 0 0 20px 0;">WASBOT has already saved {{num .ContactsSaved}} contacts for you. Everyone who saves your number back can see your status.</p>
     {{else}}
     <p style="margin: 0 0 20px 0;">Set up contact saving once and watch your list grow on its own.</p>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Why it matters: people who are not saved usually never see your status. Every contact WASBOT saves is one more person your next post reaches.</p>
+    <p style="margin: 0 0 20px 0;">Why it matters: people who are not saved usually never see your status. Every contact WASBOT saves can see your status once they save your number back.</p>
 
     <p style="margin: 0 0 20px 0;"><a href="https://www.wasbot.app/watch/contacts" target="_blank" style="font-weight: 600;">Watch how (3 min)</a><br><a href="{{if .ContactsURL}}{{.ContactsURL}}{{else}}{{.DashboardURL}}{{end}}" target="_blank" style="font-weight: 600;">Set it up</a></p>
 

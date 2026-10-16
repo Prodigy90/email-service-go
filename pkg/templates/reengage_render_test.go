@@ -31,7 +31,7 @@ func reengageStates() []renderState {
 	}
 	bare := map[string]interface{}{
 		"Name": "there", "DashboardURL": "https://www.wasbot.app/dashboard",
-		"PricingURL": "https://www.wasbot.app/pricing",
+		"BillingURL": "https://www.wasbot.app/billing",
 	}
 	withName := func(m map[string]interface{}) map[string]interface{} {
 		return withKeys(m, map[string]interface{}{"FirstName": "Ada"})
@@ -68,13 +68,15 @@ func TestReengageDay0_RendersForEveryChurnedReader(t *testing.T) {
 		if !strings.Contains(body, reengageHelpLink) || !strings.Contains(html, reengageHelpLink) {
 			t.Errorf("%s: missing the preset wa.me help link", label)
 		}
-		if !strings.Contains(body, "https://www.wasbot.app/pricing") || !strings.Contains(html, `href="https://www.wasbot.app/pricing"`) {
+		if !strings.Contains(body, "https://www.wasbot.app/billing") || !strings.Contains(html, `href="https://www.wasbot.app/billing"`) {
 			t.Errorf("%s: no way back to a plan", label)
 		}
 		if n := countSignoffs(body, html); n != [2]int{1, 1} {
 			t.Errorf("%s: sign-offs (body, html) = %v, want one each", label, n)
 		}
-		assertTeaser(t, label, "Tomorrow: what happens to the new people who message you while WASBOT is off.", body, html)
+		if strings.Contains(body, "Tomorrow:") || strings.Contains(html, "Tomorrow:") {
+			t.Errorf("%s: a win-back email teases a next one", label)
+		}
 
 		// The recap only shows what really happened.
 		hasActivity := st.data["HasActivity"] == true
@@ -103,20 +105,13 @@ func TestReengageDay0_RendersForEveryChurnedReader(t *testing.T) {
 
 // reengage_day1..7 are the rest of the come-back series. Each renders for every
 // churned reader, says nothing a trial reader would hear, always offers the
-// way back to a plan, and names the next email's topic in its teaser.
+// way back through /billing, and never teases a next email (a win-back is
+// not onboarding).
 func TestReengageSeries_RendersForEveryChurnedReader(t *testing.T) {
 	ts := newTestTemplateService(t)
 	branding := domain.DefaultBranding()
-	teasers := map[string]string{
-		"reengage_day1": "Tomorrow: your status, posted from the cloud with your phone in your pocket.",
-		"reengage_day2": "Tomorrow: who is replying to the people who message you at night.",
-		"reengage_day3": "Tomorrow: all your groups, one send.",
-		"reengage_day4": "Tomorrow: the follow-ups that stopped when your plan ended.",
-		"reengage_day5": "Tomorrow: who actually watched your status.",
-		"reengage_day6": "Tomorrow: my last email about coming back, and one question for you.",
-		"reengage_day7": "",
-	}
-	for name, tease := range teasers {
+	names := []string{"reengage_day1", "reengage_day2", "reengage_day3", "reengage_day4", "reengage_day5", "reengage_day6", "reengage_day7"}
+	for _, name := range names {
 		for _, st := range reengageStates() {
 			label := name + " [" + st.name + "]"
 			subject, body, html, err := ts.RenderWithBranding(name, st.data, branding)
@@ -135,16 +130,17 @@ func TestReengageSeries_RendersForEveryChurnedReader(t *testing.T) {
 			if !strings.Contains(body, reengageHelpLink) || !strings.Contains(html, reengageHelpLink) {
 				t.Errorf("%s: missing the preset wa.me help link", label)
 			}
-			if !strings.Contains(body, "https://www.wasbot.app/pricing") || !strings.Contains(html, `href="https://www.wasbot.app/pricing"`) {
+			if !strings.Contains(body, "https://www.wasbot.app/billing") || !strings.Contains(html, `href="https://www.wasbot.app/billing"`) {
 				t.Errorf("%s: no way back to a plan", label)
 			}
 			if n := countSignoffs(body, html); n != [2]int{1, 1} {
 				t.Errorf("%s: sign-offs (body, html) = %v, want one each", label, n)
 			}
-			if tease != "" {
-				assertTeaser(t, label, tease, body, html)
-			} else if strings.Contains(body, "Tomorrow:") {
-				t.Errorf("%s: the last email teases a next one", label)
+			if strings.Contains(body, "Tomorrow:") || strings.Contains(html, "Tomorrow:") {
+				t.Errorf("%s: a win-back email teases a next one", label)
+			}
+			if strings.Contains(body, "pricing") || strings.Contains(html, "/pricing") {
+				t.Errorf("%s: sends a lapsed payer to /pricing, not /billing", label)
 			}
 			for _, zero := range []string{" 0 contacts", " 0 statuses", " 0 group", "viewed 0", " 0 follow-up"} {
 				if strings.Contains(body, zero) {

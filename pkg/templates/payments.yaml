@@ -866,7 +866,7 @@ payment_success_onetime:
     What you now have running for you:
 
     - Status posted from the cloud, full quality, phone in your pocket
-    - Every new chat saved for you, so they can all see your status
+    - Every new chat saved to your contacts for you
     - Messages to all your groups at once, with tag everyone
     - Broadcasts and follow-up sequences, replies while you sleep
     - Stats on who sees your status
@@ -1066,7 +1066,7 @@ payment_success_onetime:
         <td style="padding: 24px;">
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Status posted from the cloud, full quality, phone in your pocket</span></td></tr>
-                <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Every new chat saved for you, so they can all see your status</span></td></tr>
+                <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Every new chat saved to your contacts for you</span></td></tr>
                 <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Messages to all your groups at once, with tag everyone</span></td></tr>
                 <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Broadcasts and follow-up sequences, replies while you sleep</span></td></tr>
                 <tr><td style="padding: 8px 0;"><span style="color: {{.Branding.PrimaryColor}}; font-size: 16px;">&#x2714;</span> <span style="margin-left: 12px; color: #374151;">Stats on who sees your status</span></td></tr>
