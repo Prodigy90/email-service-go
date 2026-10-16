@@ -2,7 +2,9 @@
 # series (churned paid users) used to open with onboarding_day0, which since
 # the 2026-10-12 welcome refresh reads as a first welcome. This is its own
 # opener: the plan ended, the account is still here, what they got from
-# WASBOT, how to come back. Steps 1-7 still reuse the trial templates.
+# WASBOT, how to come back. Steps 1-7 (reengage_day1..7) are its own come-back
+# series: what WASBOT did for them, what stopped with the plan, how to turn
+# it back on. No trial lines, no codes, no limits.
 # FOUNDER-REVIEW-GATED COPY: do not deploy before the founder has read it.
 
 reengage_day0:
@@ -21,7 +23,7 @@ reengage_day0:
     {{end}}
     {{end}}Coming back takes two minutes:
     1. Pick your plan: {{.PricingURL}}
-    2. Open your dashboard and check your WhatsApp is still linked: {{.DashboardURL}}
+    2. If your WhatsApp was linked when your plan ended, it starts again by itself. If not, link it from your dashboard: {{.DashboardURL}}
 
     Here is what is waiting for you:
 
@@ -38,7 +40,7 @@ reengage_day0:
     Talk soon,
     Victor
 
-    Tomorrow: how to get every new chat saved to your contacts, without typing a thing.
+    Tomorrow: what happens to the new people who message you while WASBOT is off.
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -177,7 +179,7 @@ reengage_day0:
         </table>
         {{end}}
 
-        <p style="margin: 0 0 20px 0;"><strong>Coming back takes two minutes.</strong> Pick your plan, then open your dashboard and check your WhatsApp is still linked.<br><a href="{{.DashboardURL}}" target="_blank" style="font-weight: 600;">Open your dashboard</a></p>
+        <p style="margin: 0 0 20px 0;"><strong>Coming back takes two minutes.</strong> Pick your plan. If your WhatsApp was linked when your plan ended, it starts again by itself. If not, link it from your dashboard.<br><a href="{{.DashboardURL}}" target="_blank" style="font-weight: 600;">Open your dashboard</a></p>
 
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
           <tr>
@@ -211,7 +213,7 @@ reengage_day0:
 
         <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
 
-        <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> how to get every new chat saved to your contacts, without typing a thing.</p>
+        <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> what happens to the new people who message you while WASBOT is off.</p>
                   </div>
                 </td>
               </tr>
@@ -274,3 +276,1685 @@ reengage_day0:
       </table>
     </body>
     </html>
+
+reengage_day1:
+  subject: "New chats are not being saved right now"
+  description: "Re-engagement step 1 (churned paid users): contact saving stopped with the plan. Item 76, 2026-10-16."
+  preview_text: "Everyone who messages you while WASBOT is off stays unsaved."
+  body: |-
+    Hi {{.Name}},
+
+    {{if .ContactsSaved}}While your plan was on, WASBOT saved {{num .ContactsSaved}} contacts for you. Every one of them can see your status.{{else}}WASBOT can save everyone who messages you to your contacts. Name, number, done.{{end}}
+
+    Since your plan ended, that has stopped. New people are messaging you and staying unsaved, and people who are not saved usually never see your status.
+
+    Turn WASBOT back on and saving starts again from the next chat. Then tap Get unsaved on your Contacts page to catch the people who messaged you while it was off.
+
+    Turn WASBOT back on: {{.PricingURL}}
+
+    Watch how contact saving works (3 min): https://www.wasbot.app/watch/contacts
+
+    {{if .NeedsLink}}When you come back, link your WhatsApp first. It takes about a minute: {{.ConnectURL}}{{end}}
+
+    Questions? Reply to this email or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+
+    Talk soon,
+    Victor
+
+    Tomorrow: your status, posted from the cloud with your phone in your pocket.
+  html_body: |-
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="color-scheme" content="light dark">
+          <meta name="supported-color-schemes" content="light dark">
+          <title>New chats are not being saved</title>
+          <!--[if mso]>
+          <noscript>
+            <xml>
+              <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+              </o:OfficeDocumentSettings>
+            </xml>
+          </noscript>
+          <![endif]-->
+          <style>
+            :root { color-scheme: light dark; }
+
+            /* Reset */
+            body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+            table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+            img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+            body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+            /* Client-specific */
+            #outlook a { padding: 0; }
+            .ReadMsgBody { width: 100%; }
+            .ExternalClass { width: 100%; }
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+            /* Base styles */
+            body {
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+              background-color: #f3f4f6;
+              margin: 0;
+              padding: 0;
+            }
+
+            /* Links */
+            a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+            a:hover { text-decoration: underline; }
+
+            /* Button styles */
+            .btn {
+              display: inline-block;
+              padding: 14px 28px;
+              background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+              color: #ffffff !important;
+              text-decoration: none;
+              border-radius: 8px;
+              font-weight: 600;
+              font-size: 15px;
+              box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+              transition: all 0.2s ease;
+            }
+            .btn:hover {
+              background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+              box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+            }
+            .btn-danger {
+              background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+              box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+            }
+
+            /* Responsive */
+            @media only screen and (max-width: 620px) {
+              .container { width: 100% !important; padding: 0 !important; }
+              .content { padding: 24px 20px !important; }
+              .header { padding: 24px 20px !important; }
+              .footer-content { padding: 24px 20px !important; }
+            }
+
+            /* Dark mode: preserve header text visibility */
+            @media (prefers-color-scheme: dark) {
+              .header-company-name { color: #ffffff !important; }
+            }
+          </style>
+        </head>
+        <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+          <!-- Preview text -->
+          <div style="display: none; max-height: 0; overflow: hidden;">
+            {{if .PreviewText}}{{.PreviewText}}{{else}}Everyone who messages you while WASBOT is off stays unsaved.{{end}}
+            &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+          </div>
+
+          <!-- Email wrapper -->
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+            <tr>
+              <td style="padding: 40px 20px;">
+                <!-- Main container -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+                  <!-- Header with logo -->
+                  <tr>
+                    <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td>
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                              <tr>
+                                <td style="vertical-align: middle; padding-right: 14px;">
+                                  <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                    {{.Branding.LogoContent}}
+                                  </div>
+                                </td>
+                                <td style="vertical-align: middle;">
+                                  <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- Main content -->
+                  <tr>
+                    <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                      <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">New chats are not being saved</h1>
+
+                          <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+            <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+            <p style="margin: 0 0 20px 0;">{{if .ContactsSaved}}While your plan was on, WASBOT saved <strong>{{num .ContactsSaved}}</strong> contacts for you. Every one of them can see your status.{{else}}WASBOT can save everyone who messages you to your contacts. Name, number, done.{{end}}</p>
+
+            <p style="margin: 0 0 20px 0;">Since your plan ended, that has stopped. New people are messaging you and staying unsaved, and people who are not saved usually never see your status.</p>
+
+            <p style="margin: 0 0 20px 0;">Turn WASBOT back on and saving starts again from the next chat. Then tap Get unsaved on your Contacts page to catch the people who messaged you while it was off.</p>
+
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
+              <tr>
+                <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+                  <a href="{{.PricingURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                    Turn WASBOT back on &#x2192;
+                  </a>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin: 0 0 20px 0;">Watch how contact saving works: <a href="https://www.wasbot.app/watch/contacts" target="_blank" style="font-weight: 600;">3 minute video</a></p>
+
+            {{if .NeedsLink}}<p style="margin: 0 0 20px 0;">When you come back, link your WhatsApp first. It takes about a minute. <a href="{{.ConnectURL}}" target="_blank" style="font-weight: 600;">Link your WhatsApp</a></p>{{end}}
+
+            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+
+            <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
+
+            <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> your status, posted from the cloud with your phone in your pocket.</p>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                      <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                            <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                              Need help? Simply reply to this email and we'll get back to you.
+                            </p>
+
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                              {{.Branding.CompanyName}} Technologies<br>
+                              Lagos, Nigeria
+                            </p>
+
+                            <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                              &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                            </p>
+
+                            {{if .UnsubscribeURL}}
+                            <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                              <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                            </p>
+                            {{end}}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+        </html>
+
+reengage_day2:
+  subject: "Back to posting status from your phone?"
+  description: "Re-engagement step 2 (churned paid users): status from the cloud. Item 76, 2026-10-16."
+  preview_text: "Upload once, full quality, phone in your pocket."
+  body: |-
+    Hi {{.Name}},
+
+    {{if .StatusesPosted}}With WASBOT you posted {{num .StatusesPosted}} statuses, sent to {{num .StatusRecipients}} contacts.{{end}}
+
+    Without it, it is the old routine again. Status takes forever to send, your phone gets hot, WhatsApp lags.
+
+    With WASBOT you upload once and it goes out from the cloud in full quality. Your phone does nothing. You can post with your phone off, or schedule it for later.
+
+    Turn WASBOT back on: {{.PricingURL}}
+
+    {{if .NeedsLink}}When you come back, link your WhatsApp first. It takes about a minute: {{.ConnectURL}}{{end}}
+
+    Questions? Reply to this email or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+
+    Talk soon,
+    Victor
+
+    Tomorrow: who is replying to the people who message you at night.
+  html_body: |-
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="color-scheme" content="light dark">
+          <meta name="supported-color-schemes" content="light dark">
+          <title>Back to posting status from your phone?</title>
+          <!--[if mso]>
+          <noscript>
+            <xml>
+              <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+              </o:OfficeDocumentSettings>
+            </xml>
+          </noscript>
+          <![endif]-->
+          <style>
+            :root { color-scheme: light dark; }
+
+            /* Reset */
+            body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+            table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+            img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+            body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+            /* Client-specific */
+            #outlook a { padding: 0; }
+            .ReadMsgBody { width: 100%; }
+            .ExternalClass { width: 100%; }
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+            /* Base styles */
+            body {
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+              background-color: #f3f4f6;
+              margin: 0;
+              padding: 0;
+            }
+
+            /* Links */
+            a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+            a:hover { text-decoration: underline; }
+
+            /* Button styles */
+            .btn {
+              display: inline-block;
+              padding: 14px 28px;
+              background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+              color: #ffffff !important;
+              text-decoration: none;
+              border-radius: 8px;
+              font-weight: 600;
+              font-size: 15px;
+              box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+              transition: all 0.2s ease;
+            }
+            .btn:hover {
+              background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+              box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+            }
+            .btn-danger {
+              background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+              box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+            }
+
+            /* Responsive */
+            @media only screen and (max-width: 620px) {
+              .container { width: 100% !important; padding: 0 !important; }
+              .content { padding: 24px 20px !important; }
+              .header { padding: 24px 20px !important; }
+              .footer-content { padding: 24px 20px !important; }
+            }
+
+            /* Dark mode: preserve header text visibility */
+            @media (prefers-color-scheme: dark) {
+              .header-company-name { color: #ffffff !important; }
+            }
+          </style>
+        </head>
+        <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+          <!-- Preview text -->
+          <div style="display: none; max-height: 0; overflow: hidden;">
+            {{if .PreviewText}}{{.PreviewText}}{{else}}Upload once, full quality, phone in your pocket.{{end}}
+            &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+          </div>
+
+          <!-- Email wrapper -->
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+            <tr>
+              <td style="padding: 40px 20px;">
+                <!-- Main container -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+                  <!-- Header with logo -->
+                  <tr>
+                    <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td>
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                              <tr>
+                                <td style="vertical-align: middle; padding-right: 14px;">
+                                  <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                    {{.Branding.LogoContent}}
+                                  </div>
+                                </td>
+                                <td style="vertical-align: middle;">
+                                  <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- Main content -->
+                  <tr>
+                    <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                      <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Back to posting status from your phone?</h1>
+
+                          <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+            <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+            {{if .StatusesPosted}}<p style="margin: 0 0 20px 0;">With WASBOT you posted <strong>{{num .StatusesPosted}}</strong> statuses, sent to <strong>{{num .StatusRecipients}}</strong> contacts.</p>{{end}}
+
+            <p style="margin: 0 0 20px 0;">Without it, it is the old routine again. Status takes forever to send, your phone gets hot, WhatsApp lags.</p>
+
+            <p style="margin: 0 0 20px 0;">With WASBOT you upload once and it goes out from the cloud in full quality. Your phone does nothing. You can post with your phone off, or schedule it for later.</p>
+
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
+              <tr>
+                <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+                  <a href="{{.PricingURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                    Turn WASBOT back on &#x2192;
+                  </a>
+                </td>
+              </tr>
+            </table>
+
+            {{if .NeedsLink}}<p style="margin: 0 0 20px 0;">When you come back, link your WhatsApp first. It takes about a minute. <a href="{{.ConnectURL}}" target="_blank" style="font-weight: 600;">Link your WhatsApp</a></p>{{end}}
+
+            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+
+            <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
+
+            <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> who is replying to the people who message you at night.</p>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                      <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                            <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                              Need help? Simply reply to this email and we'll get back to you.
+                            </p>
+
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                              {{.Branding.CompanyName}} Technologies<br>
+                              Lagos, Nigeria
+                            </p>
+
+                            <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                              &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                            </p>
+
+                            {{if .UnsubscribeURL}}
+                            <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                              <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                            </p>
+                            {{end}}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+        </html>
+
+reengage_day3:
+  subject: "Who is replying to your 3am customers?"
+  description: "Re-engagement step 3 (churned paid users): auto-replies. Item 76, 2026-10-16."
+  preview_text: "People ask \"price\" at night and buy from whoever replies first."
+  body: |-
+    Hi {{.Name}},
+
+    People message you at night. "Price?" "Location?" "Do you deliver?" By morning, a lot of them have bought from whoever replied first.
+
+    With WASBOT on, your auto-replies answer them instantly, any hour, while you sleep.
+
+    If you set up auto-replies before, they are still saved. They are just not running while your plan is off. Turn WASBOT back on and they start answering again.
+
+    Turn WASBOT back on: {{.PricingURL}}
+
+    {{if .NeedsLink}}When you come back, link your WhatsApp first. It takes about a minute: {{.ConnectURL}}{{end}}
+
+    Questions? Reply to this email or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+
+    Talk soon,
+    Victor
+
+    Tomorrow: all your groups, one send.
+  html_body: |-
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="color-scheme" content="light dark">
+          <meta name="supported-color-schemes" content="light dark">
+          <title>Who is replying to your 3am customers?</title>
+          <!--[if mso]>
+          <noscript>
+            <xml>
+              <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+              </o:OfficeDocumentSettings>
+            </xml>
+          </noscript>
+          <![endif]-->
+          <style>
+            :root { color-scheme: light dark; }
+
+            /* Reset */
+            body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+            table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+            img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+            body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+            /* Client-specific */
+            #outlook a { padding: 0; }
+            .ReadMsgBody { width: 100%; }
+            .ExternalClass { width: 100%; }
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+            /* Base styles */
+            body {
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+              background-color: #f3f4f6;
+              margin: 0;
+              padding: 0;
+            }
+
+            /* Links */
+            a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+            a:hover { text-decoration: underline; }
+
+            /* Button styles */
+            .btn {
+              display: inline-block;
+              padding: 14px 28px;
+              background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+              color: #ffffff !important;
+              text-decoration: none;
+              border-radius: 8px;
+              font-weight: 600;
+              font-size: 15px;
+              box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+              transition: all 0.2s ease;
+            }
+            .btn:hover {
+              background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+              box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+            }
+            .btn-danger {
+              background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+              box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+            }
+
+            /* Responsive */
+            @media only screen and (max-width: 620px) {
+              .container { width: 100% !important; padding: 0 !important; }
+              .content { padding: 24px 20px !important; }
+              .header { padding: 24px 20px !important; }
+              .footer-content { padding: 24px 20px !important; }
+            }
+
+            /* Dark mode: preserve header text visibility */
+            @media (prefers-color-scheme: dark) {
+              .header-company-name { color: #ffffff !important; }
+            }
+          </style>
+        </head>
+        <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+          <!-- Preview text -->
+          <div style="display: none; max-height: 0; overflow: hidden;">
+            {{if .PreviewText}}{{.PreviewText}}{{else}}People ask "price" at night and buy from whoever replies first.{{end}}
+            &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+          </div>
+
+          <!-- Email wrapper -->
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+            <tr>
+              <td style="padding: 40px 20px;">
+                <!-- Main container -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+                  <!-- Header with logo -->
+                  <tr>
+                    <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td>
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                              <tr>
+                                <td style="vertical-align: middle; padding-right: 14px;">
+                                  <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                    {{.Branding.LogoContent}}
+                                  </div>
+                                </td>
+                                <td style="vertical-align: middle;">
+                                  <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- Main content -->
+                  <tr>
+                    <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                      <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Who is replying to your 3am customers?</h1>
+
+                          <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+            <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+            <p style="margin: 0 0 20px 0;">People message you at night. "Price?" "Location?" "Do you deliver?" By morning, a lot of them have bought from whoever replied first.</p>
+
+            <p style="margin: 0 0 20px 0;">With WASBOT on, your auto-replies answer them instantly, any hour, while you sleep.</p>
+
+            <p style="margin: 0 0 20px 0;">If you set up auto-replies before, they are still saved. They are just not running while your plan is off. Turn WASBOT back on and they start answering again.</p>
+
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
+              <tr>
+                <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+                  <a href="{{.PricingURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                    Turn WASBOT back on &#x2192;
+                  </a>
+                </td>
+              </tr>
+            </table>
+
+            {{if .NeedsLink}}<p style="margin: 0 0 20px 0;">When you come back, link your WhatsApp first. It takes about a minute. <a href="{{.ConnectURL}}" target="_blank" style="font-weight: 600;">Link your WhatsApp</a></p>{{end}}
+
+            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+
+            <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
+
+            <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> all your groups, one send.</p>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                      <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                            <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                              Need help? Simply reply to this email and we'll get back to you.
+                            </p>
+
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                              {{.Branding.CompanyName}} Technologies<br>
+                              Lagos, Nigeria
+                            </p>
+
+                            <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                              &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                            </p>
+
+                            {{if .UnsubscribeURL}}
+                            <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                              <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                            </p>
+                            {{end}}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+        </html>
+
+reengage_day4:
+  subject: "Back to copy, paste, next group?"
+  description: "Re-engagement step 4 (churned paid users): groups and broadcasts. Item 76, 2026-10-16."
+  preview_text: "Write once, send to every group, tag everyone."
+  body: |-
+    Hi {{.Name}},
+
+    {{if .GroupSends}}You sent {{num .GroupSends}} group blasts with WASBOT. {{end}}Without it, it is copy, paste, next group, copy, paste, and an hour is gone.
+
+    With WASBOT you write once, pick your groups and send. Tag everyone in a group so nobody misses it.
+
+    Broadcasts work the same way for your contacts: one personal message to each person on your list, no group needed.
+
+    Turn WASBOT back on: {{.PricingURL}}
+
+    Watch how (4 min): https://www.wasbot.app/watch/groups
+
+    {{if .NeedsLink}}When you come back, link your WhatsApp first. It takes about a minute: {{.ConnectURL}}{{end}}
+
+    Questions? Reply to this email or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+
+    Talk soon,
+    Victor
+
+    Tomorrow: the follow-ups that stopped when your plan ended.
+  html_body: |-
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="color-scheme" content="light dark">
+          <meta name="supported-color-schemes" content="light dark">
+          <title>Back to copy, paste, next group?</title>
+          <!--[if mso]>
+          <noscript>
+            <xml>
+              <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+              </o:OfficeDocumentSettings>
+            </xml>
+          </noscript>
+          <![endif]-->
+          <style>
+            :root { color-scheme: light dark; }
+
+            /* Reset */
+            body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+            table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+            img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+            body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+            /* Client-specific */
+            #outlook a { padding: 0; }
+            .ReadMsgBody { width: 100%; }
+            .ExternalClass { width: 100%; }
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+            /* Base styles */
+            body {
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+              background-color: #f3f4f6;
+              margin: 0;
+              padding: 0;
+            }
+
+            /* Links */
+            a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+            a:hover { text-decoration: underline; }
+
+            /* Button styles */
+            .btn {
+              display: inline-block;
+              padding: 14px 28px;
+              background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+              color: #ffffff !important;
+              text-decoration: none;
+              border-radius: 8px;
+              font-weight: 600;
+              font-size: 15px;
+              box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+              transition: all 0.2s ease;
+            }
+            .btn:hover {
+              background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+              box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+            }
+            .btn-danger {
+              background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+              box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+            }
+
+            /* Responsive */
+            @media only screen and (max-width: 620px) {
+              .container { width: 100% !important; padding: 0 !important; }
+              .content { padding: 24px 20px !important; }
+              .header { padding: 24px 20px !important; }
+              .footer-content { padding: 24px 20px !important; }
+            }
+
+            /* Dark mode: preserve header text visibility */
+            @media (prefers-color-scheme: dark) {
+              .header-company-name { color: #ffffff !important; }
+            }
+          </style>
+        </head>
+        <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+          <!-- Preview text -->
+          <div style="display: none; max-height: 0; overflow: hidden;">
+            {{if .PreviewText}}{{.PreviewText}}{{else}}Write once, send to every group, tag everyone.{{end}}
+            &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+          </div>
+
+          <!-- Email wrapper -->
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+            <tr>
+              <td style="padding: 40px 20px;">
+                <!-- Main container -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+                  <!-- Header with logo -->
+                  <tr>
+                    <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td>
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                              <tr>
+                                <td style="vertical-align: middle; padding-right: 14px;">
+                                  <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                    {{.Branding.LogoContent}}
+                                  </div>
+                                </td>
+                                <td style="vertical-align: middle;">
+                                  <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- Main content -->
+                  <tr>
+                    <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                      <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Back to copy, paste, next group?</h1>
+
+                          <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+            <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+            <p style="margin: 0 0 20px 0;">{{if .GroupSends}}You sent <strong>{{num .GroupSends}}</strong> group blasts with WASBOT. {{end}}Without it, it is copy, paste, next group, copy, paste, and an hour is gone.</p>
+
+            <p style="margin: 0 0 20px 0;">With WASBOT you write once, pick your groups and send. Tag everyone in a group so nobody misses it.</p>
+
+            <p style="margin: 0 0 20px 0;">Broadcasts work the same way for your contacts: one personal message to each person on your list, no group needed.</p>
+
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
+              <tr>
+                <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+                  <a href="{{.PricingURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                    Turn WASBOT back on &#x2192;
+                  </a>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin: 0 0 20px 0;">Watch how: <a href="https://www.wasbot.app/watch/groups" target="_blank" style="font-weight: 600;">4 minute video</a></p>
+
+            {{if .NeedsLink}}<p style="margin: 0 0 20px 0;">When you come back, link your WhatsApp first. It takes about a minute. <a href="{{.ConnectURL}}" target="_blank" style="font-weight: 600;">Link your WhatsApp</a></p>{{end}}
+
+            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+
+            <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
+
+            <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> the follow-ups that stopped when your plan ended.</p>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                      <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                            <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                              Need help? Simply reply to this email and we'll get back to you.
+                            </p>
+
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                              {{.Branding.CompanyName}} Technologies<br>
+                              Lagos, Nigeria
+                            </p>
+
+                            <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                              &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                            </p>
+
+                            {{if .UnsubscribeURL}}
+                            <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                              <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                            </p>
+                            {{end}}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+        </html>
+
+reengage_day5:
+  subject: "Your follow-ups have stopped"
+  description: "Re-engagement step 5 (churned paid users): follow-up sequences. Item 76, 2026-10-16."
+  preview_text: "People who asked this week are not getting the reminder."
+  body: |-
+    Hi {{.Name}},
+
+    A lot of people ask, go quiet, and then buy from whoever followed up.
+
+    {{if .SequencesActive}}You have {{num .SequencesActive}} follow-up sequences set up in WASBOT. They are saved, but nothing goes out while your plan is off, so the people who asked about your product this week are not getting the reminder.{{else}}A follow-up sequence is a set of messages that go out over days, one after the other. Someone sends a keyword, and WASBOT keeps the chat warm for you.{{end}}
+
+    Turn WASBOT back on and they pick up again.
+
+    Turn WASBOT back on: {{.PricingURL}}
+
+    Watch how sequences work (15 min): https://youtu.be/UbRkNE8muGY
+
+    {{if .NeedsLink}}When you come back, link your WhatsApp first. It takes about a minute: {{.ConnectURL}}{{end}}
+
+    Questions? Reply to this email or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+
+    Talk soon,
+    Victor
+
+    Tomorrow: who actually watched your status.
+  html_body: |-
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="color-scheme" content="light dark">
+          <meta name="supported-color-schemes" content="light dark">
+          <title>Your follow-ups have stopped</title>
+          <!--[if mso]>
+          <noscript>
+            <xml>
+              <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+              </o:OfficeDocumentSettings>
+            </xml>
+          </noscript>
+          <![endif]-->
+          <style>
+            :root { color-scheme: light dark; }
+
+            /* Reset */
+            body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+            table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+            img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+            body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+            /* Client-specific */
+            #outlook a { padding: 0; }
+            .ReadMsgBody { width: 100%; }
+            .ExternalClass { width: 100%; }
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+            /* Base styles */
+            body {
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+              background-color: #f3f4f6;
+              margin: 0;
+              padding: 0;
+            }
+
+            /* Links */
+            a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+            a:hover { text-decoration: underline; }
+
+            /* Button styles */
+            .btn {
+              display: inline-block;
+              padding: 14px 28px;
+              background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+              color: #ffffff !important;
+              text-decoration: none;
+              border-radius: 8px;
+              font-weight: 600;
+              font-size: 15px;
+              box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+              transition: all 0.2s ease;
+            }
+            .btn:hover {
+              background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+              box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+            }
+            .btn-danger {
+              background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+              box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+            }
+
+            /* Responsive */
+            @media only screen and (max-width: 620px) {
+              .container { width: 100% !important; padding: 0 !important; }
+              .content { padding: 24px 20px !important; }
+              .header { padding: 24px 20px !important; }
+              .footer-content { padding: 24px 20px !important; }
+            }
+
+            /* Dark mode: preserve header text visibility */
+            @media (prefers-color-scheme: dark) {
+              .header-company-name { color: #ffffff !important; }
+            }
+          </style>
+        </head>
+        <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+          <!-- Preview text -->
+          <div style="display: none; max-height: 0; overflow: hidden;">
+            {{if .PreviewText}}{{.PreviewText}}{{else}}People who asked this week are not getting the reminder.{{end}}
+            &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+          </div>
+
+          <!-- Email wrapper -->
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+            <tr>
+              <td style="padding: 40px 20px;">
+                <!-- Main container -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+                  <!-- Header with logo -->
+                  <tr>
+                    <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td>
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                              <tr>
+                                <td style="vertical-align: middle; padding-right: 14px;">
+                                  <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                    {{.Branding.LogoContent}}
+                                  </div>
+                                </td>
+                                <td style="vertical-align: middle;">
+                                  <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- Main content -->
+                  <tr>
+                    <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                      <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Your follow-ups have stopped</h1>
+
+                          <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+            <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+            <p style="margin: 0 0 20px 0;">A lot of people ask, go quiet, and then buy from whoever followed up.</p>
+
+            <p style="margin: 0 0 20px 0;">{{if .SequencesActive}}You have <strong>{{num .SequencesActive}}</strong> follow-up sequences set up in WASBOT. They are saved, but nothing goes out while your plan is off, so the people who asked about your product this week are not getting the reminder.{{else}}A follow-up sequence is a set of messages that go out over days, one after the other. Someone sends a keyword, and WASBOT keeps the chat warm for you.{{end}}</p>
+
+            <p style="margin: 0 0 20px 0;">Turn WASBOT back on and they pick up again.</p>
+
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
+              <tr>
+                <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+                  <a href="{{.PricingURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                    Turn WASBOT back on &#x2192;
+                  </a>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin: 0 0 20px 0;">Watch how sequences work: <a href="https://youtu.be/UbRkNE8muGY" target="_blank" style="font-weight: 600;">15 minute video</a></p>
+
+            {{if .NeedsLink}}<p style="margin: 0 0 20px 0;">When you come back, link your WhatsApp first. It takes about a minute. <a href="{{.ConnectURL}}" target="_blank" style="font-weight: 600;">Link your WhatsApp</a></p>{{end}}
+
+            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+
+            <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
+
+            <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> who actually watched your status.</p>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                      <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                            <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                              Need help? Simply reply to this email and we'll get back to you.
+                            </p>
+
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                              {{.Branding.CompanyName}} Technologies<br>
+                              Lagos, Nigeria
+                            </p>
+
+                            <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                              &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                            </p>
+
+                            {{if .UnsubscribeURL}}
+                            <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                              <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                            </p>
+                            {{end}}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+        </html>
+
+reengage_day6:
+  subject: "Who watched your status"
+  description: "Re-engagement step 6 (churned paid users): status stats. Item 76, 2026-10-16."
+  preview_text: "Posting is half of it. The other half is knowing who saw it."
+  body: |-
+    Hi {{.Name}},
+
+    Posting is half of it. The other half is knowing who saw it.
+
+    {{if .StatusViews}}Your statuses were viewed {{num .StatusViews}} times while you were with WASBOT. {{end}}Every status you post with WASBOT shows how many people it was delivered to and how many viewed it, so you can see what works and post more of it.
+
+    Your past stats are still in your account. Turn WASBOT back on and every new post adds to them.
+
+    Turn WASBOT back on: {{.PricingURL}}
+
+    {{if .NeedsLink}}When you come back, link your WhatsApp first. It takes about a minute: {{.ConnectURL}}{{end}}
+
+    Questions? Reply to this email or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+
+    Talk soon,
+    Victor
+
+    Tomorrow: my last email about coming back, and one question for you.
+  html_body: |-
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="color-scheme" content="light dark">
+          <meta name="supported-color-schemes" content="light dark">
+          <title>Who watched your status</title>
+          <!--[if mso]>
+          <noscript>
+            <xml>
+              <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+              </o:OfficeDocumentSettings>
+            </xml>
+          </noscript>
+          <![endif]-->
+          <style>
+            :root { color-scheme: light dark; }
+
+            /* Reset */
+            body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+            table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+            img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+            body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+            /* Client-specific */
+            #outlook a { padding: 0; }
+            .ReadMsgBody { width: 100%; }
+            .ExternalClass { width: 100%; }
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+            /* Base styles */
+            body {
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+              background-color: #f3f4f6;
+              margin: 0;
+              padding: 0;
+            }
+
+            /* Links */
+            a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+            a:hover { text-decoration: underline; }
+
+            /* Button styles */
+            .btn {
+              display: inline-block;
+              padding: 14px 28px;
+              background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+              color: #ffffff !important;
+              text-decoration: none;
+              border-radius: 8px;
+              font-weight: 600;
+              font-size: 15px;
+              box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+              transition: all 0.2s ease;
+            }
+            .btn:hover {
+              background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+              box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+            }
+            .btn-danger {
+              background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+              box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+            }
+
+            /* Responsive */
+            @media only screen and (max-width: 620px) {
+              .container { width: 100% !important; padding: 0 !important; }
+              .content { padding: 24px 20px !important; }
+              .header { padding: 24px 20px !important; }
+              .footer-content { padding: 24px 20px !important; }
+            }
+
+            /* Dark mode: preserve header text visibility */
+            @media (prefers-color-scheme: dark) {
+              .header-company-name { color: #ffffff !important; }
+            }
+          </style>
+        </head>
+        <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+          <!-- Preview text -->
+          <div style="display: none; max-height: 0; overflow: hidden;">
+            {{if .PreviewText}}{{.PreviewText}}{{else}}Posting is half of it. The other half is knowing who saw it.{{end}}
+            &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+          </div>
+
+          <!-- Email wrapper -->
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+            <tr>
+              <td style="padding: 40px 20px;">
+                <!-- Main container -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+                  <!-- Header with logo -->
+                  <tr>
+                    <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td>
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                              <tr>
+                                <td style="vertical-align: middle; padding-right: 14px;">
+                                  <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                    {{.Branding.LogoContent}}
+                                  </div>
+                                </td>
+                                <td style="vertical-align: middle;">
+                                  <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- Main content -->
+                  <tr>
+                    <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                      <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Who watched your status</h1>
+
+                          <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+            <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+            <p style="margin: 0 0 20px 0;">Posting is half of it. The other half is knowing who saw it.</p>
+
+            <p style="margin: 0 0 20px 0;">{{if .StatusViews}}Your statuses were viewed <strong>{{num .StatusViews}}</strong> times while you were with WASBOT. {{end}}Every status you post with WASBOT shows how many people it was delivered to and how many viewed it, so you can see what works and post more of it.</p>
+
+            <p style="margin: 0 0 20px 0;">Your past stats are still in your account. Turn WASBOT back on and every new post adds to them.</p>
+
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
+              <tr>
+                <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+                  <a href="{{.PricingURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                    Turn WASBOT back on &#x2192;
+                  </a>
+                </td>
+              </tr>
+            </table>
+
+            {{if .NeedsLink}}<p style="margin: 0 0 20px 0;">When you come back, link your WhatsApp first. It takes about a minute. <a href="{{.ConnectURL}}" target="_blank" style="font-weight: 600;">Link your WhatsApp</a></p>{{end}}
+
+            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+
+            <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
+
+            <p style="margin: 28px 0 0 0; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #374151; line-height: 1.6;"><strong>Tomorrow:</strong> my last email about coming back, and one question for you.</p>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                      <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                            <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                              Need help? Simply reply to this email and we'll get back to you.
+                            </p>
+
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                              {{.Branding.CompanyName}} Technologies<br>
+                              Lagos, Nigeria
+                            </p>
+
+                            <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                              &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                            </p>
+
+                            {{if .UnsubscribeURL}}
+                            <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                              <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                            </p>
+                            {{end}}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+        </html>
+
+reengage_day7:
+  subject: "Last one from me about this{{if .FirstName}}, {{.FirstName}}{{end}}"
+  description: "Re-engagement step 7 (churned paid users): last note, recap, 30-day link window, ask why they stopped. No offer. Item 76, 2026-10-16."
+  preview_text: "Your link is kept for 30 days after your plan ends."
+  body: |-
+    Hi {{.Name}},
+
+    This is the last email I will send you about coming back.
+
+    {{if .HasActivity}}Here is what WASBOT did for you:
+    {{if .ContactsSaved}}- Saved {{num .ContactsSaved}} contacts
+    {{end}}{{if .StatusesPosted}}- Posted {{num .StatusesPosted}} statuses{{if .StatusViews}}, viewed {{num .StatusViews}} times{{end}}
+    {{end}}{{if .GroupSends}}- Sent {{num .GroupSends}} group blasts
+    {{end}}{{if .TimeSavedHours}}- Roughly {{num .TimeSavedHours}} hours of work you did not have to do
+    {{end}}{{end}}
+
+    One thing worth knowing. If your WhatsApp was linked when your plan ended, we keep that link for 30 days. Come back inside that time and WASBOT starts again by itself, no QR code. After 30 days you just link it again, which takes about a minute.
+
+    Turn WASBOT back on: {{.PricingURL}}
+
+    {{if .NeedsLink}}When you come back, link your WhatsApp first. It takes about a minute: {{.ConnectURL}}{{end}}
+
+    And if something made you stop, I would like to know. The price, something that did not work, or you just got busy. Reply to this email and tell me in one line.
+
+    Or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+
+    Talk soon,
+    Victor
+  html_body: |-
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="color-scheme" content="light dark">
+          <meta name="supported-color-schemes" content="light dark">
+          <title>Last one from me about this</title>
+          <!--[if mso]>
+          <noscript>
+            <xml>
+              <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+              </o:OfficeDocumentSettings>
+            </xml>
+          </noscript>
+          <![endif]-->
+          <style>
+            :root { color-scheme: light dark; }
+
+            /* Reset */
+            body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+            table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+            img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+            body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+            /* Client-specific */
+            #outlook a { padding: 0; }
+            .ReadMsgBody { width: 100%; }
+            .ExternalClass { width: 100%; }
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+            /* Base styles */
+            body {
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+              background-color: #f3f4f6;
+              margin: 0;
+              padding: 0;
+            }
+
+            /* Links */
+            a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+            a:hover { text-decoration: underline; }
+
+            /* Button styles */
+            .btn {
+              display: inline-block;
+              padding: 14px 28px;
+              background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);
+              color: #ffffff !important;
+              text-decoration: none;
+              border-radius: 8px;
+              font-weight: 600;
+              font-size: 15px;
+              box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+              transition: all 0.2s ease;
+            }
+            .btn:hover {
+              background: linear-gradient(135deg, {{.Branding.SecondaryColor}} 0%, {{.Branding.AccentColor}} 100%);
+              box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+            }
+            .btn-danger {
+              background: linear-gradient(135deg, {{.Branding.DangerColor}} 0%, #dc2626 100%);
+              box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+            }
+
+            /* Responsive */
+            @media only screen and (max-width: 620px) {
+              .container { width: 100% !important; padding: 0 !important; }
+              .content { padding: 24px 20px !important; }
+              .header { padding: 24px 20px !important; }
+              .footer-content { padding: 24px 20px !important; }
+            }
+
+            /* Dark mode: preserve header text visibility */
+            @media (prefers-color-scheme: dark) {
+              .header-company-name { color: #ffffff !important; }
+            }
+          </style>
+        </head>
+        <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+          <!-- Preview text -->
+          <div style="display: none; max-height: 0; overflow: hidden;">
+            {{if .PreviewText}}{{.PreviewText}}{{else}}Your link is kept for 30 days after your plan ends.{{end}}
+            &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+          </div>
+
+          <!-- Email wrapper -->
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+            <tr>
+              <td style="padding: 40px 20px;">
+                <!-- Main container -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+                  <!-- Header with logo -->
+                  <tr>
+                    <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td>
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                              <tr>
+                                <td style="vertical-align: middle; padding-right: 14px;">
+                                  <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                                    {{.Branding.LogoContent}}
+                                  </div>
+                                </td>
+                                <td style="vertical-align: middle;">
+                                  <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- Main content -->
+                  <tr>
+                    <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                      <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Last one from me about this</h1>
+
+                          <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+            <p style="margin: 0 0 20px 0;">Hi {{.Name}},</p>
+
+            <p style="margin: 0 0 20px 0;">This is the last email I will send you about coming back.</p>
+
+            {{if .HasActivity}}
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 24px;">
+              <tr>
+                <td style="padding: 16px 20px; font-size: 15px; color: #374151; line-height: 1.8;">Here is what WASBOT did for you:{{if .ContactsSaved}}<br>Saved <strong>{{num .ContactsSaved}}</strong> contacts{{end}}{{if .StatusesPosted}}<br>Posted <strong>{{num .StatusesPosted}}</strong> statuses{{if .StatusViews}}, viewed <strong>{{num .StatusViews}}</strong> times{{end}}{{end}}{{if .GroupSends}}<br>Sent <strong>{{num .GroupSends}}</strong> group blasts{{end}}{{if .TimeSavedHours}}<br>Roughly <strong>{{num .TimeSavedHours}}</strong> hours of work you did not have to do{{end}}</td>
+              </tr>
+            </table>
+            {{end}}
+
+            <p style="margin: 0 0 20px 0;">One thing worth knowing. If your WhatsApp was linked when your plan ended, we keep that link for 30 days. Come back inside that time and WASBOT starts again by itself, no QR code. After 30 days you just link it again, which takes about a minute.</p>
+
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
+              <tr>
+                <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%);">
+                  <a href="{{.PricingURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">
+                    Turn WASBOT back on &#x2192;
+                  </a>
+                </td>
+              </tr>
+            </table>
+
+            {{if .NeedsLink}}<p style="margin: 0 0 20px 0;">When you come back, link your WhatsApp first. It takes about a minute. <a href="{{.ConnectURL}}" target="_blank" style="font-weight: 600;">Link your WhatsApp</a></p>{{end}}
+
+            <p style="margin: 0 0 20px 0;">And if something made you stop, I would like to know. The price, something that did not work, or you just got busy. Reply to this email and tell me in one line.</p>
+
+            <p style="margin: 0 0 20px 0;">Or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+
+            <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                      <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                            <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                              Need help? Simply reply to this email and we'll get back to you.
+                            </p>
+
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin-bottom: 20px;">
+                              <tr>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialTwitter}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconTwitterURL}}" alt="X" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialInstagram}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconInstagramURL}}" alt="Instagram" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                                <td style="padding: 0 8px;">
+                                  <a href="{{.Branding.SocialYouTube}}" style="display: inline-block;">
+                                    <img src="{{.Branding.IconYouTubeURL}}" alt="YouTube" width="24" height="24" style="opacity: 0.6;">
+                                  </a>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
+                              {{.Branding.CompanyName}} Technologies<br>
+                              Lagos, Nigeria
+                            </p>
+
+                            <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">
+                              &copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.
+                            </p>
+
+                            {{if .UnsubscribeURL}}
+                            <p style="margin: 12px 0 0 0; font-size: 12px; color: #9ca3af;">
+                              <a href="{{.UnsubscribeURL}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails.
+                            </p>
+                            {{end}}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+        </html>
