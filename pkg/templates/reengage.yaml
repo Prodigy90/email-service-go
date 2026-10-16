@@ -24,7 +24,7 @@ reengage_day0:
     {{end}}
     {{end}}Coming back takes two minutes:
     1. Pick your plan: {{.BillingURL}}
-    2. Link your WhatsApp again from your dashboard: {{.DashboardURL}}
+    2. If your WhatsApp isn't linked, link it from your dashboard: {{.DashboardURL}}
 
     Here is what is waiting for you:
 
@@ -178,7 +178,7 @@ reengage_day0:
         </table>
         {{end}}
 
-        <p style="margin: 0 0 20px 0;"><strong>Coming back takes two minutes.</strong> Pick your plan, then link your WhatsApp again from your dashboard.<br><a href="{{.DashboardURL}}" target="_blank" style="font-weight: 600;">Open your dashboard</a></p>
+        <p style="margin: 0 0 20px 0;"><strong>Coming back takes two minutes.</strong> Pick your plan. If your WhatsApp isn't linked, link it from your dashboard.<br><a href="{{.DashboardURL}}" target="_blank" style="font-weight: 600;">Open your dashboard</a></p>
 
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
           <tr>
@@ -1700,7 +1700,7 @@ reengage_day7:
     {{end}}{{if .TimeSavedHours}}- Roughly {{num .TimeSavedHours}} hours of work you did not have to do
     {{end}}{{end}}
 
-    Everything you set up is still in your account: your lists, your auto-replies, your sequences and your stats. Pick a plan, link your WhatsApp again from your dashboard, and you are back where you stopped. It takes about a minute.
+    Everything you set up is still in your account: your lists, your auto-replies, your sequences and your stats. Pick a plan and you are back where you stopped. If your WhatsApp isn't linked, link it from your dashboard. It takes about a minute.
 
     Turn WASBOT back on: {{.BillingURL}}
 
@@ -1850,7 +1850,7 @@ reengage_day7:
             </table>
             {{end}}
 
-            <p style="margin: 0 0 20px 0;">Everything you set up is still in your account: your lists, your auto-replies, your sequences and your stats. Pick a plan, link your WhatsApp again from your dashboard, and you are back where you stopped. It takes about a minute.</p>
+            <p style="margin: 0 0 20px 0;">Everything you set up is still in your account: your lists, your auto-replies, your sequences and your stats. Pick a plan and you are back where you stopped. If your WhatsApp isn't linked, link it from your dashboard. It takes about a minute.</p>
 
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
               <tr>
