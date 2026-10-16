@@ -203,3 +203,20 @@ func TestLifecycleTemplates_HaveExactlyOneSignoffPerBranch(t *testing.T) {
 		}
 	}
 }
+
+// Day 2 is the Status email, so it links the Status tutorial. The backend sends
+// no VideoURL for day 2, so the template's own fallback is what readers get.
+func TestOnboardingDay2_LinksStatusTutorial(t *testing.T) {
+	ts := newTestTemplateService(t)
+	_, body, html, err := ts.RenderWithBranding("onboarding_day2", baseLifecycleData(), domain.DefaultBranding())
+	if err != nil {
+		t.Fatalf("render: %v", err)
+	}
+	const want = "https://www.wasbot.app/tutorials/status"
+	if !strings.Contains(body, "Watch how it works (5 min): "+want) {
+		t.Errorf("text body is missing the Status tutorial link")
+	}
+	if !strings.Contains(html, `href="`+want+`"`) {
+		t.Errorf("html body is missing the Status tutorial link")
+	}
+}
