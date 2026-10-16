@@ -554,6 +554,8 @@ onboarding_day2:
 
     Post one now: {{if .StatusURL}}{{.StatusURL}}{{else}}{{.DashboardURL}}{{end}}
 
+    Watch how it works (5 min): {{if .VideoURL}}{{.VideoURL}}{{else}}https://www.wasbot.app/tutorials/status{{end}}
+
     {{if .Code}}Quick reminder: your code {{.Code}} is live for the rest of your trial. {{.CodePct}}% off your first payment, any plan, monthly or yearly.
 
     {{end}}Talk soon,
@@ -711,6 +713,8 @@ onboarding_day2:
         </td>
       </tr>
     </table>
+
+    <p style="margin: 0 0 24px 0; font-size: 14px; color: #6b7280; text-align: center;"><a href="{{if .VideoURL}}{{.VideoURL}}{{else}}https://www.wasbot.app/tutorials/status{{end}}" target="_blank" style="color: {{.Branding.PrimaryColor}}; font-weight: 600;">Watch how it works (5 min) &#x2192;</a></p>
 
     {{if .Code}}
     <p style="margin: 0 0 24px 0; font-size: 14px; color: #6b7280; text-align: center;">Quick reminder: your code <strong style="color: #b45309;">{{.Code}}</strong> is live for the rest of your trial. {{.CodePct}}% off your first payment, any plan, monthly or yearly.</p>
