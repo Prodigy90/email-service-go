@@ -38,6 +38,7 @@ func baseLifecycleData() map[string]interface{} {
 		"DashboardURL":     "https://www.wasbot.app/dashboard",
 		"ConnectURL":       "https://www.wasbot.app/dashboard",
 		"PricingURL":       "https://www.wasbot.app/pricing",
+		"BillingURL":       "https://www.wasbot.app/billing",
 		"UpgradeURL":       "https://www.wasbot.app/billing",
 		"BlogURL":          "https://www.wasbot.app/blog",
 		"WhatsAppGroupURL": "https://chat.whatsapp.com/example",
