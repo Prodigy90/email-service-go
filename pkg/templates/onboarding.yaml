@@ -18,8 +18,8 @@ onboarding_day0:
     {{if .TrialEnd}}Your plan: Free trial
     Ends: {{.TrialEnd}}
 
-    {{end}}Start here: link your WhatsApp. It takes about a minute, and this video walks you through linking and setting up contact saving.
-       Full setup video (9 min): {{if .VideoURL}}{{.VideoURL}}{{else}}https://youtu.be/eYCPi68WpKM{{end}}
+    {{end}}Start here: link your WhatsApp. It takes about a minute, and our tutorials walk you through it, then contact saving.
+       Watch the tutorials: {{if .VideoURL}}{{.VideoURL}}{{else}}https://www.wasbot.app/tutorials{{end}}
        Link now: {{.ConnectURL}}
 
     Here is what WASBOT does for you:
@@ -185,7 +185,7 @@ onboarding_day0:
     </table>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;"><strong>Start here: link your WhatsApp.</strong> It takes about a minute, and this video walks you through linking and setting up contact saving.<br><a href="{{if .VideoURL}}{{.VideoURL}}{{else}}https://youtu.be/eYCPi68WpKM{{end}}" target="_blank" style="font-weight: 600;">Full setup video (9 min)</a></p>
+    <p style="margin: 0 0 20px 0;"><strong>Start here: link your WhatsApp.</strong> It takes about a minute, and our tutorials walk you through it, then contact saving.<br><a href="{{if .VideoURL}}{{.VideoURL}}{{else}}https://www.wasbot.app/tutorials{{end}}" target="_blank" style="font-weight: 600;">Watch the tutorials</a></p>
 
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 24px auto;">
       <tr>
