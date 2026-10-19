@@ -83,7 +83,7 @@ func day0States() []renderState {
 	welcome := func() map[string]interface{} {
 		return withKeys(baseLifecycleData(), map[string]interface{}{
 			"FirstName": "Ada", "Code": "ADA10", "CodePct": 10, "TrialEnd": "Friday, 21 August",
-			"VideoURL": "https://youtu.be/eYCPi68WpKM", "VideoTitle": "Watch the full setup (9 min)",
+			"VideoURL": "https://www.wasbot.app/tutorials", "VideoTitle": "Watch the setup tutorials",
 		})
 	}
 	noName := welcome()
@@ -233,7 +233,7 @@ func TestWelcome_Day0RendersInEveryState(t *testing.T) {
 			group = "https://chat.whatsapp.com/EoP7wlsiUe4CKKA5E6BXCY" // template fallback
 		}
 		for _, must := range []string{
-			"https://youtu.be/eYCPi68WpKM", group,
+			"https://www.wasbot.app/tutorials", group,
 			"https://whatsapp.com/channel/0029VbDZGfB17EmsMzdM8f31",
 			"https://instagram.com/wasbot.app", "https://x.com/wasbot", "https://www.youtube.com/@wasbot_app",
 		} {
@@ -242,8 +242,9 @@ func TestWelcome_Day0RendersInEveryState(t *testing.T) {
 				t.Errorf("%s: missing %s", label, must)
 			}
 		}
-		// One video only: the 9-minute setup covers linking AND contact saving,
-		// so a second contacts link would be a duplicate (founder 2026-10-12).
+		// One video link only: the tutorials page starts with linking and goes on
+		// to contact saving, so a second contacts link would be a duplicate
+		// (founder 2026-10-12; hub instead of the 9-min video, 2026-10-19).
 		if strings.Contains(body, "/watch/contacts") || strings.Contains(html, "/watch/contacts") {
 			t.Errorf("%s: day0 carries a second (contacts) video link", label)
 		}
