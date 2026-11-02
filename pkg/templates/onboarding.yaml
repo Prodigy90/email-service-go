@@ -34,7 +34,7 @@ onboarding_day0:
 
     {{if .Code}}Your personal discount code: {{.Code}}. It takes {{.CodePct}}% off your first payment on any plan, for a month or a full year, so the longer you pick, the more you save. It only works while your free trial is active. Once your trial ends, it's full price.
 
-    {{end}}Stuck anywhere? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
+    {{end}}Stuck anywhere? Message us on WhatsApp and a representative will respond as soon as possible: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Join the community, we share tips and updates there:
     WhatsApp group: {{if .WhatsAppGroupURL}}{{.WhatsAppGroupURL}}{{else}}https://chat.whatsapp.com/EoP7wlsiUe4CKKA5E6BXCY{{end}}
@@ -225,7 +225,7 @@ onboarding_day0:
     </table>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Stuck anywhere? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
+    <p style="margin: 0 0 20px 0;">Stuck anywhere? <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 24px;">
       <tr>

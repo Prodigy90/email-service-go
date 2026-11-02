@@ -15,7 +15,7 @@ import (
 // backend produces for it.
 
 // helpLink is the preset WhatsApp chat, never a bare number to copy.
-const helpLink = "https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help."
+const helpLink = "https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help."
 
 // signoffs are the two house sign-offs: Victor on the welcomes, the team on
 // the series.
@@ -188,7 +188,7 @@ func assertClean(t *testing.T, label, subject, body, html string) {
 func assertHelpLink(t *testing.T, label, body, html string) {
 	t.Helper()
 	if !strings.Contains(body, helpLink) || !strings.Contains(html, helpLink) {
-		t.Errorf("%s: missing the preset wa.me help link", label)
+		t.Errorf("%s: missing the preset support help link", label)
 	}
 }
 
