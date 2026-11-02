@@ -872,7 +872,7 @@ payment_success_onetime:
     - Stats on who sees your status
     - Posting to more than one number when you add numbers
 
-    Need help? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
+    Need help? Message us on WhatsApp and a representative will respond as soon as possible: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Community:
     WhatsApp group: {{if .WhatsAppGroupURL}}{{.WhatsAppGroupURL}}{{else}}https://chat.whatsapp.com/EoP7wlsiUe4CKKA5E6BXCY{{end}}
@@ -1076,7 +1076,7 @@ payment_success_onetime:
       </tr>
     </table>
 
-    <p style="margin: 0 0 20px 0;">Need help? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
+    <p style="margin: 0 0 20px 0;">Need help? <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 24px;">
       <tr>

@@ -36,7 +36,7 @@ reengage_day0:
     - Shows you who actually sees your status
     - Posts to more than one WhatsApp number at once when you add numbers
 
-    If something made you stop, I want to hear it. Reply to this email or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+    If something made you stop, I want to hear it. Reply to this email or message us on WhatsApp: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
 
     Talk soon,
     Victor
@@ -208,7 +208,7 @@ reengage_day0:
           </tr>
         </table>
 
-        <p style="margin: 0 0 20px 0;">If something made you stop, I want to hear it. Reply to this email or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+        <p style="margin: 0 0 20px 0;">If something made you stop, I want to hear it. Reply to this email or <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
 
         <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
                   </div>
@@ -293,7 +293,7 @@ reengage_day1:
 
     {{if .NeedsLink}}When you come back, link your WhatsApp first. It takes about a minute: {{.ConnectURL}}{{end}}
 
-    Questions? Reply to this email or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+    Questions? Reply to this email or message us on WhatsApp: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
 
     Talk soon,
     Victor
@@ -445,7 +445,7 @@ reengage_day1:
 
             {{if .NeedsLink}}<p style="margin: 0 0 20px 0;">When you come back, link your WhatsApp first. It takes about a minute. <a href="{{.ConnectURL}}" target="_blank" style="font-weight: 600;">Link your WhatsApp</a></p>{{end}}
 
-            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
 
             <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
                       </div>
@@ -528,7 +528,7 @@ reengage_day2:
 
     {{if .NeedsLink}}When you come back, link your WhatsApp first. It takes about a minute: {{.ConnectURL}}{{end}}
 
-    Questions? Reply to this email or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+    Questions? Reply to this email or message us on WhatsApp: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
 
     Talk soon,
     Victor
@@ -678,7 +678,7 @@ reengage_day2:
 
             {{if .NeedsLink}}<p style="margin: 0 0 20px 0;">When you come back, link your WhatsApp first. It takes about a minute. <a href="{{.ConnectURL}}" target="_blank" style="font-weight: 600;">Link your WhatsApp</a></p>{{end}}
 
-            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
 
             <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
                       </div>
@@ -761,7 +761,7 @@ reengage_day3:
 
     {{if .NeedsLink}}When you come back, link your WhatsApp first. It takes about a minute: {{.ConnectURL}}{{end}}
 
-    Questions? Reply to this email or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+    Questions? Reply to this email or message us on WhatsApp: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
 
     Talk soon,
     Victor
@@ -911,7 +911,7 @@ reengage_day3:
 
             {{if .NeedsLink}}<p style="margin: 0 0 20px 0;">When you come back, link your WhatsApp first. It takes about a minute. <a href="{{.ConnectURL}}" target="_blank" style="font-weight: 600;">Link your WhatsApp</a></p>{{end}}
 
-            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
 
             <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
                       </div>
@@ -996,7 +996,7 @@ reengage_day4:
 
     {{if .NeedsLink}}When you come back, link your WhatsApp first. It takes about a minute: {{.ConnectURL}}{{end}}
 
-    Questions? Reply to this email or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+    Questions? Reply to this email or message us on WhatsApp: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
 
     Talk soon,
     Victor
@@ -1148,7 +1148,7 @@ reengage_day4:
 
             {{if .NeedsLink}}<p style="margin: 0 0 20px 0;">When you come back, link your WhatsApp first. It takes about a minute. <a href="{{.ConnectURL}}" target="_blank" style="font-weight: 600;">Link your WhatsApp</a></p>{{end}}
 
-            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
 
             <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
                       </div>
@@ -1233,7 +1233,7 @@ reengage_day5:
 
     {{if .NeedsLink}}When you come back, link your WhatsApp first. It takes about a minute: {{.ConnectURL}}{{end}}
 
-    Questions? Reply to this email or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+    Questions? Reply to this email or message us on WhatsApp: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
 
     Talk soon,
     Victor
@@ -1385,7 +1385,7 @@ reengage_day5:
 
             {{if .NeedsLink}}<p style="margin: 0 0 20px 0;">When you come back, link your WhatsApp first. It takes about a minute. <a href="{{.ConnectURL}}" target="_blank" style="font-weight: 600;">Link your WhatsApp</a></p>{{end}}
 
-            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
 
             <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
                       </div>
@@ -1468,7 +1468,7 @@ reengage_day6:
 
     {{if .NeedsLink}}When you come back, link your WhatsApp first. It takes about a minute: {{.ConnectURL}}{{end}}
 
-    Questions? Reply to this email or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+    Questions? Reply to this email or message us on WhatsApp: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
 
     Talk soon,
     Victor
@@ -1618,7 +1618,7 @@ reengage_day6:
 
             {{if .NeedsLink}}<p style="margin: 0 0 20px 0;">When you come back, link your WhatsApp first. It takes about a minute. <a href="{{.ConnectURL}}" target="_blank" style="font-weight: 600;">Link your WhatsApp</a></p>{{end}}
 
-            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+            <p style="margin: 0 0 20px 0;">Questions? Reply to this email or <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
 
             <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
                       </div>
@@ -1708,7 +1708,7 @@ reengage_day7:
 
     And if something made you stop, I would like to know. The price, something that did not work, or you just got busy. Reply to this email and tell me in one line.
 
-    Or message us on WhatsApp: https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
+    Or message us on WhatsApp: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question.
 
     Talk soon,
     Victor
@@ -1866,7 +1866,7 @@ reengage_day7:
 
             <p style="margin: 0 0 20px 0;">And if something made you stop, I would like to know. The price, something that did not work, or you just got busy. Reply to this email and tell me in one line.</p>
 
-            <p style="margin: 0 0 20px 0;">Or <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
+            <p style="margin: 0 0 20px 0;">Or <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question." target="_blank" style="font-weight: 600;">message us on WhatsApp</a>.</p>
 
             <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>Victor</strong></p>
                       </div>

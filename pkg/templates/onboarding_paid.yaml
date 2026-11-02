@@ -26,7 +26,7 @@ onboarding_paid_day1:
 
     {{if .NeedsLink}}Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}
 
-    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
+    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Talk soon,
     The WASBOT Team
@@ -176,7 +176,7 @@ onboarding_paid_day1:
     <p style="margin: 0 0 20px 0;">Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}</p>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
+    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
 
@@ -261,7 +261,7 @@ onboarding_paid_day2:
 
     {{if .NeedsLink}}Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}
 
-    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
+    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Talk soon,
     The WASBOT Team
@@ -419,7 +419,7 @@ onboarding_paid_day2:
     <p style="margin: 0 0 20px 0;">Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}</p>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
+    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
 
@@ -504,7 +504,7 @@ onboarding_paid_day3:
 
     {{if .NeedsLink}}Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}
 
-    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
+    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Talk soon,
     The WASBOT Team
@@ -658,7 +658,7 @@ onboarding_paid_day3:
     <p style="margin: 0 0 20px 0;">Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}</p>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
+    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
 
@@ -747,7 +747,7 @@ onboarding_paid_day4:
 
     {{if .NeedsLink}}Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}
 
-    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
+    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Talk soon,
     The WASBOT Team
@@ -899,7 +899,7 @@ onboarding_paid_day4:
     <p style="margin: 0 0 20px 0;">Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}</p>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
+    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
 
@@ -985,7 +985,7 @@ onboarding_paid_day5:
 
     {{if .NeedsLink}}Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}
 
-    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
+    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Talk soon,
     The WASBOT Team
@@ -1135,7 +1135,7 @@ onboarding_paid_day5:
     <p style="margin: 0 0 20px 0;">Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}</p>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
+    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
 
@@ -1220,7 +1220,7 @@ onboarding_paid_day6:
 
     {{if .NeedsLink}}Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}
 
-    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
+    {{end}}Need a hand? Message us on WhatsApp and a representative will respond as soon as possible: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Talk soon,
     The WASBOT Team
@@ -1378,7 +1378,7 @@ onboarding_paid_day6:
     <p style="margin: 0 0 20px 0;">Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}</p>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
+    <p style="margin: 0 0 20px 0;">Need a hand? <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">Message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <p style="margin: 32px 0 0 0; font-size: 16px; color: #374151; line-height: 1.7;">Talk soon,<br><strong>The WASBOT Team</strong></p>
 
@@ -1463,7 +1463,7 @@ onboarding_paid_day7:
 
     {{if .NeedsLink}}Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}
 
-    {{end}}Anytime you're stuck, message us on WhatsApp and a representative will respond as soon as possible: https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
+    {{end}}Anytime you're stuck, message us on WhatsApp and a representative will respond as soon as possible: https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help.
 
     Videos worth keeping:
 
@@ -1625,7 +1625,7 @@ onboarding_paid_day7:
     <p style="margin: 0 0 20px 0;">Not linked yet? Link your WhatsApp first, it takes about a minute: {{.ConnectURL}}</p>
     {{end}}
 
-    <p style="margin: 0 0 20px 0;">Anytime you're stuck, <a href="https://wa.me/2349018943768?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
+    <p style="margin: 0 0 20px 0;">Anytime you're stuck, <a href="https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20just%20joined%20WASBOT%20and%20need%20help." target="_blank" style="font-weight: 600;">message us on WhatsApp</a> and a representative will respond as soon as possible.</p>
 
     <p style="margin: 0 0 12px 0; color: #111827;"><strong>Videos worth keeping:</strong></p>
 

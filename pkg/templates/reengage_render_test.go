@@ -13,7 +13,7 @@ import (
 // six-field group, or none on a query failure) and never with trial or code
 // fields: those are only attached while a trial is running.
 
-const reengageHelpLink = "https://wa.me/2349018943768?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question."
+const reengageHelpLink = "https://www.wasbot.app/wa?text=Hi%20Victor%2C%20my%20WASBOT%20plan%20ended%20and%20I%20have%20a%20question."
 
 func reengageStates() []renderState {
 	fullStats := map[string]interface{}{
@@ -66,7 +66,7 @@ func TestReengageDay0_RendersForEveryChurnedReader(t *testing.T) {
 			}
 		}
 		if !strings.Contains(body, reengageHelpLink) || !strings.Contains(html, reengageHelpLink) {
-			t.Errorf("%s: missing the preset wa.me help link", label)
+			t.Errorf("%s: missing the preset support help link", label)
 		}
 		if !strings.Contains(body, "https://www.wasbot.app/billing") || !strings.Contains(html, `href="https://www.wasbot.app/billing"`) {
 			t.Errorf("%s: no way back to a plan", label)
@@ -128,7 +128,7 @@ func TestReengageSeries_RendersForEveryChurnedReader(t *testing.T) {
 				}
 			}
 			if !strings.Contains(body, reengageHelpLink) || !strings.Contains(html, reengageHelpLink) {
-				t.Errorf("%s: missing the preset wa.me help link", label)
+				t.Errorf("%s: missing the preset support help link", label)
 			}
 			if !strings.Contains(body, "https://www.wasbot.app/billing") || !strings.Contains(html, `href="https://www.wasbot.app/billing"`) {
 				t.Errorf("%s: no way back to a plan", label)
