@@ -59,3 +59,25 @@ func TestCampaignUpdateRendersExactlyOneSignoff(t *testing.T) {
 		}
 	})
 }
+
+// A two-line sign-off ("Victor\nWASBOT Team.") must keep its line break in the
+// HTML part: the <p> carries white-space: pre-line, and the text stays escaped.
+func TestCampaignUpdateMultiLineClosing(t *testing.T) {
+	ts := newTestTemplateService(t)
+	_, body, htmlBody, err := ts.Render("campaign_update", map[string]interface{}{
+		"Name": "Victor", "Subject": "s", "Intro": "i", "Body": "b",
+		"Closing": "Victor\nWASBOT Team.",
+	})
+	if err != nil {
+		t.Fatalf("render: %v", err)
+	}
+	if !strings.Contains(htmlBody, `white-space: pre-line;">Victor`+"\n"+`WASBOT Team.</p>`) {
+		t.Errorf("html: two-line closing not rendered with pre-line + newline:\n%s", htmlBody)
+	}
+	if !strings.Contains(body, "Victor\nWASBOT Team.") {
+		t.Error("text: two-line closing missing")
+	}
+	if strings.Contains(htmlBody, "The WASBOT Team") {
+		t.Error("html: default sign-off leaked alongside Closing")
+	}
+}
