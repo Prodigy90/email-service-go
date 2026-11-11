@@ -14,7 +14,7 @@ import (
 func TestVSLWalkthroughLink_Renders(t *testing.T) {
 	ts := newTestTemplateService(t)
 	const watch = "https://www.wasbot.app/walkthrough?ref=camp_email-vsl1"
-	const help = "https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20watched%20the%20WASBOT%20walkthrough%20and%20have%20a%20question."
+	const help = "https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20watched%20your%20WhatsApp%20automation%20video%20and%20have%20a%20question."
 	subject, body, html, err := ts.RenderWithBranding("vsl_walkthrough_link",
 		map[string]interface{}{"WatchURL": watch, "HelpURL": help}, domain.DefaultBranding())
 	if err != nil {
@@ -26,17 +26,17 @@ func TestVSLWalkthroughLink_Renders(t *testing.T) {
 		_ = os.WriteFile(out, []byte(html), 0o644)
 	}
 
-	if subject != "Your WASBOT walkthrough (16 minutes)" {
+	if subject != "How to automate your WhatsApp (your 16-minute video)" {
 		t.Errorf("subject = %q", subject)
 	}
 	if !strings.Contains(body, watch) || !strings.Contains(html, `href="`+watch+`"`) {
-		t.Error("missing the walkthrough link")
+		t.Error("missing the watch link")
 	}
 	if !strings.Contains(body, help) || !strings.Contains(html, `href="`+help+`"`) {
 		t.Error("missing the support link")
 	}
 	for _, line := range []string{
-		"Here's the walkthrough you asked for.",
+		"Here's the video you asked for, on how to automate your WhatsApp.",
 		"reply at 1am without touching their phone.",
 		"Watch it when you're ready, it picks up where you stopped on the same device.",
 		"Questions? Reply to this email or message us at",
@@ -48,8 +48,8 @@ func TestVSLWalkthroughLink_Renders(t *testing.T) {
 	if !strings.Contains(body, "Victor, founder of WASBOT") || !strings.Contains(html, "<strong>Victor</strong>, founder of WASBOT") {
 		t.Error("missing the sign-off")
 	}
-	if strings.Count(html, "Watch the walkthrough") != 1 {
-		t.Errorf("want exactly one button, got %d", strings.Count(html, "Watch the walkthrough"))
+	if strings.Count(html, "Watch the video") != 1 {
+		t.Errorf("want exactly one button, got %d", strings.Count(html, "Watch the video"))
 	}
 	for _, out := range []string{subject, body, html} {
 		if strings.Contains(out, "<no value>") || strings.Contains(strings.ToLower(out), "hi ,") {

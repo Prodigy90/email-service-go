@@ -5,23 +5,23 @@
 #
 # Data: WatchURL, HelpURL (both defaulted by the backend), PreviewText optional.
 vsl_walkthrough_link:
-  subject: "Your WASBOT walkthrough (16 minutes)"
-  preview_text: "The 16-minute walkthrough you asked for. Watch it when you're ready."
+  subject: "How to automate your WhatsApp (your 16-minute video)"
+  preview_text: "The video you asked for. Watch it when you're ready."
   body: |
     Hi there,
 
-    Here's the walkthrough you asked for. It shows how sellers get every contact saved, post status to everyone, send to all their groups at once and reply at 1am without touching their phone.
+    Here's the video you asked for, on how to automate your WhatsApp. It shows how sellers get every contact saved, post status to everyone, send to all their groups at once and reply at 1am without touching their phone.
 
     Watch it when you're ready, it picks up where you stopped on the same device.
 
-    Watch the walkthrough: {{.WatchURL}}
+    Watch the video: {{.WatchURL}}
 
     Questions? Reply to this email or message us at wasbot.app/wa: {{.HelpURL}}
 
     Victor, founder of WASBOT
 
     ---
-    You're getting this because you asked for the WASBOT walkthrough at wasbot.app.
+    You're getting this because you asked for the free WhatsApp automation video at wasbot.app.
   html_body: |
     <!DOCTYPE html>
     <html lang="en">
@@ -31,7 +31,7 @@ vsl_walkthrough_link:
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="color-scheme" content="light dark">
       <meta name="supported-color-schemes" content="light dark">
-      <title>Your WASBOT walkthrough (16 minutes)</title>
+      <title>How to automate your WhatsApp (your 16-minute video)</title>
       <!--[if mso]>
       <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
       <![endif]-->
@@ -85,18 +85,18 @@ vsl_walkthrough_link:
               <!-- Body -->
               <tr>
                 <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
-                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Your walkthrough is ready</h1>
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Your video is ready</h1>
 
                   <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
                     <p style="margin: 0 0 24px 0;">Hi there,</p>
-                    <p style="margin: 0 0 24px 0;">Here's the walkthrough you asked for. It shows how sellers get every contact saved, post status to everyone, send to all their groups at once and reply at 1am without touching their phone.</p>
+                    <p style="margin: 0 0 24px 0;">Here's the video you asked for, on how to automate your WhatsApp. It shows how sellers get every contact saved, post status to everyone, send to all their groups at once and reply at 1am without touching their phone.</p>
                     <p style="margin: 0 0 4px 0;">Watch it when you're ready, it picks up where you stopped on the same device.</p>
 
                     <!-- CTA -->
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
                       <tr>
                         <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
-                          <a href="{{.WatchURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">Watch the walkthrough</a>
+                          <a href="{{.WatchURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">Watch the video</a>
                         </td>
                       </tr>
                     </table>
@@ -114,7 +114,7 @@ vsl_walkthrough_link:
                   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                     <tr>
                       <td class="footer-content" style="padding: 32px 40px; text-align: center;">
-                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">You're getting this because you asked for the WASBOT walkthrough at wasbot.app.</p>
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">You're getting this because you asked for the free WhatsApp automation video at wasbot.app.</p>
                         <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">{{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria</p>
                         <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">&copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.</p>
                       </td>
