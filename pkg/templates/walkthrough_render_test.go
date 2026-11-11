@@ -13,7 +13,7 @@ import (
 // link; the copy is the founder-approved draft.
 func TestVSLWalkthroughLink_Renders(t *testing.T) {
 	ts := newTestTemplateService(t)
-	const watch = "https://www.wasbot.app/walkthrough?ref=email_vsl1"
+	const watch = "https://www.wasbot.app/walkthrough?ref=camp_email-vsl1"
 	const help = "https://www.wasbot.app/wa?text=Hi%20Victor%2C%20I%20watched%20the%20WASBOT%20walkthrough%20and%20have%20a%20question."
 	subject, body, html, err := ts.RenderWithBranding("vsl_walkthrough_link",
 		map[string]interface{}{"WatchURL": watch, "HelpURL": help}, domain.DefaultBranding())
