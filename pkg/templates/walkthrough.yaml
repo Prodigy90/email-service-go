@@ -1,0 +1,136 @@
+# The /walkthrough link email (item 136): one send to a lead's address the
+# first time it is entered on the walkthrough page. The lead asked for it
+# ("We'll email you the link so you can finish it later"), so the backend sends
+# it ungated. No name is known, so no {{.Name}}.
+#
+# Data: WatchURL, HelpURL (both defaulted by the backend), PreviewText optional.
+vsl_walkthrough_link:
+  subject: "How to automate your WhatsApp (your 16-minute video)"
+  preview_text: "The video you asked for. Watch it when you're ready."
+  body: |
+    Hi there,
+
+    Here's the video you asked for, on how to automate your WhatsApp. It shows how sellers get every contact saved, post status to everyone, send to all their groups at once and reply at 1am without touching their phone.
+
+    Watch it when you're ready, it picks up where you stopped on the same device.
+
+    Watch the video: {{.WatchURL}}
+
+    Questions? Reply to this email or message us at wasbot.app/wa: {{.HelpURL}}
+
+    Victor, founder of WASBOT
+
+    ---
+    You're getting this because you asked for the free WhatsApp automation video at wasbot.app.
+  html_body: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+      <title>How to automate your WhatsApp (your 16-minute video)</title>
+      <!--[if mso]>
+      <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+      <![endif]-->
+      <style>
+        :root { color-scheme: light dark; }
+        body, table, td, p, a, li { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; }
+        a { color: {{.Branding.PrimaryColor}}; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media only screen and (max-width: 620px) {
+          .container { width: 100% !important; padding: 0 !important; }
+          .content { padding: 24px 20px !important; }
+          .header { padding: 24px 20px !important; }
+          .footer-content { padding: 24px 20px !important; }
+        }
+        @media (prefers-color-scheme: dark) {
+          .header-company-name { color: #ffffff !important; }
+        }
+      </style>
+    </head>
+    <body style="background-color: #f3f4f6; margin: 0; padding: 0;">
+      <div style="display: none; max-height: 0; overflow: hidden;">
+        {{.PreviewText}}
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+      </div>
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f3f4f6;">
+        <tr>
+          <td style="padding: 40px 20px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center" class="container" style="max-width: 600px; margin: 0 auto;">
+
+              <!-- Header -->
+              <tr>
+                <td class="header" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%); padding: 32px 40px; border-radius: 16px 16px 0 0;">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                      <td style="vertical-align: middle; padding-right: 14px;">
+                        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); border-radius: 12px; text-align: center; line-height: 44px;">
+                          {{.Branding.LogoContent}}
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle;">
+                        <span class="header-company-name" style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 1px;">{{.Branding.CompanyName}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                <td class="content" style="background-color: #ffffff; padding: 40px; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb;">
+                  <h1 style="margin: 0 0 24px 0; font-size: 26px; font-weight: 700; color: #111827; line-height: 1.3;">Your video is ready</h1>
+
+                  <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
+                    <p style="margin: 0 0 24px 0;">Hi there,</p>
+                    <p style="margin: 0 0 24px 0;">Here's the video you asked for, on how to automate your WhatsApp. It shows how sellers get every contact saved, post status to everyone, send to all their groups at once and reply at 1am without touching their phone.</p>
+                    <!-- Thumbnail: the play button is baked into the image (email apps strip overlays). -->
+                    <a href="{{.WatchURL}}" target="_blank" style="display: block; margin: 0 0 24px 0; text-decoration: none;">
+                      <img src="https://media.wasbot.app/vsl/walkthrough-email-thumb-23ca48729c19c8d4997a.jpg" width="520" alt="Play the video: how to automate your WhatsApp" style="display: block; width: 100%; max-width: 520px; height: auto; border: 0; border-radius: 10px;">
+                    </a>
+                    <p style="margin: 0 0 4px 0;">Watch it when you're ready, it picks up where you stopped on the same device.</p>
+
+                    <!-- CTA -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 32px auto;">
+                      <tr>
+                        <td style="border-radius: 8px; background: linear-gradient(135deg, {{.Branding.PrimaryColor}} 0%, {{.Branding.SecondaryColor}} 100%); box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);">
+                          <a href="{{.WatchURL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none;">Watch the video</a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin: 0 0 24px 0;">Questions? Reply to this email or message us at <a href="{{.HelpURL}}" target="_blank">wasbot.app/wa</a>.</p>
+                    <p style="margin: 0;"><strong>Victor</strong>, founder of WASBOT</p>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 0; border-radius: 0 0 16px 16px; border: 1px solid #e5e7eb; border-top: none;">
+                  <div style="height: 1px; background: linear-gradient(to right, transparent, #e5e7eb, transparent); margin: 0 40px;"></div>
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td class="footer-content" style="padding: 32px 40px; text-align: center;">
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">You're getting this because you asked for the free WhatsApp automation video at wasbot.app.</p>
+                        <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">{{.Branding.CompanyName}} Technologies<br>Lagos, Nigeria</p>
+                        <p style="margin: 16px 0 0 0; font-size: 12px; color: #9ca3af;">&copy; {{.Branding.Year}} {{.Branding.CompanyName}}. All rights reserved.</p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  description: "Walkthrough link (Nov 2026, item 136). Sent once per lead on first insert in vsl_leads. Data: WatchURL, HelpURL. No name. Em-dash-free."
