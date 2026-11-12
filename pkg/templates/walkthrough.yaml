@@ -90,6 +90,10 @@ vsl_walkthrough_link:
                   <div style="font-size: 16px; line-height: 1.7; color: #4b5563;">
                     <p style="margin: 0 0 24px 0;">Hi there,</p>
                     <p style="margin: 0 0 24px 0;">Here's the video you asked for, on how to automate your WhatsApp. It shows how sellers get every contact saved, post status to everyone, send to all their groups at once and reply at 1am without touching their phone.</p>
+                    <!-- Thumbnail: the play button is baked into the image (email apps strip overlays). -->
+                    <a href="{{.WatchURL}}" target="_blank" style="display: block; margin: 0 0 24px 0; text-decoration: none;">
+                      <img src="https://media.wasbot.app/vsl/walkthrough-email-thumb-23ca48729c19c8d4997a.jpg" width="520" alt="Play the video: how to automate your WhatsApp" style="display: block; width: 100%; max-width: 520px; height: auto; border: 0; border-radius: 10px;">
+                    </a>
                     <p style="margin: 0 0 4px 0;">Watch it when you're ready, it picks up where you stopped on the same device.</p>
 
                     <!-- CTA -->
