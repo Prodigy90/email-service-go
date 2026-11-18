@@ -44,6 +44,7 @@ func TestTemplateConstants(t *testing.T) {
 		// Auth templates
 		{TemplateEmailVerification, "email_verification"},
 		{TemplatePasswordReset, "password_reset"},
+		{TemplatePasswordResetNoAccount, "password_reset_no_account"},
 
 		// WASBOT templates
 		{TemplateAccountUpgraded, "account_upgraded"},
@@ -102,6 +103,7 @@ func TestTemplateConstantsNotEmpty(t *testing.T) {
 		TemplateAffiliateLinkUpdated,
 		TemplateEmailVerification,
 		TemplatePasswordReset,
+		TemplatePasswordResetNoAccount,
 		TemplateAccountUpgraded,
 		TemplateRefundPending,
 		TemplateRefundProcessed,

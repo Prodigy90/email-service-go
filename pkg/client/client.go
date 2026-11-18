@@ -56,21 +56,21 @@ func (c *Client) WithHTTPClient(httpClient *http.Client) *Client {
 // BrandingConfig holds product-specific branding for email templates.
 // This allows different products to customize email appearance.
 type BrandingConfig struct {
-	PrimaryColor    string `json:"primary_color,omitempty"`    // e.g., "#10b981" (green for wasbot)
-	SecondaryColor  string `json:"secondary_color,omitempty"`  // e.g., "#059669"
-	AccentColor     string `json:"accent_color,omitempty"`     // e.g., "#047857"
-	DangerColor     string `json:"danger_color,omitempty"`     // e.g., "#ef4444"
-	CompanyName     string `json:"company_name,omitempty"`     // e.g., "WASBOT"
-	LogoURL         string `json:"logo_url,omitempty"`         // URL to company logo
-	DashboardURL    string `json:"dashboard_url,omitempty"`    // e.g., "https://www.wasbot.app/dashboard"
-	SupportEmail    string `json:"support_email,omitempty"`    // e.g., "support@wasbot.app"
-	WebsiteURL      string `json:"website_url,omitempty"`      // e.g., "https://www.wasbot.app"
-	SocialTwitter    string `json:"social_twitter,omitempty"`    // X (Twitter) URL
-	SocialInstagram  string `json:"social_instagram,omitempty"`  // Instagram URL
-	IconTwitterURL   string `json:"icon_twitter_url,omitempty"`  // URL to X/Twitter icon image
+	PrimaryColor     string `json:"primary_color,omitempty"`      // e.g., "#10b981" (green for wasbot)
+	SecondaryColor   string `json:"secondary_color,omitempty"`    // e.g., "#059669"
+	AccentColor      string `json:"accent_color,omitempty"`       // e.g., "#047857"
+	DangerColor      string `json:"danger_color,omitempty"`       // e.g., "#ef4444"
+	CompanyName      string `json:"company_name,omitempty"`       // e.g., "WASBOT"
+	LogoURL          string `json:"logo_url,omitempty"`           // URL to company logo
+	DashboardURL     string `json:"dashboard_url,omitempty"`      // e.g., "https://www.wasbot.app/dashboard"
+	SupportEmail     string `json:"support_email,omitempty"`      // e.g., "support@wasbot.app"
+	WebsiteURL       string `json:"website_url,omitempty"`        // e.g., "https://www.wasbot.app"
+	SocialTwitter    string `json:"social_twitter,omitempty"`     // X (Twitter) URL
+	SocialInstagram  string `json:"social_instagram,omitempty"`   // Instagram URL
+	IconTwitterURL   string `json:"icon_twitter_url,omitempty"`   // URL to X/Twitter icon image
 	IconInstagramURL string `json:"icon_instagram_url,omitempty"` // URL to Instagram icon image
-	SocialYouTube    string `json:"social_youtube,omitempty"`    // YouTube URL
-	IconYouTubeURL   string `json:"icon_youtube_url,omitempty"`  // URL to YouTube icon image
+	SocialYouTube    string `json:"social_youtube,omitempty"`     // YouTube URL
+	IconYouTubeURL   string `json:"icon_youtube_url,omitempty"`   // URL to YouTube icon image
 }
 
 // SendRequest represents an email send request.
@@ -308,14 +308,14 @@ const (
 	TemplateAffiliateLinkUpdated = "affiliate_link_updated"
 
 	// Payments (recurring subscriptions)
-	TemplatePaymentSuccess        = "payment_success"          // Recurring payment success
-	TemplatePaymentFailed         = "payment_failed"           // Payment failure (attempt 1)
-	TemplatePaymentFailedAttempt2 = "payment_failed_attempt2"  // Payment failure (attempt 2 — more urgent)
-	TemplatePaymentFailedFinal    = "payment_failed_final"     // Payment failure (final — subscription suspended)
-	TemplateSubscriptionRenewed   = "subscription_renewed"     // Auto-renewal success
-	TemplateSubscriptionExpiring  = "subscription_expiring"    // Generic expiring
-	TemplateSubscriptionCancelled = "subscription_cancelled"   // Subscription cancelled
-	TemplateCheckoutAbandoned     = "checkout_abandoned"       // Checkout started but never completed
+	TemplatePaymentSuccess        = "payment_success"         // Recurring payment success
+	TemplatePaymentFailed         = "payment_failed"          // Payment failure (attempt 1)
+	TemplatePaymentFailedAttempt2 = "payment_failed_attempt2" // Payment failure (attempt 2 — more urgent)
+	TemplatePaymentFailedFinal    = "payment_failed_final"    // Payment failure (final — subscription suspended)
+	TemplateSubscriptionRenewed   = "subscription_renewed"    // Auto-renewal success
+	TemplateSubscriptionExpiring  = "subscription_expiring"   // Generic expiring
+	TemplateSubscriptionCancelled = "subscription_cancelled"  // Subscription cancelled
+	TemplateCheckoutAbandoned     = "checkout_abandoned"      // Checkout started but never completed
 
 	// One-time payment templates (non-recurring)
 	TemplatePaymentSuccessOnetime        = "payment_success_onetime"        // One-time payment confirmation
@@ -346,22 +346,23 @@ const (
 	// onboarding sequence below.
 
 	// Authentication
-	TemplateEmailVerification = "email_verification"
-	TemplatePasswordReset     = "password_reset"
+	TemplateEmailVerification      = "email_verification"
+	TemplatePasswordReset          = "password_reset"
+	TemplatePasswordResetNoAccount = "password_reset_no_account"
 
 	// Migration campaigns
-	TemplateMigrationAnnouncement  = "migration_announcement"
-	TemplateMigrationFollowUp      = "migration_follow_up"
-	TemplateMigrationVerifyEmail   = "migration_verify_email"
-	TemplateMigrationUpgradeNudge  = "migration_upgrade_nudge"
-	TemplateMigrationFinalNotice   = "migration_final_notice"
+	TemplateMigrationAnnouncement = "migration_announcement"
+	TemplateMigrationFollowUp     = "migration_follow_up"
+	TemplateMigrationVerifyEmail  = "migration_verify_email"
+	TemplateMigrationUpgradeNudge = "migration_upgrade_nudge"
+	TemplateMigrationFinalNotice  = "migration_final_notice"
 
 	TemplateMigrationVerifyEmailFinal  = "migration_verify_email_final"
 	TemplateMigrationUpgradeNudgeFinal = "migration_upgrade_nudge_final"
 
 	// Campaign templates (flexible, content-driven)
-	TemplateCampaignUpdate      = "campaign_update"       // Flexible shell — pass Subject, Intro, HTMLBody, optional VideoURL
-	TemplateFeatureAnnouncement = "feature_announcement"  // Pre-built 4-feature announcement
+	TemplateCampaignUpdate      = "campaign_update"      // Flexible shell — pass Subject, Intro, HTMLBody, optional VideoURL
+	TemplateFeatureAnnouncement = "feature_announcement" // Pre-built 4-feature announcement
 
 	// Onboarding sequence (Migration 062)
 	TemplateOnboardingDay0 = "onboarding_day0" // Signup — link your WhatsApp
