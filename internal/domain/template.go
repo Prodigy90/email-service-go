@@ -25,29 +25,29 @@ type TemplateInfo struct {
 // Pre-defined template names for consistency across services.
 const (
 	// Affiliate System templates
-	TemplatePayoutApproved  = "payout_approved"
-	TemplatePayoutRejected  = "payout_rejected"
-	TemplatePayoutProcessed = "payout_processed"
+	TemplatePayoutApproved   = "payout_approved"
+	TemplatePayoutRejected   = "payout_rejected"
+	TemplatePayoutProcessed  = "payout_processed"
 	TemplateCommissionEarned = "commission_earned"
 
 	// Webhook Router / Payment templates (recurring subscriptions)
-	TemplatePaymentSuccess        = "payment_success"          // Recurring payment success
-	TemplatePaymentFailed         = "payment_failed"           // Payment failure (attempt 1)
-	TemplatePaymentFailedAttempt2 = "payment_failed_attempt2"  // Payment failure (attempt 2 — more urgent)
-	TemplatePaymentFailedFinal    = "payment_failed_final"     // Payment failure (final — subscription suspended)
-	TemplateSubscriptionRenewed   = "subscription_renewed"     // Auto-renewal success
-	TemplateSubscriptionExpiring  = "subscription_expiring"    // Generic expiring (deprecated, use specific ones)
-	TemplateSubscriptionCancelled = "subscription_cancelled"   // Subscription cancelled
-	TemplateCheckoutAbandoned     = "checkout_abandoned"       // Checkout started but never completed
+	TemplatePaymentSuccess        = "payment_success"         // Recurring payment success
+	TemplatePaymentFailed         = "payment_failed"          // Payment failure (attempt 1)
+	TemplatePaymentFailedAttempt2 = "payment_failed_attempt2" // Payment failure (attempt 2 — more urgent)
+	TemplatePaymentFailedFinal    = "payment_failed_final"    // Payment failure (final — subscription suspended)
+	TemplateSubscriptionRenewed   = "subscription_renewed"    // Auto-renewal success
+	TemplateSubscriptionExpiring  = "subscription_expiring"   // Generic expiring (deprecated, use specific ones)
+	TemplateSubscriptionCancelled = "subscription_cancelled"  // Subscription cancelled
+	TemplateCheckoutAbandoned     = "checkout_abandoned"      // Checkout started but never completed
 
 	// One-time payment templates (non-recurring)
-	TemplatePaymentSuccessOnetime     = "payment_success_onetime"     // One-time payment confirmation
-	TemplateSubscriptionActivated     = "subscription_activated"      // New recurring subscription activated
+	TemplatePaymentSuccessOnetime        = "payment_success_onetime"        // One-time payment confirmation
+	TemplateSubscriptionActivated        = "subscription_activated"         // New recurring subscription activated
 	TemplateSubscriptionActivatedOnetime = "subscription_activated_onetime" // One-time subscription activated
 
 	// WASBOT templates. "welcome" was deleted 2026-10-12 (unsent since
 	// 2026-04; the signup welcome is onboarding_day0).
-	TemplateAccountUpgraded  = "account_upgraded"
+	TemplateAccountUpgraded = "account_upgraded"
 
 	// trial_day3/5/6/10 and trial_expiring removed 2026-08-15: dead code,
 	// the old trial cron that called them is disabled. Superseded by the
@@ -73,16 +73,18 @@ const (
 	// Authentication templates (Migration 022)
 	TemplateEmailVerification = "email_verification"
 	TemplatePasswordReset     = "password_reset"
+	// Sent instead of a reset link when the address has no account.
+	TemplatePasswordResetNoAccount = "password_reset_no_account"
 
 	// Affiliate link update template
 	TemplateAffiliateLinkUpdated = "affiliate_link_updated"
 
 	// Migration campaign templates
-	TemplateMigrationAnnouncement  = "migration_announcement"
-	TemplateMigrationFollowUp      = "migration_follow_up"
-	TemplateMigrationVerifyEmail   = "migration_verify_email"
-	TemplateMigrationUpgradeNudge  = "migration_upgrade_nudge"
-	TemplateMigrationFinalNotice   = "migration_final_notice"
+	TemplateMigrationAnnouncement = "migration_announcement"
+	TemplateMigrationFollowUp     = "migration_follow_up"
+	TemplateMigrationVerifyEmail  = "migration_verify_email"
+	TemplateMigrationUpgradeNudge = "migration_upgrade_nudge"
+	TemplateMigrationFinalNotice  = "migration_final_notice"
 
 	TemplateMigrationVerifyEmailFinal  = "migration_verify_email_final"
 	TemplateMigrationUpgradeNudgeFinal = "migration_upgrade_nudge_final"

@@ -182,6 +182,7 @@ func TestTemplateService_AllDomainTemplatesPresent(t *testing.T) {
 		domain.TemplateAccessRevoked,
 		domain.TemplateEmailVerification,
 		domain.TemplatePasswordReset,
+		domain.TemplatePasswordResetNoAccount,
 		domain.TemplateAffiliateLinkUpdated,
 		domain.TemplateMigrationAnnouncement,
 		domain.TemplateMigrationFollowUp,

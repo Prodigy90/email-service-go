@@ -106,10 +106,10 @@ func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (
 
 	// Copy allowed request headers (e.g., Reply-To)
 	allowedHeaders := map[string]bool{
-		"Reply-To":              true,
-		"X-Campaign-Tag":       true,
-		"X-Mailer":             true,
-		"X-Entity-Ref-ID":      true,
+		"Reply-To":        true,
+		"X-Campaign-Tag":  true,
+		"X-Mailer":        true,
+		"X-Entity-Ref-ID": true,
 	}
 	if len(req.Headers) > 0 {
 		email.Headers = make(map[string]string, len(req.Headers))
@@ -430,8 +430,9 @@ func (s *EmailService) GetCampaignBouncedEmails(ctx context.Context, campaignTag
 // classifies them as Promotions when unsubscribe headers are present.
 var transactionalTemplates = map[string]bool{
 	// Auth
-	"email_verification": true,
-	"password_reset":     true,
+	"email_verification":        true,
+	"password_reset":            true,
+	"password_reset_no_account": true,
 	// Payments & subscriptions
 	"payment_success":                true,
 	"payment_success_onetime":        true,
@@ -451,8 +452,8 @@ var transactionalTemplates = map[string]bool{
 	"refund_processed": true,
 	"refund_failed":    true,
 	// Account lifecycle
-	"account_upgraded":    true,
-	"legacy_provisioned":  true,
+	"account_upgraded":   true,
+	"legacy_provisioned": true,
 }
 
 // isTransactionalTemplate returns true if the template is transactional
