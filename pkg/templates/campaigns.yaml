@@ -18,7 +18,7 @@ campaign_update:
     The WASBOT Team{{end}}
 
     ---
-    You're receiving this because you have a WASBOT account.
+    {{if .FooterReason}}{{.FooterReason}}{{else}}You're receiving this because you have a WASBOT account.{{end}}
     Unsubscribe: {{.UnsubscribeURL}}
   html_body: |
     <!DOCTYPE html>
