@@ -467,3 +467,49 @@ func TestCheckoutAbandonedHasNoEmDashesInCopy(t *testing.T) {
 		t.Errorf("em-dash in copy: %q", text)
 	}
 }
+
+// Naira checkouts get a bank-transfer escape hatch for buyers Paystack blocks;
+// everyone else (USD via Bachs, or an older backend that doesn't send the flag)
+// keeps the generic reply line. A naira account number offered to a USD buyer
+// would be wrong, so the flag must gate it in both bodies.
+func TestCheckoutAbandonedBankTransferOffer(t *testing.T) {
+	ts := newTestTemplateService(t)
+	const offer = `Reply "transfer"`
+	const generic = "tell us what happened"
+	base := func() map[string]interface{} {
+		return map[string]interface{}{"CustomerName": "Victor", "PlanName": "Basic", "CheckoutURL": "https://x"}
+	}
+
+	on := base()
+	on["OfferBankTransfer"] = true
+	_, text, html, err := ts.Render(domain.TemplateCheckoutAbandoned, on)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for name, body := range map[string]string{"text": text, "html": html} {
+		if !strings.Contains(body, "Is Paystack giving you trouble?") || !strings.Contains(strings.ReplaceAll(body, "&#34;", `"`), offer) {
+			t.Errorf("%s: transfer offer missing when flag is on", name)
+		}
+		if strings.Contains(body, generic) {
+			t.Errorf("%s: generic line shown alongside the transfer offer", name)
+		}
+	}
+
+	for label, data := range map[string]map[string]interface{}{
+		"flag false":  func() map[string]interface{} { d := base(); d["OfferBankTransfer"] = false; return d }(),
+		"flag absent": base(),
+	} {
+		_, text, html, err := ts.Render(domain.TemplateCheckoutAbandoned, data)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for name, body := range map[string]string{"text": text, "html": html} {
+			if strings.Contains(body, "Paystack giving you trouble") {
+				t.Errorf("%s/%s: transfer offer shown without the flag", label, name)
+			}
+			if !strings.Contains(body, generic) {
+				t.Errorf("%s/%s: generic reply line missing", label, name)
+			}
+		}
+	}
+}

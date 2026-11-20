@@ -3227,7 +3227,7 @@ checkout_abandoned:
 
     {{end}}Finish setting up {{.PlanName}}: {{.CheckoutURL}}
 
-    If you hit a snag on the payment page, just reply to this email and tell us what happened and we'll sort it.
+    {{if .OfferBankTransfer}}Is Paystack giving you trouble? Reply "transfer" and we'll send you our account number so you can pay by bank transfer instead.{{else}}If you hit a snag on the payment page, just reply to this email and tell us what happened and we'll sort it.{{end}}
   html_body: |-
     <!DOCTYPE html>
     <html lang="en">
@@ -3373,7 +3373,7 @@ checkout_abandoned:
                       </tr>
                     </table>
 
-                    <p style="margin: 0; font-size: 14px; color: #6b7280;">If you hit a snag on the payment page, just reply to this email and tell us what happened and we'll sort it.</p>
+                    <p style="margin: 0; font-size: 14px; color: #6b7280;">{{if .OfferBankTransfer}}Is Paystack giving you trouble? Reply "transfer" and we'll send you our account number so you can pay by bank transfer instead.{{else}}If you hit a snag on the payment page, just reply to this email and tell us what happened and we'll sort it.{{end}}</p>
                   </div>
                 </td>
               </tr>
