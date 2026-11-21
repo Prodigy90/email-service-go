@@ -72,8 +72,10 @@ const countedStatuses = `status <> 'failed'`
 //
 // emails.to_address is matched with "= ANY" so the btree on to_address is
 // used: the table is large (message bodies), and a lower() on the column
-// would scan it. A row stored in mixed case is therefore missed; every
-// sender we know of sends the address as the account holds it.
+// would scan it. A row stored in mixed case is therefore missed. The
+// campaign server lower-cases its lists; the backend sends the address as
+// user_auth holds it, and prod's pg_stats sample of both columns (11-21)
+// held no mixed-case value. A lower(to_address) index would close the gap.
 func (r *RecipientStateRepository) Get(ctx context.Context, q RecipientStateQuery) (map[string]*RecipientState, error) {
 	out := map[string]*RecipientState{}
 	if len(q.Emails) == 0 {
