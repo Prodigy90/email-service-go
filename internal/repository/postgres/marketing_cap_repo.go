@@ -3,7 +3,6 @@ package postgres
 import (
 	"context"
 	"database/sql"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"strings"
@@ -173,19 +172,7 @@ func (r *EmailRepository) CreateUnderMarketingCap(ctx context.Context, email *do
 		email.Metadata["daily_cap"] = "would_cap"
 	}
 
-	metadata, _ := json.Marshal(email.Metadata)
-	templateData, _ := json.Marshal(email.TemplateData)
-	headers, _ := json.Marshal(email.Headers)
-	result, err := tx.ExecContext(ctx, `
-		INSERT INTO emails (
-			id, to_address, from_address, subject, body, html_body,
-			template, template_data, status, max_retries, idempotency_id,
-			source_service, metadata, headers, created_at, updated_at
-		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
-		ON CONFLICT (idempotency_id) DO NOTHING`,
-		email.ID, email.To, email.From, email.Subject, email.Body, email.HTMLBody,
-		email.Template, templateData, email.Status, email.MaxRetries, nullString(email.IdempotencyID),
-		nullString(email.SourceService), metadata, headers, email.CreatedAt, email.UpdatedAt)
+	result, err := insertEmail(ctx, tx, email, true)
 	if err != nil {
 		return nil, res, fmt.Errorf("cap: insert: %w", err)
 	}

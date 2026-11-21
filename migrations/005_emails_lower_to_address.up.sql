@@ -1,10 +1,15 @@
 -- Match an address case-insensitively without scanning emails: the daily
 -- marketing cap and /recipients/state count by lower(to_address), because
 -- the backend sends the address as user_auth holds it (may be mixed case)
--- and the campaign server lower-cases its lists. ~123K rows at 2026-11-21:
--- a plain build takes well under a second.
-CREATE INDEX IF NOT EXISTS idx_emails_to_address_lower ON emails (lower(to_address));
--- An expression index has no planner statistics until the table is analyzed;
--- without them the 500-address state read could plan a scan. ANALYZE (unlike
--- VACUUM) may run inside the migration's transaction.
-ANALYZE emails;
+-- and the campaign server lower-cases its lists.
+--
+-- CONCURRENTLY, and the only statement in the file: migrations run at API
+-- startup during a rolling restart, so the old pod is still inserting sends.
+-- A plain build on a prod-sized copy (123K rows, 192 MB heap) blocked a
+-- concurrent insert for ~1s. CONCURRENTLY cannot run in a transaction block,
+-- and golang-migrate sends the file as one statement string, so nothing else
+-- may share this file (the ANALYZE is migration 006).
+-- If this fails partway it leaves an INVALID index that IF NOT EXISTS would
+-- then skip: DROP INDEX CONCURRENTLY idx_emails_to_address_lower, force the
+-- version back to 4, restart.
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_emails_to_address_lower ON emails (lower(to_address));

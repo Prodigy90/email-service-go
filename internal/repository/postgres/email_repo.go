@@ -22,13 +22,10 @@ func NewEmailRepository(db *sqlx.DB) *EmailRepository {
 	return &EmailRepository{db: db}
 }
 
-// Create inserts a new email record.
-func (r *EmailRepository) Create(ctx context.Context, email *domain.Email) error {
-	metadata, _ := json.Marshal(email.Metadata)
-	templateData, _ := json.Marshal(email.TemplateData)
-	headers, _ := json.Marshal(email.Headers)
-
-	query := `
+// insertEmailSQL is the one INSERT every save path uses (Create,
+// CreateOrGetByIdempotencyID, CreateUnderMarketingCap), so a capped or
+// shadow row can never be stored differently from an uncapped one.
+const insertEmailSQL = `
 		INSERT INTO emails (
 			id, to_address, from_address, subject, body, html_body,
 			template, template_data, status, max_retries, idempotency_id,
@@ -37,7 +34,22 @@ func (r *EmailRepository) Create(ctx context.Context, email *domain.Email) error
 			$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16
 		)`
 
-	_, err := r.db.ExecContext(ctx, query,
+// execer is *sqlx.DB or *sqlx.Tx.
+type execer interface {
+	ExecContext(ctx context.Context, query string, args ...interface{}) (sql.Result, error)
+}
+
+// insertEmail runs insertEmailSQL; onConflictIdem adds
+// ON CONFLICT (idempotency_id) DO NOTHING.
+func insertEmail(ctx context.Context, ex execer, email *domain.Email, onConflictIdem bool) (sql.Result, error) {
+	metadata, _ := json.Marshal(email.Metadata)
+	templateData, _ := json.Marshal(email.TemplateData)
+	headers, _ := json.Marshal(email.Headers)
+	q := insertEmailSQL
+	if onConflictIdem {
+		q += "\n\t\tON CONFLICT (idempotency_id) DO NOTHING"
+	}
+	return ex.ExecContext(ctx, q,
 		email.ID,
 		email.To,
 		email.From,
@@ -55,6 +67,11 @@ func (r *EmailRepository) Create(ctx context.Context, email *domain.Email) error
 		email.CreatedAt,
 		email.UpdatedAt,
 	)
+}
+
+// Create inserts a new email record.
+func (r *EmailRepository) Create(ctx context.Context, email *domain.Email) error {
+	_, err := insertEmail(ctx, r.db, email, false)
 	return err
 }
 
@@ -70,40 +87,9 @@ func (r *EmailRepository) CreateOrGetByIdempotencyID(ctx context.Context, email 
 		return email, false, nil
 	}
 
-	metadata, _ := json.Marshal(email.Metadata)
-	templateData, _ := json.Marshal(email.TemplateData)
-	headers, _ := json.Marshal(email.Headers)
-
 	// Use INSERT ON CONFLICT DO NOTHING to atomically try insertion
 	// If conflict on idempotency_id, nothing is inserted
-	query := `
-		INSERT INTO emails (
-			id, to_address, from_address, subject, body, html_body,
-			template, template_data, status, max_retries, idempotency_id,
-			source_service, metadata, headers, created_at, updated_at
-		) VALUES (
-			$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16
-		)
-		ON CONFLICT (idempotency_id) DO NOTHING`
-
-	result, err := r.db.ExecContext(ctx, query,
-		email.ID,
-		email.To,
-		email.From,
-		email.Subject,
-		email.Body,
-		email.HTMLBody,
-		email.Template,
-		templateData,
-		email.Status,
-		email.MaxRetries,
-		nullString(email.IdempotencyID),
-		nullString(email.SourceService),
-		metadata,
-		headers,
-		email.CreatedAt,
-		email.UpdatedAt,
-	)
+	result, err := insertEmail(ctx, r.db, email, true)
 	if err != nil {
 		return nil, false, err
 	}

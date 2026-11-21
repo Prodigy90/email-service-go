@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 	"sync"
 	"testing"
 	"time"
@@ -407,5 +408,120 @@ func TestMarketingCap_BulkMetadataNotShared_Integration(t *testing.T) {
 	w.db.Get(&stamped, `SELECT count(*) FROM emails WHERE to_address = $1 AND metadata->>'daily_cap' = 'would_cap'`, fresh)
 	if stamped != 0 || shared["daily_cap"] != nil {
 		t.Errorf("the shared map was stamped (fresh stamped=%d, map=%v)", stamped, shared)
+	}
+}
+
+// spyCapStore counts entries into the capped path (the only place the
+// transaction and the advisory lock are taken).
+type spyCapStore struct {
+	inner marketingCapStore
+	mu    sync.Mutex
+	calls int
+}
+
+func (s *spyCapStore) CreateUnderMarketingCap(ctx context.Context, e *domain.Email, c postgres.MarketingCap) (*domain.Email, postgres.CapResult, error) {
+	s.mu.Lock()
+	s.calls++
+	s.mu.Unlock()
+	return s.inner.CreateUnderMarketingCap(ctx, e, c)
+}
+
+// Off mode: a marketing send never enters the capped path (main's
+// CreateOrGetByIdempotencyID only). Service mail never enters it in ANY mode.
+func TestMarketingCap_WhoEntersTheLock_Integration(t *testing.T) {
+	for _, mode := range []MarketingCapMode{CapOff, CapShadow, CapEnforce} {
+		w := newCapWorld(t, mode, capNow)
+		spy := &spyCapStore{inner: w.svc.capRepo}
+		w.svc.capRepo = spy
+		for _, tmpl := range []string{"password_reset", "payment_success", "subscription_expiring_1d", "onboarding_day0", "checkout_abandoned", "commission_earned", "vsl_walkthrough_link"} {
+			if _, err := w.send(w.addr("svc-"+tmpl), tmpl, "wasbot", nil, ""); err != nil {
+				t.Fatalf("%s %s: %v", mode, tmpl, err)
+			}
+		}
+		if _, err := w.send(w.addr("svc-raw"), "", "support", nil, ""); err != nil {
+			t.Fatal(err)
+		}
+		if spy.calls != 0 {
+			t.Errorf("%s: service mail entered the capped path %d times", mode, spy.calls)
+		}
+		if _, err := w.send(w.addr("mkt"), "campaign_update", "campaign", map[string]interface{}{"campaign": "c"}, ""); err != nil {
+			t.Fatal(err)
+		}
+		want := 1
+		if mode == CapOff {
+			want = 0
+		}
+		if spy.calls != want {
+			t.Errorf("%s: a marketing send entered the capped path %d times, want %d", mode, spy.calls, want)
+		}
+	}
+
+	// And with an address's lock held elsewhere, service mail to it doesn't wait (enforce).
+	w := newCapWorld(t, CapEnforce, capNow)
+	a := w.addr("svc-locked")
+	tx := w.db.MustBegin()
+	defer tx.Rollback()
+	tx.MustExec(`SELECT pg_advisory_xact_lock(hashtextextended($1, 0))`, "mktcap:"+a)
+	done := make(chan error, 1)
+	go func() { _, err := w.send(a, "password_reset", "wasbot", nil, ""); done <- err }()
+	select {
+	case err := <-done:
+		if err != nil {
+			t.Fatal(err)
+		}
+	case <-time.After(5 * time.Second):
+		t.Fatal("service mail waited on the marketing cap lock")
+	}
+}
+
+// The capped path stores a row exactly as the uncapped path does: an
+// off-mode row and a shadow-mode row for the same input are equal apart
+// from metadata.daily_cap (and id/idempotency/timestamps, which differ by
+// construction).
+func TestMarketingCap_ShadowRowEqualsOffRow_Integration(t *testing.T) {
+	type stored struct {
+		To, From, Subject, Body, HTML, Template, TemplateData, Status, SourceService, Metadata, Headers string
+		MaxRetries, RetryCount                                                                       int
+		HasIdem                                                                                      bool
+	}
+	read := func(w *capWorld, id uuid.UUID) stored {
+		var s stored
+		if err := w.db.QueryRow(`SELECT to_address, COALESCE(from_address,''), subject, body, COALESCE(html_body,''), COALESCE(template,''),
+			template_data::text, status, COALESCE(source_service,''), (metadata - 'daily_cap')::text, headers::text, max_retries, retry_count, idempotency_id IS NOT NULL
+			FROM emails WHERE id = $1`, id).Scan(&s.To, &s.From, &s.Subject, &s.Body, &s.HTML, &s.Template, &s.TemplateData, &s.Status,
+			&s.SourceService, &s.Metadata, &s.Headers, &s.MaxRetries, &s.RetryCount, &s.HasIdem); err != nil {
+			t.Fatal(err)
+		}
+		return s
+	}
+	send := func(mode MarketingCapMode) (stored, string) {
+		w := newCapWorld(t, mode, capNow)
+		a := "parity-" + w.run + "@cap-test.example"
+		// A marketing email earlier today, so shadow stamps would_cap.
+		w.seed(a, "sent", "campaign_update", "campaign", `{"campaign":"earlier"}`, capNow.Add(-time.Hour))
+		req := &domain.SendEmailRequest{
+			To: a, From: "Victor <v@x.co>", Template: "campaign_update", SourceService: "campaign",
+			IdempotencyID: "parity-" + w.run,
+			Metadata:      map[string]interface{}{"campaign": "vsl_reeng_d1pm", "content_rev": "abc"},
+			Headers:       map[string]string{"Reply-To": "hello@x.co", "X-Not-Allowed": "dropped"},
+			TemplateData:  map[string]interface{}{"Name": "Ada", "Subject": "Hi", "Body": "b", "HTMLBody": "<p>b</p>"},
+		}
+		resp, err := w.svc.Send(context.Background(), req)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var cap string
+		w.db.Get(&cap, `SELECT COALESCE(metadata->>'daily_cap','') FROM emails WHERE id = $1`, resp.ID)
+		s := read(w, resp.ID)
+		s.To = strings.Replace(s.To, w.run, "RUN", 1)
+		return s, cap
+	}
+	off, offCap := send(CapOff)
+	shadow, shadowCap := send(CapShadow)
+	if off != shadow {
+		t.Errorf("rows differ:\n off    %+v\n shadow %+v", off, shadow)
+	}
+	if offCap != "" || shadowCap != "would_cap" {
+		t.Errorf("daily_cap: off %q, shadow %q; want \"\" and would_cap", offCap, shadowCap)
 	}
 }
