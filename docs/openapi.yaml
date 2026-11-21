@@ -1185,6 +1185,68 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /api/v1/recipients/state:
+    post:
+      tags:
+        - Suppressions
+      summary: Send and suppression state per address
+      description: |
+        For up to 500 addresses (matched trimmed and lower-cased), returns the
+        suppression row, sends accepted today (Lagos calendar day, from
+        `day_start`), the marketing share of those (service mail such as
+        receipts, auth, welcome and the abandoned-checkout reminder left out),
+        sends in the rolling last 24 hours, and the last send and last
+        marketing send. A send counts when it was accepted for delivery
+        (status anything but `failed`); suppressed sends create no row and
+        never count. Every requested address is returned, in request order.
+      operationId: getRecipientState
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [emails]
+              properties:
+                emails:
+                  type: array
+                  maxItems: 500
+                  items: {type: string, format: email}
+      responses:
+        '200':
+          description: State per address
+          content:
+            application/json:
+              example:
+                day_start: "2026-11-21T00:00:00+01:00"
+                timezone: "Africa/Lagos"
+                recipients:
+                  - email: "ada@example.com"
+                    suppressed: false
+                    suppression: null
+                    unsubscribed: false
+                    bounced: false
+                    complained: false
+                    ever_bounced: false
+                    ever_complained: false
+                    sends_today: 2
+                    marketing_today: 1
+                    sends_24h: 3
+                    last_send: {at: "2026-11-21T11:00:12Z", template: "campaign_update", campaign: "vsl_reeng_d3am", sequence: false, source_service: "campaign", status: "sent", service: false}
+                    last_marketing_send: {at: "2026-11-21T11:00:12Z", template: "campaign_update", campaign: "vsl_reeng_d3am", sequence: false, source_service: "campaign", status: "sent", service: false}
+        '400':
+          description: Missing emails or more than 500
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
   /api/v1/suppressions/{email}:
     delete:
       tags:

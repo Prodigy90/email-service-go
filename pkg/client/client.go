@@ -248,6 +248,64 @@ func (c *Client) CheckSuppressions(ctx context.Context, emails []string) (*Suppr
 	return &resp, nil
 }
 
+// RecipientSend is one accepted send to an address.
+type RecipientSend struct {
+	At            time.Time `json:"at"`
+	Template      *string   `json:"template"`
+	Campaign      *string   `json:"campaign"`
+	Sequence      bool      `json:"sequence"`
+	SourceService *string   `json:"source_service"`
+	Status        string    `json:"status"`
+	// Service: cap-exempt service mail (receipts, auth, welcome...).
+	Service bool `json:"service"`
+}
+
+// RecipientSuppression is an address's suppression-list row.
+type RecipientSuppression struct {
+	Reason      string    `json:"reason"` // unsubscribe | bounce | complaint
+	Source      string    `json:"source"`
+	CampaignTag *string   `json:"campaign_tag"`
+	At          time.Time `json:"at"`
+}
+
+// RecipientState is what the email service knows about one address.
+type RecipientState struct {
+	Email             string                `json:"email"`
+	Suppressed        bool                  `json:"suppressed"`
+	Suppression       *RecipientSuppression `json:"suppression"`
+	Unsubscribed      bool                  `json:"unsubscribed"`
+	Bounced           bool                  `json:"bounced"`
+	Complained        bool                  `json:"complained"`
+	EverBounced       bool                  `json:"ever_bounced"`
+	EverComplained    bool                  `json:"ever_complained"`
+	SendsToday        int                   `json:"sends_today"`
+	MarketingToday    int                   `json:"marketing_today"`
+	Sends24h          int                   `json:"sends_24h"`
+	LastSend          *RecipientSend        `json:"last_send"`
+	LastMarketingSend *RecipientSend        `json:"last_marketing_send"`
+}
+
+// RecipientStateResponse is the response of GetRecipientState.
+type RecipientStateResponse struct {
+	// DayStart is the Lagos midnight that "today" counts from.
+	DayStart   time.Time        `json:"day_start"`
+	Timezone   string           `json:"timezone"`
+	Recipients []RecipientState `json:"recipients"`
+}
+
+// GetRecipientState returns send and suppression state for up to 500
+// addresses, one entry per distinct address in request order.
+func (c *Client) GetRecipientState(ctx context.Context, emails []string) (*RecipientStateResponse, error) {
+	var resp RecipientStateResponse
+	req := struct {
+		Emails []string `json:"emails"`
+	}{Emails: emails}
+	if err := c.doRequest(ctx, "POST", "/api/v1/recipients/state", req, &resp); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
 // doRequest performs an HTTP request.
 func (c *Client) doRequest(ctx context.Context, method, path string, body interface{}, result interface{}) error {
 	var bodyReader io.Reader
