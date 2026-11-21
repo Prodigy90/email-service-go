@@ -199,6 +199,20 @@ func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (
 		}
 	}
 
+	// A retry of a row that was saved but never reached the queue (Redis
+	// down) sends it: reporting it "already queued" would drop it for good.
+	// The capped path already did this under the lock.
+	if existedBefore && postgres.IsNeverEnqueued(savedEmail) {
+		revived, err := s.repo.ReviveNeverEnqueued(ctx, savedEmail.ID)
+		if err != nil {
+			return nil, fmt.Errorf("failed to revive email: %w", err)
+		}
+		if revived {
+			s.logger.Info().Str("email_id", savedEmail.ID.String()).Msg("Idempotent retry of a never-enqueued email, enqueueing it")
+			existedBefore = false
+		}
+	}
+
 	// If email already existed (idempotent duplicate), return the existing record
 	if existedBefore {
 		s.logger.Debug().Str("idempotency_id", req.IdempotencyID).Msg("Duplicate request, returning existing")
@@ -220,7 +234,7 @@ func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (
 	if err := enqueue(email); err != nil {
 		s.logger.Error().Err(err).Str("email_id", email.ID.String()).Msg("Failed to enqueue email")
 		// Update status to failed
-		_ = s.repo.UpdateStatus(ctx, email.ID, domain.StatusFailed, "Failed to enqueue")
+		_ = s.repo.UpdateStatus(ctx, email.ID, domain.StatusFailed, postgres.NeverEnqueued)
 		return nil, fmt.Errorf("failed to queue email: %w", err)
 	}
 
@@ -436,12 +450,17 @@ func (s *EmailService) saveUnderCap(ctx context.Context, email *domain.Email, ov
 	if mode == CapOff || s.capRepo == nil || !IsMarketingSend(email.Template, email.SourceService, email.Metadata) {
 		return nil, false, false, nil
 	}
+	// Copy before stamping (cap_override, daily_cap): bulk sends pass one
+	// Metadata map to every recipient, so a stamp on the shared map would
+	// mark everyone after this one.
+	md := make(map[string]interface{}, len(email.Metadata)+2)
+	for k, v := range email.Metadata {
+		md[k] = v
+	}
+	email.Metadata = md
 	campaign, _ := email.Metadata["campaign"].(string)
 	allow := s.capCfg.PerDay
 	if override != nil {
-		if email.Metadata == nil {
-			email.Metadata = map[string]interface{}{}
-		}
 		email.Metadata["cap_override"] = map[string]interface{}{"reason": override.Reason, "allow": override.Allow}
 		s.logger.Warn().Str("cap_mode", string(mode)).Str("to", email.To).Str("template", email.Template).
 			Str("source_service", email.SourceService).Str("campaign", campaign).

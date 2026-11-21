@@ -4,3 +4,7 @@
 -- and the campaign server lower-cases its lists. ~123K rows at 2026-11-21:
 -- a plain build takes well under a second.
 CREATE INDEX IF NOT EXISTS idx_emails_to_address_lower ON emails (lower(to_address));
+-- An expression index has no planner statistics until the table is analyzed;
+-- without them the 500-address state read could plan a scan. ANALYZE (unlike
+-- VACUUM) may run inside the migration's transaction.
+ANALYZE emails;

@@ -338,3 +338,74 @@ func TestMarketingCap_Off_Integration(t *testing.T) {
 		t.Errorf("off: %d rows, %d stamped; want 2 and 0", w.rows(a), would)
 	}
 }
+
+// seedNeverEnqueued writes a row as Send leaves it when the queue was down.
+func (w *capWorld) seedNeverEnqueued(to, idem string, at time.Time) uuid.UUID {
+	id := uuid.New()
+	w.db.MustExec(`INSERT INTO emails (id, to_address, subject, body, template, status, error_message, retry_count, idempotency_id, source_service, metadata, created_at, updated_at)
+		VALUES ($1, $2, 's', 'b', 'onboarding_day3', 'failed', 'Failed to enqueue', 0, $3, 'wasbot', '{"sequence":true}', $4, $4)`, id, to, idem, at)
+	return id
+}
+
+func (w *capWorld) status(id uuid.UUID) string {
+	var st string
+	if err := w.db.Get(&st, `SELECT status FROM emails WHERE id = $1`, id); err != nil {
+		w.t.Fatal(err)
+	}
+	return st
+}
+
+// A retry of a row that never reached the queue sends it (same row, back to
+// queued, enqueued), and still under the cap; a row the worker gave up on
+// stays a duplicate.
+func TestMarketingCap_NeverEnqueuedRetry_Integration(t *testing.T) {
+	for _, mode := range []MarketingCapMode{CapOff, CapEnforce} {
+		w := newCapWorld(t, mode, capNow)
+		a := w.addr("revive-" + string(mode))
+		idem := "cap-" + w.run + "-revive-" + string(mode)
+		id := w.seedNeverEnqueued(a, idem, capNow.Add(-time.Minute))
+		resp, err := w.send(a, "onboarding_day3", "wasbot", map[string]interface{}{"sequence": true}, idem)
+		if err != nil || resp.ID != id || w.status(id) != "queued" || len(w.sent) != 1 || w.rows(a) != 1 {
+			t.Errorf("%s: revive: err=%v id=%v status=%s enqueued=%d rows=%d", mode, err, resp, w.status(id), len(w.sent), w.rows(a))
+		}
+	}
+
+	w := newCapWorld(t, CapEnforce, capNow)
+	a := w.addr("revive-capped")
+	idem := "cap-" + w.run + "-revive-capped"
+	id := w.seedNeverEnqueued(a, idem, capNow.Add(-time.Hour))
+	if _, err := w.send(a, "campaign_update", "campaign", map[string]interface{}{"campaign": "c"}, ""); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := w.send(a, "onboarding_day3", "wasbot", nil, idem); !isCapped(err) || w.status(id) != "failed" {
+		t.Errorf("revive after today's marketing email: want capped and left failed, got %v / %s", err, w.status(id))
+	}
+
+	// Worker gave up after retries: a duplicate, not revived.
+	b := w.addr("gaveup")
+	gid := uuid.New()
+	w.db.MustExec(`INSERT INTO emails (id, to_address, subject, body, template, status, error_message, retry_count, idempotency_id, source_service, created_at, updated_at)
+		VALUES ($1, $2, 's', 'b', 'onboarding_day3', 'failed', 'provider 500', 3, $3, 'wasbot', $4, $4)`, gid, b, "cap-"+w.run+"-gaveup", capNow.Add(-time.Hour))
+	before := len(w.sent)
+	if resp, err := w.send(b, "onboarding_day3", "wasbot", nil, "cap-"+w.run+"-gaveup"); err != nil || resp.ID != gid || len(w.sent) != before || w.status(gid) != "failed" {
+		t.Errorf("worker-failed row should stay a duplicate: %v %v", resp, err)
+	}
+}
+
+// Bulk sends share one Metadata map: one shadow stamp must not mark the rest.
+func TestMarketingCap_BulkMetadataNotShared_Integration(t *testing.T) {
+	w := newCapWorld(t, CapShadow, capNow)
+	busy, fresh := w.addr("bulkbusy"), w.addr("bulkfresh")
+	w.seed(busy, "sent", "campaign_update", "campaign", `{"campaign":"x"}`, capNow.Add(-time.Hour))
+	shared := map[string]interface{}{"campaign": "bulk"}
+	for _, to := range []string{busy, fresh} {
+		if _, err := w.send(to, "campaign_update", "campaign", shared, ""); err != nil {
+			t.Fatal(err)
+		}
+	}
+	var stamped int
+	w.db.Get(&stamped, `SELECT count(*) FROM emails WHERE to_address = $1 AND metadata->>'daily_cap' = 'would_cap'`, fresh)
+	if stamped != 0 || shared["daily_cap"] != nil {
+		t.Errorf("the shared map was stamped (fresh stamped=%d, map=%v)", stamped, shared)
+	}
+}
