@@ -41,14 +41,15 @@ type RecipientState struct {
 
 // RecipientStateQuery bounds one batch read.
 type RecipientStateQuery struct {
-	// Emails are matched exactly against emails.to_address and
+	// Emails are matched against lower(emails.to_address) and
 	// lower(suppressions.email); callers pass them lower-cased.
 	Emails []string
 	// DayStart is the start of "today" (the caller picks the zone).
 	DayStart time.Time
 	// Since24h is now minus 24 hours.
 	Since24h time.Time
-	// ServiceTemplates are templates that never count as marketing.
+	// ServiceTemplates are templates that never count as marketing (the rest
+	// of the rule, for untemplated sends, is in MarketingSQL).
 	ServiceTemplates []string
 }
 
@@ -70,12 +71,9 @@ const countedStatuses = `status <> 'failed'`
 // Get returns state for each address that has any; an address with no rows
 // anywhere is absent from the map (the caller fills an empty state).
 //
-// emails.to_address is matched with "= ANY" so the btree on to_address is
-// used: the table is large (message bodies), and a lower() on the column
-// would scan it. A row stored in mixed case is therefore missed. The
-// campaign server lower-cases its lists; the backend sends the address as
-// user_auth holds it, and prod's pg_stats sample of both columns (11-21)
-// held no mixed-case value. A lower(to_address) index would close the gap.
+// emails.to_address is matched by lower(to_address) (index from migration
+// 005), so a row stored in mixed case still counts for the lower-cased
+// address callers pass.
 func (r *RecipientStateRepository) Get(ctx context.Context, q RecipientStateQuery) (map[string]*RecipientState, error) {
 	out := map[string]*RecipientState{}
 	if len(q.Emails) == 0 {
@@ -130,16 +128,16 @@ func (r *RecipientStateRepository) Get(ctx context.Context, q RecipientStateQuer
 	// Counts and bounce history over every row of each address.
 	{
 		rows, err := r.db.QueryContext(ctx, `
-			SELECT to_address,
+			SELECT lower(to_address),
 			  count(*) FILTER (WHERE `+countedStatuses+` AND created_at >= $2),
 			  count(*) FILTER (WHERE `+countedStatuses+` AND created_at >= $2
-			                   AND NOT (COALESCE(template, '') = ANY($4))),
+			                   AND `+MarketingSQL("$4")+`),
 			  count(*) FILTER (WHERE `+countedStatuses+` AND created_at >= $3),
 			  bool_or(status = 'bounced'),
 			  bool_or(status = 'complaint')
 			FROM emails
-			WHERE to_address = ANY($1)
-			GROUP BY to_address`, emails, q.DayStart, q.Since24h, service)
+			WHERE lower(to_address) = ANY($1)
+			GROUP BY lower(to_address)`, emails, q.DayStart, q.Since24h, service)
 		if err != nil {
 			return nil, err
 		}
@@ -164,13 +162,13 @@ func (r *RecipientStateRepository) Get(ctx context.Context, q RecipientStateQuer
 	// Last send, and last marketing send.
 	for _, marketingOnly := range []bool{false, true} {
 		rows, err := r.db.QueryContext(ctx, `
-			SELECT DISTINCT ON (to_address) to_address, created_at, template,
+			SELECT DISTINCT ON (lower(to_address)) lower(to_address), created_at, template,
 			  metadata->>'campaign', COALESCE(metadata->>'sequence', '') = 'true',
-			  source_service, status, COALESCE(template, '') = ANY($2)
+			  source_service, status, NOT `+MarketingSQL("$2")+`
 			FROM emails
-			WHERE to_address = ANY($1) AND `+countedStatuses+`
-			  AND (NOT $3 OR NOT (COALESCE(template, '') = ANY($2)))
-			ORDER BY to_address, created_at DESC`, emails, service, marketingOnly)
+			WHERE lower(to_address) = ANY($1) AND `+countedStatuses+`
+			  AND (NOT $3 OR `+MarketingSQL("$2")+`)
+			ORDER BY lower(to_address), created_at DESC`, emails, service, marketingOnly)
 		if err != nil {
 			return nil, err
 		}

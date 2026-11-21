@@ -61,6 +61,12 @@ type Config struct {
 	// CORSOrigins is the explicit allowlist of origins permitted for CORS.
 	// If empty, CORS headers are not set (same-origin only). Wildcard is rejected in production.
 	CORSOrigins []string
+
+	// MarketingCapMode is the daily marketing-email cap: off (default),
+	// shadow (log + stamp "would cap", still send) or enforce (409).
+	MarketingCapMode string
+	// MarketingDailyCap is the most marketing emails per address per Lagos day.
+	MarketingDailyCap int
 }
 
 type SMTPConfig struct {
@@ -162,6 +168,8 @@ func Load() *Config {
 		SwaggerAllowedIPs: getEnv("SWAGGER_ALLOWED_IPS", ""),
 		TrustedProxies:    parseTrustedProxies(getEnv("TRUSTED_PROXIES", "")),
 		CORSOrigins:       parseCSVList(getEnv("CORS_ORIGINS", "")),
+		MarketingCapMode:  getEnv("MARKETING_CAP_MODE", "off"),
+		MarketingDailyCap: getEnvIntPositive("MARKETING_DAILY_CAP", 1),
 	}
 }
 

@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -36,7 +38,9 @@ func (h *EmailHandler) RegisterRoutes(r *gin.RouterGroup) {
 // @Param request body domain.SendEmailRequest true "Email request"
 // @Success 202 {object} domain.SendEmailResponse
 // @Failure 400 {object} ErrorResponse
+// @Failure 409 {object} CapRefusal "marketing send held by the daily cap (MARKETING_CAP_MODE=enforce)"
 // @Failure 500 {object} ErrorResponse
+// @Failure 503 {object} ErrorResponse "daily cap could not be checked; marketing send held"
 // @Router /send [post]
 func (h *EmailHandler) Send(c *gin.Context) {
 	var req domain.SendEmailRequest
@@ -47,11 +51,39 @@ func (h *EmailHandler) Send(c *gin.Context) {
 
 	resp, err := h.emailService.Send(c.Request.Context(), &req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: err.Error()})
+		writeSendError(c, err)
 		return
 	}
 
 	c.JSON(http.StatusAccepted, resp)
+}
+
+// CapRefusal is the 409 body for a send held by the daily marketing cap.
+// Error starts with the code, so a client that only surfaces the error
+// string (pkg/client) can still tell it apart.
+type CapRefusal struct {
+	Error          string    `json:"error"`
+	Code           string    `json:"code"`
+	MarketingToday int       `json:"marketing_today"`
+	Cap            int       `json:"cap"`
+	RetryAfter     time.Time `json:"retry_after"`
+}
+
+// writeSendError maps Send errors: 409 cap refusal, 503 cap unreadable
+// (the send holds), 400 bad request, 500 the rest.
+func writeSendError(c *gin.Context, err error) {
+	var capped *service.ErrMarketingCapped
+	switch {
+	case errors.As(err, &capped):
+		c.JSON(http.StatusConflict, CapRefusal{Error: capped.Error(), Code: "marketing_daily_cap",
+			MarketingToday: capped.MarketingToday, Cap: capped.Cap, RetryAfter: capped.RetryAfter})
+	case errors.Is(err, service.ErrMarketingCapUnavailable):
+		c.JSON(http.StatusServiceUnavailable, gin.H{"error": err.Error(), "code": "marketing_cap_unavailable"})
+	case errors.Is(err, service.ErrInvalidRequest):
+		c.JSON(http.StatusBadRequest, ErrorResponse{Error: err.Error()})
+	default:
+		c.JSON(http.StatusInternalServerError, ErrorResponse{Error: err.Error()})
+	}
 }
 
 // SendBulk handles bulk email sending.

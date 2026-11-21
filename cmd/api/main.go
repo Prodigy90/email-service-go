@@ -122,6 +122,11 @@ func main() {
 	suppressionRepo := postgres.NewSuppressionRepository(sqlxDB)
 
 	emailService := service.NewEmailService(emailRepo, emailSender, templateService, asynqClient, redisClient, suppressionRepo, log)
+	// Daily marketing cap (one per address per Lagos day). Off unless
+	// MARKETING_CAP_MODE says shadow or enforce: this service deploys on merge.
+	capCfg := service.MarketingCapConfig{Mode: service.ParseMarketingCapMode(cfg.MarketingCapMode), PerDay: cfg.MarketingDailyCap}
+	emailService.SetMarketingCap(capCfg)
+	log.Info().Str("mode", string(capCfg.Mode)).Int("per_day", capCfg.PerDay).Msg("Marketing daily cap")
 
 	// Create event repository and webhook service
 	eventRepo := postgres.NewEventRepository(sqlxDB)
