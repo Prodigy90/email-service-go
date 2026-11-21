@@ -19,6 +19,7 @@ type Deps struct {
 	WebhookService     *service.WebhookService     // Optional: if nil, webhook routes are skipped
 	UnsubscribeService *service.UnsubscribeService  // Optional: if nil, unsubscribe routes are skipped
 	SuppressionRepo    *postgres.SuppressionRepository // Required if UnsubscribeService is set
+	RecipientState     *service.RecipientStateService  // Optional: if nil, /recipients/state is skipped
 	APIKey             string
 	SwaggerAllowedIPs  string
 	RateLimiter        *middleware.RateLimiter // Optional: if nil, a default is created
@@ -91,6 +92,11 @@ func New(d Deps) *gin.Engine {
 	// Campaign endpoints
 	campaignHandler := handlers.NewCampaignHandler(d.EmailService, d.SuppressionRepo, d.Logger)
 	campaignHandler.RegisterRoutes(api)
+
+	// Per-address send and suppression state (person journey, shared cap)
+	if d.RecipientState != nil {
+		handlers.NewRecipientStateHandler(d.RecipientState, d.Logger).RegisterRoutes(api)
+	}
 
 	return r
 }

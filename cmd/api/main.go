@@ -141,6 +141,7 @@ func main() {
 		WebhookService:     webhookService,
 		UnsubscribeService: unsubscribeService,
 		SuppressionRepo:    suppressionRepo,
+		RecipientState:     service.NewRecipientStateService(postgres.NewRecipientStateRepository(sqlxDB)),
 		APIKey:             cfg.APIKey,
 		SwaggerAllowedIPs:  cfg.SwaggerAllowedIPs,
 		TrustedProxies:     cfg.TrustedProxies,
