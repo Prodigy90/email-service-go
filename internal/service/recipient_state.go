@@ -22,20 +22,44 @@ var lagos = time.FixedZone("Africa/Lagos", 3600)
 // keeps outside the system (root repo .scratch/onboarding-tight/03-email-map.md,
 // "Kept outside the system"): the day-0 welcome, the abandoned-checkout
 // reminder, the second payment-failed notice, and the walkthrough link a
-// lead asked for minutes earlier.
+// lead asked for minutes earlier. Also the affiliate-system's account mail
+// (payouts, commissions, access, link changes, signup): an affiliate's
+// commission notice must never be held behind a newsletter.
 func serviceTemplates() []string {
-	out := make([]string, 0, len(transactionalTemplates)+4)
+	out := make([]string, 0, len(transactionalTemplates)+len(extraServiceTemplates))
 	for t := range transactionalTemplates {
 		out = append(out, t)
 	}
-	out = append(out, "onboarding_day0", "checkout_abandoned", "payment_failed_attempt2", "vsl_walkthrough_link")
+	out = append(out, extraServiceTemplates...)
 	slices.Sort(out)
 	return out
+}
+
+// extraServiceTemplates are service mail that still carries an unsubscribe
+// header (so it is not in transactionalTemplates).
+var extraServiceTemplates = []string{
+	"onboarding_day0", "checkout_abandoned", "payment_failed_attempt2", "vsl_walkthrough_link",
+	"payout_approved", "payout_rejected", "payout_processed", "commission_earned",
+	"commission_refunded", "access_revoked", "affiliate_link_updated", "affiliate_signup",
 }
 
 // IsServiceTemplate reports whether a template is service mail (cap-exempt).
 func IsServiceTemplate(t string) bool {
 	return slices.Contains(serviceTemplates(), t)
+}
+
+// IsMarketingSend is the Go side of postgres.MarketingSQL: a templated send
+// is marketing unless its template is service; an untemplated one only when
+// it comes from the campaign server. Keep the two in step.
+func IsMarketingSend(template, sourceService string, metadata map[string]interface{}) bool {
+	if IsServiceTemplate(template) {
+		return false
+	}
+	if template != "" || sourceService == "campaign" {
+		return true
+	}
+	v, ok := metadata["campaign"]
+	return ok && v != nil
 }
 
 // RecipientStateReader is the read the service needs.

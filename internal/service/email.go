@@ -3,7 +3,9 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -29,6 +31,27 @@ type EmailService struct {
 	suppressionRepo *postgres.SuppressionRepository
 	unsubscribe     *UnsubscribeService
 	logger          zerolog.Logger
+
+	// capRepo/capCfg drive the daily marketing cap (marketing_cap.go). Mode
+	// off (the default) leaves Send exactly as it was.
+	capRepo marketingCapStore
+	capCfg  MarketingCapConfig
+	now     func() time.Time
+	// enqueueFn queues a saved email; tests replace it (default s.enqueue).
+	enqueueFn func(*domain.Email) error
+}
+
+// marketingCapStore is the capped insert (postgres.EmailRepository).
+type marketingCapStore interface {
+	CreateUnderMarketingCap(ctx context.Context, email *domain.Email, cap postgres.MarketingCap) (*domain.Email, postgres.CapResult, error)
+}
+
+// SetMarketingCap sets the daily marketing cap's mode and size.
+func (s *EmailService) SetMarketingCap(cfg MarketingCapConfig) {
+	if cfg.PerDay < 1 {
+		cfg.PerDay = 1
+	}
+	s.capCfg = cfg
 }
 
 // NewEmailService creates a new email service.
@@ -42,7 +65,7 @@ func NewEmailService(
 	suppressionRepo *postgres.SuppressionRepository,
 	logger zerolog.Logger,
 ) *EmailService {
-	return &EmailService{
+	svc := &EmailService{
 		repo:            repo,
 		sender:          sender,
 		templates:       templates,
@@ -50,7 +73,13 @@ func NewEmailService(
 		redis:           redisClient,
 		suppressionRepo: suppressionRepo,
 		logger:          logger.With().Str("component", "email_service").Logger(),
+		capCfg:          MarketingCapConfig{Mode: CapOff, PerDay: 1},
+		now:             time.Now,
 	}
+	if repo != nil {
+		svc.capRepo = repo
+	}
+	return svc
 }
 
 // SetUnsubscribeService sets the unsubscribe service for URL generation.
@@ -60,6 +89,9 @@ func (s *EmailService) SetUnsubscribeService(unsub *UnsubscribeService) {
 
 // Send queues an email for delivery.
 func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (*domain.SendEmailResponse, error) {
+	if o := req.MarketingCapOverride; o != nil && (strings.TrimSpace(o.Reason) == "" || o.Allow < 0) {
+		return nil, fmt.Errorf("%w: marketing_cap_override needs a reason and allow >= 0", ErrInvalidRequest)
+	}
 	// Pre-send suppression check
 	if s.suppressionRepo != nil {
 		suppressed, err := s.suppressionRepo.IsSuppressed(ctx, req.To)
@@ -86,6 +118,7 @@ func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (
 	}
 
 	// Build email
+	now := s.now()
 	email := &domain.Email{
 		ID:            uuid.New(),
 		From:          req.From,
@@ -100,8 +133,8 @@ func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (
 		IdempotencyID: req.IdempotencyID,
 		SourceService: req.SourceService,
 		Metadata:      req.Metadata,
-		CreatedAt:     time.Now(),
-		UpdatedAt:     time.Now(),
+		CreatedAt:     now,
+		UpdatedAt:     now,
 	}
 
 	// Copy allowed request headers (e.g., Reply-To)
@@ -152,10 +185,32 @@ func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (
 	}
 
 	// Atomically create or get existing email by idempotency ID
-	// This prevents race conditions with concurrent duplicate requests
-	savedEmail, existedBefore, err := s.repo.CreateOrGetByIdempotencyID(ctx, email)
+	// This prevents race conditions with concurrent duplicate requests.
+	// Marketing sends go through the daily cap instead (same idempotency
+	// semantics, plus the per-address count under a lock).
+	savedEmail, existedBefore, capped, err := s.saveUnderCap(ctx, email, req.MarketingCapOverride, now)
 	if err != nil {
-		return nil, fmt.Errorf("failed to save email: %w", err)
+		return nil, err
+	}
+	if !capped {
+		savedEmail, existedBefore, err = s.repo.CreateOrGetByIdempotencyID(ctx, email)
+		if err != nil {
+			return nil, fmt.Errorf("failed to save email: %w", err)
+		}
+	}
+
+	// A retry of a row that was saved but never reached the queue (Redis
+	// down) sends it: reporting it "already queued" would drop it for good.
+	// The capped path already did this under the lock.
+	if existedBefore && postgres.IsNeverEnqueued(savedEmail) {
+		revived, err := s.repo.ReviveNeverEnqueued(ctx, savedEmail.ID)
+		if err != nil {
+			return nil, fmt.Errorf("failed to revive email: %w", err)
+		}
+		if revived {
+			s.logger.Info().Str("email_id", savedEmail.ID.String()).Msg("Idempotent retry of a never-enqueued email, enqueueing it")
+			existedBefore = false
+		}
 	}
 
 	// If email already existed (idempotent duplicate), return the existing record
@@ -172,10 +227,14 @@ func (s *EmailService) Send(ctx context.Context, req *domain.SendEmailRequest) (
 	email = savedEmail
 
 	// Queue for sending
-	if err := s.enqueue(email); err != nil {
+	enqueue := s.enqueueFn
+	if enqueue == nil {
+		enqueue = s.enqueue
+	}
+	if err := enqueue(email); err != nil {
 		s.logger.Error().Err(err).Str("email_id", email.ID.String()).Msg("Failed to enqueue email")
 		// Update status to failed
-		_ = s.repo.UpdateStatus(ctx, email.ID, domain.StatusFailed, "Failed to enqueue")
+		_ = s.repo.UpdateStatus(ctx, email.ID, domain.StatusFailed, postgres.NeverEnqueued)
 		return nil, fmt.Errorf("failed to queue email: %w", err)
 	}
 
@@ -227,6 +286,10 @@ func (s *EmailService) SendBulk(ctx context.Context, req *domain.SendBulkRequest
 
 		resp, err := s.Send(ctx, singleReq)
 		if err != nil {
+			if capErr := (*ErrMarketingCapped)(nil); errors.As(err, &capErr) {
+				s.logger.Info().Str("to", recipient).Msg("Bulk email held by the daily marketing cap")
+				continue
+			}
 			s.logger.Error().Err(err).Str("to", recipient).Msg("Failed to queue bulk email")
 			continue
 		}
@@ -287,6 +350,10 @@ func (s *EmailService) SendBulkPersonalized(ctx context.Context, req *domain.Sen
 
 		resp, err := s.Send(ctx, singleReq)
 		if err != nil {
+			if capErr := (*ErrMarketingCapped)(nil); errors.As(err, &capErr) {
+				s.logger.Info().Str("to", recipient.Email).Msg("Personalized bulk email held by the daily marketing cap")
+				continue
+			}
 			s.logger.Error().Err(err).Str("to", recipient.Email).Msg("Failed to queue personalized bulk email")
 			continue
 		}
@@ -373,6 +440,62 @@ func (s *EmailService) ProcessEmail(ctx context.Context, emailID uuid.UUID) erro
 	_ = s.repo.MarkSent(ctx, emailID, now)
 
 	return nil
+}
+
+// saveUnderCap runs the daily marketing cap for a marketing send. handled is
+// false when the cap does not apply (off, service mail, no store, or a
+// shadow-mode read failure) and the caller saves the email the usual way.
+func (s *EmailService) saveUnderCap(ctx context.Context, email *domain.Email, override *domain.MarketingCapOverride, now time.Time) (saved *domain.Email, existed bool, handled bool, err error) {
+	mode := s.capCfg.Mode
+	if mode == CapOff || s.capRepo == nil || !IsMarketingSend(email.Template, email.SourceService, email.Metadata) {
+		return nil, false, false, nil
+	}
+	// Copy before stamping (cap_override, daily_cap): bulk sends pass one
+	// Metadata map to every recipient, so a stamp on the shared map would
+	// mark everyone after this one.
+	md := make(map[string]interface{}, len(email.Metadata)+2)
+	for k, v := range email.Metadata {
+		md[k] = v
+	}
+	email.Metadata = md
+	campaign, _ := email.Metadata["campaign"].(string)
+	allow := s.capCfg.PerDay
+	if override != nil {
+		email.Metadata["cap_override"] = map[string]interface{}{"reason": override.Reason, "allow": override.Allow}
+		s.logger.Warn().Str("cap_mode", string(mode)).Str("to", email.To).Str("template", email.Template).
+			Str("source_service", email.SourceService).Str("campaign", campaign).
+			Str("reason", override.Reason).Int("allow", override.Allow).Msg("marketing daily cap: override")
+		if override.Allow == 0 {
+			return nil, false, false, nil
+		}
+		allow = override.Allow
+	}
+	day := DayStart(now)
+	saved, res, err := s.capRepo.CreateUnderMarketingCap(ctx, email, postgres.MarketingCap{
+		DayStart: day, Allow: allow, ServiceTemplates: serviceTemplates(), Shadow: mode == CapShadow,
+	})
+	switch {
+	case errors.Is(err, postgres.ErrCapReached):
+		s.logger.Info().Str("cap_mode", string(mode)).Str("to", email.To).Str("template", email.Template).
+			Str("source_service", email.SourceService).Str("campaign", campaign).
+			Int("marketing_today", res.MarketingToday).Int("cap", allow).Time("day_start", day).
+			Msg("marketing daily cap: refused")
+		return nil, false, true, &ErrMarketingCapped{To: email.To, MarketingToday: res.MarketingToday, Cap: allow, RetryAfter: NextDayStart(now)}
+	case err != nil:
+		if mode == CapShadow {
+			s.logger.Warn().Err(err).Str("cap_mode", string(mode)).Str("to", email.To).Msg("marketing daily cap: check failed, sending (shadow)")
+			return nil, false, false, nil
+		}
+		s.logger.Error().Err(err).Str("cap_mode", string(mode)).Str("to", email.To).Msg("marketing daily cap: check failed, holding")
+		return nil, false, true, fmt.Errorf("%w: %v", ErrMarketingCapUnavailable, err)
+	}
+	if res.WouldCap {
+		s.logger.Warn().Str("cap_mode", string(mode)).Str("to", email.To).Str("template", email.Template).
+			Str("source_service", email.SourceService).Str("campaign", campaign).
+			Int("marketing_today", res.MarketingToday).Int("cap", allow).Time("day_start", day).
+			Msg("marketing daily cap: would cap")
+	}
+	return saved, res.Existed, true, nil
 }
 
 // ListTemplates returns available templates.

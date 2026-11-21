@@ -58,6 +58,18 @@ type SendEmailRequest struct {
 	ProductID     string                 `json:"product_id,omitempty"`
 	Headers       map[string]string      `json:"headers,omitempty"`
 	Branding      *BrandingConfig        `json:"branding,omitempty"`
+	// MarketingCapOverride lets one marketing send past the daily cap. It is
+	// logged and stamped into the row's metadata (cap_override).
+	MarketingCapOverride *MarketingCapOverride `json:"marketing_cap_override,omitempty"`
+}
+
+// MarketingCapOverride is an explicit, logged exception to the daily
+// marketing cap. Reason is required. Allow > 0 raises today's limit for this
+// send to Allow (2 = may be the second marketing email today); Allow 0
+// bypasses the cap for this send.
+type MarketingCapOverride struct {
+	Reason string `json:"reason"`
+	Allow  int    `json:"allow,omitempty"`
 }
 
 // SendBulkRequest represents a request to send emails to multiple recipients.
